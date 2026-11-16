@@ -2363,10 +2363,6 @@
 
   /* ---------- 인증 ---------- */
   function cloudEmailAuth(mode) {
-    if (!cloud.client) {
-      cloudMsg('인터넷에 연결되면 로그인할 수 있어요. 지금 기록은 이 기기에 저장돼요.');
-      return;
-    }
     var emailEl = $('syncEmail'), passEl = $('syncPass'), btn = $('syncSubmit');
     var email = (emailEl.value || '').trim();
     var pass = passEl.value || '';
@@ -2383,6 +2379,10 @@
     if (!pass) {
       cloudMsg('비밀번호를 입력해 주세요.');
       passEl.focus();
+      return;
+    }
+    if (!cloud.client) {
+      cloudMsg('인터넷에 연결되면 로그인할 수 있어요. 지금 기록은 이 기기에 저장돼요.');
       return;
     }
     var label = mode === 'signup' ? '회원가입' : '이메일로 로그인';
