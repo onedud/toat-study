@@ -197,17 +197,17 @@
   .rainbow .sep{font-size:8px;color:#C6D6D1;margin:0 -1px}
   .rainbow .txt{margin-left:auto;font-size:10px;font-weight:800;color:var(--dim)}
 
-  .pet-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:206px;margin-top:6px}
+  .pet-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:206px;margin-top:6px}
   .pet-bubble{
     position:absolute;top:2px;left:50%;transform:translateX(-50%);z-index:3;max-width:calc(100% - 8px);
     padding:7px 12px;border-radius:14px;background:#fff;border:1px solid var(--line);
-    font-size:11.5px;font-weight:700;color:#2A4A41;box-shadow:0 6px 16px rgba(16,105,80,.10);
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    font-size:11px;font-weight:700;color:#2A4A41;box-shadow:0 6px 16px rgba(16,105,80,.10);
+    text-align:center;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all;max-height:62px
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
   .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}
   button.pet-bubble{text-align:left}
-  .pet-scene{position:relative;display:flex;align-items:flex-end;justify-content:center;width:100%;padding-top:34px}
+  .pet-scene{position:relative;display:flex;align-items:flex-end;justify-content:center;width:100%;padding-top:62px}
   .pet-art{width:min(62%,214px);flex:none;position:relative;z-index:2}
   .pet-art svg{width:100%;height:auto;display:block;overflow:visible;animation:floaty 4.6s ease-in-out infinite}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
@@ -2260,7 +2260,7 @@
     renderRainbow(info);
     const q = currentQuote();
     if (q) {
-      const txt = q.text.length > 34 ? q.text.slice(0, 33) + '…' : q.text;
+      const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
       $('petBubble').innerHTML = esc(txt) + ' <span class="qhint">명언 ›</span>';
       $('petBubble').setAttribute('aria-label', '오늘의 명언 보기: ' + q.text + ' — ' + (q.author || '작가 미상'));
     } else {
