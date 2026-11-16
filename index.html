@@ -221,10 +221,9 @@
     border-bottom-right-radius:3px
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
-  .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}
-  button.pet-bubble{transition:transform .1s,box-shadow .15s}
+  .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}  button.pet-bubble{transition:transform .1s,box-shadow .15s}
   button.pet-bubble:active{transform:scale(.98)}
-  .pet-bubble .qhint{background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:1px 6px}
+  .pet-bubble .qhint{background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:2px 8px}
   .pet-scene{position:relative;width:100%;max-width:360px;height:222px;margin:56px auto 0;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:min(62%,206px);flex:none;z-index:2}
   .pet-art svg{width:100%;height:auto;display:block;overflow:visible;animation:floaty 4.6s ease-in-out infinite}
@@ -762,6 +761,8 @@
   .photo-preview .ph-empty .em{font-size:26px;display:block;margin-bottom:6px}
   .photo-actions{display:flex;gap:7px;margin-top:9px}
   .photo-actions .btn{flex:1;font-size:12.5px;padding:9px}
+  .photo-hint.ro,.hint.ro{color:var(--mint-deep);font-weight:800}
+  #photoDiary.readonly{background:#F5F8F7;color:#5C7469;border-color:#E6EEEB}
 
   /* ---------- 마이페이지 ---------- */
   .mp-hero{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:linear-gradient(150deg,#E9FBF3,#FBFEFC);border:1px solid var(--line)}
@@ -854,8 +855,21 @@
   .todo-top .lb{font-size:11px;font-weight:800;color:var(--muted)}
   .todo-toggle{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;color:var(--muted);padding:5px 9px;border-radius:999px;border:1px solid var(--line);background:#fff}
   .todo-toggle.on{color:var(--mint-deep);border-color:var(--mint-line);background:var(--mint-soft)}
+  .todo-toggle .ck{width:15px;height:15px;border-radius:4px;border:1.6px solid #C2D1CB;background:#fff;display:grid;place-items:center;flex:none;font-size:10px;line-height:1;color:#fff;transition:background .15s,border-color .15s}
+  .todo-toggle.on .ck{background:var(--mint);border-color:var(--mint)}
+  .todo-toggle.on .ck::after{content:'✓';font-weight:900}
+  .todo-subj{margin:10px 0 2px;padding:2px 0 3px}
+  .todo-add-wrap{margin-top:12px}
+  .todo-add-wide{width:100%;padding:12px;border-radius:14px;border:1px dashed var(--mint-line);background:var(--mint-soft);color:var(--mint-deep);font-size:13.5px;font-weight:900}
+  .todo-add-wide:active{transform:scale(.99)}
+  .todo-add-card{margin-top:8px;padding:12px 12px 10px;border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+  .todo-add-card .tac-lb{font-size:10.5px;font-weight:900;letter-spacing:.06em;color:var(--dim);margin-bottom:6px}
+  .todo-add-card .tac-subj{flex-wrap:wrap;padding:0;margin-bottom:8px}
+  .todo-add-card .tac-subj .chip{padding:6px 10px;font-size:11.5px}
+  .todo-add-cancel{display:block;width:100%;margin-top:8px;padding:7px;border-radius:11px;background:transparent;border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--muted)}
   .todo-group{margin-top:10px}
   .todo-ghead{display:flex;align-items:center;gap:6px;margin:12px 2px 7px}
+  .todo-ghead .sdot{width:7px;height:7px;border-radius:50%;flex:none}
   .todo-gname{font-size:12px;font-weight:900;color:#2C4A42;background:var(--mint-soft);border:1px solid var(--mint-line);padding:5px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
   .todo-gname .n{font-size:10px;color:var(--mint-deep);opacity:.75}
   .todo-gadd{font-size:12px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px dashed var(--mint-line);padding:5px 10px;border-radius:999px;margin-left:auto}
@@ -897,18 +911,23 @@
   .todo-empty{text-align:center;padding:28px 16px;color:var(--dim);font-size:12px;line-height:1.7}
 
   /* ---------- 명언 ---------- */
-  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-  .qcard{border-radius:16px;padding:13px 13px 10px;min-height:132px;display:flex;flex-direction:column;text-align:left;border:1px solid rgba(30,50,45,.04)}
+  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .qcard{border-radius:16px;padding:12px 13px 11px;min-height:118px;display:flex;flex-direction:column;text-align:left;border:1px solid rgba(30,50,45,.04)}
+  .qcard .qcat{display:inline-block;align-self:flex-start;font-size:9.5px;font-weight:900;letter-spacing:.02em;color:#5E7069;background:rgba(255,255,255,.72);border-radius:999px;padding:2px 8px;margin-bottom:7px}
   .qcard .qt{font-size:12px;line-height:1.55;font-weight:700;color:#2B3330;word-break:keep-all}
-  .qcard .qa{margin-top:auto;padding-top:10px;font-size:10.5px;font-weight:800;color:#77827D;display:flex;align-items:center;justify-content:space-between;gap:4px}
-  .qcard .bm{font-size:13px;line-height:1;color:#7C8983;display:inline-flex}
-  .qcard .bm svg{width:12px;height:12px;display:block}
-  .qcard.fav .bm{color:var(--mint-deep)}
-  .qcard.fav{box-shadow:inset 0 0 0 2px rgba(24,210,155,.35)}
-  .qadd{grid-column:1/-1;border:1px dashed var(--mint-line);background:var(--mint-soft);color:var(--mint-deep);border-radius:16px;padding:13px;font-size:13px;font-weight:900}
+  .qcard .qa{margin-top:auto;padding-top:9px;font-size:10.5px;font-weight:800;color:#77827D;display:flex;align-items:center;justify-content:space-between;gap:4px}
   .quote-hero{padding:14px 16px;border-radius:20px;background:linear-gradient(150deg,#EAFBF3,#FBFEFC);border:1px solid var(--line);margin-bottom:4px}
   .quote-hero .t{font-size:13px;font-weight:900;color:#173B32}
   .quote-hero .d{font-size:11.5px;color:#517868;margin-top:3px;line-height:1.5}
+  .quote-shuffle{margin-top:9px;font-size:11px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px solid var(--mint-line);border-radius:999px;padding:5px 11px}
+  .quote-search{position:relative;margin-top:10px}
+  .quote-search input{width:100%;padding:11px 34px 11px 13px;border-radius:13px;border:1px solid var(--line);background:#FBFEFD;font-size:16px;font-weight:700;color:#20352F;outline:none;-webkit-appearance:none}
+  .quote-search input:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13)}
+  .quote-search input::placeholder{font-size:13.5px;font-weight:700;color:#A9BAB4}
+  .quote-search .qs-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--gray-soft);color:var(--muted);font-size:15px;line-height:1}
+  .qcats{margin-top:9px;padding:2px 0 2px}
+  .qcats .chip{padding:7px 12px;font-size:12px}
+  .qempty{text-align:center;font-size:12px;color:var(--dim);padding:18px 0 4px}
 
   /* ---------- 통계 ---------- */
   #statsSettings{margin-left:auto}
@@ -1243,7 +1262,7 @@
 
       <div class="pet-stage">
         <div class="pet-bubble-wrap">
-          <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 보기">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
+          <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 — 누르면 다른 문장">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
           <span class="pet-bubble-tail" aria-hidden="true"></span>
         </div>
         <div class="pet-scene">
@@ -1322,7 +1341,6 @@
     <div class="page-head">
       <div>
         <h1><span class="em" aria-hidden="true">⏱️</span>토디테이블</h1>
-        <div class="sub" id="ttHeadSub">오늘 0분</div>
       </div>
     </div>
 
@@ -1376,9 +1394,6 @@
         <h1><span class="em" aria-hidden="true">✅</span>할일</h1>
         <div class="sub" id="todoSub">오늘 할일</div>
       </div>
-      <div class="tools">
-        <button class="mini-round" id="todoCatAdd" aria-label="카테고리 추가" title="카테고리 추가">＋</button>
-      </div>
     </div>
     <div class="card todo-cal-card">
       <div class="todo-views" id="todoViews" role="tablist" aria-label="할일 달력 보기">
@@ -1388,11 +1403,24 @@
       </div>
       <div id="todoCal"></div>
     </div>
+    <div class="chips stat-subj todo-subj" id="todoSubjects" role="group" aria-label="과목 필터"></div>
     <div class="todo-top" style="margin-top:10px">
       <span class="lb" id="todoCount">0 / 0 완료</span>
-      <button class="todo-toggle" id="todoDoneToggle" aria-pressed="false"><span aria-hidden="true">👁</span>완료 보기</button>
+      <button class="todo-toggle" id="todoDoneToggle" aria-pressed="false"><span class="ck" aria-hidden="true"></span>완료 보기</button>
     </div>
     <div id="todoGroups"></div>
+    <div class="todo-add-wrap">
+      <button class="todo-add-wide" id="todoAddWide" type="button">＋ 추가</button>
+      <div class="todo-add-card" id="todoAddCard" hidden>
+        <div class="tac-lb">과목</div>
+        <div class="chips tac-subj" id="todoAddSubj" role="group" aria-label="할일 과목 선택"></div>
+        <div class="todo-add-row">
+          <input type="text" id="todoNewText" maxlength="120" placeholder="할일을 적어주세요" aria-label="새 할일" autocomplete="off">
+          <button class="btn primary small" id="todoAddOk" type="button">추가</button>
+        </div>
+        <button class="todo-add-cancel" id="todoAddCancel" type="button">취소</button>
+      </div>
+    </div>
   </main>
 
   <!-- ================= WRONG NOTES ================= -->
@@ -1512,17 +1540,28 @@
 </section>
 
 <!-- ================= 저장한 명언 ================= -->
-<section class="coll" id="quotes" role="dialog" aria-modal="true" aria-label="저장한 명언">
+<section class="coll" id="quotes" role="dialog" aria-modal="true" aria-label="명언">
   <div class="coll-wrap">
     <div class="coll-head">
       <button class="back" id="quotesClose" aria-label="명언 닫기">‹</button>
-      <h1><span class="em" aria-hidden="true">💬</span>저장한 명언</h1>
-      <span class="count" id="quotesCount">0</span>
+      <h1><span class="em" aria-hidden="true">💬</span>명언</h1>
+      <span class="count" id="quotesCount">100개</span>
     </div>
     <div class="quote-hero">
       <div class="t">오늘의 한 줄</div>
       <div class="d" id="quotesHero">마음에 남는 문장을 모아두면, 힘든 날 꺼내볼 수 있어요.</div>
+      <button class="quote-shuffle" id="quoteShuffle" type="button">다른 문장 보기 ↻</button>
     </div>
+    <div class="quote-search">
+      <input id="quoteSearch" type="search" placeholder="공부, 성공, 저자로 찾기" aria-label="명언 검색" autocomplete="off" enterkeyhint="search">
+      <button class="qs-clear" id="quoteSearchClear" type="button" aria-label="검색 지우기" hidden>×</button>
+    </div>
+    <div class="chips qcats" id="quoteCats" role="group" aria-label="명언 분류">
+      <button type="button" class="chip on" data-qcat="전체" aria-pressed="true">전체</button>
+      <button type="button" class="chip" data-qcat="공부" aria-pressed="false">📖 공부</button>
+      <button type="button" class="chip" data-qcat="성공" aria-pressed="false">🏆 성공</button>
+    </div>
+    <p class="qempty" id="quoteEmpty" hidden>찾는 문장이 없어요. 다른 낱말로 찾아보세요.</p>
     <div class="qgrid" id="quotesGrid"></div>
   </div>
 </section>
@@ -1549,21 +1588,6 @@
     </div>
   </div>
 </section>
-
-<div class="sheet" id="quoteSheet" role="dialog" aria-modal="true" aria-labelledby="quoteTitle">
-  <div class="veil" data-close="quoteSheet"></div>
-  <div class="sheet-card">
-    <div class="sheet-grip"></div>
-    <div class="sheet-head"><h2 id="quoteTitle">명언 저장</h2><button class="x" data-close="quoteSheet" aria-label="닫기">×</button></div>
-    <div class="field"><label for="quoteText">문장</label><textarea id="quoteText" rows="4" maxlength="220" placeholder="마음에 새기고 싶은 한 문장"></textarea></div>
-    <div class="field"><label for="quoteAuthor">출처 / 작가</label><input type="text" id="quoteAuthor" maxlength="30" placeholder="예: 김태리, 무인도의 디바"></div>
-    <div class="sheet-actions">
-      <button class="btn ghost danger" id="quoteDelete" hidden>삭제</button>
-      <button class="btn ghost" data-close="quoteSheet">취소</button>
-      <button class="btn primary" id="quoteSave">저장</button>
-    </div>
-  </div>
-</div>
 
 <!-- ================= 타이머 통계 ================= -->
 <section class="coll" id="stats" role="dialog" aria-modal="true" aria-label="타이머 통계">
@@ -1827,14 +1851,14 @@
       <button class="btn ghost small" id="photoPick">사진 고르기</button>
       <button class="btn ghost small danger" id="photoDelete" hidden>일기·인증 삭제</button>
     </div>
-    <div class="field"><label for="photoDiary">오늘의 일기</label></div>
+    <div class="field"><label for="photoDiary" id="photoDiaryLabel">오늘의 일기</label></div>
     <div class="diary-wrap">
       <textarea class="diary" id="photoDiary" rows="6" maxlength="3000" placeholder="오늘 어떤 하루였나요? 잘한 것, 아쉬운 것, 내일의 다짐…"></textarea>
       <span class="diary-date" id="diaryDate"></span>
     </div>
-    <p class="hint" id="photoHint" style="margin-top:8px">사진은 최대 1000px, JPEG 75%로 자동 압축돼요 · 일기만 남겨도 돼요</p>
+    <p class="hint" id="photoHint" style="margin-top:8px">공부 인증 사진은 최대 480px로 작게 압축돼요 · 일기만 남겨도 돼요</p>
     <div class="sheet-actions">
-      <button class="btn ghost" data-close="photoSheet">취소</button>
+      <button class="btn ghost" id="photoCancel" data-close="photoSheet">취소</button>
       <button class="btn primary" id="photoSave">저장</button>
     </div>
     <input type="file" id="photoFile" accept="image/*" hidden>
@@ -2067,33 +2091,180 @@
       goal: (preset.goal || DEFAULT_GOAL),
       subjects: names.map((n, i) => ({ id: (keepIds && keepIds[i] && keepIds[i].id) || ('s' + uid() + i), name: String(n || ''), icon: (keepIds && keepIds[i] && keepIds[i].icon) || SUBJECT_ICONS[i % SUBJECT_ICONS.length] })),
       days: {},
-      photos: {},
       wrong: [],
       master: [],
       todos: {},
       slots: {},
       extras: {},
-      todoCats: ['공부', '할일'],
-      pet: { animal: 'tiger', name: '두근', minutes: {} }
+      todoCats: ['공부', '할일']
     };
   }
 
-  const DEFAULT_QUOTES = [
-    { text: '시원하고 선선하고 기분 좋은 바람이 반드시 불어올 것이라고 믿어 의심치 않습니다.', author: '김태리' },
-    { text: '지금의 이 시간이 쌓여서 결국 너를 만든다.', author: '토디' },
-    { text: '쉬어가는 것도 공부의 일부야. 오늘 하루도 충분히 잘했어.', author: '토디' },
-    { text: '어제의 나보다 한 페이지 더.', author: '토디' },
-    { text: '합격은 매일의 30분이 만든다.', author: '토디' },
-    { text: '포기하지 않는 사람이 결국 웃는다.', author: '토디' }
+  /* =========================================================
+     명언 100선 — 공부 50 · 성공 50 (읽기 전용 데이터)
+     ========================================================= */
+  const QUOTE_BANK = [
+    { id: 'q01', category: '공부', text: '배우고 때로 익히면 또한 기쁘지 아니한가.', author: '공자' },
+    { id: 'q02', category: '공부', text: '아는 것을 안다 하고 모르는 것을 모른다 하는 것, 그것이 아는 것이다.', author: '공자' },
+    { id: 'q03', category: '공부', text: '세 사람이 길을 가면 그중 반드시 나의 스승이 있다.', author: '공자' },
+    { id: 'q04', category: '공부', text: '들은 것은 잊고, 본 것은 기억하고, 직접 해본 것은 이해한다.', author: '공자' },
+    { id: 'q05', category: '공부', text: '아는 것이 힘이다.', author: '프랜시스 베이컨' },
+    { id: 'q06', category: '공부', text: '독서는 사람을 충만하게 하고, 대화는 사람을 재치 있게 하며, 글쓰기는 사람을 정확하게 한다.', author: '프랜시스 베이컨' },
+    { id: 'q07', category: '공부', text: '어떤 책은 맛보고, 어떤 책은 통째로 삼키고, 아주 적은 책만 씹어 음미하라.', author: '프랜시스 베이컨' },
+    { id: 'q08', category: '공부', text: '배우기를 멈춘 사람이 늙은 것이다. 스무 살이든 여든 살이든.', author: '헨리 포드' },
+    { id: 'q09', category: '공부', text: '교육은 세상을 바꾸는 가장 강력한 무기다.', author: '넬슨 만델라' },
+    { id: 'q10', category: '공부', text: '배움이 없는 자유는 위험하고, 자유가 없는 배움은 헛되다.', author: '존 F. 케네디' },
+    { id: 'q11', category: '공부', text: '배움에는 왕도가 없다.', author: '유럽 격언' },
+    { id: 'q12', category: '공부', text: '좋은 책을 읽는 것은 지난 세기의 가장 훌륭한 사람들과 이야기하는 것이다.', author: '데카르트' },
+    { id: 'q13', category: '공부', text: '독서는 재료를 공급할 뿐, 그것을 내 것으로 만드는 것은 사색이다.', author: '존 로크' },
+    { id: 'q14', category: '공부', text: '교육은 우리 자신의 무지를 발견해 가는 과정이다.', author: '윌 듀란트' },
+    { id: 'q15', category: '공부', text: '교육은 노후로 가는 여행을 위한 최상의 양식이다.', author: '아리스토텔레스' },
+    { id: 'q16', category: '공부', text: '모든 사람은 본성적으로 알고자 한다.', author: '아리스토텔레스' },
+    { id: 'q17', category: '공부', text: '교육 없는 천재는 광산 속의 은이나 마찬가지다.', author: '벤저민 프랭클린' },
+    { id: 'q18', category: '공부', text: '나는 학교가 나의 교육을 방해하도록 내버려둔 적이 없다.', author: '마크 트웨인' },
+    { id: 'q19', category: '공부', text: '제대로 교육받은 머리가 지식만 가득한 머리보다 낫다.', author: '몽테뉴' },
+    { id: 'q20', category: '공부', text: '책을 읽음에 어찌 장소를 가릴 것이랴.', author: '이황' },
+    { id: 'q21', category: '공부', text: '지식은 빛과 같아서, 퍼뜨릴수록 더 넓게 비춘다.', author: '토머스 제퍼슨' },
+    { id: 'q22', category: '공부', text: '주제를 이해하라. 그러면 할 말이 떠오를 것이다.', author: '카토' },
+    { id: 'q23', category: '공부', text: '돈은 빌려주지 않아도 되지만, 책은 빌려준다.', author: '유대교 격언' },
+    { id: 'q24', category: '공부', text: '교양이란 세상에서 이야기되고 사색되어 온 가장 훌륭한 것을 아는 것이다.', author: '매슈 아놀드' },
+    { id: 'q25', category: '공부', text: '미루는 것은 쉬운 일을 어렵게 만들고, 어려운 일은 더 어렵게 만든다.', author: '메이슨 쿨리' },
+    { id: 'q26', category: '공부', text: '낭비한 시간에 대한 후회는 더 큰 시간 낭비다.', author: '메이슨 쿨리' },
+    { id: 'q27', category: '공부', text: '오늘 할 수 있는 일을 내일로 미루지 마라.', author: '벤저민 프랭클린' },
+    { id: 'q28', category: '공부', text: '인생이 짧은 것이 아니라, 우리가 시간을 많이 낭비하는 것이다.', author: '세네카' },
+    { id: 'q29', category: '공부', text: '“시간이 없어서”보다 어리석은 변명은 없다.', author: '토머스 에디슨' },
+    { id: 'q30', category: '공부', text: '내가 헛되이 보낸 오늘은 어제 죽은 이가 갈망하던 내일이다.', author: '호라티우스' },
+    { id: 'q31', category: '공부', text: '꾸준함이 없으면 재능도 소용없다.', author: '스티브 프리폰테인' },
+    { id: 'q32', category: '공부', text: '천재는 노력하는 사람을 이길 수 없고, 노력하는 사람은 즐기는 사람을 이길 수 없다.', author: '격언' },
+    { id: 'q33', category: '공부', text: '시작이 반이다.', author: '속담' },
+    { id: 'q34', category: '공부', text: '공부는 거슬러 가는 배와 같아서, 나아가지 않으면 뒤로 밀린다.', author: '중국 격언' },
+    { id: 'q35', category: '공부', text: '늦었다고 생각하는 순간이 가장 이른 때다.', author: '격언' },
+    { id: 'q36', category: '공부', text: '오늘 걷지 않으면 내일은 뛰어야 한다.', author: '속담' },
+    { id: 'q37', category: '공부', text: '지금 흘린 침이 내일 흘릴 눈물이 된다.', author: '속담' },
+    { id: 'q38', category: '공부', text: '공부할 때의 고통은 잠깐이지만, 못 배운 고통은 평생이다.', author: '속담' },
+    { id: 'q39', category: '공부', text: '아는 만큼 보인다.', author: '속담' },
+    { id: 'q40', category: '공부', text: '연습이 완벽을 만든다.', author: '속담' },
+    { id: 'q41', category: '공부', text: '반복은 배움의 어머니다.', author: '라틴 격언' },
+    { id: 'q42', category: '공부', text: '남들이 자는 새벽, 책상은 나를 배신하지 않는다.', author: '수험생 격언' },
+    { id: 'q43', category: '공부', text: '무엇을 모르는지 아는 것이 배움의 시작이다.', author: '소크라테스' },
+    { id: 'q44', category: '공부', text: '천 리 길도 한 걸음부터.', author: '속담' },
+    { id: 'q45', category: '공부', text: '모르는 것이 부끄러운 게 아니라, 묻지 않는 것이 부끄럽다.', author: '속담' },
+    { id: 'q46', category: '공부', text: '이해하지 못한 채 외운 것은 오래 남지 않는다.', author: '격언' },
+    { id: 'q47', category: '공부', text: '배운 것을 누군가에게 설명해 보라. 그때 진짜 내 것이 된다.', author: '격언' },
+    { id: 'q48', category: '공부', text: '기초를 건너뛰면 언젠가 다시 기초로 돌아온다.', author: '격언' },
+    { id: 'q49', category: '공부', text: '책 한 권을 끝까지 읽은 사람이 열 권을 펼치기만 한 사람보다 앞선다.', author: '격언' },
+    { id: 'q50', category: '공부', text: '배움은 평생의 등불이다.', author: '격언' },
+    { id: 'q51', category: '성공', text: '당신이 할 수 있다고 믿든, 할 수 없다고 믿든, 믿는 대로 된다.', author: '헨리 포드' },
+    { id: 'q52', category: '성공', text: '천재는 1퍼센트의 영감과 99퍼센트의 노력으로 만들어진다.', author: '토머스 에디슨' },
+    { id: 'q53', category: '성공', text: '실패한 것이 아니다. 작동하지 않는 만 가지 방법을 발견했을 뿐이다.', author: '토머스 에디슨' },
+    { id: 'q54', category: '성공', text: '성공은 열정을 잃지 않고 실패에서 실패로 걸어가는 것이다.', author: '윈스턴 처칠' },
+    { id: 'q55', category: '성공', text: '절대 포기하지 마라. 절대, 절대, 절대, 절대.', author: '윈스턴 처칠' },
+    { id: 'q56', category: '성공', text: '성공은 우연이 아니다. 노력과 인내, 배움과 희생의 결과다.', author: '펠레' },
+    { id: 'q57', category: '성공', text: '실패를 두려워하지 말고, 시도하지 않는 것을 두려워하라.', author: '마이클 조던' },
+    { id: 'q58', category: '성공', text: '나는 실패를 거듭했고, 그래서 성공했다.', author: '마이클 조던' },
+    { id: 'q59', category: '성공', text: '넘어지는 것은 중요하지 않다. 중요한 것은 다시 일어서는 것이다.', author: '격언' },
+    { id: 'q60', category: '성공', text: '도전에 성공하는 비결은 단 하나, 결코 포기하지 않는 것이다.', author: '디오도어 루빈' },
+    { id: 'q61', category: '성공', text: '실패는 우회로일 뿐, 막다른 길이 아니다.', author: '지그 지글러' },
+    { id: 'q62', category: '성공', text: '너무 많은 사람이 시작조차 하지 않기 때문에 실패한다.', author: 'W. 클레멘트 스톤' },
+    { id: 'q63', category: '성공', text: '어떤 일을 해내는 가장 효과적인 방법은 그 일을 하는 것이다.', author: '아멜리아 에어하트' },
+    { id: 'q64', category: '성공', text: '실패한 사람이 패배하는 것이 아니라, 포기한 사람이 패배한다.', author: '장 파울' },
+    { id: 'q65', category: '성공', text: '인생에서 가장 큰 기쁨은, 세상이 안 된다고 말한 일을 해내는 것이다.', author: '월터 배조트' },
+    { id: 'q66', category: '성공', text: '또 실패했는가? 괜찮다. 다시 하라. 그리고 더 나은 실패를 하라.', author: '사뮈엘 베케트' },
+    { id: 'q67', category: '성공', text: '멈추지 말고 한 가지 목표에 매진하라. 그것이 성공의 비결이다.', author: '안나 파블로바' },
+    { id: 'q68', category: '성공', text: '기회는 일어나는 것이 아니라 만들어 내는 것이다.', author: '크리스 그로서' },
+    { id: 'q69', category: '성공', text: '노력은 우리가 통제할 수 있는 유일한 것이다.', author: '찰스 스윈돌' },
+    { id: 'q70', category: '성공', text: '노력은 우리의 한계를 뛰어넘게 한다.', author: '브루스 리' },
+    { id: 'q71', category: '성공', text: '성공은 태도에서 시작된다. 태도는 선택이다.', author: '찰스 스윈돌' },
+    { id: 'q72', category: '성공', text: '불가능이란 없다. 그것은 나약한 사람들의 핑계일 뿐이다.', author: '무하마드 알리' },
+    { id: 'q73', category: '성공', text: '꿈을 적어라. 그러면 그것은 목표가 된다.', author: '윌리엄 제임스' },
+    { id: 'q74', category: '성공', text: '계획 없는 목표는 그저 소원일 뿐이다.', author: '앙투안 드 생텍쥐페리' },
+    { id: 'q75', category: '성공', text: '성공이란 마술도 눈속임도 아니다. 집중하는 법을 배우는 것이다.', author: '잭 캔필드' },
+    { id: 'q76', category: '성공', text: '어제보다 나아지기 위해 노력해야 할 사람은 어제의 나뿐이다.', author: '격언' },
+    { id: 'q77', category: '성공', text: '꾸준함은 결국 재능을 이긴다.', author: '격언' },
+    { id: 'q78', category: '성공', text: '한 번에 한 걸음씩, 멈추지 않는 것이 가장 빠른 길이다.', author: '격언' },
+    { id: 'q79', category: '성공', text: '가장 큰 위험은 아무 위험도 감수하지 않는 것이다.', author: '격언' },
+    { id: 'q80', category: '성공', text: '용기란 두려움이 없는 것이 아니라, 두려움을 이겨내는 것이다.', author: '넬슨 만델라' },
+    { id: 'q81', category: '성공', text: '믿음은 계단 전체가 보이지 않아도 첫걸음을 내딛는 것이다.', author: '마틴 루터 킹' },
+    { id: 'q82', category: '성공', text: '혼자서 할 수 있는 일은 적지만, 함께하면 많은 일을 할 수 있다.', author: '헬렌 켈러' },
+    { id: 'q83', category: '성공', text: '낙관주의는 성취로 이끄는 신념이다.', author: '헬렌 켈러' },
+    { id: 'q84', category: '성공', text: '모든 꿈은 그것을 이룰 용기가 있을 때 이루어진다.', author: '월트 디즈니' },
+    { id: 'q85', category: '성공', text: '여러분이 할 수 있는 가장 큰 모험은 꿈꾸는 삶을 사는 것이다.', author: '오프라 윈프리' },
+    { id: 'q86', category: '성공', text: '할 수 있다고 생각하면 길은 열린다.', author: '에이브러햄 링컨' },
+    { id: 'q87', category: '성공', text: '성공은 마지막 순간까지 버티는 사람에게 온다.', author: '격언' },
+    { id: 'q88', category: '성공', text: '실수는 성장의 증거다.', author: '격언' },
+    { id: 'q89', category: '성공', text: '지금의 이 시간이 쌓여서 결국 너를 만든다.', author: '토디' },
+    { id: 'q90', category: '성공', text: '아직 늦지 않았다고 믿는 사람에게 늦은 때란 없다.', author: '격언' },
+    { id: 'q91', category: '성공', text: '행운은 준비된 정신을 좋아한다.', author: '루이 파스퇴르' },
+    { id: 'q92', category: '성공', text: '행운이란 100퍼센트 노력한 뒤에 남는 것이다.', author: '랭스턴 콜먼' },
+    { id: 'q93', category: '성공', text: '승자의 조건은 재능이 아니라 태도다.', author: '데니스 웨이틀리' },
+    { id: 'q94', category: '성공', text: '열정이 없는 사람은 바람만 기다리는 배와 같다.', author: '격언' },
+    { id: 'q95', category: '성공', text: '역경을 이겨내고 핀 꽃이 가장 아름답다.', author: '격언' },
+    { id: 'q96', category: '성공', text: '남을 뛰어넘으려 하지 말고, 자기 자신을 뛰어넘으려 애써라.', author: '윌리엄 포크너' },
+    { id: 'q97', category: '성공', text: '작은 성공을 반복하면 큰 성과가 된다.', author: '격언' },
+    { id: 'q98', category: '성공', text: '포기하고 싶은 순간이, 사실은 결과에 가장 가까운 순간이다.', author: '격언' },
+    { id: 'q99', category: '성공', text: '오늘의 노력이 내일의 자산이 된다.', author: '격언' },
+    { id: 'q100', category: '성공', text: '가장 큰 실패는 시도하지 않는 것이다.', author: '격언' }
   ];
-  function freshQuotes() {
-    return DEFAULT_QUOTES.map((q) => ({ id: 'q' + uid(), text: q.text, author: q.author, fav: false }));
-  }
+  const quoteById = (id) => QUOTE_BANK.find((q) => q.id === id) || null;
 
   function freshState() {
     const c = freshCert('공인중개사', '2027-10-30', PRESETS['공인중개사'].subjects);
     c.subjects = PRESETS['공인중개사'].subjects.map((n, i) => ({ id: 's' + (i + 1), name: n, icon: SUBJECT_ICONS[i % SUBJECT_ICONS.length] }));
-    return { v: 2, nickname: DEFAULT_NICK, activeCert: c.id, certs: [c], quotes: freshQuotes() };
+    return { v: 2, nickname: DEFAULT_NICK, activeCert: c.id, certs: [c], pet: { animal: 'tiger', name: '두근', minutes: {} }, photos: {} };
+  }
+
+  /* =========================================================
+     토디펫 · todY calendar — 자격증과 무관한 ‘내 기록’(전역)
+     ---------------------------------------------------------
+     예전에는 cert.pet / cert.photos 였다. 불러올 때 전역으로
+     합쳐서 어느 자격증을 보고 있어도 펫과 달력이 그대로 보인다.
+     ========================================================= */
+  function normalizePet(raw) {
+    const p = (raw && typeof raw === 'object') ? raw : {};
+    const out = {
+      animal: ANIMALS.some((a) => a.id === p.animal) ? p.animal : 'tiger',
+      name: (typeof p.name === 'string' && p.name.trim()) ? p.name.trim().slice(0, 12) : '두근',
+      minutes: {}
+    };
+    if (p.minutes && typeof p.minutes === 'object' && !Array.isArray(p.minutes)) {
+      Object.keys(p.minutes).forEach((k) => {
+        if (!ANIMALS.some((a) => a.id === k)) return;
+        const v = Math.max(0, Math.round(Number(p.minutes[k]) || 0));
+        if (v > 0) out.minutes[k] = v;
+      });
+    }
+    return out;
+  }
+  function petTotalOf(p) {
+    return Object.keys(p.minutes || {}).reduce((n, k) => n + (Number(p.minutes[k]) || 0), 0);
+  }
+  /* cert.pet → 전역 펫으로 합치기 (분은 더하고, 동물·이름은 처음 값 유지) */
+  function absorbPet(store, raw) {
+    const p = normalizePet(raw);
+    if (!petTotalOf(p)) { return; }
+    if (!petTotalOf(store)) { store.animal = p.animal; store.name = p.name; }
+    Object.keys(p.minutes).forEach((k) => { store.minutes[k] = (store.minutes[k] || 0) + p.minutes[k]; });
+  }
+  function normalizePhotos(raw) {
+    const out = {};
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out;
+    Object.keys(raw).forEach((k) => {
+      const p = raw[k];
+      if (!isKey(k) || !p || typeof p !== 'object') return;
+      const img = typeof p.img === 'string' && p.img.indexOf('data:image/') === 0 ? p.img : '';
+      const diary = typeof p.diary === 'string' ? p.diary : (typeof p.memo === 'string' ? p.memo : '');
+      if (!img && !diary.trim()) return;
+      out[k] = { img: img, diary: diary, memo: diary, at: p.at || k };
+    });
+    return out;
+  }
+  function absorbPhotos(store, raw) {
+    const p = normalizePhotos(raw);
+    Object.keys(p).forEach((k) => {
+      const cur = store[k] || {};
+      const diary = (cur.diary || '').trim() ? cur.diary : p[k].diary;
+      store[k] = { img: cur.img || p[k].img, diary: diary, memo: diary, at: cur.at || p[k].at || k };
+    });
   }
 
   function normalizeNote(x) {
@@ -2136,19 +2307,12 @@
     if (!Array.isArray(out.subjects) || !out.subjects.length) out.subjects = base.subjects;
     out.subjects = out.subjects.filter((s) => s && typeof s === 'object').map((s, i) => ({ id: String(s.id || ('s' + uid())), name: String(s.name == null ? '' : s.name), icon: (typeof s.icon === 'string' && s.icon.trim()) ? s.icon.slice(0, 8) : SUBJECT_ICONS[i % SUBJECT_ICONS.length] }));
     if (!out.days || typeof out.days !== 'object' || Array.isArray(out.days)) out.days = {};
-    if (!out.photos || typeof out.photos !== 'object' || Array.isArray(out.photos)) out.photos = {};
-    Object.keys(out.photos).forEach((k) => {
-      const p = out.photos[k];
-      const img = p && typeof p.img === 'string' && p.img.indexOf('data:image/') === 0 ? p.img : '';
-      const diary = p && typeof p.diary === 'string' ? p.diary : (p && typeof p.memo === 'string' ? p.memo : '');
-      if (!p || typeof p !== 'object' || !isKey(k) || (!img && !diary.trim())) { delete out.photos[k]; return; }
-      out.photos[k] = { img: img, diary: diary, memo: diary, at: p.at || k };
-    });
     if (!out.todos || typeof out.todos !== 'object' || Array.isArray(out.todos)) out.todos = {};
     Object.keys(out.todos).forEach((k) => {
       if (!isKey(k) || !Array.isArray(out.todos[k])) { delete out.todos[k]; return; }
       out.todos[k] = out.todos[k].filter((t) => t && typeof t === 'object' && t.text).map((t) => ({
-        id: String(t.id || ('t' + uid())), text: String(t.text).slice(0, 120), done: !!t.done, cat: String(t.cat || '공부')
+        id: String(t.id || ('t' + uid())), text: String(t.text).slice(0, 120), done: !!t.done, cat: String(t.cat || '공부'),
+        subjectId: String(t.subjectId || '')
       }));
     });
     if (!out.slots || typeof out.slots !== 'object' || Array.isArray(out.slots)) out.slots = {};    Object.keys(out.slots).forEach((k) => {
@@ -2181,22 +2345,24 @@
     out.wrong = out.wrong.map(normalizeNote).filter(Boolean);
     out.master = out.master.map(normalizeNote).filter(Boolean);
     linkNoteSubjects(out.subjects, out.wrong.concat(out.master));
-    const pet = Object.assign({ animal: 'tiger', name: '두근', minutes: {} }, out.pet || {});
-    if (!ANIMALS.some((a) => a.id === pet.animal)) pet.animal = 'tiger';
-    if (typeof pet.name !== 'string' || !pet.name.trim()) pet.name = '두근';
-    if (!pet.minutes || typeof pet.minutes !== 'object' || Array.isArray(pet.minutes)) pet.minutes = {};
-    Object.keys(pet.minutes).forEach((k) => { pet.minutes[k] = Math.max(0, Number(pet.minutes[k]) || 0); });
-    out.pet = pet;
+    /* 펫·사진은 전역(state.pet / state.photos)으로 옮겨서 cert에는 두지 않는다 */
+    delete out.pet;
+    delete out.photos;
     return out;
   }
 
   function stateFrom(raw) {
     if (raw && typeof raw === 'object' && Array.isArray(raw.certs) && raw.certs.length) {
-      const s = { v: 2, nickname: typeof raw.nickname === 'string' && raw.nickname.trim() ? raw.nickname.slice(0, 16) : DEFAULT_NICK, certs: raw.certs.map(normalizeCert) };
+      /* 전역 펫·달력: state.pet/photos + 예전 cert.pet/photos를 모두 합친다 */
+      const pet = normalizePet(raw.pet);
+      const photos = normalizePhotos(raw.photos);
+      raw.certs.forEach((rc) => {
+        if (!rc || typeof rc !== 'object') return;
+        absorbPet(pet, rc.pet);
+        absorbPhotos(photos, rc.photos);
+      });
+      const s = { v: 2, nickname: typeof raw.nickname === 'string' && raw.nickname.trim() ? raw.nickname.slice(0, 16) : DEFAULT_NICK, certs: raw.certs.map(normalizeCert), pet: pet, photos: photos };
       s.activeCert = s.certs.some((c) => c.id === raw.activeCert) ? raw.activeCert : s.certs[0].id;
-      s.quotes = Array.isArray(raw.quotes) && raw.quotes.length
-        ? raw.quotes.filter((q) => q && typeof q.text === 'string' && q.text.trim()).map((q) => ({ id: String(q.id || ('q' + uid())), text: q.text.slice(0, 220), author: String(q.author || '작가 미상').slice(0, 30), fav: !!q.fav }))
-        : freshQuotes();
       return s;
     }
     // 구버전(studyTracker.v1) 데이터 이전
@@ -2223,7 +2389,7 @@
         });
         mins += hours.size * 60;
       });
-      if (mins > 0) c.pet.minutes = { tiger: mins };
+      if (mins > 0) s.pet.minutes = { tiger: mins };
     }
     return s;
   }
@@ -2239,6 +2405,9 @@
 
   const state = loadState();
   const cert = () => state.certs.find((c) => c.id === state.activeCert) || state.certs[0];
+  /* 펫과 달력(인증사진·일기)은 자격증과 상관없는 ‘내 기록’ — 전역 저장 */
+  const petStore = () => state.pet;
+  const photoStore = () => state.photos;
 
   let saveTimer = null;
   function saveNow() {
@@ -2769,12 +2938,13 @@
     for (var i = 0; i < certs.length; i++) {
       var c = certs[i] || {};
       if (c.days && Object.keys(c.days).length) return true;
-      if (c.photos && Object.keys(c.photos).length) return true;
       if (c.wrong && c.wrong.length) return true;
       if (c.master && c.master.length) return true;
       if (c.todos && Object.keys(c.todos).length) return true;
       if (c.slots && Object.keys(c.slots).length) return true;
     }
+    if (state.photos && Object.keys(state.photos).length) return true;
+    if (state.pet && petTotalOf(state.pet) > 0) return true;
     return false;
   }
 
@@ -3090,15 +3260,15 @@
   function streakDays() {
     let n = 0;
     let k = todayKey();
-    if (!(dayMinutes(k) > 0) && !cert().photos[k]) k = addDays(k, -1);
-    while (dayMinutes(k) > 0 || cert().photos[k]) { n++; k = addDays(k, -1); }
+    if (!(dayMinutes(k) > 0) && !photoStore()[k]) k = addDays(k, -1);
+    while (dayMinutes(k) > 0 || photoStore()[k]) { n++; k = addDays(k, -1); }
     return n;
   }
   function photoStreak() {
     let n = 0;
     let k = todayKey();
-    if (!cert().photos[k]) k = addDays(k, -1);
-    while (cert().photos[k]) { n++; k = addDays(k, -1); }
+    if (!photoStore()[k]) k = addDays(k, -1);
+    while (photoStore()[k]) { n++; k = addDays(k, -1); }
     return n;
   }
 
@@ -3118,8 +3288,8 @@
      펫 성장 계산
      ========================================================= */
   function petInfo(c, animalId) {
-    const a = animalOf(animalId || c.pet.animal);
-    const total = Math.max(0, Number(c.pet.minutes[a.id]) || 0);
+    const a = animalOf(animalId || petStore().animal);
+    const total = Math.max(0, Number(petStore().minutes[a.id]) || 0);
     const goal = Math.max(10, Number(c.goal) || DEFAULT_GOAL);
     const stage = total >= goal * 2 ? 2 : total >= goal ? 1 : 0;
     let color = 0, target = goal * (stage + 1), left = target - total, pct = 0, complete = false, base = 0;
@@ -3532,17 +3702,17 @@
     const P = petPalette(info);
     $('petEmoji').textContent = info.animal.emoji;
     $('petAnimalName').textContent = info.animal.name;
-    $('petName').textContent = c.pet.name || '두근';
+    $('petName').textContent = petStore().name || '두근';
     const q = currentQuote();    if (q) {
       const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
       $('petBubble').innerHTML = esc(txt) + ' <span class="qhint">명언 ›</span>';
-      $('petBubble').setAttribute('aria-label', '오늘의 명언 보기: ' + q.text + ' — ' + (q.author || '작가 미상'));
+      $('petBubble').setAttribute('aria-label', '오늘의 명언 — 누르면 다른 문장: ' + q.text + ' — ' + (q.author || '작가 미상'));
     } else {
       $('petBubble').innerHTML = '오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span>';
     }
     const art = $('petArt');
     art.innerHTML = petSVG(info.animal.id, info.stage, info.color, {});
-    art.setAttribute('aria-label', c.pet.name + ' · ' + info.animal.name + ' ' + STAGE_NAME[info.stage] + ' · ' + P.name + ' — 토디펫 상태 보기');
+    art.setAttribute('aria-label', petStore().name + ' · ' + info.animal.name + ' ' + STAGE_NAME[info.stage] + ' · ' + P.name + ' — 토디펫 상태 보기');
     art.style.filter = 'drop-shadow(0 12px 16px rgba(16,80,58,.13))';
     $('flowerLeft').innerHTML = flowerSVG('white');
     $('flowerRight').innerHTML = flowerSVG('coral');
@@ -3574,19 +3744,24 @@
     return heroIconVal;
   }
 
+  /* 오늘의 한 줄 — 새로 열 때마다 100개 중 하나를 무작위로 (탭하면 다시 뽑기) */
   let heroQuoteId = null;
   function currentQuote() {
-    const list = state.quotes || [];
-    if (!list.length) return null;
-    if (!heroQuoteId || !list.some((q) => q.id === heroQuoteId)) heroQuoteId = list[Math.floor(Math.random() * list.length)].id;
-    return list.find((q) => q.id === heroQuoteId) || list[0];
+    if (!heroQuoteId || !quoteById(heroQuoteId)) {
+      heroQuoteId = QUOTE_BANK[Math.floor(Math.random() * QUOTE_BANK.length)].id;
+    }
+    return quoteById(heroQuoteId) || QUOTE_BANK[0];
   }
   function cycleQuote() {
-    const list = state.quotes || [];
-    if (list.length < 2) { openQuotes(); return; }
-    const i = list.findIndex((q) => q.id === heroQuoteId);
-    heroQuoteId = list[(i + 1) % list.length].id;
+    if (QUOTE_BANK.length < 2) return;
+    let next = null;
+    for (let i = 0; i < 12; i++) {
+      const pick = QUOTE_BANK[Math.floor(Math.random() * QUOTE_BANK.length)];
+      if (pick.id !== heroQuoteId) { next = pick; break; }
+    }
+    heroQuoteId = (next || QUOTE_BANK[0]).id;
     renderHero();
+    if ($('quotes').classList.contains('open')) renderQuotes();
   }
 
   /* =========================================================
@@ -3615,7 +3790,7 @@
     for (let d = 1; d <= daysInMonth; d++) {
       const k = calY + '-' + pad(calM + 1) + '-' + pad(d);
       const dow = new Date(calY, calM, d).getDay();
-      const entry = c.photos[k];
+      const entry = photoStore()[k];
       const hasImg = !!(entry && entry.img);
       const hasDiary = !!(entry && (entry.diary || '').trim());
       const cls = 'cal-cell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') + (k === tk ? ' today' : '') +
@@ -3634,7 +3809,7 @@
     const st = photoStreak();
     $('calStreak').innerHTML = st > 0 ? '🔥 ' + st + '일 연속 인증' : '';
     const monthPrefix = calY + '-' + pad(calM + 1);
-    const monthDays = Object.keys(c.photos).filter((k) => k.indexOf(monthPrefix) === 0).length;
+    const monthDays = Object.keys(photoStore()).filter((k) => k.indexOf(monthPrefix) === 0).length;
     $('calCount').textContent = monthDays ? '이번 달 인증 ' + monthDays + '일' : '아직 인증 기록이 없어요';
   }
 
@@ -3909,8 +4084,8 @@
     fillSlots(startKey, subjectId, start, end);
     if (endKey !== startKey) fillSlots(endKey, subjectId, start, end);
     // 펫 성장
-    if (!c.pet.minutes[c.pet.animal]) c.pet.minutes[c.pet.animal] = 0;
-    c.pet.minutes[c.pet.animal] += minutes;
+    if (!petStore().minutes[petStore().animal]) petStore().minutes[petStore().animal] = 0;
+    petStore().minutes[petStore().animal] += minutes;
     const after = petInfo(c);
     focus = null;
     saveFocus();
@@ -3948,21 +4123,43 @@
     photoDate = dateKey;
     photoPending = null;
     photoChanged = false;
-    const p = cert().photos[dateKey];
+    const p = photoStore()[dateKey];
     const hasImg = !!(p && p.img);
-    $('photoSub').textContent = prettyDate(dateKey) + (dateKey === todayKey() ? ' · 오늘' : '');
+    const isToday = dateKey === todayKey();
+    $('photoSub').textContent = prettyDate(dateKey) + (isToday ? ' · 오늘' : ' · 읽기 전용');
     $('photoDiary').value = p ? (p.diary || p.memo || '') : '';
     $('diaryDate').textContent = prettyDate(dateKey);
+    $('photoDiaryLabel').textContent = isToday ? '오늘의 일기' : '그날의 일기';
     $('photoImg').hidden = !hasImg;
     $('photoEmpty').hidden = hasImg;
     if (hasImg) $('photoImg').src = p.img; else $('photoImg').removeAttribute('src');
-    $('photoDelete').hidden = !p;
+    /* 인증사진·일기는 당일에만 작성·수정할 수 있다 (지난·미래 날짜는 읽기 전용) */
+    $('photoDelete').hidden = !p || !isToday;
+    $('photoPick').hidden = !isToday;
+    $('photoDiary').readOnly = !isToday;
+    $('photoDiary').classList.toggle('readonly', !isToday);
+    $('photoSave').hidden = !isToday;
+    $('photoCancel').textContent = isToday ? '취소' : '닫기';
     $('photoPick').textContent = hasImg ? '사진 교체' : '사진 고르기';
-    $('photoHint').textContent = '사진은 최대 1000px, JPEG 75%로 자동 압축돼요 · 일기만 남겨도 돼요';
+    $('photoHint').textContent = isToday
+      ? '공부 인증 사진은 최대 480px로 작게 압축돼요 · 일기만 남겨도 돼요'
+      : '인증사진과 일기는 당일에만 작성할 수 있어요';
+    $('photoHint').classList.toggle('ro', !isToday);
+    $('photoEmpty').innerHTML = hasImg ? '' : (isToday
+      ? '<span class="em">📷</span>공부 인증 사진을 남겨보세요'
+      : '<span class="em">🔒</span>이 날에는 남긴 인증사진이 없어요');
     openSheet('photoSheet');
   }
 
-  function compressImage(file) {
+  /* 사진 압축 — 쓰임새마다 해상도·품질을 다르게
+     · 공부 인증(달력) 사진: 480px · 0.55 (작게, ~20-30KB)
+     · 오답노트 사진: 1000px · 0.75 (문제를 읽을 수 있게) */
+  const PHOTO_OPTS = {
+    checkin: { maxW: 480, maxH: 672, quality: 0.55, minW: 240, minH: 180, budget: 120000 },
+    note: { maxW: 1000, maxH: 1400, quality: 0.75, minW: 240, minH: 180, budget: 400000 }
+  };
+  function compressImage(file, opts) {
+    const o = Object.assign({}, PHOTO_OPTS.note, opts || {});
     return new Promise((resolve, reject) => {
       if (!file || !/^image\//.test(file.type || '')) { reject(new Error('not-image')); return; }
       const reader = new FileReader();
@@ -3972,7 +4169,7 @@
         img.onerror = () => reject(new Error('decode'));
         img.onload = () => {
           try {
-            const MAXW = 1000, MAXH = 1400;
+            const MAXW = o.maxW, MAXH = o.maxH;
             const nw = img.naturalWidth || img.width, nh = img.naturalHeight || img.height;
             const scale = Math.min(1, MAXW / nw, MAXH / nh);
             let w = Math.max(1, Math.round(nw * scale));
@@ -3982,15 +4179,15 @@
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
             ctx.drawImage(img, 0, 0, w, h);
-            let q = 0.75;
+            let q = o.quality;
             let data = canvas.toDataURL('image/jpeg', q);
             let guard = 0;
-            while (data.length > 400000 && guard < 6) {
+            while (data.length > o.budget && guard < 6) {
               guard++;
               if (q > 0.45) q -= 0.1;
               else {
-                w = Math.max(240, Math.round(w * 0.82));
-                h = Math.max(180, Math.round(h * 0.82));
+                w = Math.max(o.minW, Math.round(w * 0.82));
+                h = Math.max(o.minH, Math.round(h * 0.82));
                 canvas.width = w; canvas.height = h;
                 ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
                 ctx.drawImage(img, 0, 0, w, h);
@@ -4023,7 +4220,7 @@
     const c = cert();
     return ANIMALS.map((a) => {
       const info = petInfo(c, a.id);
-      return { a: a, info: info, owned: info.total > 0, active: c.pet.animal === a.id };
+      return { a: a, info: info, owned: info.total > 0, active: petStore().animal === a.id };
     });
   }
 
@@ -4032,7 +4229,7 @@
     const c = cert();
     const info = petInfo(c);
     $('psEmoji').textContent = info.animal.emoji;
-    $('psName').textContent = (c.pet.name || '두근') + ' · ' + info.animal.name;
+    $('psName').textContent = (petStore().name || '두근') + ' · ' + info.animal.name;
     $('psMins').textContent = fmtDur(info.total);
     $('psStages').innerHTML = stageTrackHTML(info.stage);
     $('psStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[info.stage]);
@@ -4092,7 +4289,7 @@
       ? '<b>' + esc(active.animal.name) + '</b>이 무지개를 완성했어요! 다른 십이지신도 키워볼까요?'
       : '지금 <b>' + esc(active.animal.name) + '</b>는 <b>' + STAGE_NAME[active.stage] + ' · ' + petPalette(active).name + '</b> · ' + fmtDur(active.total) + ' 공부했어요. 다음 진화까지 ' + fmtDur(active.left) + '.';
     $('cgEmoji').textContent = active.animal.emoji;
-    $('cgName').textContent = (c.pet.name || '두근') + ' · ' + active.animal.name;
+    $('cgName').textContent = (petStore().name || '두근') + ' · ' + active.animal.name;
     $('cgMins').textContent = fmtDur(active.total);
     $('cgStages').innerHTML = stageTrackHTML(active.stage);
     $('cgStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[active.stage]);
@@ -4112,14 +4309,14 @@
     const info = petInfo(c, a.id);
     const P = petPalette(info);
     const owned = info.total > 0;
-    const active = c.pet.animal === a.id;
+    const active = petStore().animal === a.id;
     $('detailTitle').textContent = '펫 상세';
     $('detailShowcase').style.setProperty('--p1', P.bg1);
     $('detailShowcase').style.setProperty('--p2', P.bg2);
     $('detailArt').innerHTML = petSVG(a.id, info.stage, info.color, { label: a.name + ' ' + STAGE_NAME[info.stage] });
     $('detailFlowerA').innerHTML = flowerSVG('white');
     $('detailFlowerB').innerHTML = flowerSVG('coral');
-    $('detailName').textContent = a.name + (active ? ' · ' + (c.pet.name || '두근') : '');
+    $('detailName').textContent = a.name + (active ? ' · ' + (petStore().name || '두근') : '');
     $('detailTag').textContent = active ? '키우는 중' : owned ? '보유중' : '미보유';
     $('detailTag').classList.toggle('off', !owned && !active);
     $('detailStars').innerHTML = PALETTE.map((p, i) => '<span class="' + (i <= info.color && owned ? '' : 'off') + '">★</span>').join('') +
@@ -4233,8 +4430,8 @@
 
   let petSheetAnimal = 'tiger';
   function openPetSheet() {
-    petSheetAnimal = cert().pet.animal;
-    $('petNameInput').value = cert().pet.name || '두근';
+    petSheetAnimal = petStore().animal;
+    $('petNameInput').value = petStore().name || '두근';
     $('petAnimalGrid').innerHTML = ANIMALS.map((a) =>
       '<button class="pick-sub' + (a.id === petSheetAnimal ? ' on' : '') + '" data-petanimal="' + a.id + '">' +
         '<span class="em" aria-hidden="true">' + a.emoji + '</span><span class="nm">' + a.name + '</span></button>').join('');
@@ -4253,6 +4450,9 @@
     todoMonthM = d.getMonth();
   })();
   let showDone = false;
+  let todoSubject = 'all';   /* 'all' | 'none' | 과목 id — 타이머 통계와 같은 칩 필터 */
+  let todoAddOpen = false;
+  let todoAddSid = '';
 
   function todoCalHTML(c) {
     if (todoView === 'day') {
@@ -4339,8 +4539,23 @@
     $('todoDoneToggle').classList.toggle('on', showDone);
     $('todoDoneToggle').setAttribute('aria-pressed', showDone ? 'true' : 'false');
     $('todoSub').textContent = (todoDate === todayKey() ? '오늘' : prettyDate(todoDate)) + ' · ' + c.name;
-    const groups = c.todoCats.map((cat) => {
-      const all = items.filter((t) => t.cat === cat);
+    renderTodoSubjects();
+    /* 과목별로 묶어서 보여준다 (전체 = 과목들 + 일반) */
+    const buckets = [];
+    if (todoSubject === 'all') {
+      c.subjects.forEach((s, i) => buckets.push({ id: s.id, name: s.name || '(이름 없음)', color: SUBJ_COLORS[i % SUBJ_COLORS.length] }));
+      buckets.push({ id: '', name: '일반', color: '#B9C7C1' });
+    } else if (todoSubject === 'none') {
+      buckets.push({ id: '', name: '일반', color: '#B9C7C1' });
+    } else {
+      const i = c.subjects.findIndex((s) => s.id === todoSubject);
+      if (i >= 0) buckets.push({ id: c.subjects[i].id, name: c.subjects[i].name || '(이름 없음)', color: SUBJ_COLORS[i % SUBJ_COLORS.length] });
+      else buckets.push({ id: '', name: '일반', color: '#B9C7C1' });
+    }
+    let html = '';
+    buckets.forEach((b) => {
+      const all = items.filter((t) => todoItemSubjectId(t) === b.id);
+      if (!all.length && todoSubject === 'all') return;
       const list = all.filter((t) => showDone || !t.done);
       const rows = list.map((t) =>
         '<div class="todo-item' + (t.done ? ' done' : '') + '" data-titem="' + esc(t.id) + '" role="checkbox" aria-checked="' + (t.done ? 'true' : 'false') + '" tabindex="0">' +
@@ -4348,39 +4563,68 @@
           '<span class="tx">' + esc(t.text) + '</span>' +
           '<button class="todo-del" data-tdel="' + esc(t.id) + '" aria-label="' + esc(t.text) + ' 삭제">×</button>' +
         '</div>').join('');
-      return '<div class="todo-group" data-cat="' + esc(cat) + '">' +
-        '<div class="todo-ghead"><span class="todo-gname">' + esc(cat) + ' <span class="n">' + all.filter((t) => t.done).length + '/' + all.length + '</span></span>' +
-          '<button class="todo-gadd" data-tadd="' + esc(cat) + '">＋ 추가</button></div>' +
-        (rows || '<div class="todo-empty">' + (all.length ? '완료한 항목만 있어요 · ‘완료 보기’를 켜보세요' : '아직 할일이 없어요. ＋ 추가로 적어보세요.') + '</div>') +
+      html += '<div class="todo-group" data-cat="' + esc(b.id) + '" data-tgname="' + esc(b.name) + '">' +
+        '<div class="todo-ghead"><span class="sdot" style="background:' + b.color + '" aria-hidden="true"></span>' +
+          '<span class="todo-gname">' + esc(b.name) + ' <span class="n">' + all.filter((t) => t.done).length + '/' + all.length + '</span></span></div>' +
+        (rows || '<div class="todo-empty">' + (all.length ? '완료한 항목만 있어요 · ‘완료 보기’를 켜보세요' : '이 과목에 적은 할일이 없어요') + '</div>') +
       '</div>';
-    }).join('');
-    $('todoGroups').innerHTML = groups;
+    });
+    if (!html) {
+      html = '<div class="todo-empty">' + (items.length ? '이 날 적은 할일이 없어요' : '아직 할일이 없어요') + ' · 아래 ＋ 추가로 적어보세요.</div>';
+    }
+    $('todoGroups').innerHTML = html;
+    $('todoAddWide').hidden = todoAddOpen;
+    $('todoAddCard').hidden = !todoAddOpen;
   }
 
-  function todoAddRow(cat) {
-    const group = $('todoGroups').querySelector('.todo-group[data-cat="' + cat.replace(/"/g, '\\"') + '"]');
-    if (!group || group.querySelector('.todo-add-row')) return;
-    const row = document.createElement('div');
-    row.className = 'todo-add-row';
-    row.innerHTML = '<input type="text" maxlength="120" placeholder="할일을 적어주세요" aria-label="새 할일">' +
-      '<button class="btn primary small" type="button">추가</button>';
-    group.insertBefore(row, group.querySelector('.todo-empty'));
-    const input = row.querySelector('input');
-    const commit = () => {
-      const text = (input.value || '').trim();
-      if (!text) { toast('할일을 적어주세요'); return; }
-      setTodo(todoDate, cert(), cat, text);
-    };
-    row.querySelector('button').addEventListener('click', commit);
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
-    input.focus();
+  /* 과목 할당: 비어 있거나 지워진 과목은 ‘일반’ */
+  function todoItemSubjectId(t) {
+    if (!t || !t.subjectId) return '';
+    return cert().subjects.some((s) => s.id === t.subjectId) ? t.subjectId : '';
   }
-  function setTodo(dateKey, c, cat, text) {
-    if (!c.todos[dateKey]) c.todos[dateKey] = [];
-    c.todos[dateKey].push({ id: 't' + uid(), text: text.slice(0, 120), done: false, cat: cat });
+
+  function renderTodoSubjects() {
+    const c = cert();
+    if (todoSubject !== 'all' && todoSubject !== 'none' && !c.subjects.some((s) => s.id === todoSubject)) todoSubject = 'all';
+    const items = [{ id: 'all', name: '전체', icon: '📋' }].concat(c.subjects.map((s, i) => ({ id: s.id, name: s.name || '(이름 없음)', icon: subjectIconOf(s, i) })));
+    $('todoSubjects').innerHTML = items.map((x) =>
+      '<button type="button" class="chip' + (x.id === todoSubject ? ' on' : '') + '" data-todosubj="' + esc(x.id) + '" aria-pressed="' + (x.id === todoSubject ? 'true' : 'false') + '">' +
+      '<span aria-hidden="true">' + esc(x.icon) + '</span>' + esc(x.name) + '</button>').join('');
+  }
+
+  function renderTodoAddSubjects() {
+    const c = cert();
+    const items = [{ id: '', name: '일반', icon: '📌' }].concat(c.subjects.map((s, i) => ({ id: s.id, name: s.name || '(이름 없음)', icon: subjectIconOf(s, i) })));
+    $('todoAddSubj').innerHTML = items.map((x) =>
+      '<button type="button" class="chip' + (x.id === todoAddSid ? ' on' : '') + '" data-taddsubj="' + esc(x.id) + '" aria-pressed="' + (x.id === todoAddSid ? 'true' : 'false') + '">' +
+      '<span aria-hidden="true">' + esc(x.icon) + '</span>' + esc(x.name) + '</button>').join('');
+  }
+
+  function openTodoAdd() {
+    todoAddSid = (todoSubject === 'all' || todoSubject === 'none') ? '' : todoSubject;
+    todoAddOpen = true;
+    renderTodoAddSubjects();
+    $('todoAddWide').hidden = true;
+    $('todoAddCard').hidden = false;
+    setTimeout(() => { try { $('todoNewText').focus(); } catch (e) {} }, 60);
+  }
+  function closeTodoAdd() {
+    todoAddOpen = false;
+    $('todoAddCard').hidden = true;
+    $('todoAddWide').hidden = false;
+    $('todoNewText').value = '';
+  }
+  function commitTodo() {
+    const text = ($('todoNewText').value || '').trim();
+    if (!text) { toast('할일을 적어주세요'); $('todoNewText').focus(); return; }
+    const c = cert();
+    if (!c.todos[todoDate]) c.todos[todoDate] = [];
+    c.todos[todoDate].push({ id: 't' + uid(), text: text.slice(0, 120), done: false, subjectId: todoAddSid || '', cat: '' });
     save(true);
+    $('todoNewText').value = '';
     renderTodo();
-    toast('할일을 추가했어요');
+    toast(todoAddSid ? '“' + subjectName(todoAddSid) + '” 할일을 추가했어요' : '할일을 추가했어요');
+    try { $('todoNewText').focus(); } catch (e) {}
   }
 
   $('todoViews').addEventListener('click', (e) => {
@@ -4416,6 +4660,22 @@
     }
   });
   $('todoDoneToggle').addEventListener('click', () => { showDone = !showDone; renderTodo(); });
+  $('todoSubjects').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-todosubj]');
+    if (!b) return;
+    todoSubject = b.dataset.todosubj;
+    renderTodo();
+  });
+  $('todoAddWide').addEventListener('click', openTodoAdd);
+  $('todoAddCancel').addEventListener('click', closeTodoAdd);
+  $('todoAddOk').addEventListener('click', commitTodo);
+  $('todoNewText').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commitTodo(); } });
+  $('todoAddSubj').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-taddsubj]');
+    if (!b) return;
+    todoAddSid = b.dataset.taddsubj;
+    renderTodoAddSubjects();
+  });
   $('todoGroups').addEventListener('click', (e) => {
     const del = e.target.closest('[data-tdel]');
     if (del) {
@@ -4426,8 +4686,6 @@
       renderTodo();
       return;
     }
-    const add = e.target.closest('[data-tadd]');
-    if (add) { todoAddRow(add.dataset.tadd); return; }
     const item = e.target.closest('[data-titem]');
     if (!item) return;
     const t = (cert().todos[todoDate] || []).find((x) => x.id === item.dataset.titem);
@@ -4447,55 +4705,50 @@
     save(true);
     renderTodo();
   });
-  $('todoCatAdd').addEventListener('click', () => {
-    if ($('todoGroups').querySelector('#todoCatRow')) return;
-    const row = document.createElement('div');
-    row.className = 'todo-add-row';
-    row.id = 'todoCatRow';
-    row.innerHTML = '<input type="text" maxlength="12" placeholder="새 카테고리 이름" aria-label="새 카테고리"><button class="btn primary small" type="button">추가</button>';
-    $('todoGroups').insertBefore(row, $('todoGroups').firstChild);
-    const input = row.querySelector('input');
-    const commit = () => {
-      const v = (input.value || '').trim();
-      if (!v) { toast('카테고리 이름을 적어주세요'); return; }
-      if (cert().todoCats.includes(v)) { toast('이미 있는 카테고리예요'); return; }
-      cert().todoCats.push(v);
-      save(true);
-      renderTodo();
-      toast('“' + v + '” 카테고리를 추가했어요');
-    };
-    row.querySelector('button').addEventListener('click', commit);
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
-    input.focus();
-  });
-
   /* =========================================================
-     저장한 명언
+     명언 (읽기 전용) — 100선을 카테고리·검색으로 찾아보기
      ========================================================= */
   const QUOTE_BG = ['#F2F2EA', '#F8E9FA', '#ECF0FB', '#E9F7EF', '#FDF3DE', '#F9E8E5', '#EAF6F8', '#F5F0E6'];
-  const BM_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M6.5 3.8h11v16.4L12 15.6 6.5 20.2z"/></svg>';
-  const BM_ON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 3.8h11v16.4L12 15.6 6.5 20.2z"/></svg>';
-  let editingQuoteId = null;
+  let quoteCat = '전체';
+  let quoteQuery = '';
+
+  function quoteList() {
+    const q = quoteQuery.trim().toLowerCase();
+    return QUOTE_BANK.filter((x) => {
+      if (quoteCat !== '전체' && x.category !== quoteCat) return false;
+      if (!q) return true;
+      return (x.text + ' ' + x.author + ' ' + x.category).toLowerCase().indexOf(q) >= 0;
+    });
+  }
 
   function renderQuotes() {
-    const list = state.quotes || [];
-    $('quotesCount').textContent = list.length + '개';
+    const list = quoteList();
+    $('quotesCount').textContent = (quoteCat === '전체' && !quoteQuery.trim()) ? QUOTE_BANK.length + '개' : list.length + ' / ' + QUOTE_BANK.length + '개';
     const hero = currentQuote();
     $('quotesHero').innerHTML = hero
       ? '“' + esc(hero.text.length > 44 ? hero.text.slice(0, 43) + '…' : hero.text) + '” — ' + esc(hero.author || '작가 미상')
       : '마음에 남는 문장을 모아두면, 힘든 날 꺼내볼 수 있어요.';
+    $('quoteEmpty').hidden = list.length > 0;
     $('quotesGrid').innerHTML = list.map((q, i) =>
-      '<div class="qcard' + (q.fav ? ' fav' : '') + '" data-qid="' + esc(q.id) + '" role="button" tabindex="0" style="background:' + QUOTE_BG[i % QUOTE_BG.length] + '" aria-label="' + esc(q.text) + ' 수정">' +
+      '<div class="qcard" data-qid="' + esc(q.id) + '" data-qcat="' + esc(q.category) + '" role="listitem" style="background:' + QUOTE_BG[i % QUOTE_BG.length] + '">' +
+        '<span class="qcat">' + (q.category === '공부' ? '📖' : '🏆') + ' ' + esc(q.category) + '</span>' +
         '<div class="qt">' + esc(q.text) + '</div>' +
-        '<div class="qa"><span>- ' + esc(q.author || '작가 미상') + '</span>' +
-          '<span class="bm" data-qbm="' + esc(q.id) + '" role="button" tabindex="0" aria-label="북마크">' + (q.fav ? BM_ON : BM_OFF) + '</span></div>' +
-      '</div>').join('') +
-      '<button class="qadd" id="quoteAdd">＋ 명언 추가</button>';
-    const add = $('quoteAdd');
-    if (add) add.addEventListener('click', () => openQuoteSheet(null));
+        '<div class="qa"><span>- ' + esc(q.author || '작가 미상') + '</span></div>' +
+      '</div>').join('');
+    document.querySelectorAll('#quoteCats [data-qcat]').forEach((b) => {
+      const on = b.dataset.qcat === quoteCat;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    const clr = $('quoteSearchClear');
+    if (clr) clr.hidden = !$('quoteSearch').value;
   }
 
   function openQuotes() {
+    if (heroQuoteId == null) currentQuote();
+    quoteCat = '전체';
+    quoteQuery = '';
+    $('quoteSearch').value = '';
     renderQuotes();
     $('quotes').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -4505,68 +4758,24 @@
     document.body.style.overflow = '';
     renderHero();
   }
-  function openQuoteSheet(q) {
-    editingQuoteId = q ? q.id : null;
-    $('quoteTitle').textContent = q ? '명언 수정' : '명언 저장';
-    $('quoteText').value = q ? q.text : '';
-    $('quoteAuthor').value = q ? (q.author || '') : '';
-    $('quoteDelete').hidden = !q;
-    openSheet('quoteSheet');
-    setTimeout(() => { try { $('quoteText').focus(); } catch (e) {} }, 80);
-  }
 
   $('quotesClose').addEventListener('click', closeQuotes);
-  $('quotesGrid').addEventListener('click', (e) => {
-    const bm = e.target.closest('[data-qbm]');
-    if (bm) {
-      e.stopPropagation();
-      const q = (state.quotes || []).find((x) => x.id === bm.dataset.qbm);
-      if (!q) return;
-      q.fav = !q.fav;
-      save(true);
-      renderQuotes();
-      toast(q.fav ? '북마크에 담았어요 🔖' : '북마크를 해제했어요');
-      return;
-    }
-    const card = e.target.closest('[data-qid]');
-    if (!card) return;
-    const q = (state.quotes || []).find((x) => x.id === card.dataset.qid);
-    if (q) openQuoteSheet(q);
-  });
-  $('quotesGrid').addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    const card = e.target.closest('[data-qid]');
-    if (!card || e.target.closest('[data-qbm]')) return;
-    e.preventDefault();
-    const q = (state.quotes || []).find((x) => x.id === card.dataset.qid);
-    if (q) openQuoteSheet(q);
-  });
-  $('quoteSave').addEventListener('click', () => {
-    const text = ($('quoteText').value || '').trim();
-    const author = ($('quoteAuthor').value || '').trim() || '작가 미상';
-    if (!text) { toast('문장을 적어주세요'); $('quoteText').focus(); return; }
-    if (editingQuoteId) {
-      const q = (state.quotes || []).find((x) => x.id === editingQuoteId);
-      if (q) { q.text = text.slice(0, 220); q.author = author.slice(0, 30); }
-    } else {
-      state.quotes = state.quotes || [];
-      state.quotes.unshift({ id: 'q' + uid(), text: text.slice(0, 220), author: author.slice(0, 30), fav: false });
-    }
-    save(true);
-    closeSheet('quoteSheet');
+  $('quoteShuffle').addEventListener('click', cycleQuote);
+  $('quoteSearch').addEventListener('input', () => {
+    quoteQuery = $('quoteSearch').value || '';
     renderQuotes();
-    renderHero();
-    toast(editingQuoteId ? '명언을 수정했어요' : '명언을 저장했어요');
   });
-  $('quoteDelete').addEventListener('click', () => {
-    if (!editingQuoteId) return;
-    if (!window.confirm('이 명언을 지울까요?')) return;
-    state.quotes = (state.quotes || []).filter((x) => x.id !== editingQuoteId);
-    save(true);
-    closeSheet('quoteSheet');
+  $('quoteSearchClear').addEventListener('click', () => {
+    $('quoteSearch').value = '';
+    quoteQuery = '';
     renderQuotes();
-    renderHero();
-    toast('명언을 지웠어요');
+    $('quoteSearch').focus();
+  });
+  $('quoteCats').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-qcat]');
+    if (!b) return;
+    quoteCat = b.dataset.qcat;
+    renderQuotes();
   });
 
   /* =========================================================
@@ -4760,7 +4969,11 @@
   $('heroFocus').addEventListener('click', () => openPicker());
   $('petBtn').addEventListener('click', openCollection);
   $('petArt').addEventListener('click', openPetStat);
-  $('petBubble').addEventListener('click', openQuotes);
+  $('petBubble').addEventListener('click', (e) => {
+    /* 말풍선을 누르면 다른 문장으로 (힌트 ‘명언 ›’을 누르면 명언 페이지) */
+    if (e.target.closest('.qhint')) { openQuotes(); return; }
+    cycleQuote();
+  });
   $('psClose').addEventListener('click', closePetStat);
   $('psClose2').addEventListener('click', closePetStat);
   $('psOpenColl').addEventListener('click', () => { closePetStat(); openCollection(); });
@@ -4852,8 +5065,8 @@
   });
   $('detailSelect').addEventListener('click', () => {
     const a = ANIMALS[detailIdx];
-    cert().pet.animal = a.id;
-    if (!cert().pet.minutes[a.id]) cert().pet.minutes[a.id] = 0;
+    petStore().animal = a.id;
+    if (!petStore().minutes[a.id]) petStore().minutes[a.id] = 0;
     save(true);
     renderDetail();
     renderCollection();
@@ -4973,25 +5186,28 @@
   });
   $('petSave').addEventListener('click', () => {
     const nm = ($('petNameInput').value || '').trim();
-    cert().pet.name = nm || '두근';
-    cert().pet.animal = petSheetAnimal;
-    if (cert().pet.minutes[petSheetAnimal] == null) cert().pet.minutes[petSheetAnimal] = 0;
+    petStore().name = nm || '두근';
+    petStore().animal = petSheetAnimal;
+    if (petStore().minutes[petSheetAnimal] == null) petStore().minutes[petSheetAnimal] = 0;
     save(true);
     closeSheet('petSheet');
     renderAll();
-    toast('펫을 ' + animalOf(petSheetAnimal).name + ' · ' + cert().pet.name + '(으)로 바꿨어요');
+    toast('펫을 ' + animalOf(petSheetAnimal).name + ' · ' + petStore().name + '(으)로 바꿨어요');
   });
 
   /* =========================================================
      인증 사진 이벤트
      ========================================================= */
-  $('photoPick').addEventListener('click', () => $('photoFile').click());
+  $('photoPick').addEventListener('click', () => {
+    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    $('photoFile').click();
+  });
   $('photoFile').addEventListener('change', async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
     $('photoHint').textContent = '사진을 압축하는 중…';
     try {
-      const out = await compressImage(file);
+      const out = await compressImage(file, PHOTO_OPTS.checkin);
       photoPending = out;
       photoChanged = true;
       $('photoImg').src = out.data;
@@ -5007,12 +5223,13 @@
     }
   });
   $('photoSave').addEventListener('click', () => {
-    const existing = cert().photos[photoDate];
+    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    const existing = photoStore()[photoDate];
     const img = photoPending ? photoPending.data : (existing && existing.img ? existing.img : '');
     const diary = ($('photoDiary').value || '').trim();
     if (!img && !diary) { toast('사진을 고르거나 일기를 남겨주세요'); return; }
-    cert().photos[photoDate] = { img: img, diary: diary, memo: diary, at: new Date().toISOString() };
-    if (!saveNow()) { delete cert().photos[photoDate]; return; }
+    photoStore()[photoDate] = { img: img, diary: diary, memo: diary, at: new Date().toISOString() };
+    if (!saveNow()) { delete photoStore()[photoDate]; return; }
     const wasNew = !existing;
     closeSheet('photoSheet');
     renderCalendar();
@@ -5020,10 +5237,11 @@
     toast(wasNew ? prettyDate(photoDate) + ' 기록을 남겼어요 📸' : '이 날의 기록을 저장했어요');
   });
   $('photoDelete').addEventListener('click', () => {
-    const entry = cert().photos[photoDate];
+    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    const entry = photoStore()[photoDate];
     if (!entry) { toast('지울 기록이 없어요'); return; }
     if (!window.confirm(prettyDate(photoDate) + '의 인증 사진과 일기를 모두 지울까요?\n지운 기록은 되돌릴 수 없어요.')) return;
-    delete cert().photos[photoDate];
+    delete photoStore()[photoDate];
     save(true);
     photoPending = null;
     $('photoDiary').value = '';
@@ -5108,7 +5326,6 @@
     $('ttTotalClock').textContent = clockOf(totalMin);
     $('ttGoalPill').textContent = '목표 ' + fmtDur(c.goal);
     $('ttGoalFill').style.width = Math.min(100, Math.round((totalMin / Math.max(1, c.goal)) * 100)) + '%';
-    $('ttHeadSub').textContent = (ttDate === todayKey() ? '오늘 ' : prettyDate(ttDate) + ' ') + fmtDur(totalMin);
     const sel = currentEditSubject();
     $('ttQuickList').innerHTML = c.subjects.map((s, si) => {
       const m = subjectMinutes(ttDate, s.id);
@@ -5752,7 +5969,7 @@
     if (!file) return;
     $('noteFileHint').textContent = '사진을 압축하는 중…';
     try {
-      const out = await compressImage(file);
+      const out = await compressImage(file, PHOTO_OPTS.note);
       pendingNoteImg = out;
       $('noteImg').src = out.data;
       $('noteImg').hidden = false;
@@ -5902,8 +6119,9 @@
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     focusState: () => focus, resumeFocusTick: resumeFocusTick, paintFocus: paintFocus,
     openTimeEdit: openTimeEdit, manualState: () => ttManual,
+    quotes: () => QUOTE_BANK, compressImage: compressImage, photoOpts: PHOTO_OPTS,
     subjectMinutes: subjectMinutes, subjectExtra: subjectExtraMinutes, dayMinutes: dayMinutes,
-    addMinutes: (id, min) => { const c = cert(); c.pet.minutes[id || c.pet.animal] = (c.pet.minutes[id || c.pet.animal] || 0) + min; saveNow(); renderAll(); }
+    addMinutes: (id, min) => { const p = petStore(); p.minutes[id || p.animal] = (p.minutes[id || p.animal] || 0) + min; saveNow(); renderAll(); }
   };
 })();
 </script>
