@@ -207,14 +207,16 @@
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
   .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}
-  button.pet-bubble{text-align:left}
+  button.pet-bubble{text-align:left;transition:transform .1s,box-shadow .15s}
+  button.pet-bubble:active{transform:translateX(-50%) scale(.975)}
+  .pet-bubble .qhint{background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:1px 6px}
   .pet-scene{position:relative;width:100%;max-width:360px;height:222px;margin:56px auto 0;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:min(62%,206px);flex:none;z-index:2}
   .pet-art svg{width:100%;height:auto;display:block;overflow:visible;animation:floaty 4.6s ease-in-out infinite}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   .flower{position:absolute;bottom:0;z-index:1;pointer-events:none;filter:drop-shadow(0 7px 9px rgba(20,80,50,.10))}
-  .flower.a{left:1%;width:72px;transform:rotate(-6deg)}
-  .flower.b{right:1%;width:72px;transform:rotate(7deg)}
+  .flower.a{left:2%;width:56px;transform:rotate(-6deg)}
+  .flower.b{right:2%;width:56px;transform:rotate(7deg)}
   .pet-base{
     width:44%;height:9px;margin:4px auto 0;border-radius:999px;
     background:radial-gradient(50% 50% at 50% 50%, rgba(16,105,80,.16), rgba(16,105,80,0) 72%)
@@ -227,7 +229,7 @@
   }
   .focus-cta:active{transform:scale(.985)}
   .focus-cta .zap{font-size:15px}
-  .focus-cta .cta-emoji{width:29px;height:29px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:17px;line-height:1;flex:none;box-shadow:0 2px 6px rgba(4,60,42,.14)}
+    .focus-cta .cta-emoji{font-size:16px;line-height:1;flex:none;display:inline-block}
   .focus-cta > span:last-child{white-space:nowrap}
   .ac-btn .felt-ic{width:36px;height:36px;flex:none;display:block}
   .qbolt .felt-ic{display:block;width:100%;height:100%}
@@ -622,7 +624,7 @@
   .tt-tip{font-size:11px;color:var(--dim);margin-top:9px;padding:0 4px;line-height:1.55}
 
   /* ---------- 2열 타임테이블 (TIMERS | TIMELINE) ---------- */
-  .tt-split{display:grid;grid-template-columns:1fr 1.15fr;gap:7px;margin-top:10px;align-items:stretch}
+  .tt-split{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;align-items:stretch}
   .tt-timers,.tt-timeline{padding:10px 6px 9px;min-width:0}
   .split-head{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:0 3px 6px}
   .split-head > span:first-child{font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--dim)}
@@ -637,18 +639,35 @@
   .tt-qrow .qrow-sub{display:none}
   .tt-qrow .qrow-time{font-size:9px;letter-spacing:-.02em;margin-left:auto;flex:none}
   .tt-add-btn{width:100%;margin-top:6px;padding:6px 4px;border-radius:9px;border:1px dashed var(--mint-line);background:#fff;color:var(--mint-deep);font-size:9.5px;font-weight:900}
-  .tl-grid{display:grid;grid-template-columns:12px repeat(7,minmax(0,1fr));grid-auto-rows:8px;gap:1px;min-width:0}
-  .tl-corner{height:12px}
-  .tl-dow{font-size:7px;font-weight:900;color:#9DAEA8;text-align:center;line-height:12px;height:12px}
-  .tl-dow.today{color:var(--mint-deep)}
-  .tl-h{font-size:5.8px;line-height:8px;color:#B7C6C1;text-align:right;padding-right:1px;font-weight:700;font-variant-numeric:tabular-nums;overflow:hidden}
-  .tl-cell{border-radius:2.5px;background:#F1F6F4;min-width:0;min-height:0;padding:0;border:none;transition:background .12s}
-  .tl-cell.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
-  .tl-cell.sel{box-shadow:inset 0 0 0 1.5px rgba(16,105,80,.35)}
-  .tl-cell.now{outline:1px solid rgba(24,210,155,.55);outline-offset:0}
-  .tl-foot{display:flex;align-items:center;gap:4px;margin-top:7px;padding:0 3px;font-size:8.5px;font-weight:800;color:#5C7469;min-width:0}
-  .tl-foot .sdot{width:6px;height:6px;border-radius:50%;flex:none}
-  .tl-foot #tlEditName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52px}
+  /* 한 날짜 × 24시간 × 10분 6칸 (읽기 전용 · Tody time 자동 기록) */
+  .coll-grow{margin-top:10px;padding:12px 13px 11px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(150deg,#F0FDF8 0%,#FFFFFF 72%);box-shadow:var(--shadow)}
+  .coll-grow .cg-top{display:flex;align-items:center;gap:6px}
+  .coll-grow .cg-em{font-size:16px;line-height:1}
+  .coll-grow .cg-nm{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .coll-grow .cg-min{margin-left:auto;flex:none;font-size:10px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px solid var(--mint-line);border-radius:999px;padding:3px 9px}
+  .coll-grow .cg-hint{margin-top:8px;font-size:10.5px;font-weight:700;color:#517868}
+  .coll-grow .rainbow{margin-top:11px}
+  .stage-track{display:flex;align-items:center;gap:4px;margin-top:11px}
+  .stage-track .st{display:inline-flex;align-items:center;gap:3px;padding:5px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:10px;font-weight:800;color:var(--dim);white-space:nowrap;flex:none}
+  .stage-track .st b{font-size:11.5px;line-height:1}
+  .stage-track .st.done{color:var(--mint-deep);background:var(--mint-soft);border-color:var(--mint-line)}
+  .stage-track .st.on{color:#0B5B47;background:linear-gradient(135deg,#D8F8EB,#BEEFDD);border-color:var(--mint);box-shadow:0 4px 10px rgba(24,210,155,.22);font-weight:900}
+  .stage-track .bar{flex:1;height:3px;border-radius:999px;background:#E6F4EF;min-width:5px}
+  .stage-track .bar.done{background:linear-gradient(90deg,#8DE9C8,#18D29B)}
+  .tl-grid{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .tl-row{display:grid;grid-template-columns:24px 1fr;gap:6px;align-items:center;padding:1px 4px;margin:0 -4px;border-radius:8px}
+  .tl-row.now{background:var(--mint-soft)}
+  .tl-hour{font-size:9px;line-height:1;font-weight:800;color:#A9BAB4;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+  .tl-row.now .tl-hour{color:var(--mint-deep);font-weight:900}
+  .tl-slots{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;min-width:0}
+  .tl-slot{display:block;height:12px;border-radius:3.5px;background:#F1F6F4;transition:background .2s}
+  .tl-slot.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+  .tl-row.now .tl-slot:not(.on){background:#E5F5EE}
+  .tl-foot{display:flex;align-items:center;gap:6px;margin-top:9px;padding:0 3px;font-size:8.5px;font-weight:800;color:#5C7469;min-width:0}
+  .tl-legend{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden}
+  .tl-legend .lg{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-weight:800;color:#5C7469;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+  .tl-legend .lg i{width:6px;height:6px;border-radius:50%;flex:none;display:block}
+  .tl-legend .more{font-size:8.5px;color:var(--dim);font-weight:800}
   .tl-foot-hint{margin-left:auto;font-size:7.5px;font-weight:700;color:#A9BAB4;white-space:nowrap}
   .subj-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0}
   .subj-edit-row .sdot{width:10px;height:10px;border-radius:50%;flex:none}
@@ -904,10 +923,80 @@
     .pet-art{width:220px}
     .pet-stage{min-height:230px}
     .coll-grid{grid-template-columns:1fr 1fr 1fr}
+    .tt-split{grid-template-columns:1fr 1.05fr}
+    .tl-row{padding:1px 6px;margin:0 -6px}
+    .tl-slot{height:14px}
+    .tl-hour{font-size:9.5px}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   }
+
+  /* ---------- ☁️ 클라우드 동기화 ---------- */
+  .sync-banner{
+    display:flex;align-items:center;gap:4px;margin:0 0 10px;padding:6px 6px 6px 4px;
+    border-radius:16px;border:1px dashed var(--mint-line);
+    background:linear-gradient(135deg,#F0FDF8 0%,#FFFFFF 70%);box-shadow:var(--shadow)
+  }
+  .sync-banner .sb-main{display:flex;align-items:center;gap:9px;flex:1;min-width:0;text-align:left;padding:5px 7px;border-radius:12px}
+  .sync-banner .sb-main:active{transform:scale(.99)}
+  .sync-banner .em{font-size:17px;line-height:1;flex:none}
+  .sync-banner .tx{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .sync-banner .tx b{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sync-banner .tx span{font-size:10.5px;font-weight:700;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sync-banner .go{margin-left:auto;font-size:16px;font-weight:400;color:#A6CCC0;flex:none}
+  .sync-banner .sb-x{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;color:#A9BCB6;font-size:14px;font-weight:700;background:#fff}
+  .sync-banner .sb-x:active{color:var(--muted);background:var(--gray-soft)}
+
+  .sync-chip{
+    display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 9px;margin-left:auto;flex:none;
+    border-radius:10px;border:1px solid var(--mint-line);background:#fff;
+    font-size:11px;font-weight:900;color:var(--mint-deep)
+  }
+  .sync-chip .ic{font-size:13px;line-height:1}
+  .sync-chip[data-state="off"]{color:var(--muted);border-color:var(--line);background:var(--gray-soft)}
+  .sync-chip[data-state="error"]{color:#C0553F;border-color:#F8D3D2;background:var(--red-soft)}
+  .sync-chip:active{transform:scale(.96)}
+  #statsSettings{margin-left:6px}
+
+  .mp-item-tx{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+  .mp-item-tx b{font-size:13px;font-weight:900;color:#20352F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mp-item-tx span{font-size:10.5px;font-weight:700;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  .field input[type=email],.field input[type=password]{
+    width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#FBFEFD;
+    font-size:14px;font-weight:600;outline:none;transition:border-color .15s,box-shadow .15s
+  }
+  .field input[type=email]:focus,.field input[type=password]:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13)}
+
+  .sync-or{display:flex;align-items:center;gap:8px;margin:13px 0 4px;color:var(--dim);font-size:10.5px;font-weight:800}
+  .sync-or::before,.sync-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
+  .oauth-btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:8px;
+    padding:11px 12px;border-radius:13px;border:1px solid var(--line);background:#fff;
+    font-size:13.5px;font-weight:900;color:#2A3C36;transition:transform .1s
+  }
+  .oauth-btn:active{transform:scale(.985)}
+  .oauth-btn .gi{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:none;background:#fff;border:1px solid #E2E8F0;font-size:12px;font-weight:900;color:#4285F4;line-height:1}
+  .oauth-btn .ki{width:19px;height:19px;flex:none;display:block}
+  .oauth-btn .ki svg{display:block;width:100%;height:100%}
+  .oauth-btn.kakao{background:#FEE500;border-color:#F2D900;color:#191919;box-shadow:0 6px 14px rgba(240,200,0,.18)}
+  .sync-msg{min-height:18px;margin:10px 0 0;font-size:11.5px;font-weight:700;line-height:1.55;color:#C0553F;white-space:pre-line}
+  .sync-msg.ok{color:var(--mint-deep)}
+  .sync-note{margin:6px 0 0;font-size:10.5px;font-weight:700;line-height:1.5;color:#B9843C;background:var(--yellow-soft);border:1px solid #F6E7BF;border-radius:10px;padding:7px 9px}
+
+  .acct-card{display:flex;align-items:center;gap:10px;padding:12px 13px;border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+  .acct-card .av{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--mint-soft);font-size:17px;flex:none}
+  .acct-card .em{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acct-card .pv{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:10px;font-weight:800;color:var(--dim)}
+  .sync-line{
+    display:flex;align-items:center;gap:6px;margin-top:12px;padding:10px 12px;border-radius:12px;
+    background:var(--mint-soft);font-size:11.5px;font-weight:800;color:#2C6A58;line-height:1.45
+  }
+  .sync-line[data-state="pending"]{background:var(--blue-soft);color:#3B7398}
+  .sync-line[data-state="error"]{background:var(--red-soft);color:#B54A44}
+  .sync-line[data-state="idle"]{background:var(--gray-soft);color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -1032,6 +1121,16 @@
       <button class="mi add" id="certManage" role="menuitem">＋ 자격증 추가 / 관리</button>
     </div>
 
+    <!-- ☁️ 게스트용 동기화 안내 (로그인하면 사라짐) -->
+    <div class="sync-banner" id="syncBanner" hidden>
+      <button class="sb-main" id="syncBannerOpen" type="button">
+        <span class="em" aria-hidden="true">☁️</span>
+        <span class="tx"><b>로그인하고 다른 기기와 동기화하기</b><span>지금 기록은 이 기기에만 저장돼요</span></span>
+        <span class="go" aria-hidden="true">›</span>
+      </button>
+      <button class="sb-x" id="syncBannerClose" type="button" aria-label="동기화 안내 닫기">×</button>
+    </div>
+
     <section class="card hero-card" aria-label="토디펫 성장">
       <div class="pet-top">
         <button class="pet-badge" id="petBadge" aria-label="토디펫 정보 수정">
@@ -1040,14 +1139,7 @@
         </button>
         <span class="pet-name" id="petName">두근</span>
         <button class="mini-edit" id="petEdit" aria-label="펫 이름·동물 수정">수정</button>
-        <div class="stage-pills" id="stagePills" role="img" aria-label="성장 단계">
-          <span class="sp" data-stage="0">🥚 알</span>
-          <span class="sp" data-stage="1">🐣 유아기</span>
-          <span class="sp" data-stage="2">👑 성체</span>
-        </div>
       </div>
-
-      <div class="rainbow" id="rainbowRow" aria-label="무지개 색 진행"></div>
 
       <div class="pet-stage">
         <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 보기">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
@@ -1157,12 +1249,12 @@
         <button class="tt-add-btn" id="addSubject">＋ 과목 추가</button>
       </section>
       <section class="card tt-timeline" aria-label="24시간 타임라인">
-        <div class="split-head"><span>TIMELINE</span><span class="split-sub" id="tlWeekLabel">이번 주</span></div>
-        <div class="tl-grid" id="ttTimeline"></div>
-        <div class="tl-foot"><span class="sdot" id="tlEditDot" aria-hidden="true"></span><span id="tlEditName">과목</span><span class="tl-foot-hint">칸을 탭해 채우기</span></div>
+        <div class="split-head"><span>TIMELINE</span><span class="split-sub" id="tlWeekLabel">10분 단위</span></div>
+        <div class="tl-grid" id="ttTimeline" aria-readonly="true"></div>
+        <div class="tl-foot"><span class="tl-legend" id="tlLegend"></span><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
     </div>
-    <p class="tt-tip">왼쪽에서 과목을 고르고, 오른쪽 타임라인의 시간 칸을 탭하거나 드래그하면 채워져요. Tody time으로 공부를 마치면 오늘 칸이 저절로 채워집니다.</p>
+    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽 과목의 ⚡로 <b>Tody time</b>을 시작하고 끝내면, 그 시간이 선택한 날짜의 24시간 타임라인에 10분 단위로 저절로 채워집니다.</p>
 
     <section class="card tt-summary">
       <div class="tt-sum-label">
@@ -1271,6 +1363,16 @@
         <div class="t">십이지신 도감</div>
         <div class="d" id="collHeroText">공부한 만큼 펠트 인형이 자라나요. 알 → 유아기 → 성체, 그리고 무지개 7색까지 모아보세요.</div>
       </div>
+      <div class="coll-grow" id="collGrow" aria-label="내 토디펫 성장">
+        <div class="cg-top">
+          <span class="cg-em" id="cgEmoji" aria-hidden="true">🐯</span>
+          <span class="cg-nm" id="cgName">호랑이</span>
+          <span class="cg-min" id="cgMins">0분</span>
+        </div>
+        <div class="stage-track" id="cgStages" role="img" aria-label="성장 단계"></div>
+        <div class="rainbow" id="cgRainbow" aria-label="무지개 색 진행"></div>
+        <div class="cg-hint" id="cgHint">다음 진화까지 180분</div>
+      </div>
       <div class="coll-filters" id="collFilters" role="tablist" aria-label="도감 필터">
         <button class="chip on" data-cfilter="all">전체</button>
         <button class="chip" data-cfilter="owned">보유중</button>
@@ -1299,6 +1401,7 @@
           <span class="ds-tag" id="detailTag">보유중</span>
         </div>
         <div class="stars" id="detailStars" aria-label="무지개 색 등급"></div>
+        <div class="stage-track" id="detailStages" role="img" aria-label="성장 단계"></div>
         <dl class="spec" id="detailSpec"></dl>
         <div class="ds-foot">
           <div class="grow-note" id="detailNote">공부할수록 자라나요</div>
@@ -1346,7 +1449,11 @@
     <div class="coll-head">
       <button class="back" id="statsClose" aria-label="통계 닫기">‹</button>
       <h1><span class="em" aria-hidden="true">📊</span>타이머 통계</h1>
+      <button class="sync-chip" id="statsSync" data-state="off" type="button" aria-label="클라우드 로그인">
+        <span class="ic" aria-hidden="true">☁️</span><span class="tx" id="statsSyncTx">로그인</span>
+      </button>
       <button class="back" id="statsSettings" aria-label="설정 및 데이터 관리" title="설정">⚙️</button>
+
     </div>
     <div class="stats-tabs" id="statsTabs" role="tablist">
       <button data-mode="day" class="on" role="tab">일간</button>
@@ -1414,6 +1521,14 @@
         <div class="sub" id="mpSub">공인중개사 · 연속 0일</div>
       </div>
       <button class="mini-edit" id="mpNameEdit" style="margin-left:auto">이름 수정</button>
+    </div>
+    <div class="mp-sec">클라우드 동기화</div>
+    <div class="mp-list">
+      <button class="mp-item" id="mpSync" type="button">
+        <span class="em" id="mpSyncEm" aria-hidden="true">☁️</span>
+        <span class="mp-item-tx"><b id="mpSyncTitle">로그인하고 동기화</b><span id="mpSyncSub">다른 기기와 공부 기록·펫·사진을 함께 써요</span></span>
+        <span class="go" aria-hidden="true">›</span>
+      </button>
     </div>
     <div class="mp-sec">자격증</div>
     <div id="mpCerts"></div>
@@ -1582,8 +1697,66 @@
   <img id="lightboxImg" alt="사진">
 </div>
 
+<!-- ================= ☁️ 로그인 · 클라우드 동기화 ================= -->
+<div class="sheet" id="syncSheet" role="dialog" aria-modal="true" aria-labelledby="syncTitle">
+  <div class="veil" data-close="syncSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="syncTitle"><span aria-hidden="true">☁️</span>클라우드 동기화</h2><button class="x" data-close="syncSheet" aria-label="닫기">×</button></div>
+
+    <!-- 로그인 전 -->
+    <div id="syncGuest">
+      <p class="sheet-sub">로그인하면 공부 기록·펫·사진이 다른 기기에서도 그대로 이어져요.</p>
+      <div class="seg" id="syncTabs" role="tablist" aria-label="로그인 방식">
+        <button type="button" data-tab="login" class="on" role="tab" aria-selected="true">이메일 로그인</button>
+        <button type="button" data-tab="signup" role="tab" aria-selected="false">회원가입</button>
+      </div>
+      <form id="syncForm" novalidate>
+        <div class="field">
+          <label for="syncEmail">이메일</label>
+          <input type="email" id="syncEmail" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="tody@example.com">
+        </div>
+        <div class="field">
+          <label for="syncPass">비밀번호</label>
+          <input type="password" id="syncPass" autocomplete="current-password" placeholder="6자 이상">
+        </div>
+        <button class="btn primary" id="syncSubmit" type="submit" style="width:100%;margin-top:14px">이메일로 로그인</button>
+      </form>
+      <div class="sync-or">또는</div>
+      <button class="oauth-btn" id="oauthGoogle" type="button">
+        <span class="gi" aria-hidden="true">G</span>Google로 계속하기
+      </button>
+      <button class="oauth-btn kakao" id="oauthKakao" type="button">
+        <span class="ki" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 3.4c-5.23 0-9.47 3.32-9.47 7.42 0 2.62 1.74 4.92 4.36 6.22l-.9 3.24c-.08.29.25.52.5.36l3.86-2.5c.54.08 1.09.12 1.65.12 5.23 0 9.47-3.32 9.47-7.42S17.23 3.4 12 3.4z"/></svg></span>카카오로 계속하기
+      </button>
+      <p class="sync-note" id="oauthHint" hidden></p>
+      <p class="sync-msg" id="syncMsg" role="status" aria-live="polite"></p>
+      <p class="hint" style="text-align:center;margin-top:2px">로그인하지 않아도 기록은 이 기기에 저장돼요</p>
+    </div>
+
+    <!-- 로그인 후 -->
+    <div id="syncMember" hidden>
+      <div class="acct-card">
+        <span class="av" aria-hidden="true">☁️</span>
+        <div style="min-width:0;flex:1">
+          <div class="em" id="acctEmail">—</div>
+          <div class="pv"><span class="tag" id="acctProvider">이메일</span><span id="acctUidShort"></span></div>
+        </div>
+      </div>
+      <div class="sync-line" id="syncLine" role="status" aria-live="polite" data-state="idle">☁️ 로그인됨</div>
+      <div class="sheet-actions" style="margin-top:12px">
+        <button class="btn ghost" id="syncSignOut" type="button">로그아웃</button>
+        <button class="btn primary" id="syncNow" type="button">지금 동기화</button>
+      </div>
+      <p class="hint" style="text-align:center;margin-top:10px">기록을 저장할 때마다 자동으로 동기화돼요</p>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- Supabase JS v2 (CDN). 오프라인이거나 로드에 실패하면 앱은 로컬 저장소로만 동작합니다. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
   'use strict';
@@ -1720,6 +1893,7 @@
       wrong: [],
       master: [],
       todos: {},
+      slots: {},
       todoCats: ['공부', '할일'],
       pet: { animal: 'tiger', name: '두근', minutes: {} }
     };
@@ -1798,6 +1972,17 @@
         id: String(t.id || ('t' + uid())), text: String(t.text).slice(0, 120), done: !!t.done, cat: String(t.cat || '공부')
       }));
     });
+    if (!out.slots || typeof out.slots !== 'object' || Array.isArray(out.slots)) out.slots = {};
+    Object.keys(out.slots).forEach((k) => {
+      if (!isKey(k) || !out.slots[k] || typeof out.slots[k] !== 'object' || Array.isArray(out.slots[k])) { delete out.slots[k]; return; }
+      const day = out.slots[k];
+      Object.keys(day).forEach((sid) => {
+        if (!Array.isArray(day[sid])) { delete day[sid]; return; }
+        const clean = Array.from(new Set(day[sid].map(Number).filter((n) => Number.isInteger(n) && n >= 0 && n < 144))).sort((a, b) => a - b);
+        if (clean.length) day[sid] = clean; else delete day[sid];
+      });
+      if (!Object.keys(day).length) delete out.slots[k];
+    });
     if (!Array.isArray(out.todoCats) || !out.todoCats.length) out.todoCats = ['공부', '할일'];
     out.todoCats = out.todoCats.map((c) => String(c).slice(0, 12)).filter(Boolean);
     if (!out.todoCats.length) out.todoCats = ['공부', '할일'];
@@ -1869,6 +2054,7 @@
   function saveNow() {
     try {
       store.setItem(KEY, JSON.stringify(state));
+      cloudTouch();
       return true;
     } catch (err) {
       const quota = err && (err.name === 'QuotaExceededError' || /quota/i.test(String(err.message || err)));
@@ -1881,6 +2067,625 @@
     clearTimeout(saveTimer);
     saveTimer = setTimeout(saveNow, 200);
     return true;
+  }
+
+  /* =========================================================
+     ☁️ Supabase 로그인 · 클라우드 동기화
+     ---------------------------------------------------------
+     · 로그인하지 않아도 앱은 100% 로컬(localStorage)로 동작한다.
+     · SDK가 없거나 오프라인이면 조용히 로컬 모드로 남는다.
+     ========================================================= */
+  var CLOUD_URL = 'https://jrkhnbkhosqvxjyfztsj.supabase.co';
+  var CLOUD_KEY = 'sb_publishable_HhMlEWcj2aWk_of95s5Mfw_0XIpFDRB';
+  var CLOUD_TABLE = 'tody_user_states';
+  var CLOUD_META_KEY = 'studyTracker.cloud.v1';
+  var CLOUD_PUSH_DELAY = 1200;
+  var CLOUD_REDIRECT = (function () {
+    try {
+      if (location.protocol === 'http:' || location.protocol === 'https:') return location.origin + location.pathname;
+    } catch (e) {}
+    return null;
+  })();
+
+  var cloud = {
+    client: null,
+    session: null,
+    user: null,
+    providers: null,
+    providersAsked: false,
+    meta: { updatedAt: null, lastSync: null, dismissed: false },
+    status: 'local',      /* local | idle | syncing | synced | error */
+    error: '',
+    busy: false,
+    pushing: false,
+    pullFor: null,
+    pushTimer: null,
+    applying: false,
+    wired: false,
+    authMode: 'login',
+    lastToastAt: 0
+  };
+
+  /* ---------- 메타(마지막 수정 · 마지막 동기화) ---------- */
+  function cloudMetaLoad() {
+    try {
+      var m = JSON.parse(store.getItem(CLOUD_META_KEY) || 'null');
+      if (m && typeof m === 'object') {
+        if (typeof m.updatedAt === 'string') cloud.meta.updatedAt = m.updatedAt;
+        if (typeof m.lastSync === 'string') cloud.meta.lastSync = m.lastSync;
+        cloud.meta.dismissed = !!m.dismissed;
+      }
+    } catch (e) {}
+  }
+  function cloudMetaSave() {
+    try { store.setItem(CLOUD_META_KEY, JSON.stringify(cloud.meta)); } catch (e) {}
+  }
+
+  /* 로컬 저장이 일어날 때마다: 수정 시각 기록 + (로그인 상태면) 디바운스 업로드 */
+  function cloudTouch() {
+    if (!cloud || cloud.applying) return;
+    cloud.meta.updatedAt = new Date().toISOString();
+    cloudMetaSave();
+    if (cloud.session) cloudSchedulePush();
+  }
+
+  function cloudSchedulePush() {
+    if (!cloud.client || !cloud.session) return;
+    clearTimeout(cloud.pushTimer);
+    var wait = cloud.status === 'error' ? 15000 : CLOUD_PUSH_DELAY;
+    cloud.pushTimer = setTimeout(function () {
+      cloud.pushTimer = null;
+      cloudPushNow('auto');
+    }, wait);
+    if (cloud.status !== 'error') cloud.status = 'syncing';
+    cloudRender();
+  }
+
+  /* ---------- 오류 → 한국어 안내 ---------- */
+  function cloudText(err) {
+    return String((err && (err.message || err.msg || err.error_description || err.details)) || err || '');
+  }
+  function cloudCode(err) {
+    return String((err && (err.code || err.error_code || err.status)) || '');
+  }
+  function cloudErrMsg(err) {
+    var m = cloudText(err);
+    var c = cloudCode(err);
+    var all = c + ' ' + m;
+    if (/PGRST205|PGRST204|schema cache|Could not find the table|does not exist|relation .* does not exist/i.test(all)) {
+      return '동기화 테이블(tody_user_states)이 아직 없어요. Supabase SQL Editor에서 안내된 SQL을 실행해 주세요.';
+    }
+    if (/row-level security|RLS|permission denied|JWT|401|403/i.test(all)) return '권한(RLS) 설정을 확인해 주세요.';
+    if (/provider is not enabled|Unsupported provider/i.test(m)) return 'Supabase 대시보드에서 해당 로그인 설정을 먼저 켜주세요.';
+    if (/Failed to fetch|NetworkError|Load failed|network|fetch failed/i.test(m)) return '네트워크에 연결할 수 없어요. 기록은 이 기기에 저장돼요.';
+    if (m) return '동기화하지 못했어요 · ' + m;
+    return '동기화하지 못했어요. 잠시 후 다시 시도해 주세요.';
+  }
+  function cloudAuthError(err) {
+    var m = cloudText(err);
+    if (/Invalid login credentials/i.test(m)) return '이메일 또는 비밀번호가 맞지 않아요.';
+    if (/Email not confirmed/i.test(m)) return '메일함에서 인증 링크를 먼저 눌러 주세요.';
+    if (/User already registered|already been registered/i.test(m)) return '이미 가입된 이메일이에요. 로그인 탭에서 들어와 주세요.';
+    if (/Password should be at least|password.*(6|six)/i.test(m)) return '비밀번호는 6자 이상으로 정해 주세요.';
+    if (/Unable to validate email|invalid.*email|email_address_invalid/i.test(m)) return '이메일 형식을 확인해 주세요.';
+    if (/provider is not enabled|Unsupported provider/i.test(m)) return 'Supabase 대시보드에서 해당 로그인 설정을 먼저 켜주세요.';
+    if (/rate limit|too many/i.test(m)) return '잠시 후 다시 시도해 주세요.';
+    if (/Failed to fetch|NetworkError|network/i.test(m)) return '네트워크에 연결할 수 없어요.';
+    return m ? '로그인하지 못했어요 · ' + m : '로그인하지 못했어요. 잠시 후 다시 시도해 주세요.';
+  }
+
+  /* ---------- 상태 표시 ---------- */
+  function cloudAgo(iso) {
+    var t = Date.parse(iso || '');
+    if (!t) return '';
+    var d = Math.max(0, Date.now() - t);
+    if (d < 60000) return '방금';
+    if (d < 3600000) return Math.floor(d / 60000) + '분 전';
+    if (d < 86400000) return Math.floor(d / 3600000) + '시간 전';
+    return Math.floor(d / 86400000) + '일 전';
+  }
+  function cloudStatusText() {
+    if (!cloud.session) {
+      return cloud.client ? '로그인하면 다른 기기와 자동으로 동기화돼요' : '오프라인 · 이 기기에 저장 중';
+    }
+    if (cloud.status === 'syncing') return '동기화 중…';
+    if (cloud.status === 'error') return '동기화 실패 · ' + (cloud.error || '잠시 후 다시 시도해 주세요');
+    var ago = cloudAgo(cloud.meta.lastSync);
+    if (ago) return '☁️ ' + (ago === '방금' ? '방금 동기화됨' : ago + ' 동기화됨');
+    return '☁️ 로그인됨 · 아직 동기화 전';
+  }
+  function cloudProviderName() {
+    var p = cloud.user && cloud.user.app_metadata && cloud.user.app_metadata.provider;
+    if (!p) return '이메일';
+    if (p === 'google') return 'Google';
+    if (p === 'kakao') return '카카오';
+    if (p === 'email') return '이메일';
+    return p;
+  }
+
+  function cloudRender() {
+    var signedIn = !!cloud.session;
+    var banner = $('syncBanner');
+    if (banner) banner.hidden = signedIn || cloud.meta.dismissed;
+
+    var chip = $('statsSync');
+    if (chip) {
+      var st = signedIn ? (cloud.status === 'error' ? 'error' : 'on') : 'off';
+      chip.setAttribute('data-state', st);
+      chip.setAttribute('aria-label', signedIn ? '클라우드 동기화 · ' + ((cloud.user && cloud.user.email) || '로그인됨') : '클라우드 로그인');
+      var ctx = $('statsSyncTx');
+      if (ctx) ctx.textContent = signedIn ? (cloud.status === 'syncing' ? '동기화 중' : cloud.status === 'error' ? '동기화 오류' : '동기화됨') : '로그인';
+    }
+
+    var mt = $('mpSyncTitle'), ms = $('mpSyncSub'), me = $('mpSyncEm');
+    if (mt) mt.textContent = signedIn ? ((cloud.user && cloud.user.email) || '로그인됨') : '로그인하고 동기화';
+    if (ms) ms.textContent = signedIn ? cloudStatusText() : '다른 기기와 공부 기록·펫·사진을 함께 써요';
+    if (me) me.textContent = signedIn ? '☁️' : '☁️';
+
+    var guest = $('syncGuest'), member = $('syncMember');
+    if (guest) guest.hidden = signedIn;
+    if (member) member.hidden = !signedIn;
+    if (signedIn) {
+      var em = $('acctEmail'), pv = $('acctProvider'), uid = $('acctUidShort'), line = $('syncLine'), now = $('syncNow');
+      if (em) em.textContent = (cloud.user && cloud.user.email) || '로그인됨';
+      if (pv) pv.textContent = cloudProviderName();
+      if (uid) uid.textContent = cloud.user && cloud.user.id ? '· ' + String(cloud.user.id).slice(0, 8) : '';
+      if (line) {
+        line.textContent = cloudStatusText();
+        line.setAttribute('data-state', cloud.status === 'error' ? 'error' : cloud.status === 'syncing' ? 'pending' : 'ok');
+      }
+      if (now) now.disabled = cloud.status === 'syncing';
+    }
+  }
+
+  function cloudMsg(text, ok) {
+    var el = $('syncMsg');
+    if (!el) return;
+    el.textContent = text || '';
+    el.classList.toggle('ok', !!ok);
+  }
+
+  /* ---------- UI ---------- */
+  function cloudWire() {
+    if (cloud.wired) return;
+    cloud.wired = true;
+    var open = function () { cloudOpen(); };
+    var bOpen = $('syncBannerOpen'), bClose = $('syncBannerClose'), sChip = $('statsSync'), mp = $('mpSync');
+    if (bOpen) bOpen.addEventListener('click', open);
+    if (bClose) bClose.addEventListener('click', function () {
+      cloud.meta.dismissed = true;
+      cloudMetaSave();
+      cloudRender();
+      toast('동기화 안내를 숨겼어요 · 마이페이지에서 다시 열 수 있어요');
+    });
+    if (sChip) sChip.addEventListener('click', function () { closeStats(); open(); });
+    if (mp) mp.addEventListener('click', open);
+
+    var tabs = $('syncTabs');
+    if (tabs) tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-tab]');
+      if (!b) return;
+      cloudSetMode(b.dataset.tab);
+    });
+    var form = $('syncForm');
+    if (form) form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      cloudEmailAuth(cloud.authMode);
+    });
+    var g = $('oauthGoogle'), k = $('oauthKakao');
+    if (g) g.addEventListener('click', function () { cloudOAuth('google'); });
+    if (k) k.addEventListener('click', function () { cloudOAuth('kakao'); });
+    var now = $('syncNow');
+    if (now) now.addEventListener('click', function () {
+      if (!cloud.session) return;
+      cloudSync({ manual: true });
+    });
+    var out = $('syncSignOut');
+    if (out) out.addEventListener('click', cloudSignOut);
+    var flush = function () {
+      if (!cloud.pushTimer || !cloud.session) return;
+      clearTimeout(cloud.pushTimer);
+      cloud.pushTimer = null;
+      cloudPushNow('flush');
+    };
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) flush(); });
+  }
+
+  function cloudSetMode(mode) {
+    cloud.authMode = mode === 'signup' ? 'signup' : 'login';
+    var tabs = $('syncTabs');
+    if (tabs) {
+      tabs.querySelectorAll('[data-tab]').forEach(function (b) {
+        var on = b.dataset.tab === cloud.authMode;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    }
+    var pass = $('syncPass');
+    if (pass) pass.setAttribute('autocomplete', cloud.authMode === 'signup' ? 'new-password' : 'current-password');
+    var sub = $('syncSubmit');
+    if (sub) sub.textContent = cloud.authMode === 'signup' ? '회원가입' : '이메일로 로그인';
+    cloudMsg('');
+  }
+
+  function cloudOpen() {
+    cloudRender();
+    if ($('syncSheet') && !$('syncSheet').classList.contains('open')) {
+      cloudSetMode(cloud.authMode);
+      openSheet('syncSheet');
+    }
+    cloudLoadProviders();
+    if (cloud.session) {
+      if (cloud.pullFor !== (cloud.session.user && cloud.session.user.id)) cloudSync({ first: true, manual: true });
+      else cloudSync({ manual: false });
+    }
+  }
+
+  function cloudLoadProviders() {
+    if (cloud.providersAsked || !window.fetch) return;
+    cloud.providersAsked = true;
+    fetch(CLOUD_URL + '/auth/v1/settings', { headers: { apikey: CLOUD_KEY } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (j && j.external) cloud.providers = j.external;
+        cloudRenderOauthNote();
+      })
+      .catch(function () { cloud.providersAsked = false; });
+  }
+  function cloudProviderEnabled(provider) {
+    if (cloud.providers) return Promise.resolve(cloud.providers[provider] === undefined ? null : !!cloud.providers[provider]);
+    if (!window.fetch) return Promise.resolve(null);
+    return fetch(CLOUD_URL + '/auth/v1/settings', { headers: { apikey: CLOUD_KEY } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j || !j.external) return null;
+        cloud.providers = j.external;
+        cloudRenderOauthNote();
+        return cloud.providers[provider] === undefined ? null : !!cloud.providers[provider];
+      })
+      .catch(function () { return null; });
+  }
+  function cloudRenderOauthNote() {
+    var el = $('oauthHint');
+    if (!el) return;
+    if (!cloud.providers) { el.hidden = true; return; }
+    var off = [];
+    if (cloud.providers.google === false) off.push('Google');
+    if (cloud.providers.kakao === false) off.push('카카오');
+    if (off.length) {
+      el.textContent = off.join(' · ') + ' 로그인은 Supabase 대시보드에서 먼저 켜야 쓸 수 있어요.';
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
+  }
+
+  /* ---------- 인증 ---------- */
+  function cloudEmailAuth(mode) {
+    if (!cloud.client) {
+      cloudMsg('인터넷에 연결되면 로그인할 수 있어요. 지금 기록은 이 기기에 저장돼요.');
+      return;
+    }
+    var emailEl = $('syncEmail'), passEl = $('syncPass'), btn = $('syncSubmit');
+    var email = (emailEl.value || '').trim();
+    var pass = passEl.value || '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      cloudMsg('이메일 형식을 확인해 주세요.');
+      emailEl.focus();
+      return;
+    }
+    if (mode === 'signup' && pass.length > 0 && pass.length < 6) {
+      cloudMsg('비밀번호는 6자 이상으로 정해 주세요.');
+      passEl.focus();
+      return;
+    }
+    if (!pass) {
+      cloudMsg('비밀번호를 입력해 주세요.');
+      passEl.focus();
+      return;
+    }
+    var label = mode === 'signup' ? '회원가입' : '이메일로 로그인';
+    btn.disabled = true;
+    btn.textContent = mode === 'signup' ? '가입 중…' : '로그인 중…';
+    cloudMsg('');
+    var job;
+    try {
+      job = mode === 'signup'
+        ? cloud.client.auth.signUp({ email: email, password: pass })
+        : cloud.client.auth.signInWithPassword({ email: email, password: pass });
+    } catch (err) {
+      job = Promise.reject(err);
+    }
+    Promise.resolve(job).then(function (res) {
+      if (res && res.error) { cloudMsg(cloudAuthError(res.error)); return; }
+      var data = (res && res.data) || {};
+      passEl.value = '';
+      if (mode === 'signup') {
+        var identities = data.user && data.user.identities;
+        if (data.session) cloudMsg('가입했어요. 기록을 동기화할게요.', true);
+        else if (identities && identities.length === 0) cloudMsg('이미 가입된 이메일이에요. 로그인 탭에서 들어와 주세요.');
+        else cloudMsg('가입 확인 메일을 보냈어요. 메일함에서 인증 링크를 누르면 로그인돼요.', true);
+      } else {
+        cloudMsg('로그인했어요. 기록을 동기화할게요.', true);
+      }
+    }).catch(function (err) {
+      cloudMsg(cloudAuthError(err));
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = label;
+    });
+  }
+
+  function cloudOAuth(provider) {
+    var label = provider === 'google' ? 'Google' : '카카오';
+    if (!cloud.client) {
+      cloudMsg('인터넷에 연결되면 ' + label + ' 로그인을 쓸 수 있어요. 지금 기록은 이 기기에 저장돼요.');
+      return;
+    }
+    cloudMsg('');
+    cloudProviderEnabled(provider).then(function (on) {
+      if (on === false) {
+        cloudMsg('Supabase 대시보드에서 ' + label + ' 로그인 설정을 먼저 켜주세요.');
+        return;
+      }
+      var opts = CLOUD_REDIRECT ? { redirectTo: CLOUD_REDIRECT } : undefined;
+      var job;
+      try {
+        job = cloud.client.auth.signInWithOAuth({ provider: provider, options: opts });
+      } catch (err) {
+        job = Promise.reject(err);
+      }
+      Promise.resolve(job).then(function (res) {
+        if (res && res.error) cloudMsg(cloudAuthError(res.error));
+      }).catch(function (err) { cloudMsg(cloudAuthError(err)); });
+      cloudMsg(label + ' 로그인 화면으로 이동할게요…', true);
+    });
+  }
+
+  function cloudSignOut() {
+    if (!cloud.client) return;
+    var job;
+    try { job = cloud.client.auth.signOut(); } catch (err) { job = Promise.resolve({ error: err }); }
+    Promise.resolve(job).then(function (res) {
+      if (res && res.error) { toast('로그아웃하지 못했어요 · ' + cloudText(res.error)); return; }
+      clearTimeout(cloud.pushTimer);
+      cloud.pushTimer = null;
+      cloud.session = null;
+      cloud.user = null;
+      cloud.pullFor = null;
+      cloud.status = 'local';
+      cloud.meta.lastSync = null;
+      cloudMetaSave();
+      cloudRender();
+      cloudMsg('');
+      toast('로그아웃했어요 · 기록은 이 기기에 그대로 있어요');
+    });
+  }
+
+  function cloudUrlAuthError() {
+    try {
+      var src = '';
+      if (location.hash && /(^|[#&])error=/.test(location.hash)) src = location.hash.slice(1);
+      else if (location.search && /([?&])error=/.test(location.search)) src = location.search.slice(1);
+      if (!src) return '';
+      var p = new URLSearchParams(src);
+      var d = p.get('error_description') || p.get('error');
+      if (!d) return '';
+      d = d.replace(/\+/g, ' ');
+      if (/provider is not enabled|Unsupported provider/i.test(d)) return 'Supabase 대시보드에서 해당 로그인 설정을 먼저 켜주세요.';
+      return d;
+    } catch (e) { return ''; }
+  }
+
+  /* ---------- 동기화 본체 ---------- */
+  function cloudLocalHasRecords() {
+    var certs = state.certs || [];
+    for (var i = 0; i < certs.length; i++) {
+      var c = certs[i] || {};
+      if (c.days && Object.keys(c.days).length) return true;
+      if (c.photos && Object.keys(c.photos).length) return true;
+      if (c.wrong && c.wrong.length) return true;
+      if (c.master && c.master.length) return true;
+      if (c.todos && Object.keys(c.todos).length) return true;
+      if (c.slots && Object.keys(c.slots).length) return true;
+    }
+    return false;
+  }
+
+  function cloudApplyState(raw, atMs) {
+    var next;
+    try { next = stateFrom(raw); } catch (e) { return false; }
+    try { store.setItem('studyTracker.prevCloud', JSON.stringify(state)); } catch (e) {}
+    cloud.applying = true;
+    Object.keys(state).forEach(function (k) { delete state[k]; });
+    Object.assign(state, next);
+    cloud.meta.updatedAt = (raw && typeof raw.updatedAt === 'string') ? raw.updatedAt : new Date(atMs || Date.now()).toISOString();
+    cloudMetaSave();
+    cloud.applying = false;
+    try { store.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    closeFocusIfGone();
+    renderAll();
+    if ($('mypage') && $('mypage').classList.contains('open')) renderMypage();
+    return true;
+  }
+  function closeFocusIfGone() {
+    try {
+      if (focus && !state.certs.some(function (c) { return c.id === focus.certId; })) { focus = null; saveFocus(); closeFocusScreen(); }
+    } catch (e) {}
+  }
+
+  function cloudPushNow(reason) {
+    if (!cloud.client || !cloud.session || !cloud.session.user) return Promise.resolve(false);
+    if (cloud.pushing) { cloudSchedulePush(); return Promise.resolve(false); }
+    cloud.pushing = true;
+    if (cloud.status !== 'error') cloud.status = 'syncing';
+    cloudRender();
+    var uid = cloud.session.user.id;
+    var stamp = new Date().toISOString();
+    var snapshot = null;
+    try { snapshot = JSON.parse(JSON.stringify(state)); } catch (e) { snapshot = null; }
+    if (!snapshot) {
+      cloud.pushing = false;
+      cloudFail(new Error('기록을 준비하지 못했어요'));
+      return Promise.resolve(false);
+    }
+    snapshot.updatedAt = cloud.meta.updatedAt || stamp;
+    var job;
+    try {
+      job = cloud.client.from(CLOUD_TABLE).upsert({ user_id: uid, state: snapshot, updated_at: stamp }, { onConflict: 'user_id' });
+    } catch (err) {
+      job = Promise.reject(err);
+    }
+    return Promise.resolve(job).then(function (res) {
+      if (res && res.error) throw res.error;
+      cloud.pushing = false;
+      cloud.meta.lastSync = stamp;
+      cloudMetaSave();
+      cloud.status = 'synced';
+      cloud.error = '';
+      cloudRender();
+      if (reason === 'manual') toast('☁️ 동기화했어요');
+      else if (reason === 'first') toast('☁️ 이 기기의 기록을 클라우드에 올렸어요');
+      return true;
+    }).catch(function (err) {
+      cloud.pushing = false;
+      cloudFail(err);
+      return false;
+    });
+  }
+
+  function cloudSync(opts) {
+    opts = opts || {};
+    if (!cloud.client || !cloud.session || !cloud.session.user) return Promise.resolve(false);
+    if (cloud.busy) return Promise.resolve(false);
+    cloud.busy = true;
+    cloud.status = 'syncing';
+    cloud.error = '';
+    cloudRender();
+    var uid = cloud.session.user.id;
+    var job;
+    try {
+      job = cloud.client.from(CLOUD_TABLE).select('state,updated_at').eq('user_id', uid).maybeSingle();
+    } catch (err) {
+      job = Promise.reject(err);
+    }
+    return Promise.resolve(job).then(function (res) {
+      if (res && res.error) throw res.error;
+      var row = res ? res.data : null;
+      if (!row) return cloudPushNow(opts.manual ? 'manual' : 'first');
+      var cloudAt = Date.parse(row.updated_at || '') || 0;
+      var localAt = Date.parse(cloud.meta.updatedAt || '') || 0;
+      var inner = row.state && typeof row.state.updatedAt === 'string' ? Date.parse(row.state.updatedAt) : 0;
+      var remoteAt = Math.max(cloudAt, inner || 0);
+      var hasRecords = cloudLocalHasRecords();
+      var takeCloud = !hasRecords || (remoteAt > 0 && remoteAt > localAt + 1000);
+      if (takeCloud && row.state && typeof row.state === 'object') {
+        if (cloudApplyState(row.state, remoteAt || Date.now())) {
+          cloud.meta.lastSync = row.updated_at || new Date().toISOString();
+          cloudMetaSave();
+          cloud.status = 'synced';
+          cloud.error = '';
+          if (opts.manual || opts.first) toast('☁️ 다른 기기의 기록을 불러왔어요');
+        }
+        return true;
+      }
+      return cloudPushNow(opts.manual ? 'manual' : 'now');
+    }).catch(function (err) {
+      cloudFail(err);
+      return false;
+    }).then(function (r) {
+      cloud.busy = false;
+      cloudRender();
+      return r;
+    });
+  }
+
+  function cloudFail(err) {
+    cloud.error = cloudErrMsg(err);
+    cloud.status = 'error';
+    cloudRender();
+    var now = Date.now();
+    if (now - cloud.lastToastAt > 12000) {
+      cloud.lastToastAt = now;
+      toast('☁️ ' + cloud.error, 4600);
+    }
+  }
+
+  function cloudHandleAuth(event, session) {
+    var prevId = cloud.session && cloud.session.user ? cloud.session.user.id : null;
+    if (!session) {
+      if (event === 'SIGNED_OUT' || prevId) {
+        clearTimeout(cloud.pushTimer);
+        cloud.pushTimer = null;
+        cloud.session = null;
+        cloud.user = null;
+        cloud.pullFor = null;
+        cloud.status = 'local';
+        cloudRender();
+      }
+      return;
+    }
+    cloud.session = session;
+    cloud.user = session.user || null;
+    if (cloud.status === 'local') cloud.status = 'idle';
+    cloudRender();
+    var uid = cloud.user && cloud.user.id;
+    if (!uid) return;
+    if (cloud.pullFor !== uid) {
+      cloud.pullFor = uid;
+      cloudSync({ first: true });
+    }
+  }
+
+  function cloudBoot() {
+    cloudMetaLoad();
+    cloudRender();
+    cloudWire();
+    var urlErr = cloudUrlAuthError();
+    if (urlErr) {
+      cloud.error = urlErr;
+      setTimeout(function () { toast('☁️ ' + urlErr, 5200); }, 700);
+    }
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+      cloud.client = null;
+      cloud.status = 'local';
+      cloudRender();
+      return;
+    }
+    try {
+      cloud.client = window.supabase.createClient(CLOUD_URL, CLOUD_KEY, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+          flowType: 'implicit'
+        }
+      });
+    } catch (e) {
+      cloud.client = null;
+      cloud.status = 'local';
+      cloudRender();
+      return;
+    }
+    try {
+      cloud.client.auth.onAuthStateChange(function (event, session) {
+        setTimeout(function () { cloudHandleAuth(event, session); }, 0);
+      });
+    } catch (e) {}
+    try {
+      cloud.client.auth.getSession().then(function (res) {
+        var s = res && res.data ? res.data.session : null;
+        if (s) cloudHandleAuth('INITIAL_SESSION', s);
+        else cloudRender();
+      }).catch(function () {
+        cloud.status = 'local';
+        cloudRender();
+      });
+    } catch (e) {
+      cloud.status = 'local';
+      cloudRender();
+    }
   }
 
   /* =========================================================
@@ -1930,6 +2735,69 @@
       if (!before) n++;
     }
     return n;
+  }
+  /* ── 10분 칸(하루 144칸) ─────────────────────────────
+     Tody time 세션만 이 칸을 채운다. 타임라인은 읽기 전용. */
+  const SLOTS_PER_HOUR = 6;
+  function daySlotSids(dateKey) {
+    const out = [];
+    const slots = cert().slots[dateKey] || {};
+    const hours = cert().days[dateKey] || {};
+    cert().subjects.forEach((s) => {
+      const bySlot = Array.isArray(slots[s.id]) && slots[s.id].length > 0;
+      const byHour = Array.isArray(hours[s.id]) && hours[s.id].length > 0;
+      if (bySlot || byHour) out.push(s.id);
+    });
+    return out;
+  }
+  function slotSidsAt(dateKey, slot) {
+    const c = cert();
+    const h = Math.floor(slot / SLOTS_PER_HOUR);
+    const daySlots = c.slots[dateKey] || {};
+    const bySlot = [];
+    Object.keys(daySlots).forEach((sid) => {
+      const arr = daySlots[sid];
+      if (Array.isArray(arr) && arr.indexOf(slot) >= 0) bySlot.push(sid);
+    });
+    if (bySlot.length) return bySlot;
+    // 예전 기록(시간 단위)만 있으면 그 시간 전체를 그 과목으로 보여준다
+    const hourHasSlots = Object.keys(daySlots).some((sid) => Array.isArray(daySlots[sid]) && daySlots[sid].some((x) => Math.floor(x / SLOTS_PER_HOUR) === h));
+    if (hourHasSlots) return [];
+    const day = c.days[dateKey] || {};
+    return Object.keys(day).filter((sid) => Array.isArray(day[sid]) && day[sid].indexOf(h) >= 0);
+  }
+  function addSlot(dateKey, sid, slot) {
+    if (!cert().slots[dateKey]) cert().slots[dateKey] = {};
+    const day = cert().slots[dateKey];
+    const arr = Array.isArray(day[sid]) ? day[sid].slice() : [];
+    if (arr.indexOf(slot) >= 0) return false;
+    arr.push(slot);
+    arr.sort((a, b) => a - b);
+    day[sid] = arr;
+    return true;
+  }
+  function fillSlots(dateKey, sid, startMs, endMs) {
+    const from = Math.min(startMs, endMs);
+    const to = Math.max(startMs, endMs);
+    let t = new Date(from);
+    t.setSeconds(0, 0);
+    t.setMinutes(Math.floor(t.getMinutes() / 10) * 10);
+    let n = 0;
+    let guard = 0;
+    while (t.getTime() < to && guard++ < 200) {
+      if (toKey(t) === dateKey) {
+        const slot = t.getHours() * SLOTS_PER_HOUR + Math.floor(t.getMinutes() / 10);
+        if (addSlot(dateKey, sid, slot)) n++;
+      }
+      t = new Date(t.getTime() + 600000);
+    }
+    return n;
+  }
+  function daySlotMinutes(dateKey) {
+    const day = cert().slots[dateKey] || {};
+    const set = new Set();
+    Object.keys(day).forEach((sid) => { if (Array.isArray(day[sid])) day[sid].forEach((x) => set.add(x)); });
+    return set.size * 10;
   }
   function totalMinutesAll() {
     return Object.keys(cert().days).reduce((sum, k) => sum + dayMinutes(k), 0);
@@ -2230,17 +3098,17 @@
       const cy = 56 + Math.sin(a) * 26;
       petals.push('<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="22" fill="url(#' + gid + ')"/>');
     }
-    return '<svg viewBox="0 0 120 190" aria-hidden="true" style="width:100%;height:auto;display:block">' +
+    return '<svg viewBox="0 0 120 128" aria-hidden="true" style="width:100%;height:auto;display:block">' +
       '<defs><radialGradient id="' + gid + '" cx="34%" cy="24%" r="86%">' +
         '<stop offset="0" stop-color="' + pTop + '"/><stop offset="52%" stop-color="' + pMid + '"/><stop offset="100%" stop-color="' + pDeep + '"/>' +
       '</radialGradient><radialGradient id="' + cid + '" cx="38%" cy="26%" r="80%">' +
         '<stop offset="0" stop-color="' + cTop + '"/><stop offset="58%" stop-color="' + cMid + '"/><stop offset="100%" stop-color="' + cDeep + '"/>' +
       '</radialGradient></defs>' +
       '<g filter="url(#feltFlower)">' +
-        '<path d="M58 184 C57 154 58 122 61 88" stroke="url(#stemGrad)" stroke-width="12" fill="none" stroke-linecap="round"/>' +
-        '<ellipse cx="43" cy="141" rx="21" ry="11" fill="url(#stemGrad)" transform="rotate(-30 43 141)"/>' +
-        '<ellipse cx="75" cy="118" rx="18" ry="9.5" fill="url(#stemGrad)" transform="rotate(26 75 118)"/>' +
-        '<path d="M46 147 C56 145 63 138 67 130" stroke="#4C8B3C" stroke-width="1.6" opacity=".3" fill="none"/>' +
+        '<path d="M58 126 C57 110 58 98 61 86" stroke="url(#stemGrad)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
+        '<ellipse cx="44" cy="104" rx="18" ry="9.5" fill="url(#stemGrad)" transform="rotate(-30 44 104)"/>' +
+        '<ellipse cx="74" cy="92" rx="15" ry="8" fill="url(#stemGrad)" transform="rotate(26 74 92)"/>' +
+        '<path d="M47 110 C55 108 61 102 65 96" stroke="#4C8B3C" stroke-width="1.5" opacity=".3" fill="none"/>' +
         petals.join('') +
         '<circle cx="60" cy="56" r="18" fill="url(#' + cid + ')"/>' +
       '</g>' +
@@ -2352,14 +3220,24 @@
       '</button>').join('');
   }
 
-  function renderRainbow(info) {
-    const row = $('rainbowRow');
-    row.innerHTML = PALETTE.map((p, i) => {
+  function rainbowHTML(info) {
+    return PALETTE.map((p, i) => {
       const on = i === info.color;
       const got = i <= info.color || info.complete;
-      return '<span class="dot' + (on ? ' on' : '') + (got ? '' : ' lock') + '" style="background:' + p.base + '" title="' + p.name + ' ' + (got ? '획득' : '미획득') + '" aria-label="' + p.name + (got ? ' 획득' : ' 미획득') + '"></span>' +
+      return '<span class="dot' + (on ? ' on' : '') + (got ? '' : ' lock') + '" style="background:' + p.base + '" title="' + p.name + (got ? ' 획득' : ' 미획득') + '" aria-label="' + p.name + (got ? ' 획득' : ' 미획득') + '"></span>' +
         (i < 6 ? '<span class="sep" aria-hidden="true">›</span>' : '');
-    }).join('') + '<span class="txt">' + (info.complete ? '무지개 완성 🏆' : info.color + 1 + '/7') + '</span>';
+    }).join('') + '<span class="txt">' + (info.complete ? '무지개 완성 🏆' : (info.color + 1) + '/7') + '</span>';
+  }
+
+  /* 알 → 유아기 → 성체 진행 표시 (홈 대신 도감에서 보여준다) */
+  function stageTrackHTML(stage) {
+    const steps = ['🥚|알', '🐣|유아기', '👑|성체'];
+    return steps.map((v, i) => {
+      const parts = v.split('|');
+      const cls = 'st' + (i === stage ? ' on' : i < stage ? ' done' : '');
+      return (i ? '<i class="bar' + (i <= stage ? ' done' : '') + '" aria-hidden="true"></i>' : '') +
+        '<span class="' + cls + '" data-stage="' + i + '"><b aria-hidden="true">' + parts[0] + '</b>' + parts[1] + '</span>';
+    }).join('');
   }
 
   function bubbleText(info) {
@@ -2377,8 +3255,6 @@
     $('petEmoji').textContent = info.animal.emoji;
     $('petAnimalName').textContent = info.animal.name;
     $('petName').textContent = c.pet.name || '두근';
-    document.querySelectorAll('#stagePills .sp').forEach((el) => el.classList.toggle('on', Number(el.dataset.stage) === info.stage));
-    renderRainbow(info);
     const q = currentQuote();    if (q) {
       const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
       $('petBubble').innerHTML = esc(txt) + ' <span class="qhint">명언 ›</span>';
@@ -2533,9 +3409,9 @@
 
   function renderPick() {
     const c = cert();
-    const items = c.subjects.map((s) =>
+    const items = c.subjects.map((s, si) =>
       '<button class="pick-sub' + (pickSubject === s.id ? ' on' : '') + '" data-pick="' + esc(s.id) + '">' +
-        '<span class="em" aria-hidden="true">📘</span><span class="nm">' + esc(s.name || '(이름 없음)') + '</span></button>').join('');
+        '<span class="em" aria-hidden="true">' + esc(subjectIconOf(s, si)) + '</span><span class="nm">' + esc(s.name || '(이름 없음)') + '</span></button>').join('');
     $('pickList').innerHTML = items + '<button class="pick-sub pick-add" id="pickAdd">＋ 과목 추가</button>';
     const sel = c.subjects.find((s) => s.id === pickSubject);
     $('pickInfoSubject').textContent = sel ? sel.name : '과목을 선택하세요';
@@ -2651,6 +3527,7 @@
     let toH = ed.getHours();
     if (toKey(ed) !== toKey(sd)) toH = 23;
     const filled = fillHours(dateKey, subjectId, fromH, toH);
+    const slotsFilled = fillSlots(dateKey, subjectId, start, end);
     // 펫 성장
     if (!c.pet.minutes[c.pet.animal]) c.pet.minutes[c.pet.animal] = 0;
     c.pet.minutes[c.pet.animal] += minutes;
@@ -2661,7 +3538,7 @@
     closeFocusScreen();
     renderHome();
     renderTimetable();
-    let msg = 'Tody time 완료! ' + fmtDur(minutes) + ' 기록했어요' + (filled ? ' · 토디테이블 ' + filled + '칸 채움' : '');
+    let msg = 'Tody time 완료! ' + fmtDur(minutes) + ' 기록했어요' + (slotsFilled ? ' · 타임라인 ' + slotsFilled + '칸' : (filled ? ' · 토디테이블 ' + filled + '시간' : ''));
     if (after.stage > before.stage) {
       msg = '🎉 ' + after.animal.name + '이(가) ' + STAGE_NAME[after.stage] + '가 되었어요! +' + fmtDur(minutes);
     } else if (after.color > before.color) {
@@ -2807,11 +3684,20 @@
     if (!list.length) {
       $('collGrid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="em">🥚</div><b>' + (collFilter === 'owned' ? '아직 보유한 펫이 없어요' : '모든 펫을 보유하고 있어요!') + '</b><span>' + (collFilter === 'owned' ? 'Tody time으로 공부하면 펫이 알에서 깨어나요.' : '대단해요. 십이지신을 모두 만났어요.') + '</span></div>';
     }
-    // 도감 상단 문구
+    // 도감 상단 문구 + 내 펫 성장(무지개 7색 · 알/유아기/성체)
     const active = petInfo(c);
     $('collHeroText').innerHTML = active.complete
       ? '<b>' + esc(active.animal.name) + '</b>이 무지개를 완성했어요! 다른 십이지신도 키워볼까요?'
       : '지금 <b>' + esc(active.animal.name) + '</b>는 <b>' + STAGE_NAME[active.stage] + ' · ' + petPalette(active).name + '</b> · ' + fmtDur(active.total) + ' 공부했어요. 다음 진화까지 ' + fmtDur(active.left) + '.';
+    $('cgEmoji').textContent = active.animal.emoji;
+    $('cgName').textContent = (c.pet.name || '두근') + ' · ' + active.animal.name;
+    $('cgMins').textContent = fmtDur(active.total);
+    $('cgStages').innerHTML = stageTrackHTML(active.stage);
+    $('cgStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[active.stage]);
+    $('cgRainbow').innerHTML = rainbowHTML(active);
+    $('cgHint').textContent = active.complete
+      ? '무지개 7색을 모두 모았어요 🏆'
+      : (active.stage < 2 ? STAGE_NAME[active.stage + 1] + ' 진화까지 ' : '다음 색 ' + PALETTE[Math.min(6, active.color + 1)].name + '까지 ') + fmtDur(active.left);
   }
 
   function openDetail(animalId) {
@@ -2839,6 +3725,8 @@
     $('detailTag').classList.toggle('off', !owned && !active);
     $('detailStars').innerHTML = PALETTE.map((p, i) => '<span class="' + (i <= info.color && owned ? '' : 'off') + '">★</span>').join('') +
       '<span style="margin-left:6px;font-size:10.5px;color:#9AA5A0;letter-spacing:.04em">' + (info.complete ? '무지개 완성' : (info.color + 1) + ' / 7 색') + '</span>';
+    $('detailStages').innerHTML = stageTrackHTML(info.stage);
+    $('detailStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[info.stage]);
     $('detailSpec').innerHTML =
       '<div><dt>색상</dt><dd>' + P.name + ' · 무지개 ' + (info.color + 1) + '단계</dd></div>' +
       '<div><dt>성장 단계</dt><dd>' + STAGE_ICON[info.stage] + ' ' + STAGE_NAME[info.stage] + '</dd></div>' +
@@ -3791,31 +4679,41 @@
         '<div class="qrow-time">' + shortClock(m) + '</div></div>';
     }).join('') || '<div class="hint" style="padding:8px 4px">과목을 먼저 추가해 주세요</div>';
     renderTimeline();
-    $('tlEditName').textContent = (sel && subjectName(sel)) || '과목';
-    $('tlEditDot').style.background = sel ? subjectColor(sel) : '#DDE7E3';
     renderTimetableSummary();
   }
 
   function renderTimeline() {
-    const dates = weekDates(ttDate);
-    const sel = currentEditSubject();
+    const k = ttDate;
     const tk = todayKey();
-    const nowH = new Date().getHours();
-    let html = '<div class="tl-corner"></div>';
-    html += dates.map((k) => {
-      const d = fromKey(k);
-      return '<div class="tl-dow' + (k === tk ? ' today' : '') + '">' + WEEKDAY[d.getDay()] + '</div>';
-    }).join('');
+    const now = new Date();
+    const nowH = now.getHours();
+    const nowB = Math.floor(now.getMinutes() / 10);
+    const rows = [];
     for (let h = 0; h < 24; h++) {
-      html += '<div class="tl-h" aria-hidden="true">' + (h % 3 === 0 ? h : '') + '</div>';
-      html += dates.map((k) => {
-        const sids = sidsAt(k, h);
-        const cls = 'tl-cell' + (sids.length ? ' on' : '') + (sel && sids.indexOf(sel) >= 0 ? ' sel' : '') + (h === nowH && k === tk ? ' now' : '');
-        return '<button class="' + cls + '" data-tcell="1" data-day="' + k + '" data-hour="' + h + '" tabindex="-1" style="background:' + timelineCellBg(sids) + '" aria-label="' + esc(prettyDate(k) + ' ' + h + '시 ' + (sids.length ? sids.map(subjectName).join(', ') : '기록 없음')) + '"></button>';
-      }).join('');
+      const isNow = k === tk && h === nowH;
+      const hourSids = [];
+      let cells = '';
+      for (let b = 0; b < SLOTS_PER_HOUR; b++) {
+        const slot = h * SLOTS_PER_HOUR + b;
+        const sids = slotSidsAt(k, slot);
+        sids.forEach((sid) => { if (hourSids.indexOf(sid) < 0) hourSids.push(sid); });
+        cells += '<i class="tl-slot' + (sids.length ? ' on' : '') + '"' +
+          (sids.length ? ' style="background:' + timelineCellBg(sids) + '"' : '') +
+          ' title="' + esc(h + '시 ' + (b * 10) + '분' + (sids.length ? ' · ' + sids.map(subjectName).join(', ') : ' 기록 없음')) + '"></i>';
+      }
+      const label = h + '시' + (hourSids.length ? ' · ' + hourSids.map(subjectName).join(', ') : ' · 기록 없음');
+      rows.push('<div class="tl-row' + (isNow ? ' now' : '') + '" role="img" aria-label="' + esc(label) + '">' +
+        '<span class="tl-hour" aria-hidden="true">' + h + '시</span>' +
+        '<div class="tl-slots">' + cells + '</div></div>');
     }
-    $('ttTimeline').innerHTML = html;
-    $('tlWeekLabel').textContent = '24H';
+    $('ttTimeline').innerHTML = rows.join('');
+    $('tlWeekLabel').textContent = '10분 단위 · ' + (k === tk ? '오늘' : prettyDate(k));
+    const daySids = daySlotSids(k);
+    const legend = daySids.slice(0, 3).map((sid) =>
+      '<span class="lg"><i style="background:' + subjectColor(sid) + '"></i>' + esc(subjectName(sid)) + '</span>').join('');
+    $('tlLegend').innerHTML = daySids.length
+      ? legend + (daySids.length > 3 ? '<span class="more">+' + (daySids.length - 3) + '</span>' : '')
+      : '<span class="lg" style="color:#A9BAB4">아직 기록이 없어요</span>';
   }
 
   function renderTimetableSummary() {
@@ -3830,40 +4728,10 @@
     $('ttChips').innerHTML = chips.length ? chips.join('') : '<span class="hint">과목별 기록이 여기에 보여요</span>';
   }
 
-  let tlPaint = null;
-  function paintTl(cell, k, h, sid, on) {
-    setBlock(k, sid, h, on);
-    const sids = sidsAt(k, h);
-    cell.style.background = timelineCellBg(sids);
-    cell.classList.toggle('on', sids.length > 0);
-    cell.classList.toggle('sel', sids.indexOf(sid) >= 0);
-  }
-  $('ttTimeline').addEventListener('pointerdown', (e) => {
-    const cell = e.target.closest('[data-tcell]');
-    if (!cell) return;
-    e.preventDefault();
-    const sid = currentEditSubject();
-    if (!sid) { toast('과목을 먼저 추가해 주세요'); return; }
-    const k = cell.dataset.day, h = Number(cell.dataset.hour);
-    tlPaint = { sid: sid, mode: subjectHours(k, sid).indexOf(h) < 0, last: k + ':' + h };
-    paintTl(cell, k, h, sid, tlPaint.mode);
-  });
-  $('ttTimeline').addEventListener('pointermove', (e) => {
-    if (!tlPaint) return;
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    const cell = el && el.closest ? el.closest('[data-tcell]') : null;
-    if (!cell) return;
-    const k = cell.dataset.day, h = Number(cell.dataset.hour);
-    if (tlPaint.last === k + ':' + h) return;
-    tlPaint.last = k + ':' + h;
-    paintTl(cell, k, h, tlPaint.sid, tlPaint.mode);
-  });
-  document.addEventListener('pointerup', () => {
-    if (!tlPaint) return;
-    tlPaint = null;
-    save(true);
-    renderTimetable();
-    renderHome();
+  /* 타임라인은 읽기 전용 — 칸을 눌러도 기록이 바뀌지 않는다 (Tody time 세션만 기록) */
+  $('ttTimeline').addEventListener('click', (e) => {
+    if (!e.target.closest('.tl-slot')) return;
+    toast('타임라인은 읽기 전용이에요 · Tody time을 마치면 저절로 채워져요');
   });
 
   $('ttQuickList').addEventListener('click', (e) => {
@@ -3995,9 +4863,10 @@
   $('ttWeekPrev').addEventListener('click', () => { ttDate = addDays(ttDate, -7); renderTimetable(); });
   $('ttWeekNext').addEventListener('click', () => { ttDate = addDays(ttDate, 7); renderTimetable(); });
   $('ttClear').addEventListener('click', () => {
-    if (!cert().days[ttDate]) { toast('지울 기록이 없어요'); return; }
+    if (!cert().days[ttDate] && !(cert().slots && cert().slots[ttDate])) { toast('지울 기록이 없어요'); return; }
     if (!window.confirm(prettyDate(ttDate) + ' 기록을 모두 지울까요?')) return;
     delete cert().days[ttDate];
+    if (cert().slots) delete cert().slots[ttDate];
     save(true);
     renderTimetable();
     renderHome();
@@ -4391,6 +5260,7 @@
   loadFocus();
   renderAll();
   if (focus) openFocusScreen();
+  cloudBoot();
 
   // 테스트·디버그용
   window.__tody = {
@@ -4398,6 +5268,7 @@
     petInfo: (id) => petInfo(cert(), id), focusElapsedMs: focusElapsedMs,
     startFocus: startFocus, finishFocus: finishFocus, openCollection: openCollection,
     openDetail: openDetail, openPicker: openPicker, petSVG: petSVG, flowerSVG: flowerSVG,
+    cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     addMinutes: (id, min) => { const c = cert(); c.pet.minutes[id || c.pet.animal] = (c.pet.minutes[id || c.pet.animal] || 0) + min; saveNow(); renderAll(); }
   };
 })();
