@@ -146,6 +146,10 @@
     background:linear-gradient(145deg,#D9F8EC,#BEEEDC);color:#0C6B54;font-size:11px;font-weight:900;
   }
   .avatar-btn .nm{max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 로그인 전 계정 칩: ‘로그인’으로 보이고 누르면 로그인 시트 */
+  .avatar-btn.guest{border-color:var(--mint-line);background:linear-gradient(145deg,#F2FEF9,#FFFFFF)}
+  .avatar-btn.guest .nm{color:var(--mint-deep);font-weight:900;max-width:none}
+  .avatar-btn.guest .avatar{background:var(--mint-soft);color:var(--mint-deep);font-size:12px}
 
   /* 자격증 드롭다운 */
   .cert-menu{
@@ -711,6 +715,25 @@
   .tl-legend .lg i{width:6px;height:6px;border-radius:50%;flex:none;display:block}
   .tl-legend .more{font-size:8.5px;color:var(--dim);font-weight:800}
   .tl-foot-hint{margin-left:auto;font-size:7.5px;font-weight:700;color:#A9BAB4;white-space:nowrap}
+  /* TIMELINE 헤더의 ＋ (공부 시간 직접 적기) */
+  .split-add{width:20px;height:20px;flex:none;border-radius:7px;display:grid;place-items:center;background:var(--mint-soft);border:1px solid var(--mint-line);color:var(--mint-deep);font-size:13px;font-weight:900;line-height:1;padding:0 0 1px;transition:transform .1s,background .15s}
+  .split-add:hover{background:#D7F7EA}
+  .split-add:active{transform:scale(.92)}
+  /* 공부 시간 직접 적기 시트 */
+  .ttedit-sum{display:flex;align-items:baseline;gap:7px;padding:11px 13px;border-radius:14px;border:1px solid var(--mint-line);background:linear-gradient(150deg,#EFFDF7,#FBFEFC);margin-top:2px}
+  .ttedit-sum .lbl{font-size:10.5px;font-weight:900;color:var(--muted)}
+  .ttedit-sum b{font-size:19px;font-weight:900;letter-spacing:-.02em;color:#0B5B47;font-variant-numeric:tabular-nums;margin-left:auto}
+  .ttedit-sum .diff{font-size:10.5px;font-weight:800;color:var(--dim);flex:none}
+  .ttedit-sum .diff.up{color:var(--mint-deep)}
+  .ttedit-sum .diff.down{color:#D9702B}
+  .tt-edit-subj{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .tt-edit-subj .chip{display:inline-flex;align-items:center;gap:4px;font-size:12px}
+  .tt-hour-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:6px}
+  .tt-hour{position:relative;height:30px;border-radius:9px;border:1px solid #E9F1EE;background:#F5FAF8;color:#8FA49D;font-size:10.5px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;display:grid;place-items:center;transition:background .15s,border-color .15s,color .15s}
+  .tt-hour.on{color:#0F3B32;border-color:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+  .tt-hour .oth{position:absolute;right:4px;top:4px;width:4px;height:4px;border-radius:50%;opacity:.85}
+  .tt-hour:active{transform:scale(.96)}
+  @media (min-width:721px){.tt-hour-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
   .subj-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0}
   .subj-edit-row .sdot{width:10px;height:10px;border-radius:50%;flex:none}
   .subj-edit-row input{flex:1;min-width:0;padding:9px 11px;border-radius:11px;border:1px solid var(--line);font-size:13px;font-weight:700;background:#FBFEFD}
@@ -892,6 +915,9 @@
   .stats-tabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--gray-soft);border:1px solid var(--gray-line);margin:2px 0 12px}
   .stats-tabs button{flex:1;padding:9px 4px;border-radius:11px;font-size:12.5px;font-weight:900;color:var(--muted)}
   .stats-tabs button.on{background:#fff;color:var(--mint-deep);box-shadow:0 2px 6px rgba(16,105,80,.12)}
+  /* 타이머 통계 · 과목 필터 칩 */
+  .stat-subj{margin:-4px 0 11px;padding:2px 0 3px}
+  .stat-subj .chip{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;font-size:12px}
   .stat-total{padding:16px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
   .stat-total .cap{font-size:11px;font-weight:800;color:var(--dim);text-align:center;letter-spacing:.04em}
   .stat-total .big{font-size:24px;font-weight:900;letter-spacing:-.02em;text-align:center;margin-top:4px;color:#132A23}
@@ -1038,12 +1064,19 @@
   .oauth-btn.kakao{background:#FEE500;border-color:#F2D900;color:#191919;box-shadow:0 6px 14px rgba(240,200,0,.18)}
   .sync-msg{min-height:18px;margin:10px 0 0;font-size:11.5px;font-weight:700;line-height:1.55;color:#C0553F;white-space:pre-line}
   .sync-msg.ok{color:var(--mint-deep)}
+  .sync-later{display:block;width:100%;margin:9px 0 0;padding:8px 6px;border-radius:11px;background:transparent;border:1px dashed var(--line);font-size:11.5px;font-weight:800;color:var(--muted)}
   .sync-note{margin:6px 0 0;font-size:10.5px;font-weight:700;line-height:1.5;color:#B9843C;background:var(--yellow-soft);border:1px solid #F6E7BF;border-radius:10px;padding:7px 9px}
 
   .acct-card{display:flex;align-items:center;gap:10px;padding:12px 13px;border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
   .acct-card .av{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--mint-soft);font-size:17px;flex:none}
   .acct-card .em{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .acct-card .pv{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:10px;font-weight:800;color:var(--dim)}
+  /* Google 계정 연동 */
+  .acct-link{margin-top:11px;padding:11px 12px;border-radius:14px;border:1px dashed var(--mint-line);background:#FAFEFC}
+  .acct-link .btn{display:inline-flex;align-items:center;gap:7px;width:100%;justify-content:center;font-size:12.5px;padding:10px 12px;background:#fff}
+  .acct-link .btn .gi{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;background:#fff;border:1px solid #E2E8F0;font-size:11px;font-weight:900;color:#4285F4;line-height:1}
+  .acct-link .hint{display:block;margin-top:7px;font-size:10.5px;line-height:1.5;text-align:center}
+  .acct-linked{display:inline-flex;align-items:center;gap:5px;margin-top:11px;padding:5px 11px;border-radius:999px;font-size:11.5px;font-weight:900;color:var(--mint-deep);background:var(--mint-soft);border:1px solid var(--mint-line)}
   .sync-line{
     display:flex;align-items:center;gap:6px;margin-top:12px;padding:10px 12px;border-radius:12px;
     background:var(--mint-soft);font-size:11.5px;font-weight:800;color:#2C6A58;line-height:1.45
@@ -1175,9 +1208,9 @@
         <button class="egg-btn" id="petBtn" aria-label="토디펫 십이지신 도감 열기">
           <span class="ic" aria-hidden="true">🥚</span><span class="lbl">토디펫</span>
         </button>
-        <button class="avatar-btn" id="myBtn" aria-label="마이페이지 열기">
-          <span class="avatar" id="myAvatar" aria-hidden="true">오</span>
-          <span class="nm" id="myName">오뇨님</span>
+        <button class="avatar-btn guest" id="myBtn" aria-label="로그인 · 클라우드 동기화">
+          <span class="avatar" id="myAvatar" aria-hidden="true">👤</span>
+          <span class="nm" id="myName">로그인</span>
         </button>
       </div>
     </header>
@@ -1316,12 +1349,12 @@
         <button class="tt-add-btn" id="addSubject">＋ 과목 추가</button>
       </section>
       <section class="card tt-timeline" aria-label="24시간 타임라인">
-        <div class="split-head"><span>TIMELINE</span><span class="split-sub" id="tlWeekLabel">24시간</span></div>
+        <div class="split-head"><span>TIMELINE</span><button class="split-add" id="ttAddTime" type="button" aria-label="공부 시간 직접 적기" title="공부 시간 직접 적기">＋</button></div>
         <div class="tl-grid" id="ttTimeline" aria-readonly="true"></div>
         <div class="tl-foot"><span class="tl-legend" id="tlLegend"></span><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
     </div>
-    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작해 끝내면, 그 시간이 선택한 날짜의 24시간 칸(0시~23시)에 과목 색으로 저절로 채워집니다.</p>
+    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작하면 그 시간이 저절로 채워집니다. 기록을 직접 적고 싶으면 오른쪽 <b>＋</b> 버튼을 눌러 과목·시간·24시간 칸을 고쳐 주세요.</p>
 
     <section class="card tt-summary">
       <div class="tt-sum-label">
@@ -1549,6 +1582,7 @@
       <button data-mode="week" role="tab">주간</button>
       <button data-mode="month" role="tab">월간</button>
     </div>
+    <div class="chips stat-subj" id="statSubjects" role="group" aria-label="과목 필터"></div>
     <div class="stat-total">
       <div class="cap" id="statCap">오늘 집중한 시간</div>
       <div class="big" id="statTotal">0시간 0분</div>
@@ -1573,6 +1607,44 @@
     <div class="ttstart-actions">
       <button class="btn ghost" data-close="ttStart" id="ttStartNo">아니요</button>
       <button class="btn primary" id="ttStartYes">예 (시작하기)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 공부 시간 직접 적기 (TIMELINE ＋) ================= -->
+<div class="sheet ttedit" id="ttEdit" role="dialog" aria-modal="true" aria-labelledby="ttEditTitle">
+  <div class="veil" data-close="ttEdit"></div>
+  <div class="sheet-card ttedit-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="ttEditTitle">공부 시간 직접 적기</h2><button class="x" data-close="ttEdit" aria-label="닫기">×</button></div>
+    <p class="sheet-sub" id="ttEditSub">과목을 고르고 시간을 적어주세요</p>
+    <div class="ttedit-sum">
+      <span class="lbl">이 날 기록</span>
+      <b id="ttEditTotal">0분</b>
+      <span class="diff" id="ttEditDiff"></span>
+    </div>
+    <div class="field">
+      <label>과목</label>
+      <div class="tt-edit-subj" id="ttEditSubjectList" role="group" aria-label="과목 선택"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="ttEditH">시간</label><input id="ttEditH" type="number" min="0" max="24" step="1" inputmode="numeric" aria-label="시간"></div>
+      <div class="field"><label for="ttEditM">분</label><input id="ttEditM" type="number" min="0" max="59" step="5" inputmode="numeric" aria-label="분"></div>
+    </div>
+    <div class="chips" id="ttEditQuick">
+      <button type="button" class="chip" data-madd="10">+10분</button>
+      <button type="button" class="chip" data-madd="30">+30분</button>
+      <button type="button" class="chip" data-madd="60">+1시간</button>
+      <button type="button" class="chip" data-madd="-10">−10분</button>
+      <button type="button" class="chip" data-madd="clear">지우기</button>
+    </div>
+    <div class="field">
+      <label>24시간 칸 <span class="hint" id="ttEditHourHint">칸을 직접 눌러도 돼요</span></label>
+      <div class="tt-hour-grid" id="ttEditHours" role="group" aria-label="24시간 칸 선택"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn ghost" data-close="ttEdit">취소</button>
+      <button class="btn primary" id="ttEditSave">저장</button>
     </div>
   </div>
 </div>
@@ -1831,6 +1903,7 @@
       <p class="sync-note" id="oauthHint" hidden></p>
       <p class="sync-msg" id="syncMsg" role="status" aria-live="polite"></p>
       <p class="hint" style="text-align:center;margin-top:2px">로그인하지 않아도 기록은 이 기기에 저장돼요</p>
+      <button class="sync-later" id="syncLater" type="button">로그인 없이 마이페이지 · 통계 보기 ›</button>
     </div>
 
     <!-- 로그인 후 -->
@@ -1843,6 +1916,12 @@
         </div>
       </div>
       <div class="sync-line" id="syncLine" role="status" aria-live="polite" data-state="idle">☁️ 로그인됨</div>
+      <div class="acct-link" id="googleLinkRow" hidden>
+        <button class="btn ghost" id="googleLink" type="button"><span class="gi" aria-hidden="true">G</span>Google 계정 연동하기</button>
+        <span class="hint">이메일로 가입한 계정이에요. Google을 연동하면 다음부터 Google로도 로그인할 수 있어요.</span>
+      </div>
+      <div class="acct-linked" id="googleLinked" hidden>✅ Google 계정 연동됨</div>
+      <p class="sync-msg" id="syncLinkMsg" role="status" aria-live="polite"></p>
       <div class="sheet-actions" style="margin-top:12px">
         <button class="btn ghost" id="syncSignOut" type="button">로그아웃</button>
         <button class="btn primary" id="syncNow" type="button">지금 동기화</button>
@@ -1993,6 +2072,7 @@
       master: [],
       todos: {},
       slots: {},
+      extras: {},
       todoCats: ['공부', '할일'],
       pet: { animal: 'tiger', name: '두근', minutes: {} }
     };
@@ -2071,8 +2151,7 @@
         id: String(t.id || ('t' + uid())), text: String(t.text).slice(0, 120), done: !!t.done, cat: String(t.cat || '공부')
       }));
     });
-    if (!out.slots || typeof out.slots !== 'object' || Array.isArray(out.slots)) out.slots = {};
-    Object.keys(out.slots).forEach((k) => {
+    if (!out.slots || typeof out.slots !== 'object' || Array.isArray(out.slots)) out.slots = {};    Object.keys(out.slots).forEach((k) => {
       if (!isKey(k) || !out.slots[k] || typeof out.slots[k] !== 'object' || Array.isArray(out.slots[k])) { delete out.slots[k]; return; }
       const day = out.slots[k];
       Object.keys(day).forEach((sid) => {
@@ -2081,6 +2160,18 @@
         if (clean.length) day[sid] = clean; else delete day[sid];
       });
       if (!Object.keys(day).length) delete out.slots[k];
+    });
+    /* 수동 기록의 남은 분(0~59) */
+    if (!out.extras || typeof out.extras !== 'object' || Array.isArray(out.extras)) out.extras = {};
+    Object.keys(out.extras).forEach((k) => {
+      if (!isKey(k) || !out.extras[k] || typeof out.extras[k] !== 'object' || Array.isArray(out.extras[k])) { delete out.extras[k]; return; }
+      const day = out.extras[k];
+      Object.keys(day).forEach((sid) => {
+        const v = Math.round(Number(day[sid]));
+        if (!isFinite(v) || v <= 0) { delete day[sid]; return; }
+        day[sid] = Math.min(59, v);
+      });
+      if (!Object.keys(day).length) delete out.extras[k];
     });
     if (!Array.isArray(out.todoCats) || !out.todoCats.length) out.todoCats = ['공부', '할일'];
     out.todoCats = out.todoCats.map((c) => String(c).slice(0, 12)).filter(Boolean);
@@ -2306,6 +2397,7 @@
     var signedIn = !!cloud.session;
     var banner = $('syncBanner');
     if (banner) banner.hidden = signedIn || cloud.meta.dismissed;
+    if (typeof renderAccountChip === 'function') renderAccountChip();
 
     var chip = $('statsSync');
     if (chip) {
@@ -2327,14 +2419,105 @@
     if (signedIn) {
       var em = $('acctEmail'), pv = $('acctProvider'), uid = $('acctUidShort'), line = $('syncLine'), now = $('syncNow');
       if (em) em.textContent = (cloud.user && cloud.user.email) || '로그인됨';
-      if (pv) pv.textContent = cloudProviderName();
+      var hasGoogle = cloudHasGoogle();
+      if (pv) pv.textContent = hasGoogle && cloudProviderName() === '이메일' ? '이메일 · Google' : cloudProviderName();
       if (uid) uid.textContent = cloud.user && cloud.user.id ? '· ' + String(cloud.user.id).slice(0, 8) : '';
       if (line) {
         line.textContent = cloudStatusText();
         line.setAttribute('data-state', cloud.status === 'error' ? 'error' : cloud.status === 'syncing' ? 'pending' : 'ok');
       }
       if (now) now.disabled = cloud.status === 'syncing';
+      var linkRow = $('googleLinkRow'), linkDone = $('googleLinked');
+      if (linkRow) linkRow.hidden = hasGoogle;
+      if (linkDone) linkDone.hidden = !hasGoogle;
     }
+  }
+
+  /* ---------- Google 계정 연동 ---------- */
+  function cloudHasGoogle() {
+    var u = cloud.user;
+    if (!u) return false;
+    var ids = Array.isArray(u.identities) ? u.identities : [];
+    if (ids.some(function (i) { return i && i.provider === 'google'; })) return true;
+    var am = u.app_metadata || {};
+    if (am.provider === 'google') return true;
+    return Array.isArray(am.providers) && am.providers.indexOf('google') >= 0;
+  }
+
+  function cloudLinkMsg(text, ok) {
+    var el = $('syncLinkMsg');
+    if (!el) return;
+    el.textContent = text || '';
+    el.classList.toggle('ok', !!ok);
+  }
+
+  /* 연동 뒤 돌아왔을 때 최신 identities를 다시 읽어 화면을 맞춘다 */
+  function cloudRefreshUser() {
+    if (!cloud.client || !cloud.client.auth || !cloud.session) return Promise.resolve(false);
+    var job;
+    try { job = cloud.client.auth.getUser(); } catch (e) { return Promise.resolve(false); }
+    return Promise.resolve(job).then(function (res) {
+      var u = res && res.data ? res.data.user : null;
+      if (u) {
+        cloud.user = u;
+        if (cloud.session) cloud.session.user = u;
+        cloudRender();
+      }
+      return true;
+    }).catch(function () { return false; });
+  }
+
+  function cloudLinkGoogle() {
+    if (!cloud.client || !cloud.session) { toast('먼저 로그인해 주세요'); return; }
+    if (cloudHasGoogle()) { toast('✅ Google 계정 연동됨'); return; }
+    var auth = cloud.client.auth || {};
+    if (typeof auth.linkIdentity !== 'function') {
+      cloudLinkMsg('지금 불러온 라이브러리에는 계정 연동 기능이 없어요. 앱을 새로고침한 뒤 다시 시도해 주세요.');
+      return;
+    }
+    var redirectTo = CLOUD_REDIRECT || (location.origin + location.pathname);
+    var btn = $('googleLink');
+    if (btn) { btn.disabled = true; btn.textContent = 'Google로 이동 중…'; }
+    cloudLinkMsg('');
+    var restore = function () {
+      if (!btn) return;
+      btn.disabled = false;
+      btn.innerHTML = '<span class="gi" aria-hidden="true">G</span>Google 계정 연동하기';
+    };
+    var job;
+    try {
+      job = auth.linkIdentity({ provider: 'google', options: { redirectTo: redirectTo } });
+    } catch (err) {
+      job = Promise.reject(err);
+    }
+    Promise.resolve(job).then(function (res) {
+      if (res && res.error) throw res.error;
+      restore();
+      return cloudRefreshUser();
+    }).then(function () {
+      if (cloudHasGoogle()) {
+        cloudLinkMsg('✅ Google 계정 연동됨', true);
+        toast('✅ Google 계정 연동됨');
+      } else {
+        cloudLinkMsg('Google 창에서 연동을 마친 뒤 이 화면으로 돌아오면 완료돼요.', true);
+      }
+    }).catch(function (err) {
+      restore();
+      var all = cloudText(err) + ' ' + cloudCode(err);
+      if (/manual.?link/i.test(all)) {
+        var tip = "Supabase → Authentication → Settings에서 'Enable manual linking'을 켜면 연동돼요!";
+        cloudLinkMsg(tip);
+        toast(tip, 6200);
+      } else if (/already|identity .{0,20}exists|is linked|linked to/i.test(all)) {
+        cloudLinkMsg('✅ Google 계정 연동됨', true);
+        toast('✅ Google 계정 연동됨');
+        cloudRefreshUser();
+      } else {
+        var m = 'Google 연동을 시작하지 못했어요 · ' + (cloudText(err) || '잠시 후 다시 시도해 주세요');
+        cloudLinkMsg(m);
+        toast(m, 5200);
+      }
+    });
   }
 
   function cloudMsg(text, ok) {
@@ -2380,6 +2563,10 @@
     });
     var out = $('syncSignOut');
     if (out) out.addEventListener('click', cloudSignOut);
+    var gl = $('googleLink');
+    if (gl) gl.addEventListener('click', cloudLinkGoogle);
+    var later = $('syncLater');
+    if (later) later.addEventListener('click', function () { closeSheet('syncSheet'); openStats(); });
     var flush = function () {
       if (!cloud.pushTimer || !cloud.session) return;
       clearTimeout(cloud.pushTimer);
@@ -2415,6 +2602,7 @@
     }
     cloudLoadProviders();
     if (cloud.session) {
+      cloudRefreshUser();
       if (cloud.pullFor !== (cloud.session.user && cloud.session.user.id)) cloudSync({ first: true, manual: true });
       else cloudSync({ manual: false });
     }
@@ -2811,8 +2999,28 @@
     Object.keys(day).forEach((sid) => { if (Array.isArray(day[sid])) day[sid].forEach((h) => { if (h >= 0 && h < 24) set.add(h); }); });
     return Array.from(set).sort((a, b) => a - b);
   }
-  function dayMinutes(dateKey) { return dayHours(dateKey).length * 60; }
-  function subjectMinutes(dateKey, sid) { return subjectHours(dateKey, sid).length * 60; }
+  /* 수동 기록의 ‘남은 분’ — 시간 칸(60분)에 더해지는 0~59분.
+     예) 1시간 20분 = 1시 칸 + 20분. TIMELINE ＋ 시트에서만 바뀐다. */
+  function subjectExtraMinutes(dateKey, sid) {
+    const d = cert().extras && cert().extras[dateKey];
+    const v = d ? Number(d[sid]) : 0;
+    return isFinite(v) && v > 0 ? Math.min(59, Math.round(v)) : 0;
+  }
+  function dayExtraMinutes(dateKey) {
+    const d = cert().extras && cert().extras[dateKey];
+    if (!d) return 0;
+    return Object.keys(d).reduce((n, sid) => n + subjectExtraMinutes(dateKey, sid), 0);
+  }
+  function setSubjectExtraMinutes(dateKey, sid, min) {
+    const m = Math.max(0, Math.min(59, Math.round(Number(min) || 0)));
+    if (!cert().extras) cert().extras = {};
+    if (!cert().extras[dateKey]) cert().extras[dateKey] = {};
+    const day = cert().extras[dateKey];
+    if (m) day[sid] = m; else delete day[sid];
+    if (!Object.keys(day).length) delete cert().extras[dateKey];
+  }
+  function dayMinutes(dateKey) { return dayHours(dateKey).length * 60 + dayExtraMinutes(dateKey); }
+  function subjectMinutes(dateKey, sid) { return subjectHours(dateKey, sid).length * 60 + subjectExtraMinutes(dateKey, sid); }
   function setBlock(dateKey, sid, hour, on) {
     if (!cert().days[dateKey]) cert().days[dateKey] = {};
     const day = cert().days[dateKey];
@@ -2882,8 +3090,8 @@
   function streakDays() {
     let n = 0;
     let k = todayKey();
-    if (!dayHours(k).length && !cert().photos[k]) k = addDays(k, -1);
-    while (dayHours(k).length || cert().photos[k]) { n++; k = addDays(k, -1); }
+    if (!(dayMinutes(k) > 0) && !cert().photos[k]) k = addDays(k, -1);
+    while (dayMinutes(k) > 0 || cert().photos[k]) { n++; k = addDays(k, -1); }
     return n;
   }
   function photoStreak() {
@@ -3281,8 +3489,7 @@
     $('certBtnName').textContent = c.name;
     $('ddayValue').textContent = ddayText(c.examDate);
     $('ddayPill').classList.toggle('past', diffDays(todayKey(), c.examDate) < 0);
-    $('myName').textContent = state.nickname;
-    $('myAvatar').textContent = (state.nickname || '오').trim().charAt(0) || '오';
+    renderAccountChip();
     $('certMenuList').innerHTML = state.certs.map((x) =>
       '<button class="mi' + (x.id === c.id ? ' on' : '') + '" role="menuitem" data-cert="' + esc(x.id) + '">' +
         '<span class="nm">' + esc(x.name) + '</span>' +
@@ -3449,21 +3656,62 @@
     renderHero();
     renderCalendar();
     renderCards();
-    $('myName').textContent = state.nickname;
+    renderAccountChip();
+  }
+
+  /* 헤더 계정 칩 — 로그인 전에는 ‘로그인’(누르면 로그인 시트),
+     로그인 뒤에는 닉네임(누르면 통계·계정 시트) */
+  function renderAccountChip() {
+    const btn = $('myBtn');
+    if (!btn) return;
+    const signedIn = !!(typeof cloud !== 'undefined' && cloud && cloud.session);
+    const nick = (state.nickname || '오뇨님');
+    $('myName').textContent = signedIn ? nick : '로그인';
+    $('myAvatar').textContent = signedIn ? (nick.trim().charAt(0) || '오') : '👤';
+    btn.classList.toggle('guest', !signedIn);
+    btn.setAttribute('aria-label', signedIn ? '마이페이지 · 계정 열기' : '로그인 · 클라우드 동기화');
+    btn.setAttribute('title', signedIn ? nick + ' · 마이페이지' : '로그인하고 다른 기기와 동기화');
   }
 
   /* =========================================================
-     집중모드
+     집중모드 (Tody time)
+     ---------------------------------------------------------
+     폰에서 화면을 꺼도 · 앱을 바꿔도 시간이 계속 흘러야 하므로
+     진행 중인 세션을 통째로 localStorage에 두고,
+     경과 시간은 항상 epoch 시각(startedAt)으로 계산한다.
+     → setInterval은 ‘보여줄 때 다시 그리는’ 역할만 한다.
      ========================================================= */
   const FOCUS_KEY = 'studyTracker.focus';
   let focus = null;
   let focusTimer = null;
+  let lastFocusTick = 0;
   let pickSubject = '';
+
+  /* 세션 모양: { certId, subjectId, startedAt, pausedAccumMs, running, dateKey }
+     (예전 저장 형식 acc/paused/startedDate도 그대로 이어받는다) */
+  function normalizeFocus(f) {
+    if (!f || typeof f !== 'object' || !f.subjectId) return null;
+    const startedAt = Number(f.startedAt);
+    if (!isFinite(startedAt) || startedAt <= 0) return null;
+    const rawAcc = f.pausedAccumMs != null ? f.pausedAccumMs : f.acc;
+    const acc = Number(rawAcc);
+    const running = typeof f.running === 'boolean' ? f.running : !f.paused;
+    const dk = isKey(f.dateKey) ? f.dateKey : (isKey(f.startedDate) ? f.startedDate : toKey(new Date(startedAt)));
+    return {
+      certId: String(f.certId || ''),
+      subjectId: String(f.subjectId),
+      startedAt: startedAt,
+      pausedAccumMs: Math.max(0, isFinite(acc) ? acc : 0),
+      running: !!running,
+      dateKey: dk
+    };
+  }
 
   function loadFocus() {
     let f = null;
     try { f = JSON.parse(store.getItem(FOCUS_KEY) || 'null'); } catch (e) { f = null; }
-    if (!f || typeof f !== 'object' || !f.subjectId || f.certId !== cert().id) f = null;
+    f = normalizeFocus(f);
+    if (!f || f.certId !== cert().id) f = null;
     focus = f;
   }
   function saveFocus() {
@@ -3472,11 +3720,12 @@
       else store.removeItem(FOCUS_KEY);
     } catch (e) {}
   }
+  /* 지난 시간 = 멈춰 있던 누적분 + (달리는 중이면) 지금 - 시작 시각 */
   function focusElapsedMs() {
     if (!focus) return 0;
-    return Math.max(0, (focus.acc || 0) + (focus.paused ? 0 : Date.now() - (focus.startedAt || Date.now())));
+    return Math.max(0, focus.pausedAccumMs + (focus.running ? Date.now() - focus.startedAt : 0));
   }
-  function focusRunning() { return !!focus && !focus.paused; }
+  function focusRunning() { return !!focus && !!focus.running; }
 
   let pickNewIcon = SUBJECT_ICONS[0];
   function renderPick() {
@@ -3548,6 +3797,7 @@
   function paintFocus() {
     const scr = $('focusScreen');
     const sec = Math.floor(focusElapsedMs() / 1000);
+    lastFocusTick = Date.now();
     const parts = fmtClock(sec).split(':');
     $('focusClock').innerHTML = '<span class="ch">' + parts[0] + '</span>:<span class="cm">' + parts[1] + '</span>:<span class="csec">' + parts[2] + '</span>';
     const running = focusRunning();
@@ -3564,6 +3814,7 @@
   function openFocusScreen() {
     $('focusScreen').classList.add('open');
     document.body.style.overflow = 'hidden';
+    lastFocusTick = Date.now();
     paintFocus();
     clearInterval(focusTimer);
     focusTimer = setInterval(paintFocus, 500);
@@ -3575,11 +3826,34 @@
     if (!document.querySelector('.sheet.open') && !document.querySelector('.coll.open')) document.body.style.overflow = '';
   }
 
+  /* 화면·앱으로 돌아왔을 때: 죽어 있던 인터벌을 되살리고 바로 다시 그린다.
+     setInterval은 백그라운드에서 멈출 수 있지만 경과 시간은 시각 계산이라 이미 맞다. */
+  function resumeFocusTick() {
+    if (!focus) return;
+    const now = Date.now();
+    const gap = lastFocusTick ? now - lastFocusTick : 0;
+    lastFocusTick = now;
+    if ($('focusScreen').classList.contains('open')) {
+      paintFocus();
+      if (!focusTimer) focusTimer = setInterval(paintFocus, 500);
+    }
+    if (focus.running && gap > 60000) {
+      toast('화면이 꺼진 동안에도 계속 쟀어요 · ' + fmtDur(Math.max(1, Math.round(focusElapsedMs() / 60000))), 3600);
+    }
+  }
+
   function startFocus(subjectId) {
     if (focus && focusElapsedMs() > 3000) {
       if (!window.confirm('이미 진행 중인 Tody time이 있어요. 지금까지의 시간을 버리고 새로 시작할까요?')) return;
     }
-    focus = { certId: cert().id, subjectId: subjectId, startedAt: Date.now(), acc: 0, paused: false, startedDate: todayKey() };
+    focus = {
+      certId: cert().id,
+      subjectId: subjectId,
+      startedAt: Date.now(),
+      pausedAccumMs: 0,
+      running: true,
+      dateKey: todayKey()
+    };
     saveFocus();
     closeSheet('pickSheet');
     openFocusScreen();
@@ -3588,14 +3862,14 @@
 
   function togglePause() {
     if (!focus) return;
-    if (focus.paused) {
-      focus.paused = false;
-      focus.startedAt = Date.now();
-      toast('다시 집중을 이어가요');
-    } else {
-      focus.acc = focusElapsedMs();
-      focus.paused = true;
+    if (focus.running) {
+      focus.pausedAccumMs = focusElapsedMs();
+      focus.running = false;
       toast('잠시 쉬어요 · 회색 화면은 멈춘 상태예요');
+    } else {
+      focus.startedAt = Date.now();
+      focus.running = true;
+      toast('다시 집중을 이어가요');
     }
     saveFocus();
     paintFocus();
@@ -3606,8 +3880,8 @@
     const ms = focusElapsedMs();
     const sec = Math.floor(ms / 1000);
     if (sec < 5) {
-      focus.acc = ms;
-      focus.paused = true;
+      focus.pausedAccumMs = ms;
+      focus.running = false;
       saveFocus();
       paintFocus();
       toast('5초 이상 집중해야 기록할 수 있어요', 3200);
@@ -3621,12 +3895,19 @@
     const start = end - ms;
     const sd = new Date(start);
     const ed = new Date(end);
-    const dateKey = toKey(sd);
+    const startKey = focus.dateKey || toKey(sd);
+    const endKey = toKey(ed);
     const fromH = sd.getHours();
-    let toH = ed.getHours();
-    if (toKey(ed) !== toKey(sd)) toH = 23;
-    const filled = fillHours(dateKey, subjectId, fromH, toH);
-    fillSlots(dateKey, subjectId, start, end);
+    const toH = ed.getHours();
+    /* 자정을 넘긴 세션은 시작한 날 23시까지 + 끝난 날 0시부터 나눠 기록 */
+    let filled = 0;
+    if (startKey === endKey) {
+      filled = fillHours(startKey, subjectId, fromH, toH);
+    } else {
+      filled = fillHours(startKey, subjectId, fromH, 23) + fillHours(endKey, subjectId, 0, toH);
+    }
+    fillSlots(startKey, subjectId, start, end);
+    if (endKey !== startKey) fillSlots(endKey, subjectId, start, end);
     // 펫 성장
     if (!c.pet.minutes[c.pet.animal]) c.pet.minutes[c.pet.animal] = 0;
     c.pet.minutes[c.pet.animal] += minutes;
@@ -4292,16 +4573,39 @@
      타이머 통계
      ========================================================= */
   let statMode = 'day';
+  let statSubject = 'all';   /* 'all' = 전체 과목 합산, 그 외 = 과목 id */
+
+  /* 과목 필터를 반영한 하루 공부 시간 */
+  function statMinutes(k) {
+    return statSubject === 'all' ? dayMinutes(k) : subjectMinutes(k, statSubject);
+  }
+
+  function renderStatSubjects() {
+    const c = cert();
+    if (statSubject !== 'all' && !c.subjects.some((s) => s.id === statSubject)) statSubject = 'all';
+    const items = [{ id: 'all', name: '전체', icon: '📊' }].concat(c.subjects.map((s, i) => ({ id: s.id, name: s.name || '(이름 없음)', icon: subjectIconOf(s, i) })));
+    $('statSubjects').innerHTML = items.map((x) =>
+      '<button type="button" class="chip' + (x.id === statSubject ? ' on' : '') + '" data-statsubj="' + esc(x.id) + '" aria-pressed="' + (x.id === statSubject ? 'true' : 'false') + '">' +
+      '<span aria-hidden="true">' + esc(x.icon) + '</span>' + esc(x.name) + '</button>').join('');
+  }
 
   function rangeTotals(days) {
     const c = cert();
     const by = {};
     let total = 0;
     days.forEach((k) => {
-      total += dayMinutes(k);
+      total += statMinutes(k);
+      if (statSubject !== 'all') {
+        by[statSubject] = (by[statSubject] || 0) + subjectMinutes(k, statSubject);
+        return;
+      }
       Object.keys(c.days[k] || {}).forEach((sid) => {
         const arr = c.days[k][sid];
         if (Array.isArray(arr)) by[sid] = (by[sid] || 0) + arr.length * 60;
+      });
+      Object.keys((c.extras || {})[k] || {}).forEach((sid) => {
+        const m = Number(c.extras[k][sid]) || 0;
+        if (m > 0) by[sid] = (by[sid] || 0) + m;
       });
     });
     const rows = c.subjects.map((s, i) => ({ name: s.name || '(이름 없음)', min: by[s.id] || 0, color: SUBJ_COLORS[i % SUBJ_COLORS.length] }))
@@ -4329,7 +4633,7 @@
       return Array.from({ length: 7 }, (_, i) => {
         const k = addDays(todayKey(), i - 6);
         const d = fromKey(k);
-        return { label: d.getDate() + '일', min: dayMinutes(k) };
+        return { label: d.getDate() + '일', min: statMinutes(k) };
       });
     }
     if (statMode === 'week') {
@@ -4337,7 +4641,7 @@
         const anchor = addDays(todayKey(), (i - 5) * 7);
         const ds = weekDates(anchor);
         const d = fromKey(ds[0]);
-        return { label: (d.getMonth() + 1) + '/' + d.getDate(), min: ds.reduce((s, k) => s + dayMinutes(k), 0) };
+        return { label: (d.getMonth() + 1) + '/' + d.getDate(), min: ds.reduce((s, k) => s + statMinutes(k), 0) };
       });
     }
     const out = [];
@@ -4347,7 +4651,7 @@
       const y = d.getFullYear(), m = d.getMonth();
       const n = new Date(y, m + 1, 0).getDate();
       let sum = 0;
-      for (let day = 1; day <= n; day++) sum += dayMinutes(y + '-' + pad(m + 1) + '-' + pad(day));
+      for (let day = 1; day <= n; day++) sum += statMinutes(y + '-' + pad(m + 1) + '-' + pad(day));
       out.push({ label: (m + 1) + '월', min: sum });
     }
     return out;
@@ -4384,9 +4688,11 @@
 
   function renderStats() {
     const r = statRange();
+    renderStatSubjects();
     const cur = rangeTotals(r.days);
     const totalMin = cur.total;
-    $('statCap').textContent = r.cap;
+    const subjName = statSubject === 'all' ? '' : subjectName(statSubject);
+    $('statCap').textContent = (subjName ? subjName + ' · ' : '') + r.cap;
     $('statTotal').innerHTML = '<b>' + Math.floor(totalMin / 60) + '</b>시간 <b>' + (totalMin % 60) + '</b>분';
     const sumSubj = cur.rows.reduce((s, x) => s + x.min, 0);
     $('statBar').innerHTML = sumSubj
@@ -4399,16 +4705,16 @@
       : '<div class="hint" style="text-align:center;padding:14px 0">이 기간에는 기록이 없어요</div>';
     const points = trendPoints();
     const prevTotal = statMode === 'day'
-      ? dayMinutes(addDays(todayKey(), -1))
+      ? statMinutes(addDays(todayKey(), -1))
       : statMode === 'week'
-        ? weekDates(addDays(todayKey(), -7)).reduce((s, k) => s + dayMinutes(k), 0)
+        ? weekDates(addDays(todayKey(), -7)).reduce((s, k) => s + statMinutes(k), 0)
         : (function () {
             const now = new Date();
             const d = new Date(now.getFullYear(), now.getMonth() - 1, 1);
             const y = d.getFullYear(), m = d.getMonth();
             const n = new Date(y, m + 1, 0).getDate();
             let sum = 0;
-            for (let day = 1; day <= n; day++) sum += dayMinutes(y + '-' + pad(m + 1) + '-' + pad(day));
+            for (let day = 1; day <= n; day++) sum += statMinutes(y + '-' + pad(m + 1) + '-' + pad(day));
             return sum;
           })();
     const diff = totalMin - prevTotal;
@@ -4424,6 +4730,7 @@
 
   function openStats() {
     statMode = 'day';
+    statSubject = 'all';
     renderStats();
     $('stats').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -4440,6 +4747,12 @@
     statMode = b.dataset.mode;
     renderStats();
   });
+  $('statSubjects').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-statsubj]');
+    if (!b) return;
+    statSubject = b.dataset.statsubj;
+    renderStats();
+  });
 
   /* =========================================================
      홈 이벤트
@@ -4452,7 +4765,10 @@
   $('psClose2').addEventListener('click', closePetStat);
   $('psOpenColl').addEventListener('click', () => { closePetStat(); openCollection(); });
   $('petStat').addEventListener('click', (e) => { if (e.target === $('petStat')) closePetStat(); });
-  $('myBtn').addEventListener('click', openStats);
+  $('myBtn').addEventListener('click', () => {
+    if (typeof cloud !== 'undefined' && cloud && cloud.session) openStats();
+    else cloudOpen();
+  });
   $('petEdit').addEventListener('click', openPetSheet);
   $('petBadge').addEventListener('click', openPetSheet);
   $('ddayPill').addEventListener('click', openDday);
@@ -4824,7 +5140,7 @@
         '<span aria-hidden="true">' + h + '시</span></div>');
     }
     $('ttTimeline').innerHTML = boxes.join('');
-    $('tlWeekLabel').textContent = '24시간 · ' + (k === tk ? '오늘' : prettyDate(k));
+    $('ttAddTime').setAttribute('aria-label', prettyDate(k) + ' 공부 시간 직접 적기');
     const daySids = dayHourSids(k);
     const maxLg = window.innerWidth <= 720 ? 2 : 3;
     const legend = daySids.slice(0, maxLg).map((sid) =>
@@ -4846,10 +5162,175 @@
     $('ttChips').innerHTML = chips.length ? chips.join('') : '<span class="hint">과목별 기록이 여기에 보여요</span>';
   }
 
-  /* 타임라인은 읽기 전용 — 칸을 눌러도 기록이 바뀌지 않는다 (Tody time 세션만 기록) */
+  /* 타임라인은 읽기 전용 — 칸을 눌러도 기록이 바뀌지 않는다 (Tody time 세션 또는 ＋ 시트만 기록) */
   $('ttTimeline').addEventListener('click', (e) => {
     if (!e.target.closest('.tl-box')) return;
-    toast('타임라인은 읽기 전용이에요 · Tody time을 마치면 저절로 채워져요');
+    toast('타임라인은 읽기 전용이에요 · 오른쪽 ＋ 로 직접 적을 수 있어요');
+  });
+
+  /* =========================================================
+     공부 시간 직접 적기 (TIMELINE 헤더 ＋)
+     ---------------------------------------------------------
+     세션을 까먹었거나 잘못 적혔을 때: 과목·시간·24시간 칸을
+     그 자리에서 고친다. 총 시간 = 켜진 시간 칸 × 60 + 남은 분.
+     ========================================================= */
+  let ttManual = null;   /* { sid, dateKey, hours:[], mins, base } */
+
+  function openTimeEdit(sid) {
+    const c = cert();
+    const has = (id) => !!id && c.subjects.some((x) => x.id === id);
+    const pick = has(sid) ? sid : (has(currentEditSubject()) ? currentEditSubject() : (c.subjects[0] ? c.subjects[0].id : ''));
+    if (!pick) { toast('과목을 먼저 추가해 주세요'); return; }
+    ttEditSubject = pick;
+    ttManual = { sid: pick, dateKey: ttDate, hours: subjectHours(ttDate, pick), mins: subjectExtraMinutes(ttDate, pick) };
+    ttManual.base = manualTotal();
+    renderTimeEdit();
+    openSheet('ttEdit');
+  }
+
+  function manualTotal() { return ttManual ? ttManual.hours.length * 60 + ttManual.mins : 0; }
+
+  /* 시간 칸 수를 n칸으로 맞춘다 (늘릴 땐 마지막 칸 다음 시간부터, 없으면 오늘은 지금·평소는 9시부터) */
+  function setManualHoursCount(n) {
+    const hs = ttManual.hours.slice().sort((a, b) => a - b);
+    const want = Math.max(0, Math.min(24, n));
+    while (hs.length > want) hs.pop();
+    while (hs.length < want) {
+      let start;
+      if (hs.length) start = hs[hs.length - 1] + 1;
+      else if (ttManual.dateKey === todayKey()) start = Math.min(23, new Date().getHours()) - want + 1;
+      else start = 9;
+      if (start < 0) start = 0;
+      let next = -1;
+      for (let i = 0; i < 24; i++) {
+        const h = (start + i) % 24;
+        if (hs.indexOf(h) < 0) { next = h; break; }
+      }
+      if (next < 0) break;
+      hs.push(next);
+    }
+    ttManual.hours = hs.sort((a, b) => a - b);
+  }
+
+  /* 총 시간을 직접 지정 — 시간 칸과 남은 분을 함께 맞춘다 */
+  function setManualTotal(min) {
+    const total = Math.max(0, Math.min(24 * 60 + 59, Math.round(Number(min) || 0)));
+    ttManual.mins = total % 60;
+    setManualHoursCount(Math.floor(total / 60));
+  }
+
+  function renderTimeEditSubject() {
+    const c = cert();
+    const s = c.subjects.find((x) => x.id === ttManual.sid);
+    $('ttEditSub').textContent = prettyDate(ttManual.dateKey) + (ttManual.dateKey === todayKey() ? ' · 오늘' : '') +
+      (s ? ' · ' + (s.name || '(이름 없음)') : '');
+    $('ttEditSubjectList').innerHTML = c.subjects.map((x, i) =>
+      '<button type="button" class="chip' + (x.id === ttManual.sid ? ' on' : '') + '" data-mpick="' + esc(x.id) + '" aria-pressed="' + (x.id === ttManual.sid ? 'true' : 'false') + '">' +
+      '<span aria-hidden="true">' + esc(subjectIconOf(x, i)) + '</span> ' + esc(x.name || '(이름 없음)') + '</button>').join('');
+  }
+
+  function renderTimeEditHours() {
+    const c = cert();
+    const day = c.days[ttManual.dateKey] || {};
+    const col = subjectColor(ttManual.sid);
+    const boxes = [];
+    for (let h = 0; h < 24; h++) {
+      const on = ttManual.hours.indexOf(h) >= 0;
+      const other = c.subjects.find((x) => x.id !== ttManual.sid && Array.isArray(day[x.id]) && day[x.id].indexOf(h) >= 0);
+      const style = on ? ' style="background:' + tint(col, .34) + ';border-color:' + tint(col, .55) + '"' : '';
+      boxes.push('<button type="button" class="tt-hour' + (on ? ' on' : '') + '" data-hour="' + h + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
+        ' aria-label="' + h + '시' + (on ? ' 선택됨' : '') + '"' + style + '>' + h + '시' +
+        (other ? '<i class="oth" style="background:' + subjectColor(other.id) + '" aria-hidden="true"></i>' : '') + '</button>');
+    }
+    $('ttEditHours').innerHTML = boxes.join('');
+  }
+
+  /* skip: 사용자가 지금 타이핑한 입력칸은 건드리지 않는다 */
+  function syncTimeEditNumbers(skip) {
+    const total = manualTotal();
+    if (skip !== 'h') $('ttEditH').value = String(Math.floor(total / 60));
+    if (skip !== 'm') $('ttEditM').value = String(total % 60);
+    $('ttEditTotal').textContent = fmtDur(total);
+    const diff = total - (ttManual.base || 0);
+    const d = $('ttEditDiff');
+    d.textContent = diff > 0 ? '+' + fmtDur(diff) : diff < 0 ? '−' + fmtDur(-diff) : '그대로';
+    d.className = 'diff' + (diff > 0 ? ' up' : diff < 0 ? ' down' : '');
+  }
+
+  function renderTimeEdit() {
+    renderTimeEditSubject();
+    renderTimeEditHours();
+    syncTimeEditNumbers();
+  }
+
+  $('ttAddTime').addEventListener('click', () => openTimeEdit(currentEditSubject()));
+
+  $('ttEditSubjectList').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mpick]');
+    if (!b || !ttManual) return;
+    ttManual.sid = b.dataset.mpick;
+    ttManual.hours = subjectHours(ttManual.dateKey, ttManual.sid);
+    ttManual.mins = subjectExtraMinutes(ttManual.dateKey, ttManual.sid);
+    ttManual.base = manualTotal();
+    renderTimeEdit();
+  });
+
+  $('ttEditHours').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-hour]');
+    if (!b || !ttManual) return;
+    const h = Number(b.dataset.hour);
+    const i = ttManual.hours.indexOf(h);
+    if (i >= 0) ttManual.hours.splice(i, 1); else ttManual.hours.push(h);
+    ttManual.hours.sort((a, b2) => a - b2);
+    renderTimeEditHours();
+    syncTimeEditNumbers();
+  });
+
+  $('ttEditQuick').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-madd]');
+    if (!b || !ttManual) return;
+    const v = b.dataset.madd;
+    if (v === 'clear') setManualTotal(0);
+    else setManualTotal(manualTotal() + Number(v));
+    renderTimeEditHours();
+    syncTimeEditNumbers();
+  });
+
+  $('ttEditH').addEventListener('input', () => {
+    if (!ttManual) return;
+    const h = Math.max(0, Math.min(24, Math.round(Number($('ttEditH').value) || 0)));
+    setManualTotal(h * 60 + ttManual.mins);
+    renderTimeEditHours();
+    syncTimeEditNumbers('h');
+  });
+  $('ttEditM').addEventListener('input', () => {
+    if (!ttManual) return;
+    const m = Math.max(0, Math.min(59, Math.round(Number($('ttEditM').value) || 0)));
+    ttManual.mins = m;
+    syncTimeEditNumbers('m');
+  });
+  ['ttEditH', 'ttEditM'].forEach((id) => $(id).addEventListener('blur', () => { if (ttManual) syncTimeEditNumbers(); }));
+
+  $('ttEditSave').addEventListener('click', () => {
+    if (!ttManual) { closeSheet('ttEdit'); return; }
+    const c = cert();
+    const sid = ttManual.sid;
+    const k = ttManual.dateKey;
+    if (!c.subjects.some((x) => x.id === sid)) { closeSheet('ttEdit'); return; }
+    const sname = subjectName(sid);
+    const target = ttManual.hours.slice().sort((a, b) => a - b);
+    subjectHours(k, sid).forEach((h) => { if (target.indexOf(h) < 0) setBlock(k, sid, h, false); });
+    target.forEach((h) => setBlock(k, sid, h, true));
+    setSubjectExtraMinutes(k, sid, ttManual.mins);
+    const total = subjectMinutes(k, sid);
+    const changed = total !== (ttManual.base || 0);
+    closeSheet('ttEdit');
+    save(true);
+    renderTimetable();
+    renderHome();
+    toast(changed
+      ? sname + ' · ' + prettyDate(k) + ' ' + fmtDur(total) + '으로 적었어요'
+      : sname + ' · ' + prettyDate(k) + ' 기록은 그대로예요');
   });
 
   /* ---------- 과목 탭 → Tody time 시작 확인 팝업 ---------- */
@@ -4998,10 +5479,12 @@
   $('ttWeekPrev').addEventListener('click', () => { ttDate = addDays(ttDate, -7); renderTimetable(); });
   $('ttWeekNext').addEventListener('click', () => { ttDate = addDays(ttDate, 7); renderTimetable(); });
   $('ttClear').addEventListener('click', () => {
-    if (!cert().days[ttDate] && !(cert().slots && cert().slots[ttDate])) { toast('지울 기록이 없어요'); return; }
+    const hasExtra = !!(cert().extras && cert().extras[ttDate]);
+    if (!cert().days[ttDate] && !(cert().slots && cert().slots[ttDate]) && !hasExtra) { toast('지울 기록이 없어요'); return; }
     if (!window.confirm(prettyDate(ttDate) + ' 기록을 모두 지울까요?')) return;
     delete cert().days[ttDate];
     if (cert().slots) delete cert().slots[ttDate];
+    if (cert().extras) delete cert().extras[ttDate];
     save(true);
     renderTimetable();
     renderHome();
@@ -5389,10 +5872,20 @@
     renderAll();
   });
   window.addEventListener('pagehide', () => {
-    if (focus && !focus.paused) { focus.acc = focusElapsedMs(); focus.paused = true; saveFocus(); }
+    /* 화면을 떠나도 멈추지 않는다 — 세션을 그대로 저장만 해 두고, 돌아오면 경과 시간이 이어진다 */
+    if (focus) saveFocus();
     if (saveTimer) saveNow();
   });
-  document.addEventListener('visibilitychange', () => { if (document.hidden && saveTimer) saveNow(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (focus) saveFocus();
+      if (saveTimer) saveNow();
+      return;
+    }
+    resumeFocusTick();
+  });
+  window.addEventListener('pageshow', () => { resumeFocusTick(); });
+  window.addEventListener('focus', () => { resumeFocusTick(); });
 
   loadFocus();
   renderAll();
@@ -5407,6 +5900,9 @@
     openPetStat: openPetStat, closePetStat: closePetStat,
     openDetail: openDetail, openPicker: openPicker, petSVG: petSVG, flowerSVG: flowerSVG,
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
+    focusState: () => focus, resumeFocusTick: resumeFocusTick, paintFocus: paintFocus,
+    openTimeEdit: openTimeEdit, manualState: () => ttManual,
+    subjectMinutes: subjectMinutes, subjectExtra: subjectExtraMinutes, dayMinutes: dayMinutes,
     addMinutes: (id, min) => { const c = cert(); c.pet.minutes[id || c.pet.animal] = (c.pet.minutes[id || c.pet.animal] || 0) + min; saveNow(); renderAll(); }
   };
 })();
