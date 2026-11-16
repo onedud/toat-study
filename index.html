@@ -10,6 +10,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Tody">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
 <style>
   :root{
     /* ---- 민트 파스텔 ---- */
@@ -399,8 +402,20 @@
   .chip.on{background:var(--mint);border-color:var(--mint);color:#fff;box-shadow:0 4px 10px rgba(24,210,155,.25)}
   .chip.on b{color:rgba(255,255,255,.8)}
 
-  /* ---------- 집중모드 과목 선택 ---------- */
-  .pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  /* ---------- Tody time 시작 확인 팝업 ---------- */
+  .sheet.ttstart{align-items:center;padding:24px 26px}
+  .ttstart-card{
+    position:relative;width:100%;max-width:304px;border-radius:22px;background:#fff;border:1px solid var(--line);
+    padding:24px 18px 16px;text-align:center;box-shadow:0 22px 54px rgba(9,52,40,.26);animation:ttStartIn .18s ease-out
+  }
+  @keyframes ttStartIn{from{transform:scale(.96);opacity:0}to{transform:none;opacity:1}}
+  .ttstart-title{font-size:14.5px;font-weight:900;line-height:1.55;letter-spacing:-.01em;color:#173B32;word-break:keep-all}
+  .ttstart-title .em{font-size:19px;line-height:1;margin-right:3px;vertical-align:-2px}
+  .ttstart-sub{font-size:11.5px;font-weight:700;line-height:1.5;color:var(--dim);margin-top:7px;word-break:keep-all}
+  .ttstart-actions{display:flex;gap:8px;margin-top:17px}
+  .ttstart-actions .btn{flex:1;padding:11px 8px;font-size:13px;text-align:center}
+
+  /* ---------- 집중모드 과목 선택 ---------- */  .pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
   .pick-sub{
     display:flex;align-items:center;gap:8px;padding:13px 12px;border-radius:15px;border:1px solid var(--line);
     background:#FBFEFD;font-size:13.5px;font-weight:800;color:#20352F;text-align:left;min-width:0
@@ -639,14 +654,16 @@
   .add-subject{margin-top:10px;width:100%;padding:9px;border-radius:11px;border:1px dashed var(--mint-line);color:var(--mint-deep);font-size:12.5px;font-weight:800;background:#fff}
   .tt-tip{font-size:11px;color:var(--dim);margin-top:9px;padding:0 4px;line-height:1.55}
 
-  /* ---------- 2열 타임테이블 (TIMERS | TIMELINE) ---------- */
-  .tt-split{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;align-items:stretch}
-  .tt-timers,.tt-timeline{padding:10px 6px 9px;min-width:0}
+  /* ---------- 2열 타임테이블 (TIMERS | TIMELINE) · 320px부터 좌우 2단 유지 ---------- */
+  .tt-split{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:6px;margin-top:10px;align-items:stretch}
+  .tt-timers,.tt-timeline{padding:9px 6px 8px;min-width:0}
+  .tt-timers{display:flex;flex-direction:column}
+  .tt-timers #ttQuickList{flex:1;min-width:0}
   .split-head{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:0 3px 6px}
   .split-head > span:first-child{font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--dim)}
   .split-edit{font-size:9.5px;font-weight:900;color:var(--mint-deep);background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:7px;padding:2px 6px;flex:none}
-  .split-sub{font-size:8.5px;font-weight:800;color:#A7B8B2}
-  .tt-qrow{display:flex;align-items:center;gap:4px;padding:5px 3px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:background .15s,border-color .15s}
+  .split-sub{font-size:8.5px;font-weight:800;color:#A7B8B2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;text-align:right}
+  .tt-qrow{display:flex;align-items:center;gap:4px;padding:4px 3px;border-radius:9px;border:1px solid transparent;cursor:pointer;transition:background .15s,border-color .15s}
   .tt-qrow:hover{background:var(--card-soft)}
   .tt-qrow.on{background:var(--mint-soft);border-color:var(--mint-line)}
   .tt-qrow .qbolt{width:24px;height:24px;padding:3px;box-shadow:0 3px 8px rgba(230,180,40,.24)}
@@ -682,17 +699,17 @@
   .petstat-actions{display:flex;gap:8px;margin-top:13px}
   .petstat-actions .btn{flex:1}
   .tl-grid{display:flex;flex-direction:column;gap:2px;min-width:0}
-  .tl-row{display:grid;grid-template-columns:24px 1fr;gap:6px;align-items:center;padding:1px 4px;margin:0 -4px;border-radius:8px}
+  .tl-row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:3px;align-items:center;padding:0;margin:0;border-radius:7px}
   .tl-row.now{background:var(--mint-soft)}
-  .tl-hour{font-size:9px;line-height:1;font-weight:800;color:#A9BAB4;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+  .tl-hour{font-size:8px;line-height:1;font-weight:800;color:#A9BAB4;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
   .tl-row.now .tl-hour{color:var(--mint-deep);font-weight:900}
-  .tl-slots{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;min-width:0}
-  .tl-slot{display:block;height:12px;border-radius:3.5px;background:#F1F6F4;transition:background .2s}
+  .tl-slots{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5px;min-width:0}
+  .tl-slot{display:block;height:12px;border-radius:3px;background:#F1F6F4;transition:background .2s}
   .tl-slot.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
   .tl-row.now .tl-slot:not(.on){background:#E5F5EE}
-  .tl-foot{display:flex;align-items:center;gap:6px;margin-top:9px;padding:0 3px;font-size:8.5px;font-weight:800;color:#5C7469;min-width:0}
+  .tl-foot{display:flex;align-items:center;gap:5px;margin-top:8px;padding:0 2px;font-size:8.5px;font-weight:800;color:#5C7469;min-width:0;overflow:hidden}
   .tl-legend{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden}
-  .tl-legend .lg{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-weight:800;color:#5C7469;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+  .tl-legend .lg{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-weight:800;color:#5C7469;white-space:nowrap;max-width:72px;overflow:hidden;text-overflow:ellipsis}
   .tl-legend .lg i{width:6px;height:6px;border-radius:50%;flex:none;display:block}
   .tl-legend .more{font-size:8.5px;color:var(--dim);font-weight:800}
   .tl-foot-hint{margin-left:auto;font-size:7.5px;font-weight:700;color:#A9BAB4;white-space:nowrap}
@@ -917,12 +934,17 @@
   .cal-cell.has-diary .plus{color:#D9C98C}
 
   @media (max-width:360px){
-    .tt-qrow .qrow-sub{display:block;font-size:8px;color:#93A7A0;font-weight:800;margin-top:0;line-height:1.2}
-    .tt-qrow .qrow-time{display:none}
+    .tt-qrow .qrow-sub{display:none}
+    .tt-qrow .qrow-time{font-size:8.5px}
     .tt-qrow .qrow-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .tt-qrow .qbolt{width:22px;height:22px;padding:3px}
     .tt-qrow .qicon{width:22px;height:22px;font-size:12px;border-radius:8px}
-    .tt-qrow{padding:4px 3px;gap:4px}
+    .tt-qrow{padding:4px 2px;gap:3px}
+    .tt-qrow .sdot{display:none}
+    .tt-timers,.tt-timeline{padding:8px 5px 7px}
+    .tt-timeline .split-sub{display:none}
+    .tl-foot-hint{display:none}
+    .tl-legend .lg{max-width:none}
   }
 
   /* ---------- 좁은 화면 ---------- */
@@ -950,10 +972,17 @@
     .pet-art{width:220px}
     .pet-stage{min-height:230px}
     .coll-grid{grid-template-columns:1fr 1fr 1fr}
-    .tt-split{grid-template-columns:1fr 1.05fr}
-    .tl-row{padding:1px 6px;margin:0 -6px}
+    .tt-split{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:10px}
+    .tt-timers,.tt-timeline{padding:12px 10px 11px}
+    .tl-row{padding:0;margin:0}
     .tl-slot{height:14px}
-    .tl-hour{font-size:9.5px}
+    .tl-hour{font-size:9px}
+    .tt-qrow .qrow-name{font-size:11.5px}
+    .tt-qrow .qrow-time{font-size:10px}
+  }
+  @media (max-width:720px){
+    .tl-foot-hint{display:none}
+    .tl-legend .lg{max-width:none}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -1263,9 +1292,6 @@
         <h1><span class="em" aria-hidden="true">⏱️</span>토디테이블</h1>
         <div class="sub" id="ttHeadSub">오늘 0분</div>
       </div>
-      <div class="tools">
-        <button class="mini-round" id="ttFocus" aria-label="Tody time 시작" title="Tody time">⚡</button>
-      </div>
     </div>
 
     <div class="card" style="padding:2px 8px 4px">
@@ -1296,7 +1322,7 @@
         <div class="tl-foot"><span class="tl-legend" id="tlLegend"></span><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
     </div>
-    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽 과목의 ⚡로 <b>Tody time</b>을 시작하고 끝내면, 그 시간이 선택한 날짜의 24시간 타임라인에 10분 단위로 저절로 채워집니다.</p>
+    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작해 끝내면, 그 시간이 선택한 날짜의 24시간 타임라인에 10분 단위로 저절로 채워집니다.</p>
 
     <section class="card tt-summary">
       <div class="tt-sum-label">
@@ -1538,6 +1564,19 @@
     <p class="hint" style="text-align:center;margin-top:12px" id="statsNote">기록은 자동 저장되며, Tody time 완료 시 바로 반영됩니다</p>
   </div>
 </section>
+
+<!-- ================= Tody time 시작 확인 ================= -->
+<div class="sheet ttstart" id="ttStart" role="dialog" aria-modal="true" aria-labelledby="ttStartTitle">
+  <div class="veil" data-close="ttStart"></div>
+  <div class="ttstart-card">
+    <h2 class="ttstart-title" id="ttStartTitle"><span class="em" id="ttStartIcon" aria-hidden="true">📗</span> 과목 Tody time을 시작할까요?</h2>
+    <p class="ttstart-sub">지금 시작하면 타임라인에 그대로 기록돼요</p>
+    <div class="ttstart-actions">
+      <button class="btn ghost" data-close="ttStart" id="ttStartNo">아니요</button>
+      <button class="btn primary" id="ttStartYes">예 (시작하기)</button>
+    </div>
+  </div>
+</div>
 
 <!-- ================= 집중모드 과목 선택 ================= -->
 <div class="sheet" id="pickSheet" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
@@ -4433,7 +4472,6 @@
      홈 이벤트
      ========================================================= */
   $('heroFocus').addEventListener('click', () => openPicker());
-  $('ttFocus').addEventListener('click', () => openPicker());
   $('petBtn').addEventListener('click', openCollection);
   $('petArt').addEventListener('click', openPetStat);
   $('petBubble').addEventListener('click', openQuotes);
@@ -4781,8 +4819,8 @@
     $('ttQuickList').innerHTML = c.subjects.map((s, si) => {
       const m = subjectMinutes(ttDate, s.id);
       const col = subjectColor(s.id);
-      return '<div class="tt-qrow' + (s.id === sel ? ' on' : '') + '" data-tsubject="' + esc(s.id) + '" role="button" tabindex="0" aria-label="' + esc(s.name) + ' 선택">' +
-        '<button class="qicon" data-boost="' + esc(s.id) + '" style="background:' + tint(col, .14) + ';border-color:' + tint(col, .42) + '" aria-label="' + esc(s.name) + ' Tody time 바로 시작" title="Tody time"><span aria-hidden="true">' + subjectIconOf(s, si) + '</span></button>' +
+      return '<div class="tt-qrow' + (s.id === sel ? ' on' : '') + '" data-tsubject="' + esc(s.id) + '" role="button" tabindex="0" aria-label="' + esc(s.name) + ' Tody time 시작 확인">' +
+        '<span class="qicon" style="background:' + tint(col, .14) + ';border-color:' + tint(col, .42) + '" aria-hidden="true">' + subjectIconOf(s, si) + '</span>' +
         '<span class="sdot" style="background:' + col + '"></span>' +
         '<div class="qrow-main"><div class="qrow-name">' + esc(s.name || '(이름 없음)') + '</div>' +
           '<div class="qrow-sub">' + (m ? shortClock(m) : '기록 없음') + '</div></div>' +
@@ -4819,10 +4857,11 @@
     $('ttTimeline').innerHTML = rows.join('');
     $('tlWeekLabel').textContent = '10분 단위 · ' + (k === tk ? '오늘' : prettyDate(k));
     const daySids = daySlotSids(k);
-    const legend = daySids.slice(0, 3).map((sid) =>
+    const maxLg = window.innerWidth <= 720 ? 2 : 3;
+    const legend = daySids.slice(0, maxLg).map((sid) =>
       '<span class="lg"><i style="background:' + subjectColor(sid) + '"></i>' + esc(subjectName(sid)) + '</span>').join('');
     $('tlLegend').innerHTML = daySids.length
-      ? legend + (daySids.length > 3 ? '<span class="more">+' + (daySids.length - 3) + '</span>' : '')
+      ? legend + (daySids.length > maxLg ? '<span class="more">+' + (daySids.length - maxLg) + '</span>' : '')
       : '<span class="lg" style="color:#A9BAB4">아직 기록이 없어요</span>';
   }
 
@@ -4844,13 +4883,30 @@
     toast('타임라인은 읽기 전용이에요 · Tody time을 마치면 저절로 채워져요');
   });
 
+  /* ---------- 과목 탭 → Tody time 시작 확인 팝업 ---------- */
+  let ttStartSid = null;
+  function openStartConfirm(sid) {
+    const c = cert();
+    const idx = c.subjects.findIndex((x) => x.id === sid);
+    if (idx < 0) return;
+    const s = c.subjects[idx];
+    ttStartSid = sid;
+    $('ttStartTitle').innerHTML = '<span class="em" aria-hidden="true">' + esc(subjectIconOf(s, idx)) + '</span> ' +
+      esc(s.name || '(이름 없음)') + ' Tody time을 시작할까요?';
+    openSheet('ttStart');
+  }
+  $('ttStartYes').addEventListener('click', () => {
+    const sid = ttStartSid;
+    closeSheet('ttStart');
+    ttStartSid = null;
+    if (sid) startFocus(sid);
+  });
+
   $('ttQuickList').addEventListener('click', (e) => {
-    const boost = e.target.closest('[data-boost]');
-    if (boost) { startFocus(boost.dataset.boost); return; }
     const row = e.target.closest('[data-tsubject]');
     if (!row) return;
     ttEditSubject = row.dataset.tsubject;
-    renderTimetable();
+    openStartConfirm(row.dataset.tsubject);
   });
   $('ttQuickList').addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
@@ -4858,7 +4914,7 @@
     if (!row) return;
     e.preventDefault();
     ttEditSubject = row.dataset.tsubject;
-    renderTimetable();
+    openStartConfirm(row.dataset.tsubject);
   });
 
   /* ---------- 과목 편집 시트 ---------- */
