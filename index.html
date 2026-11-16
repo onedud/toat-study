@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tody · 토디 공부기록</title>
 <meta name="theme-color" content="#F3FBF8">
 <meta name="description" content="민트 파스텔 공부 기록 — 토디펫 십이지신 도감, Tody time 스톱워치, 토디테이블, 오답노트">
@@ -188,7 +188,7 @@
     font-size:10.5px;font-weight:800;color:var(--muted);white-space:nowrap
   }
   .stage-pills .sp.on{background:#fff;color:var(--mint-deep);box-shadow:0 1px 3px rgba(16,105,80,.12)}
-  .rainbow{display:flex;align-items:center;gap:5px;margin-top:10px;position:relative}
+  .rainbow{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:10px;position:relative}
   .rainbow .dot{
     width:13px;height:13px;border-radius:50%;position:relative;flex:none;
     box-shadow:inset 0 -2px 3px rgba(0,0,0,.14), 0 1px 2px rgba(0,0,0,.06)
@@ -196,19 +196,27 @@
   .rainbow .dot.on{transform:scale(1.34);box-shadow:0 0 0 2.5px #fff, 0 0 0 4.5px var(--mint-soft-2), inset 0 -2px 3px rgba(0,0,0,.14)}
   .rainbow .dot.lock{opacity:.42}
   .rainbow .sep{font-size:8px;color:#C6D6D1;margin:0 -1px}
-  .rainbow .txt{margin-left:auto;font-size:10px;font-weight:800;color:var(--dim)}
 
   .pet-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:206px;margin-top:6px}
+  /* 명언 말풍선 — 펫을 향한 아래 꼬리 + 넓은 폭 */
+  .pet-bubble-wrap{position:absolute;top:2px;left:50%;transform:translateX(-50%);z-index:3;width:calc(100% - 16px);max-width:96%;display:block}
   .pet-bubble{
-    position:absolute;top:2px;left:50%;transform:translateX(-50%);z-index:3;max-width:calc(100% - 8px);
-    padding:7px 12px;border-radius:14px;background:#fff;border:1px solid var(--line);
-    font-size:11px;font-weight:700;color:#2A4A41;box-shadow:0 6px 16px rgba(16,105,80,.10);
-    text-align:center;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all;max-height:62px
+    position:relative;width:100%;
+    padding:8px 14px 10px;border-radius:16px;background:#fff;border:1px solid var(--line);
+    font-size:11.5px;font-weight:700;color:#2A4A41;box-shadow:0 7px 18px rgba(16,105,80,.12);
+    text-align:center;line-height:1.45;word-break:keep-all;
+    max-height:70px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
+  }
+  .pet-bubble-tail{
+    position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#fff;
+    transform:translateX(-50%) rotate(45deg);
+    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    border-bottom-right-radius:3px
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
   .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}
-  button.pet-bubble{text-align:left;transition:transform .1s,box-shadow .15s}
-  button.pet-bubble:active{transform:translateX(-50%) scale(.975)}
+  button.pet-bubble{transition:transform .1s,box-shadow .15s}
+  button.pet-bubble:active{transform:scale(.98)}
   .pet-bubble .qhint{background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:1px 6px}
   .pet-scene{position:relative;width:100%;max-width:360px;height:222px;margin:56px auto 0;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:min(62%,206px);flex:none;z-index:2}
@@ -401,6 +409,14 @@
   .pick-sub .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .pick-sub.on{border-color:var(--mint);background:var(--mint-soft);color:var(--mint-deep);box-shadow:0 0 0 3px rgba(24,210,155,.1)}
   .pick-add{grid-column:1/-1;border-style:dashed;color:var(--mint-deep);justify-content:center;background:#fff}
+  .pick-new{grid-column:1/-1;display:flex;flex-direction:column;gap:7px;margin-top:2px;padding:10px;border:1px dashed var(--mint-line);border-radius:15px;background:#F6FEFB}
+  .pick-new .pn-row{display:flex;gap:6px}
+  .pick-new .pn-row input{flex:1;min-width:0;padding:10px 11px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:700;outline:none}
+  .pick-new .pn-icons{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+  .pick-new .pn-icons button{aspect-ratio:1/1;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:17px;line-height:1;display:grid;place-items:center}
+  .pick-new .pn-icons button.on{border-color:var(--mint);background:var(--mint-soft);box-shadow:0 0 0 2px rgba(24,210,155,.14)}
+  .pick-new .icon-custom{display:flex;gap:6px;align-items:center;margin-top:0}
+  .pick-new .icon-custom input{flex:1;min-width:0;padding:9px 10px;border-radius:11px;border:1px solid var(--line);background:#fff;outline:none}
   .pick-info{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--mint-soft);font-size:11.5px;font-weight:700;color:#2C6A58}
 
   /* ---------- 집중모드 전체화면 ---------- */
@@ -484,8 +500,8 @@
   .coll-head .count{margin-left:auto;font-size:11.5px;font-weight:900;color:var(--mint-deep);background:var(--mint-soft);border:1px solid var(--mint-line);padding:4px 9px;border-radius:999px}
   .coll-hero{background:linear-gradient(150deg,#E9FBF3,#F7FEFB 70%);border:1px solid var(--line);border-radius:22px;padding:14px 16px;margin-bottom:12px}
   .coll-hero .t{font-size:13.5px;font-weight:900;color:#173B32}
-  .coll-hero .d{font-size:11.5px;color:#517868;margin-top:3px;line-height:1.5}
-  .coll-filters{display:flex;gap:6px;margin:2px 0 4px;flex-wrap:wrap}
+  .coll-hero .d{font-size:11.5px;color:#517868;margin-top:3px;line-height:1.5;word-break:keep-all}
+  .coll-filters{display:flex;gap:6px;margin:17px 0 4px;flex-wrap:wrap}
   .coll-filters .chip{padding:6px 11px;font-size:11.5px}
   .coll-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
   .coll-card{
@@ -645,7 +661,6 @@
   .coll-grow .cg-em{font-size:16px;line-height:1}
   .coll-grow .cg-nm{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .coll-grow .cg-min{margin-left:auto;flex:none;font-size:10px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px solid var(--mint-line);border-radius:999px;padding:3px 9px}
-  .coll-grow .cg-hint{margin-top:8px;font-size:10.5px;font-weight:700;color:#517868}
   .coll-grow .rainbow{margin-top:11px}
   .stage-track{display:flex;align-items:center;gap:4px;margin-top:11px}
   .stage-track .st{display:inline-flex;align-items:center;gap:3px;padding:5px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:10px;font-weight:800;color:var(--dim);white-space:nowrap;flex:none}
@@ -654,6 +669,18 @@
   .stage-track .st.on{color:#0B5B47;background:linear-gradient(135deg,#D8F8EB,#BEEFDD);border-color:var(--mint);box-shadow:0 4px 10px rgba(24,210,155,.22);font-weight:900}
   .stage-track .bar{flex:1;height:3px;border-radius:999px;background:#E6F4EF;min-width:5px}
   .stage-track .bar.done{background:linear-gradient(90deg,#8DE9C8,#18D29B)}
+  /* 토디펫 상태창 팝업 (홈 펫 탭) */
+  .petstat{position:fixed;inset:0;z-index:120;display:none;place-items:center;padding:20px 16px calc(20px + env(safe-area-inset-bottom));background:rgba(10,52,40,.30);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+  .petstat.open{display:grid}
+  .petstat-card{width:100%;max-width:352px;border-radius:24px;background:linear-gradient(160deg,#FFFFFF 0%,#F7FEFB 100%);border:1px solid var(--line);box-shadow:0 22px 54px rgba(9,52,40,.26);padding:15px 15px 13px;animation:psIn .2s ease-out}
+  @keyframes psIn{from{transform:translateY(10px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+  .petstat-head{display:flex;align-items:center;gap:8px;padding:1px 2px 11px}
+  .petstat-head h2{font-size:15.5px;font-weight:900;letter-spacing:-.02em;color:#173B32;display:flex;align-items:center;gap:6px}
+  .petstat-head h2 .em{font-size:14px}
+  .petstat-head .x{margin-left:auto;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);color:#6B7F78;font-size:15px;line-height:1}
+  .petstat .coll-grow{margin-top:0}
+  .petstat-actions{display:flex;gap:8px;margin-top:13px}
+  .petstat-actions .btn{flex:1}
   .tl-grid{display:flex;flex-direction:column;gap:2px;min-width:0}
   .tl-row{display:grid;grid-template-columns:24px 1fr;gap:6px;align-items:center;padding:1px 4px;margin:0 -4px;border-radius:8px}
   .tl-row.now{background:var(--mint-soft)}
@@ -997,6 +1024,18 @@
   .sync-line[data-state="error"]{background:var(--red-soft);color:#B54A44}
   .sync-line[data-state="idle"]{background:var(--gray-soft);color:var(--muted)}
 
+  /* ---------- iOS Safari 더블탭 확대 방지 ---------- */
+  html,body,button,a,input,select,textarea,label,summary,
+  .card,.chip,.nav button,.cal-cell,.wkday,.coll-card,.coll-head .back,
+  .pick-sub,.pet-art,.pet-bubble,.pet-bubble-tail,.petstat,.sheet,.veil,
+  .todo-item,.qcard,.note,.timetable td,.tt-cell,.icon-grid button,.qicon,.pill-btn{
+    touch-action:manipulation
+  }
+  button,input,select,textarea,a{-webkit-tap-highlight-color:transparent}
+  /* ---------- 입력 요소 16px 미만 금지 (iOS 포커스 시 자동 확대 방지) ---------- */
+  input,textarea,select{font-size:16px!important}
+  input::placeholder,textarea::placeholder{font-size:16px}
+
 </style>
 </head>
 <body>
@@ -1142,7 +1181,10 @@
       </div>
 
       <div class="pet-stage">
-        <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 보기">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
+        <div class="pet-bubble-wrap">
+          <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 보기">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
+          <span class="pet-bubble-tail" aria-hidden="true"></span>
+        </div>
         <div class="pet-scene">
           <span class="flower a" id="flowerLeft" aria-hidden="true"></span>
           <button class="pet-art" id="petArt" aria-label="토디펫 — 저장한 명언 보기"></button>
@@ -1371,7 +1413,6 @@
         </div>
         <div class="stage-track" id="cgStages" role="img" aria-label="성장 단계"></div>
         <div class="rainbow" id="cgRainbow" aria-label="무지개 색 진행"></div>
-        <div class="cg-hint" id="cgHint">다음 진화까지 180분</div>
       </div>
       <div class="coll-filters" id="collFilters" role="tablist" aria-label="도감 필터">
         <button class="chip on" data-cfilter="all">전체</button>
@@ -1425,6 +1466,29 @@
       <div class="d" id="quotesHero">마음에 남는 문장을 모아두면, 힘든 날 꺼내볼 수 있어요.</div>
     </div>
     <div class="qgrid" id="quotesGrid"></div>
+  </div>
+</section>
+
+<!-- ================= 토디펫 상태창 팝업 ================= -->
+<section class="petstat" id="petStat" role="dialog" aria-modal="true" aria-labelledby="psTitle">
+  <div class="petstat-card">
+    <div class="petstat-head">
+      <h2 id="psTitle"><span class="em" aria-hidden="true">🥚</span>토디펫</h2>
+      <button class="x" id="psClose" aria-label="토디펫 상태창 닫기">×</button>
+    </div>
+    <div class="coll-grow" id="psGrow" aria-label="내 토디펫 성장">
+      <div class="cg-top">
+        <span class="cg-em" id="psEmoji" aria-hidden="true">🐯</span>
+        <span class="cg-nm" id="psName">호랑이</span>
+        <span class="cg-min" id="psMins">0분</span>
+      </div>
+      <div class="stage-track" id="psStages" role="img" aria-label="성장 단계"></div>
+      <div class="rainbow" id="psRainbow" aria-label="무지개 색 진행"></div>
+    </div>
+    <div class="petstat-actions">
+      <button class="btn ghost" id="psClose2">닫기</button>
+      <button class="btn primary" id="psOpenColl">십이지신 도감 열기</button>
+    </div>
   </div>
 </section>
 
@@ -1725,9 +1789,6 @@
       <div class="sync-or">또는</div>
       <button class="oauth-btn" id="oauthGoogle" type="button">
         <span class="gi" aria-hidden="true">G</span>Google로 계속하기
-      </button>
-      <button class="oauth-btn kakao" id="oauthKakao" type="button">
-        <span class="ki" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 3.4c-5.23 0-9.47 3.32-9.47 7.42 0 2.62 1.74 4.92 4.36 6.22l-.9 3.24c-.08.29.25.52.5.36l3.86-2.5c.54.08 1.09.12 1.65.12 5.23 0 9.47-3.32 9.47-7.42S17.23 3.4 12 3.4z"/></svg></span>카카오로 계속하기
       </button>
       <p class="sync-note" id="oauthHint" hidden></p>
       <p class="sync-msg" id="syncMsg" role="status" aria-live="polite"></p>
@@ -2272,9 +2333,8 @@
       e.preventDefault();
       cloudEmailAuth(cloud.authMode);
     });
-    var g = $('oauthGoogle'), k = $('oauthKakao');
+    var g = $('oauthGoogle');
     if (g) g.addEventListener('click', function () { cloudOAuth('google'); });
-    if (k) k.addEventListener('click', function () { cloudOAuth('kakao'); });
     var now = $('syncNow');
     if (now) now.addEventListener('click', function () {
       if (!cloud.session) return;
@@ -2352,7 +2412,6 @@
     if (!cloud.providers) { el.hidden = true; return; }
     var off = [];
     if (cloud.providers.google === false) off.push('Google');
-    if (cloud.providers.kakao === false) off.push('카카오');
     if (off.length) {
       el.textContent = off.join(' · ') + ' 로그인은 Supabase 대시보드에서 먼저 켜야 쓸 수 있어요.';
       el.hidden = false;
@@ -3226,7 +3285,7 @@
       const got = i <= info.color || info.complete;
       return '<span class="dot' + (on ? ' on' : '') + (got ? '' : ' lock') + '" style="background:' + p.base + '" title="' + p.name + (got ? ' 획득' : ' 미획득') + '" aria-label="' + p.name + (got ? ' 획득' : ' 미획득') + '"></span>' +
         (i < 6 ? '<span class="sep" aria-hidden="true">›</span>' : '');
-    }).join('') + '<span class="txt">' + (info.complete ? '무지개 완성 🏆' : (info.color + 1) + '/7') + '</span>';
+    }).join('');
   }
 
   /* 알 → 유아기 → 성체 진행 표시 (홈 대신 도감에서 보여준다) */
@@ -3264,7 +3323,7 @@
     }
     const art = $('petArt');
     art.innerHTML = petSVG(info.animal.id, info.stage, info.color, {});
-    art.setAttribute('aria-label', c.pet.name + ' · ' + info.animal.name + ' ' + STAGE_NAME[info.stage] + ' · ' + P.name + ' — 저장한 명언 보기');
+    art.setAttribute('aria-label', c.pet.name + ' · ' + info.animal.name + ' ' + STAGE_NAME[info.stage] + ' · ' + P.name + ' — 토디펫 상태 보기');
     art.style.filter = 'drop-shadow(0 12px 16px rgba(16,80,58,.13))';
     $('flowerLeft').innerHTML = flowerSVG('white');
     $('flowerRight').innerHTML = flowerSVG('coral');
@@ -3407,6 +3466,7 @@
   }
   function focusRunning() { return !!focus && !focus.paused; }
 
+  let pickNewIcon = SUBJECT_ICONS[0];
   function renderPick() {
     const c = cert();
     const items = c.subjects.map((s, si) =>
@@ -3419,29 +3479,56 @@
     $('pickInfoGoal').textContent = info.complete ? '무지개 완성' : '다음 진화까지 ' + fmtDur(info.left);
     const add = $('pickAdd');
     if (add) add.addEventListener('click', () => {
+      if ($('pickNewName')) { $('pickNewName').focus(); return; }
       const row = document.createElement('div');
-      row.style.cssText = 'grid-column:1/-1;display:flex;gap:6px;margin-top:2px';
-      row.innerHTML = '<input id="pickNewName" type="text" maxlength="16" placeholder="새 과목 이름" style="flex:1;min-width:0;padding:10px 11px;border-radius:12px;border:1px solid var(--line);font-size:13px;font-weight:700;outline:none">' +
-        '<button class="btn primary small" id="pickNewAdd">추가</button>';
+      row.className = 'pick-new';
+      row.id = 'pickNewRow';
+      row.innerHTML =
+        '<div class="pn-row">' +
+          '<input id="pickNewName" type="text" maxlength="16" placeholder="새 과목 이름" aria-label="새 과목 이름">' +
+          '<button class="btn primary small" id="pickNewAdd">추가</button>' +
+        '</div>' +
+        '<div class="pn-icons" role="group" aria-label="과목 아이콘 선택">' +
+          SUBJECT_ICONS.map((ic) => '<button type="button" data-newicon="' + esc(ic) + '" class="' + (ic === pickNewIcon ? ' on' : '') + '" aria-label="' + esc(ic) + ' 아이콘">' + ic + '</button>').join('') +
+        '</div>' +
+        '<div class="icon-custom"><input type="text" id="pickNewIcon" maxlength="8" placeholder="직접 입력 (예: 🍀)" aria-label="사용자 아이콘"><button class="btn ghost small" id="pickNewIconApply">적용</button></div>';
       $('pickList').appendChild(row);
-      $('pickNewName').focus();
+      const paintIcon = () => {
+        row.querySelectorAll('[data-newicon]').forEach((b) => b.classList.toggle('on', b.dataset.newicon === pickNewIcon));
+        $('pickNewIcon').value = SUBJECT_ICONS.indexOf(pickNewIcon) < 0 ? pickNewIcon : '';
+      };
       const commit = () => {
         const name = ($('pickNewName').value || '').trim();
-        if (!name) { toast('과목 이름을 적어주세요'); return; }
-        const s = { id: 's' + uid(), name: name };
+        if (!name) { toast('과목 이름을 적어주세요'); $('pickNewName').focus(); return; }
+        if (cert().subjects.length >= 12) { toast('과목은 12개까지 만들 수 있어요'); return; }
+        const s = { id: 's' + uid(), name: name, icon: pickNewIcon || SUBJECT_ICONS[0] };
         cert().subjects.push(s);
         save(true);
         pickSubject = s.id;
         renderPick();
-        toast('“' + name + '” 과목을 추가했어요');
+        toast('“' + name + '” 과목을 추가했어요 ' + s.icon);
       };
+      row.querySelectorAll('[data-newicon]').forEach((b) => b.addEventListener('click', () => {
+        pickNewIcon = b.dataset.newicon;
+        paintIcon();
+      }));
+      $('pickNewIconApply').addEventListener('click', () => {
+        const v = ($('pickNewIcon').value || '').trim();
+        if (!v) { toast('아이콘을 직접 입력해주세요'); return; }
+        pickNewIcon = Array.from(v).slice(0, 2).join('');
+        paintIcon();
+      });
+      $('pickNewIcon').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('pickNewIconApply').click(); } });
+      paintIcon();
       $('pickNewAdd').addEventListener('click', commit);
       $('pickNewName').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
+      $('pickNewName').focus();
     });
   }
 
   function openPicker(preselect) {
     pickSubject = preselect || (cert().subjects[0] ? cert().subjects[0].id : '');
+    pickNewIcon = SUBJECT_ICONS[cert().subjects.length % SUBJECT_ICONS.length];
     renderPick();
     openSheet('pickSheet');
   }
@@ -3647,6 +3734,28 @@
     });
   }
 
+  /* 홈 펫 탭 → 토디펫 상태창 팝업 */
+  function renderPetStat() {
+    const c = cert();
+    const info = petInfo(c);
+    $('psEmoji').textContent = info.animal.emoji;
+    $('psName').textContent = (c.pet.name || '두근') + ' · ' + info.animal.name;
+    $('psMins').textContent = fmtDur(info.total);
+    $('psStages').innerHTML = stageTrackHTML(info.stage);
+    $('psStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[info.stage]);
+    $('psRainbow').innerHTML = rainbowHTML(info);
+    $('psRainbow').setAttribute('aria-label', '무지개 색 진행 ' + (info.complete ? '완성' : (info.color + 1) + ' / 7'));
+  }
+  function openPetStat() {
+    renderPetStat();
+    $('petStat').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePetStat() {
+    $('petStat').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   function openCollection() {
     $('coll').classList.add('open');
     $('coll').classList.remove('show-detail');
@@ -3695,9 +3804,6 @@
     $('cgStages').innerHTML = stageTrackHTML(active.stage);
     $('cgStages').setAttribute('aria-label', '성장 단계 ' + STAGE_NAME[active.stage]);
     $('cgRainbow').innerHTML = rainbowHTML(active);
-    $('cgHint').textContent = active.complete
-      ? '무지개 7색을 모두 모았어요 🏆'
-      : (active.stage < 2 ? STAGE_NAME[active.stage + 1] + ' 진화까지 ' : '다음 색 ' + PALETTE[Math.min(6, active.color + 1)].name + '까지 ') + fmtDur(active.left);
   }
 
   function openDetail(animalId) {
@@ -4329,8 +4435,12 @@
   $('heroFocus').addEventListener('click', () => openPicker());
   $('ttFocus').addEventListener('click', () => openPicker());
   $('petBtn').addEventListener('click', openCollection);
-  $('petArt').addEventListener('click', openQuotes);
+  $('petArt').addEventListener('click', openPetStat);
   $('petBubble').addEventListener('click', openQuotes);
+  $('psClose').addEventListener('click', closePetStat);
+  $('psClose2').addEventListener('click', closePetStat);
+  $('psOpenColl').addEventListener('click', () => { closePetStat(); openCollection(); });
+  $('petStat').addEventListener('click', (e) => { if (e.target === $('petStat')) closePetStat(); });
   $('myBtn').addEventListener('click', openStats);
   $('petEdit').addEventListener('click', openPetSheet);
   $('petBadge').addEventListener('click', openPetSheet);
@@ -5231,6 +5341,7 @@
     renderTodo();
     renderWrong();
     renderMaster();
+    if ($('petStat').classList.contains('open')) renderPetStat();
   }
 
   document.addEventListener('keydown', (e) => {
@@ -5240,6 +5351,7 @@
     if (open) { closeSheet(open.id); return; }
     if ($('quotes').classList.contains('open')) { closeQuotes(); return; }
     if ($('stats').classList.contains('open')) { closeStats(); return; }
+    if ($('petStat').classList.contains('open')) { closePetStat(); return; }
     if ($('coll').classList.contains('open')) { closeCollection(); return; }
     if ($('focusScreen').classList.contains('open')) { exitFocus(); }
   });
@@ -5267,6 +5379,7 @@
     state: state, cert: cert, save: saveNow, render: renderAll, showPage: showPage,
     petInfo: (id) => petInfo(cert(), id), focusElapsedMs: focusElapsedMs,
     startFocus: startFocus, finishFocus: finishFocus, openCollection: openCollection,
+    openPetStat: openPetStat, closePetStat: closePetStat,
     openDetail: openDetail, openPicker: openPicker, petSVG: petSVG, flowerSVG: flowerSVG,
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     addMinutes: (id, min) => { const c = cert(); c.pet.minutes[id || c.pet.animal] = (c.pet.minutes[id || c.pet.animal] || 0) + min; saveNow(); renderAll(); }
