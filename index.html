@@ -228,9 +228,6 @@
     border-bottom-right-radius:3px
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
-  .pet-bubble .qhint{margin-left:5px;font-size:9.5px;font-weight:900;color:var(--mint-deep);opacity:.85;white-space:nowrap}  button.pet-bubble{transition:transform .1s,box-shadow .15s}
-  button.pet-bubble:active{transform:scale(.98)}
-  .pet-bubble .qhint{background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:2px 8px}
   .pet-scene{position:relative;width:100%;max-width:360px;height:222px;margin:56px auto 0;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:min(62%,206px);flex:none;z-index:2}
   .pet-art svg{width:100%;height:auto;display:block;overflow:visible;animation:floaty 4.6s ease-in-out infinite}
@@ -922,24 +919,37 @@
   .todo-mcell.all{background:#F4FAE4;border-color:#E3F0BE}
   .todo-empty{text-align:center;padding:28px 16px;color:var(--dim);font-size:12px;line-height:1.7}
 
-  /* ---------- 명언 ---------- */
-  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-  .qcard{border-radius:16px;padding:12px 13px 11px;min-height:118px;display:flex;flex-direction:column;text-align:left;border:1px solid rgba(30,50,45,.04)}
-  .qcard .qcat{display:inline-block;align-self:flex-start;font-size:9.5px;font-weight:900;letter-spacing:.02em;color:#5E7069;background:rgba(255,255,255,.72);border-radius:999px;padding:2px 8px;margin-bottom:7px}
-  .qcard .qt{font-size:12px;line-height:1.55;font-weight:700;color:#2B3330;word-break:keep-all}
-  .qcard .qa{margin-top:auto;padding-top:9px;font-size:10.5px;font-weight:800;color:#77827D;display:flex;align-items:center;justify-content:space-between;gap:4px}
-  .quote-hero{padding:14px 16px;border-radius:20px;background:linear-gradient(150deg,#EAFBF3,#FBFEFC);border:1px solid var(--line);margin-bottom:4px}
-  .quote-hero .t{font-size:13px;font-weight:900;color:#173B32}
-  .quote-hero .d{font-size:11.5px;color:#517868;margin-top:3px;line-height:1.5}
-  .quote-shuffle{margin-top:9px;font-size:11px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px solid var(--mint-line);border-radius:999px;padding:5px 11px}
-  .quote-search{position:relative;margin-top:10px}
-  .quote-search input{width:100%;padding:11px 34px 11px 13px;border-radius:13px;border:1px solid var(--line);background:#FBFEFD;font-size:16px;font-weight:700;color:#20352F;outline:none;-webkit-appearance:none}
-  .quote-search input:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13)}
-  .quote-search input::placeholder{font-size:13.5px;font-weight:700;color:#A9BAB4}
-  .quote-search .qs-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--gray-soft);color:var(--muted);font-size:15px;line-height:1}
-  .qcats{margin-top:9px;padding:2px 0 2px}
-  .qcats .chip{padding:7px 12px;font-size:12px}
-  .qempty{text-align:center;font-size:12px;color:var(--dim);padding:18px 0 4px}
+  /* ---------- Job 스크랩북 ---------- */
+  .scrap-search{display:flex;align-items:center;gap:8px;height:44px;padding:0 13px;border-radius:15px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .scrap-search .ic{font-size:13.5px;line-height:1;flex:none}
+  .scrap-search input{flex:1;min-width:0;border:none;background:none;outline:none;font-size:16px;font-weight:700;color:#2B1220;-webkit-appearance:none}
+  .scrap-search input::placeholder{font-size:13px;font-weight:600;color:#B3A0A9}
+  .scrap-search input::-webkit-search-cancel-button{-webkit-appearance:none}
+  .scrap-add{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:45px;margin-top:8px;border-radius:16px;background:linear-gradient(135deg,var(--mint) 0%,var(--mint-2) 100%);color:#fff;font-size:13.5px;font-weight:900;letter-spacing:-.02em;box-shadow:var(--shadow-mint)}
+  .scrap-add:active{transform:scale(.98)}
+  .scrap-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 3px 8px}
+  .scrap-head .lb{font-size:12px;font-weight:900;color:#4A3340;display:inline-flex;align-items:center;gap:4px;letter-spacing:-.015em}
+  .scrap-head .lb b{color:var(--mint);font-weight:900;font-variant-numeric:tabular-nums}
+  .scrap-head .rt{font-size:10.5px;font-weight:800;color:var(--dim);white-space:nowrap;flex:none}
+  .scrap-list{display:flex;flex-direction:column;gap:8px}
+  .scrap-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:11px 13px 10px;text-align:left;width:100%;cursor:pointer}
+  .scrap-card:active{transform:scale(.995)}
+  .scrap-card .l1{display:flex;align-items:center;gap:7px;min-width:0}
+  .scrap-card .ti{flex:1;min-width:0;font-size:13.5px;font-weight:800;letter-spacing:-.02em;color:#2B1220;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .scrap-link{flex:none;display:inline-flex;align-items:center;gap:2px;font-size:9.5px;font-weight:900;color:var(--mint-deep);background:var(--mint-soft);border:1px solid var(--mint-line);padding:3px 7px;border-radius:999px;text-decoration:none;letter-spacing:-.01em}
+  .scrap-card .op{margin-top:6px;font-size:12px;font-weight:600;color:#7A6670;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .scrap-card .mt{margin-top:7px;font-size:10px;font-weight:800;color:var(--dim);font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:4px}
+  .scrap-card .mt .dot{color:#D9C3CD}
+  .scrap-empty{padding:26px 10px;text-align:center;font-size:12px;font-weight:700;color:var(--dim);line-height:1.75}
+  .sc-tags{display:flex;gap:6px;overflow-x:auto;padding:2px 0;scrollbar-width:none;margin-top:7px}
+  .sc-tags::-webkit-scrollbar{display:none}
+  .sc-tags .chip{padding:6px 11px;font-size:11.5px}
+  .sc-view-title{font-size:16px;font-weight:900;line-height:1.45;letter-spacing:-.02em;color:#2B1220;word-break:keep-all}
+  .sc-view-meta{margin-top:6px;font-size:11px;font-weight:800;color:var(--dim);font-variant-numeric:tabular-nums}
+  .sc-view-link{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:12px;font-weight:900;color:var(--mint-deep);background:var(--mint-soft);border:1px solid var(--mint-line);border-radius:999px;padding:7px 12px;text-decoration:none}
+  .sc-view-link[hidden]{display:none}
+  .sc-view-body{margin-top:12px;padding:12px 13px;border-radius:14px;background:var(--gray-soft);border:1px solid var(--gray-line);font-size:13px;font-weight:600;line-height:1.65;color:#3A2530;white-space:pre-wrap;word-break:break-word}
+  .sc-view-body.empty{color:var(--dim);font-weight:700}
 
   /* ---------- 통계 ---------- */
   #statsSettings{margin-left:auto}
@@ -1170,7 +1180,7 @@
   :root[data-mode="job"] #studyNav{display:none}
   #jobNav{display:none}
   :root[data-mode="job"] #jobNav{display:grid}
-  .nav.jobnav{grid-template-columns:repeat(4,1fr)}
+  .nav.jobnav{grid-template-columns:repeat(5,1fr)}
   .nav.jobnav button .ic{font-size:19px;line-height:1;height:21px;display:grid;place-items:center}
   :root[data-mode="job"] .cert-btn{display:none}
   :root[data-mode="job"] .brand .logo-mint{display:none}
@@ -1531,12 +1541,12 @@
 
       <div class="pet-stage">
         <div class="pet-bubble-wrap">
-          <button class="pet-bubble" id="petBubble" aria-label="오늘의 명언 — 누르면 다른 문장">오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span></button>
+          <div class="pet-bubble" id="petBubble" role="note" aria-label="오늘의 명언">오늘도 한 땀씩, <b>화이팅!</b></div>
           <span class="pet-bubble-tail" aria-hidden="true"></span>
         </div>
         <div class="pet-scene">
           <span class="flower a" id="flowerLeft" aria-hidden="true"></span>
-          <button class="pet-art" id="petArt" aria-label="토디펫 — 저장한 명언 보기"></button>
+          <button class="pet-art" id="petArt" aria-label="토디펫 상태 보기"></button>
           <span class="flower b" id="flowerRight" aria-hidden="true"></span>
         </div>
         <div class="pet-base" aria-hidden="true"></div>
@@ -1802,7 +1812,6 @@
             <button class="jcal-add" id="jobAddTab">＋ 일정 추가</button>
           </div>
         </div>
-        <p class="cal-sub">합격은 초록으로 쨍하게, 불합격은 흐리게 — 한눈에 구분돼요</p>
         <div class="chips" id="jcalFilters" role="group" aria-label="전형 필터" style="padding:0 2px 10px"></div>
         <div class="jlegend" id="jlegendTab"></div>
         <div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
@@ -1873,6 +1882,26 @@
         <div id="revList"></div>
       </div>
     </main>
+
+    <!-- 스크랩북 -->
+    <main class="jpage" id="jpage-scrap">
+      <div class="page-head">
+        <div>
+          <h1><span class="em" aria-hidden="true">📁</span>스크랩북</h1>
+          <div class="sub">기사 제목 · 링크 · 내 생각을 가볍게 모아요</div>
+        </div>
+      </div>
+      <div class="scrap-search">
+        <span class="ic" aria-hidden="true">🔍</span>
+        <input id="scrapSearch" type="search" placeholder="기사 제목이나 내 의견 검색..." aria-label="스크랩 검색" autocomplete="off" enterkeyhint="search">
+      </div>
+      <button class="scrap-add" id="scrapAdd" type="button"><span aria-hidden="true">＋</span>새 기사 스크랩</button>
+      <div class="scrap-head">
+        <span class="lb">모아둔 기사 <b id="scrapCount">0</b></span>
+        <span class="rt" id="scrapHint">최신순</span>
+      </div>
+      <div class="scrap-list" id="scrapList"></div>
+    </main>
   </div>
 </div>
 
@@ -1915,6 +1944,10 @@
   <button data-jpage="tip">
     <span class="ic" aria-hidden="true">💡</span>
     <span>토디팁</span>
+  </button>
+  <button data-jpage="scrap">
+    <span class="ic" aria-hidden="true">📁</span>
+    <span>스크랩북</span>
   </button>
 </nav>
 
@@ -1977,33 +2010,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= 저장한 명언 ================= -->
-<section class="coll" id="quotes" role="dialog" aria-modal="true" aria-label="명언">
-  <div class="coll-wrap">
-    <div class="coll-head">
-      <button class="back" id="quotesClose" aria-label="명언 닫기">‹</button>
-      <h1><span class="em" aria-hidden="true">💬</span>명언</h1>
-      <span class="count" id="quotesCount">100개</span>
-    </div>
-    <div class="quote-hero">
-      <div class="t">오늘의 한 줄</div>
-      <div class="d" id="quotesHero">마음에 남는 문장을 모아두면, 힘든 날 꺼내볼 수 있어요.</div>
-      <button class="quote-shuffle" id="quoteShuffle" type="button">다른 문장 보기 ↻</button>
-    </div>
-    <div class="quote-search">
-      <input id="quoteSearch" type="search" placeholder="공부, 성공, 저자로 찾기" aria-label="명언 검색" autocomplete="off" enterkeyhint="search">
-      <button class="qs-clear" id="quoteSearchClear" type="button" aria-label="검색 지우기" hidden>×</button>
-    </div>
-    <div class="chips qcats" id="quoteCats" role="group" aria-label="명언 분류">
-      <button type="button" class="chip on" data-qcat="전체" aria-pressed="true">전체</button>
-      <button type="button" class="chip" data-qcat="공부" aria-pressed="false">📖 공부</button>
-      <button type="button" class="chip" data-qcat="성공" aria-pressed="false">🏆 성공</button>
-    </div>
-    <p class="qempty" id="quoteEmpty" hidden>찾는 문장이 없어요. 다른 낱말로 찾아보세요.</p>
-    <div class="qgrid" id="quotesGrid"></div>
   </div>
 </section>
 
@@ -2130,6 +2136,47 @@
     <div class="sheet-actions">
       <button class="btn ghost" data-close="jobRevSheet">취소</button>
       <button class="btn primary" id="rSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 💼 기사 스크랩 추가/수정 ================= -->
+<div class="sheet" id="scrapSheet" role="dialog" aria-modal="true" aria-labelledby="scrapSheetTitle">
+  <div class="veil" data-close="scrapSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="scrapSheetTitle">새 기사 스크랩</h2><button class="x" data-close="scrapSheet" aria-label="닫기">×</button></div>
+    <div class="field"><label for="scTitle">기사 제목</label><input type="text" id="scTitle" maxlength="200" placeholder="예: ETF 시장 300조 돌파…" autocomplete="off"></div>
+    <div class="field"><label for="scUrl">기사 링크 URL (선택)</label><input type="text" id="scUrl" inputmode="url" placeholder="https://…" autocomplete="off"></div>
+    <div class="field">
+      <label for="scTag">카테고리 · 태그 (선택)</label>
+      <input type="text" id="scTag" maxlength="20" placeholder="예: 금융/증권, 정책, IT" autocomplete="off">
+      <div class="sc-tags" id="scTagChips" role="group" aria-label="태그 빠른 선택"></div>
+    </div>
+    <div class="field"><label for="scMemo">내 의견 (논평)</label><textarea id="scMemo" maxlength="2000" placeholder="이 기사에서 기억할 점, 내 생각을 적어두세요"></textarea></div>
+    <div class="sheet-actions">
+      <button class="btn danger" id="scDelete" hidden>삭제</button>
+      <button class="btn ghost" data-close="scrapSheet">취소</button>
+      <button class="btn primary" id="scSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 💼 기사 스크랩 상세 ================= -->
+<div class="sheet" id="scrapViewSheet" role="dialog" aria-modal="true" aria-labelledby="scrapViewTitle">
+  <div class="veil" data-close="scrapViewSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="scrapViewTitle">기사 스크랩</h2><button class="x" data-close="scrapViewSheet" aria-label="닫기">×</button></div>
+    <div class="sc-view">
+      <div class="sc-view-title" id="svArticleTitle"></div>
+      <div class="sc-view-meta" id="svMeta"></div>
+      <a class="sc-view-link" id="svLink" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">🔗</span>원문 링크 열기</a>
+      <div class="sc-view-body" id="svMemo"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn danger" id="svDelete">삭제</button>
+      <button class="btn primary" id="svEdit">수정</button>
     </div>
   </div>
 </div>
@@ -2632,7 +2679,7 @@
   const JOB_STATUS = ['진행중', '합격', '불합격'];
   const isHttpUrl = (s) => typeof s === 'string' && /^https?:\/\//i.test(s);
   function freshJob() {
-    return { schedules: [], todos: [], categories: ['공기업', '대기업', '스타트업'], analyses: [], reviews: [] };
+    return { schedules: [], todos: [], categories: ['공기업', '대기업', '스타트업'], analyses: [], reviews: [], scraps: [] };
   }
   function normalizeJob(raw) {
     const j = (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
@@ -2668,6 +2715,18 @@
         url: isHttpUrl(a.url) ? a.url : '',
         keywords: String(a.keywords || '').slice(0, 300),
         points: String(a.points || '').slice(0, 600)
+      });
+    });
+    if (Array.isArray(j.scraps)) j.scraps.forEach((s) => {
+      if (!s || typeof s !== 'object' || !String(s.title || '').trim()) return;
+      const created = String(s.created || '');
+      out.scraps.push({
+        id: String(s.id || ('sc' + uid())),
+        title: String(s.title).trim().slice(0, 200),
+        url: isHttpUrl(s.url) ? String(s.url).slice(0, 500) : '',
+        tag: String(s.tag || '').trim().slice(0, 20),
+        memo: String(s.memo || '').slice(0, 2000),
+        created: /^\d{4}-\d{2}-\d{2}(T[\d:.]+Z?)?$/.test(created) ? created : new Date().toISOString()
       });
     });
     if (Array.isArray(j.reviews)) j.reviews.forEach((r) => {
@@ -3533,7 +3592,7 @@
     if (state.pet && petTotalOf(state.pet) > 0) return true;
     if (state.job) {
       const j = state.job;
-      if ((j.schedules && j.schedules.length) || (j.todos && j.todos.length) || (j.analyses && j.analyses.length) || (j.reviews && j.reviews.length)) return true;
+      if ((j.schedules && j.schedules.length) || (j.todos && j.todos.length) || (j.analyses && j.analyses.length) || (j.reviews && j.reviews.length) || (j.scraps && j.scraps.length)) return true;
     }
     return false;
   }
@@ -4219,6 +4278,7 @@
   let currentPage = 'home';
   function showPage(name) {
     if (!pages[name]) name = 'home';
+    const prevPage = currentPage;
     currentPage = name;
     Object.keys(pages).forEach((k) => pages[k].classList.toggle('active', k === name));
     document.querySelectorAll('.nav button').forEach((b) => {
@@ -4226,7 +4286,10 @@
       b.classList.toggle('on', on);
       if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     });
-    if (name === 'home') renderHome();
+    if (name === 'home') {
+      if (prevPage !== 'home') rotateHeroQuote();   /* 다른 탭에서 홈으로 돌아오면 새 명언 */
+      renderHome();
+    }
     if (name === 'timetable') renderTimetable();
     if (name === 'todo') renderTodo();
     if (name === 'wrong') renderWrong();
@@ -4295,10 +4358,10 @@
     $('petName').textContent = petStore().name || '콩이';
     const q = currentQuote();    if (q) {
       const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
-      $('petBubble').innerHTML = esc(txt) + ' <span class="qhint">명언 ›</span>';
-      $('petBubble').setAttribute('aria-label', '오늘의 명언 — 누르면 다른 문장: ' + q.text + ' — ' + (q.author || '작가 미상'));
+      $('petBubble').innerHTML = esc(txt);
+      $('petBubble').setAttribute('aria-label', '오늘의 명언: ' + q.text + ' — ' + (q.author || '작가 미상'));
     } else {
-      $('petBubble').innerHTML = '오늘도 한 땀씩, <b>화이팅!</b> <span class="qhint">명언 ›</span>';
+      $('petBubble').innerHTML = '오늘도 한 땀씩, <b>화이팅!</b>';
     }
     const art = $('petArt');
     art.innerHTML = petSVG(info.animal.id, info.stage, info.color, {});
@@ -4334,7 +4397,8 @@
     return heroIconVal;
   }
 
-  /* 오늘의 한 줄 — 새로 열 때마다 100개 중 하나를 무작위로 (탭하면 다시 뽑기) */
+  /* 오늘의 한 줄 — 처음 열 때 한 번, 그리고 다른 탭·모드에서 홈으로 돌아올 때마다
+     100선 중 ‘지금 문장이 아닌’ 문장을 무작위로 새로 뽑는다 (말풍선 탭으로는 바뀌지 않음) */
   let heroQuoteId = null;
   function currentQuote() {
     if (!heroQuoteId || !quoteById(heroQuoteId)) {
@@ -4342,16 +4406,11 @@
     }
     return quoteById(heroQuoteId) || QUOTE_BANK[0];
   }
-  function cycleQuote() {
-    if (QUOTE_BANK.length < 2) return;
-    let next = null;
-    for (let i = 0; i < 12; i++) {
-      const pick = QUOTE_BANK[Math.floor(Math.random() * QUOTE_BANK.length)];
-      if (pick.id !== heroQuoteId) { next = pick; break; }
-    }
-    heroQuoteId = (next || QUOTE_BANK[0]).id;
-    renderHero();
-    if ($('quotes').classList.contains('open')) renderQuotes();
+  function rotateHeroQuote() {
+    if (QUOTE_BANK.length < 2) return false;
+    const pool = QUOTE_BANK.filter((q) => q.id !== heroQuoteId);
+    heroQuoteId = pool[Math.floor(Math.random() * pool.length)].id;
+    return true;
   }
 
   /* =========================================================
@@ -5316,79 +5375,6 @@
     renderTodo();
   });
   /* =========================================================
-     명언 (읽기 전용) — 100선을 카테고리·검색으로 찾아보기
-     ========================================================= */
-  const QUOTE_BG = ['#F2F2EA', '#F8E9FA', '#ECF0FB', '#E9F7EF', '#FDF3DE', '#F9E8E5', '#EAF6F8', '#F5F0E6'];
-  let quoteCat = '전체';
-  let quoteQuery = '';
-
-  function quoteList() {
-    const q = quoteQuery.trim().toLowerCase();
-    return QUOTE_BANK.filter((x) => {
-      if (quoteCat !== '전체' && x.category !== quoteCat) return false;
-      if (!q) return true;
-      return (x.text + ' ' + x.author + ' ' + x.category).toLowerCase().indexOf(q) >= 0;
-    });
-  }
-
-  function renderQuotes() {
-    const list = quoteList();
-    $('quotesCount').textContent = (quoteCat === '전체' && !quoteQuery.trim()) ? QUOTE_BANK.length + '개' : list.length + ' / ' + QUOTE_BANK.length + '개';
-    const hero = currentQuote();
-    $('quotesHero').innerHTML = hero
-      ? '“' + esc(hero.text.length > 44 ? hero.text.slice(0, 43) + '…' : hero.text) + '” — ' + esc(hero.author || '작가 미상')
-      : '마음에 남는 문장을 모아두면, 힘든 날 꺼내볼 수 있어요.';
-    $('quoteEmpty').hidden = list.length > 0;
-    $('quotesGrid').innerHTML = list.map((q, i) =>
-      '<div class="qcard" data-qid="' + esc(q.id) + '" data-qcat="' + esc(q.category) + '" role="listitem" style="background:' + QUOTE_BG[i % QUOTE_BG.length] + '">' +
-        '<span class="qcat">' + (q.category === '공부' ? '📖' : '🏆') + ' ' + esc(q.category) + '</span>' +
-        '<div class="qt">' + esc(q.text) + '</div>' +
-        '<div class="qa"><span>- ' + esc(q.author || '작가 미상') + '</span></div>' +
-      '</div>').join('');
-    document.querySelectorAll('#quoteCats [data-qcat]').forEach((b) => {
-      const on = b.dataset.qcat === quoteCat;
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    const clr = $('quoteSearchClear');
-    if (clr) clr.hidden = !$('quoteSearch').value;
-  }
-
-  function openQuotes() {
-    if (heroQuoteId == null) currentQuote();
-    quoteCat = '전체';
-    quoteQuery = '';
-    $('quoteSearch').value = '';
-    renderQuotes();
-    $('quotes').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeQuotes() {
-    $('quotes').classList.remove('open');
-    document.body.style.overflow = '';
-    renderHero();
-  }
-
-  $('quotesClose').addEventListener('click', closeQuotes);
-  $('quoteShuffle').addEventListener('click', cycleQuote);
-  $('quoteSearch').addEventListener('input', () => {
-    quoteQuery = $('quoteSearch').value || '';
-    renderQuotes();
-  });
-  $('quoteSearchClear').addEventListener('click', () => {
-    $('quoteSearch').value = '';
-    quoteQuery = '';
-    renderQuotes();
-    $('quoteSearch').focus();
-  });
-  $('quoteCats').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-qcat]');
-    if (!b) return;
-    quoteCat = b.dataset.qcat;
-    renderQuotes();
-  });
-
-  /* =========================================================
      타이머 통계
      ========================================================= */
   let statMode = 'day';
@@ -5599,11 +5585,6 @@
   $('heroFocus').addEventListener('click', () => openPicker());
   $('petBtn').addEventListener('click', openCollection);
   $('petArt').addEventListener('click', openPetStat);
-  $('petBubble').addEventListener('click', (e) => {
-    /* 말풍선을 누르면 다른 문장으로 (힌트 ‘명언 ›’을 누르면 명언 페이지) */
-    if (e.target.closest('.qhint')) { openQuotes(); return; }
-    cycleQuote();
-  });
   $('psClose').addEventListener('click', closePetStat);
   $('psClose2').addEventListener('click', closePetStat);
   $('psOpenColl').addEventListener('click', () => { closePetStat(); openCollection(); });
@@ -6717,17 +6698,21 @@
     if (job) renderJobAll();
   }
   function setMode(m) {
+    const wasJob = state.mode === 'job';
     state.mode = m === 'job' ? 'job' : 'study';
     save();
     applyMode();
-    if (state.mode !== 'job') renderAll();
+    if (state.mode !== 'job') {
+      if (wasJob && currentPage === 'home') rotateHeroQuote();   /* Job → Study 홈 복귀 시 새 명언 */
+      renderAll();
+    }
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   $('modeToggle').addEventListener('click', () => setMode(state.mode === 'job' ? 'study' : 'job'));
   $('modeToggleJob').addEventListener('click', () => setMode(state.mode === 'job' ? 'study' : 'job'));
 
   /* ---- Job 하단 탭 ---- */
-  const jpages = { home: $('jpage-home'), cal: $('jpage-cal'), todo: $('jpage-todo'), tip: $('jpage-tip') };
+  const jpages = { home: $('jpage-home'), cal: $('jpage-cal'), todo: $('jpage-todo'), tip: $('jpage-tip'), scrap: $('jpage-scrap') };
   let jobPage = 'home';
   function showJobPage(name) {
     if (!jpages[name]) name = 'home';
@@ -6742,6 +6727,7 @@
     if (name === 'cal') renderJobCalTab();
     if (name === 'todo') renderJobTodos();
     if (name === 'tip') renderTip();
+    if (name === 'scrap') renderScraps();
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   document.querySelectorAll('#jobNav button').forEach((b) => b.addEventListener('click', () => showJobPage(b.dataset.jpage)));
@@ -6887,6 +6873,7 @@
     renderJobCalTab();
     renderJobTodos();
     renderTip();
+    renderScraps();
   }
 
   /* ---- 전형 일정 시트 ---- */
@@ -7236,6 +7223,157 @@
   });
 
   /* =========================================================
+     📁 Job 스크랩북 — 기사 제목 · 링크 · 내 의견
+     ========================================================= */
+  let scrapQuery = '';
+  let scrapEditId = null;
+  let scrapViewId = null;
+  const SCRAP_TAG_HINTS = ['금융/증권', '정책', 'IT', '채용'];
+  const scrapById = (id) => state.job.scraps.find((x) => x.id === id) || null;
+  const scrapDate = (sc) => {
+    const d = String(sc.created || '').slice(0, 10);
+    return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.replace(/-/g, '.') : '';
+  };
+  const scrapSorted = () => state.job.scraps.slice().sort((a, b) => (
+    String(a.created) === String(b.created) ? String(b.id).localeCompare(String(a.id)) : String(b.created).localeCompare(String(a.created))
+  ));
+  function scrapFiltered() {
+    const q = scrapQuery.trim().toLowerCase();
+    if (!q) return scrapSorted();
+    return scrapSorted().filter((sc) => (sc.title + ' ' + sc.memo + ' ' + sc.tag).toLowerCase().indexOf(q) >= 0);
+  }
+  const scrapFirstLine = (memo) => String(memo || '').split('\n')[0];
+
+  function renderScraps() {
+    const list = scrapFiltered();
+    const total = state.job.scraps.length;
+    const searching = !!scrapQuery.trim();
+    $('scrapCount').textContent = searching ? list.length + ' / ' + total : String(total);
+    $('scrapHint').textContent = searching ? '검색 결과' : '최신순';
+    $('scrapList').innerHTML = list.length ? list.map((sc) =>
+      '<div class="scrap-card" data-scrap="' + esc(sc.id) + '" role="button" tabindex="0" aria-label="' + esc(sc.title) + ' — 눌러서 자세히 보기">' +
+        '<div class="l1">' +
+          '<span class="ti">' + esc(sc.title) + '</span>' +
+          (sc.url ? '<a class="scrap-link" href="' + esc(sc.url) + '" target="_blank" rel="noopener noreferrer" data-sclink aria-label="' + esc(sc.title) + ' 원문 링크 새 탭에서 열기"><span aria-hidden="true">🔗</span>링크</a>' : '') +
+        '</div>' +
+        (String(sc.memo || '').trim() ? '<div class="op">' + esc(scrapFirstLine(sc.memo)) + '</div>' : '') +
+        '<div class="mt">' + esc(scrapDate(sc)) + (sc.tag ? '<span class="dot" aria-hidden="true">·</span>' + esc(sc.tag) : '') + '</div>' +
+      '</div>').join('')
+      : (total
+        ? '<div class="scrap-empty">찾는 기사가 없어요<br>다른 낱말로 찾아보세요</div>'
+        : '<div class="scrap-empty">아직 스크랩한 기사가 없어요<br>＋ 새 기사 스크랩으로 첫 기사를 담아보세요</div>');
+  }
+
+  function renderScrapTags() {
+    const tags = [];
+    state.job.scraps.forEach((sc) => { if (sc.tag && tags.indexOf(sc.tag) < 0) tags.push(sc.tag); });
+    SCRAP_TAG_HINTS.forEach((t) => { if (tags.indexOf(t) < 0) tags.push(t); });
+    $('scTagChips').innerHTML = tags.slice(0, 10).map((t) =>
+      '<button type="button" class="chip" data-sctag="' + esc(t) + '">' + esc(t) + '</button>').join('');
+  }
+
+  function openScrapSheet(id) {
+    scrapEditId = id || null;
+    const sc = id ? scrapById(id) : null;
+    $('scrapSheetTitle').textContent = sc ? '기사 스크랩 수정' : '새 기사 스크랩';
+    $('scTitle').value = sc ? sc.title : '';
+    $('scUrl').value = sc ? sc.url : '';
+    $('scTag').value = sc ? sc.tag : '';
+    $('scMemo').value = sc ? sc.memo : '';
+    $('scDelete').hidden = !sc;
+    renderScrapTags();
+    openSheet('scrapSheet');
+  }
+
+  function saveScrap() {
+    const title = ($('scTitle').value || '').trim();
+    if (!title) { toast('기사 제목을 적어주세요'); $('scTitle').focus(); return; }
+    let url = ($('scUrl').value || '').trim();
+    if (url) {
+      if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) url = 'https://' + url;
+      if (!isHttpUrl(url)) { toast('링크는 http(s) 주소로 적어주세요'); return; }
+      url = url.slice(0, 500);
+    }
+    const data = {
+      title: title.slice(0, 200),
+      url: url,
+      tag: ($('scTag').value || '').trim().slice(0, 20),
+      memo: ($('scMemo').value || '').trim().slice(0, 2000)
+    };
+    const editing = !!scrapEditId;
+    if (editing) {
+      const sc = scrapById(scrapEditId);
+      if (sc) Object.assign(sc, data);
+    } else {
+      state.job.scraps.push(Object.assign({ id: 'sc' + uid(), created: new Date().toISOString() }, data));
+    }
+    save();
+    closeSheet('scrapSheet');
+    renderScraps();
+    toast(editing ? '스크랩을 수정했어요' : '기사를 스크랩했어요');
+  }
+
+  function deleteScrap(id) {
+    const target = id || scrapEditId || scrapViewId;
+    if (!target) return;
+    state.job.scraps = state.job.scraps.filter((x) => x.id !== target);
+    save();
+    closeSheet('scrapSheet');
+    closeSheet('scrapViewSheet');
+    scrapEditId = null;
+    scrapViewId = null;
+    renderScraps();
+    toast('스크랩을 지웠어요');
+  }
+
+  function openScrapView(id) {
+    const sc = scrapById(id);
+    if (!sc) return;
+    scrapViewId = id;
+    $('svArticleTitle').textContent = sc.title;
+    $('svMeta').textContent = scrapDate(sc) + (sc.tag ? ' · ' + sc.tag : '');
+    const link = $('svLink');
+    if (sc.url) { link.href = sc.url; link.hidden = false; }
+    else { link.removeAttribute('href'); link.hidden = true; }
+    const body = $('svMemo');
+    body.textContent = sc.memo || '내 의견을 아직 적지 않았어요';
+    body.classList.toggle('empty', !sc.memo);
+    openSheet('scrapViewSheet');
+  }
+
+  $('scrapSearch').addEventListener('input', () => {
+    scrapQuery = $('scrapSearch').value || '';
+    renderScraps();
+  });
+  $('scrapAdd').addEventListener('click', () => openScrapSheet(null));
+  $('scSave').addEventListener('click', saveScrap);
+  $('scDelete').addEventListener('click', () => deleteScrap(scrapEditId));
+  $('svDelete').addEventListener('click', () => deleteScrap(scrapViewId));
+  $('svEdit').addEventListener('click', () => {
+    const id = scrapViewId;
+    closeSheet('scrapViewSheet');
+    openScrapSheet(id);
+  });
+  $('scTagChips').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sctag]');
+    if (b) $('scTag').value = b.dataset.sctag;
+  });
+  $('scrapList').addEventListener('click', (e) => {
+    /* 🔗 링크 pill은 새 탭으로 원문만 열고, 카드 상세는 열지 않는다 */
+    if (e.target.closest('[data-sclink]')) return;
+    const card = e.target.closest('[data-scrap]');
+    if (card) openScrapView(card.dataset.scrap);
+  });
+  $('scrapList').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('[data-scrap]');
+    if (!card) return;
+    e.preventDefault();
+    openScrapView(card.dataset.scrap);
+  });
+
+
+  /* =========================================================
      시작
      ========================================================= */
   function renderAll() {
@@ -7247,6 +7385,7 @@
     renderTodo();
     renderWrong();
     renderMaster();
+    if (state.mode === 'job') renderJobAll();
     if ($('petStat').classList.contains('open')) renderPetStat();
   }
 
@@ -7255,7 +7394,6 @@
     if ($('lightbox').classList.contains('open')) { closeLightbox(); return; }
     const open = document.querySelector('.sheet.open');
     if (open) { closeSheet(open.id); return; }
-    if ($('quotes').classList.contains('open')) { closeQuotes(); return; }
     if ($('stats').classList.contains('open')) { closeStats(); return; }
     if ($('petStat').classList.contains('open')) { closePetStat(); return; }
     if ($('coll').classList.contains('open')) { closeCollection(); return; }
