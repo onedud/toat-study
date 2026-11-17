@@ -329,7 +329,6 @@
   #calCard .cal-title{font-size:14px;gap:7px;color:#12241F;flex-wrap:nowrap;min-width:0}
   #calCard .cal-title .em{font-size:13px}
   #calCard .cal-name{font-weight:800;color:#7C8F89;letter-spacing:-.01em;white-space:nowrap}
-  #calCard .cal-month{font-size:16px;font-weight:900;color:#12241F;min-width:0;text-align:left;letter-spacing:-.03em}
   .cal-count{
     display:inline-flex;align-items:center;gap:1px;min-height:32px;padding:0 2px 0 10px;border-radius:10px;
     font-size:15px;font-weight:800;color:#9AA9A4;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
@@ -428,14 +427,12 @@
   @media (max-width:359px){
     #calCard{padding:14px 10px 8px}
     #calCard .cal-grid{gap:4px}
-    #calCard .cal-month{font-size:15px}
     .cal-count{font-size:14px;padding-left:8px}
   }
   /* 태블릿·데스크톱: 칸이 커지므로 숫자·간격도 같이 키운다 */
   @media (min-width:560px){
     #calCard{padding:18px 16px 12px}
     #calCard .cal-name{font-size:15px}
-    #calCard .cal-month{font-size:18px}
     .cal-count{font-size:16px;min-height:34px}
     #calCard .cal-grid,
     #arcGrid{gap:8px}
@@ -1910,7 +1907,7 @@
 
     <section class="card cal-card" id="calCard" aria-label="공부 인증 달력">
       <div class="cal-head">
-        <div class="cal-title"><span class="em" aria-hidden="true">🗓️</span><span class="cal-name">tody calendar</span><span class="cal-month" id="calMonth">11/2026</span></div>
+        <div class="cal-title"><span class="em" aria-hidden="true">🗓️</span><span class="cal-name">tody calendar</span></div>
         <button class="cal-count" id="calCountBtn" type="button" aria-label="이번 달 기록 보기">
           <span id="calCount">0/30</span><span class="chev" aria-hidden="true">›</span>
         </button>
@@ -4839,7 +4836,6 @@
     const d = new Date();
     calY = d.getFullYear();
     calM = d.getMonth();
-    $('calMonth').textContent = (calM + 1) + '/' + calY;
     $('calGrid').innerHTML = calGridHTML(calY, calM);
     const rec = monthRecordedDays(calY, calM);
     const tot = monthDays(calY, calM);
