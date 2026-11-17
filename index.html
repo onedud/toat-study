@@ -249,7 +249,7 @@
   .focus-cta .zap{font-size:15px}
     .focus-cta .cta-emoji{font-size:16px;line-height:1;flex:none;display:inline-block}
   .focus-cta > span:last-child{white-space:nowrap}
-  .ac-btn .felt-ic{width:36px;height:36px;flex:none;display:block}
+  .ac-btn .felt-ic{width:40px;height:40px;flex:none;display:grid;place-items:center;font-size:34px;line-height:1}
   .qbolt .felt-ic{display:block;width:100%;height:100%}
   .gauge{margin-top:12px;padding:12px 13px 13px;border-radius:16px;background:var(--card-soft);border:1px solid var(--line-2);position:relative}
   .gauge-top{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
@@ -1033,6 +1033,7 @@
     .pet-art{width:min(66%,190px)}
     .action-card{padding:14px 13px}
     .ac-btn{width:56px;height:56px;font-size:24px;border-radius:19px}
+    .ac-btn .felt-ic{width:36px;height:36px;font-size:30px}
     .pill-btn{padding:11px 15px;font-size:12.5px}
   }
   @media (min-width:721px){
@@ -1601,7 +1602,7 @@
 
     <section class="card action-card boost" id="boostCard" role="button" tabindex="0" aria-label="Boost card 오답카드 열기">
       <div class="ac-btn boost" id="boostBtn" aria-hidden="true">
-        <span class="felt-ic" id="icoFlame"></span>
+        <span class="felt-ic" id="icoFlame">🔥</span>
         <span class="badge zero" id="boostBadge">0</span>
       </div>
       <div class="ac-txt">
@@ -1613,7 +1614,7 @@
 
     <section class="card action-card master" id="masterCard" role="button" tabindex="0" aria-label="Master card 마스터노트 열기">
       <div class="ac-btn master" id="masterBtn" aria-hidden="true">
-        <span class="felt-ic" id="icoStar"></span>
+        <span class="felt-ic" id="icoStar">⭐</span>
         <span class="badge zero" id="masterBadge">0</span>
       </div>
       <div class="ac-txt">
@@ -4221,30 +4222,6 @@
       '</svg>';
   }
 
-  /* 펠트 아이콘 (번개 · 불꽃 · 별) — 펫과 같은 질감 */
-  const ICONS = {
-    bolt: '<svg viewBox="0 0 100 120" aria-hidden="true" style="width:100%;height:100%;display:block">' +
-      '<g filter="url(#feltIcon)">' +
-        '<path d="M59 6 21 63h22l-6 53 41-63H53z" fill="#DE9A17" opacity=".22" transform="translate(3.5,3.5)"/>' +
-        '<path d="M58 4 20 62h23l-6 54 42-64H52z" fill="url(#boltRad)"/>' +
-      '</g>' +
-      '<path d="M50 19 34 50h12l-2 21" stroke="#fff" stroke-width="4.5" opacity=".35" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="62" cy="40" rx="5" ry="12" fill="#FFF9C9" opacity=".55" transform="rotate(26 62 40)"/></svg>',
-    flame: '<svg viewBox="0 0 100 110" aria-hidden="true" style="width:100%;height:100%;display:block">' +
-      '<g filter="url(#feltIcon)">' +
-        '<path d="M53 8 C59 29 83 36 83 64 C83 87 69 103 51 103 C33 103 18 87 18 64 C18 46 32 35 39 20 C41 31 46 36 51 38 C57 29 55 15 53 8Z" fill="#D4501F" opacity=".18" transform="translate(2,3)"/>' +
-        '<path d="M52 5 C58 26 80 34 80 62 C80 84 67 100 50 100 C33 100 20 84 20 62 C20 45 32 34 39 19 C41 30 45 35 50 37 C55 28 53 15 52 5Z" fill="url(#flameRad)"/>' +
-        '<path d="M50 47 C55 60 66 64 66 77 C66 89 58 95 50 95 C42 95 34 89 34 77 C34 66 43 60 50 47Z" fill="url(#flameCoreRad)"/>' +
-      '</g>' +
-      '<ellipse cx="55" cy="60" rx="5.5" ry="15" fill="#FFF3CE" opacity=".4"/></svg>',
-    star: '<svg viewBox="0 0 100 100" aria-hidden="true" style="width:100%;height:100%;display:block">' +
-      '<g filter="url(#feltIcon)">' +
-        '<path d="M50 8 L61.2 36.6 L91.8 38.4 L68.1 57.9 L75.9 87.6 L50 71 L24.1 87.6 L31.9 57.9 L8.2 38.4 L38.8 36.6 Z" fill="#DCA015" opacity=".2" transform="translate(2.5,3)"/>' +
-        '<path d="M50 8 L61.2 36.6 L91.8 38.4 L68.1 57.9 L75.9 87.6 L50 71 L24.1 87.6 L31.9 57.9 L8.2 38.4 L38.8 36.6 Z" fill="url(#starRad)" stroke="#F0B62A" stroke-width="3" stroke-linejoin="round"/>' +
-      '</g>' +
-      '<path d="M48 24 54 37" stroke="#fff" stroke-width="4" opacity=".5" stroke-linecap="round"/>' +
-      '<ellipse cx="40" cy="45" rx="5" ry="3" fill="#fff" opacity=".3" transform="rotate(-30 40 45)"/></svg>'
-  };
 
   /* =========================================================
      공통 UI
@@ -4378,8 +4355,6 @@
     const todayMin = dayMinutes(todayKey());
     $('gaugeToday').textContent = '오늘 ' + fmtDur(todayMin) + ' · 이번 주 ' + fmtDur(weekMinutes());
     $('heroIcon').textContent = heroSubjectIcon();
-    $('icoFlame').innerHTML = ICONS.flame;
-    $('icoStar').innerHTML = ICONS.star;
   }
 
   function tint(hex, a) {
