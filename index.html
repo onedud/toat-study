@@ -323,6 +323,138 @@
   .cal-foot .hint{font-size:11px}
   .cal-foot .streak{font-size:11px;font-weight:800;color:var(--mint-deep);display:inline-flex;align-items:center;gap:3px}
 
+  /* ---------- tody calendar: 테두리 없는 달력 (홈 = 이번 달, 아카이브 = 월간 기록) ---------- */
+  #calCard{padding:16px 12px 10px}
+  #calCard .cal-head{align-items:center;padding:0 2px 8px;gap:8px}
+  #calCard .cal-title{font-size:14px;gap:7px;color:#12241F;flex-wrap:nowrap;min-width:0}
+  #calCard .cal-title .em{font-size:13px}
+  #calCard .cal-name{font-weight:800;color:#7C8F89;letter-spacing:-.01em;white-space:nowrap}
+  #calCard .cal-month{font-size:16px;font-weight:900;color:#12241F;min-width:0;text-align:left;letter-spacing:-.03em}
+  .cal-count{
+    display:inline-flex;align-items:center;gap:1px;min-height:32px;padding:0 2px 0 10px;border-radius:10px;
+    font-size:15px;font-weight:800;color:#9AA9A4;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+    transition:background .15s,color .15s;white-space:nowrap
+  }
+  .cal-count:active{background:var(--mint-soft);color:var(--mint-deep)}
+  .cal-count .chev{font-size:18px;font-weight:700;color:#C4D0CC;line-height:1;margin-left:2px}
+  #calCard .cal-grid{gap:5px}
+  #calCard .cal-cell,
+  #arcGrid .cal-cell{
+    position:relative;aspect-ratio:1/1;border:0;border-radius:10px;background:transparent;
+    display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;
+    transition:transform .12s,background .15s;cursor:pointer
+  }
+  #calCard .cal-cell:active,
+  #arcGrid .cal-cell:active{transform:scale(.93)}
+  #calCard .cal-cell.out,
+  #arcGrid .cal-cell.out{opacity:0;pointer-events:none;background:transparent;border:0}
+  #calCard .cal-cell .d,
+  #arcGrid .cal-cell .d{
+    position:relative;z-index:2;font-size:clamp(13px,4.15vw,17px);font-weight:600;color:#C0CCC8;
+    font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.02em
+  }
+  #calCard .cal-cell.sun .d,
+  #arcGrid .cal-cell.sun .d{color:#E2A9A5}
+  #calCard .cal-cell.sat .d,
+  #arcGrid .cal-cell.sat .d{color:#A6C0DD}
+  /* 일기만 남긴 날 — 옅은 민트 배경 + 작은 민트 점 */
+  #calCard .cal-cell.has-diary:not(.has-photo),
+  #arcGrid .cal-cell.has-diary:not(.has-photo){background:#F1FBF7}
+  #calCard .cal-cell.has-diary:not(.has-photo) .d,
+  #arcGrid .cal-cell.has-diary:not(.has-photo) .d{color:#2C4A42;font-weight:700}
+  #calCard .cal-cell .diary-dot,
+  #arcGrid .cal-cell .diary-dot{
+    position:absolute;left:50%;bottom:5px;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;
+    background:var(--mint);z-index:3
+  }
+  /* 오늘 — 민트 라운드 사각형 */
+  #calCard .cal-cell.today,
+  #arcGrid .cal-cell.today{background:var(--mint);box-shadow:0 4px 11px rgba(24,210,155,.26)}
+  #calCard .cal-cell.today .d,
+  #arcGrid .cal-cell.today .d{color:#fff;font-weight:800}
+  /* 사진이 있는 날 — 사각 썸네일, 날짜 숫자 없음 */
+  #calCard .cal-cell.has-photo,
+  #arcGrid .cal-cell.has-photo{background:#EDF7F3}
+  #calCard .cal-cell.has-photo img:not(.noto-em),
+  #arcGrid .cal-cell.has-photo img:not(.noto-em){
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;border-radius:10px
+  }
+  #calCard .cal-cell.has-photo::after,
+  #arcGrid .cal-cell.has-photo::after{content:none}
+  #calCard .cal-cell.today.has-photo,
+  #arcGrid .cal-cell.today.has-photo{background:#EDF7F3;box-shadow:0 0 0 2.5px var(--mint)}
+  #calCard .cal-cell.no-entry,
+  #arcGrid .cal-cell.no-entry{cursor:default}
+  @media (hover:hover){
+    #calCard .cal-cell.empty-photo:hover,
+    #arcGrid .cal-cell.empty-photo:hover{background:#F4FBF8}
+    #calCard .cal-cell.empty-photo.has-diary:hover,
+    #arcGrid .cal-cell.empty-photo.has-diary:hover{background:#E6F8F0}
+    #calCard .cal-cell.has-photo:hover img,
+    #arcGrid .cal-cell.has-photo:hover img{filter:brightness(1.03)}
+  }
+  #calCard .cal-foot{margin-top:8px}
+  #calCard .cal-foot:empty{display:none}
+
+  /* ---------- 월간 기록 아카이브 ---------- */
+  .cal-arc{
+    position:fixed;inset:0;z-index:140;background:#FBFDFC;display:none;flex-direction:column;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain
+  }
+  .cal-arc.open{display:flex;animation:arcIn .22s ease}
+  @keyframes arcIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .arc-inner{width:100%;max-width:var(--maxw);margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(30px + env(safe-area-inset-bottom))}
+  .arc-head{display:flex;align-items:center;gap:8px;height:40px}
+  .arc-back{
+    width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:20px;font-weight:800;
+    color:#4C635C;background:#fff;border:1px solid var(--line);line-height:1;flex:none
+  }
+  .arc-back:active{transform:scale(.94)}
+  .arc-name{font-size:15px;font-weight:900;letter-spacing:-.02em;color:#12241F;display:flex;align-items:center;gap:6px}
+  .arc-name span{font-size:13px}
+  .arc-monthbar{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 14px}
+  .arc-nb{
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#7E928C;
+    font-size:17px;font-weight:800;line-height:1;transition:background .15s,color .15s
+  }
+  .arc-nb:active{background:var(--mint-soft);color:var(--mint-deep)}
+  .arc-nb[disabled]{opacity:.2;pointer-events:none}
+  .arc-month{font-size:18px;font-weight:900;color:#12241F;min-width:92px;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .arc-progress{padding:0 2px 12px}
+  .arc-count{text-align:right;font-size:15px;font-weight:800;color:#9AA9A4;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .arc-bar{height:8px;border-radius:999px;background:#ECF2F0;overflow:hidden;margin-top:7px}
+  .arc-bar i{display:block;height:100%;width:0;border-radius:999px;background:var(--mint);transition:width .32s ease}
+  .arc-empty{text-align:center;color:var(--dim);font-size:12.5px;font-weight:600;padding:26px 0 8px}
+  @media (max-width:359px){
+    #calCard{padding:14px 10px 8px}
+    #calCard .cal-grid{gap:4px}
+    #calCard .cal-month{font-size:15px}
+    .cal-count{font-size:14px;padding-left:8px}
+  }
+  /* 태블릿·데스크톱: 칸이 커지므로 숫자·간격도 같이 키운다 */
+  @media (min-width:560px){
+    #calCard{padding:18px 16px 12px}
+    #calCard .cal-name{font-size:15px}
+    #calCard .cal-month{font-size:18px}
+    .cal-count{font-size:16px;min-height:34px}
+    #calCard .cal-grid,
+    #arcGrid{gap:8px}
+    #calCard .cal-dow,
+    .arc-inner .cal-dow{gap:8px;padding-bottom:6px}
+    #calCard .cal-dow span,
+    .arc-inner .cal-dow span{font-size:10.5px}
+    #calCard .cal-cell .d,
+    #arcGrid .cal-cell .d{font-size:28px}
+    #calCard .cal-cell,
+    #arcGrid .cal-cell{border-radius:12px}
+    #calCard .cal-cell.has-photo img:not(.noto-em),
+    #arcGrid .cal-cell.has-photo img:not(.noto-em){border-radius:12px}
+    #calCard .cal-cell .diary-dot,
+    #arcGrid .cal-cell .diary-dot{width:6px;height:6px;bottom:8px}
+    .arc-month{font-size:20px}
+    .arc-count{font-size:16px}
+  }
+
   /* ---------- 부스트 · 마스터 카드 ---------- */
   .action-card{margin-top:12px;padding:16px 16px 15px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;cursor:pointer}
   .action-card .ac-txt{min-width:0;flex:1}
@@ -1778,18 +1910,14 @@
 
     <section class="card cal-card" id="calCard" aria-label="공부 인증 달력">
       <div class="cal-head">
-        <div class="cal-title"><span class="em" aria-hidden="true">🗓️</span>tody calendar</div>
-        <div class="cal-nav">
-          <button class="nb" id="calPrev" aria-label="이전 달">‹</button>
-          <span class="cal-month" id="calMonth">2026년 11월</span>
-          <button class="nb" id="calNext" aria-label="다음 달">›</button>
-        </div>
+        <div class="cal-title"><span class="em" aria-hidden="true">🗓️</span><span class="cal-name">tody calendar</span><span class="cal-month" id="calMonth">11/2026</span></div>
+        <button class="cal-count" id="calCountBtn" type="button" aria-label="이번 달 기록 보기">
+          <span id="calCount">0/30</span><span class="chev" aria-hidden="true">›</span>
+        </button>
       </div>
-      <p class="cal-sub">날짜를 눌러 공부 인증사진과 일기를 남겨보세요</p>
       <div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
       <div class="cal-grid" id="calGrid" role="grid" aria-label="날짜별 인증 사진"></div>
       <div class="cal-foot">
-        <span class="hint" id="calCount"></span>
         <span class="streak" id="calStreak"></span>
       </div>
     </section>
@@ -2621,6 +2749,27 @@
       <button class="btn ghost" data-close="petSheet">취소</button>
       <button class="btn primary" id="petSave">저장</button>
     </div>
+  </div>
+</div>
+
+<!-- ================= 월간 기록 아카이브 ================= -->
+<div class="cal-arc" id="calArchive" role="dialog" aria-modal="true" aria-labelledby="arcName">
+  <div class="arc-inner">
+    <div class="arc-head">
+      <button class="arc-back" id="arcBack" type="button" aria-label="달력으로 돌아가기">‹</button>
+      <div class="arc-name" id="arcName"><span aria-hidden="true">🗓️</span>tody calendar</div>
+    </div>
+    <div class="arc-monthbar">
+      <button class="arc-nb" id="arcPrev" type="button" aria-label="기록이 있는 이전 달">‹</button>
+      <span class="arc-month" id="arcMonth">11/2026</span>
+      <button class="arc-nb" id="arcNext" type="button" aria-label="기록이 있는 다음 달">›</button>
+    </div>
+    <div class="arc-progress">
+      <div class="arc-count" id="arcCount">0/30</div>
+      <div class="arc-bar" id="arcBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="arcFill"></i></div>
+    </div>
+    <div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="cal-grid" id="arcGrid" role="grid" aria-label="월간 기록 달력"></div>
   </div>
 </div>
 
@@ -4482,7 +4631,7 @@
     const el = $(id);
     if (!el) return;
     el.classList.remove('open');
-    if (!document.querySelector('.sheet.open') && !document.querySelector('.coll.open') && !document.querySelector('.focus-screen.open')) document.body.style.overflow = '';
+    if (!document.querySelector('.sheet.open') && !document.querySelector('.coll.open') && !document.querySelector('.focus-screen.open') && !document.querySelector('.cal-arc.open')) document.body.style.overflow = '';
   }
   document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => closeSheet(b.dataset.close)));
 
@@ -4627,7 +4776,7 @@
   }
 
   /* =========================================================
-     공부 인증 달력
+     공부 인증 달력 (홈 = 이번 달 · 월간 기록 아카이브)
      ========================================================= */
   let calY, calM;
   (function initCal() {
@@ -4636,48 +4785,136 @@
     calM = d.getMonth();
   })();
 
-  function renderCalendar() {
-    const c = cert();
-    $('calMonth').textContent = calY + '년 ' + (calM + 1) + '월';
-    const first = new Date(calY, calM, 1);
-    const startDow = first.getDay();
-    const daysInMonth = new Date(calY, calM + 1, 0).getDate();
-    const prevDays = new Date(calY, calM, 0).getDate();
+  const calRecorded = (e) => !!(e && (e.img || String(e.diary || e.memo || '').trim()));
+  function monthDays(y, m) { return new Date(y, m + 1, 0).getDate(); }
+  function monthKeyOf(y, m) { return y + '-' + pad(m + 1); }
+  function monthRecordedDays(y, m) {
+    const store = photoStore();
+    const prefix = monthKeyOf(y, m);
+    let n = 0;
+    Object.keys(store).forEach((k) => {
+      if (k.indexOf(prefix) !== 0) return;
+      if (calRecorded(store[k])) n++;
+    });
+    return n;
+  }
+
+  /* 홈·아카이브가 함께 쓰는 테두리 없는 달력 칸
+     · 사진이 있으면 숫자 없이 썸네일만, 일기만 있으면 숫자 + 민트 점,
+     · 오늘은 민트 라운드 사각형 */
+  function calGridHTML(y, m) {
+    const startDow = new Date(y, m, 1).getDay();
+    const days = monthDays(y, m);
     const cells = [];
-    for (let i = startDow - 1; i >= 0; i--) {
-      const d = prevDays - i;
-      cells.push('<div class="cal-cell out" aria-hidden="true"><span class="d">' + d + '</span></div>');
-    }
+    for (let i = 0; i < startDow; i++) cells.push('<div class="cal-cell out" aria-hidden="true"></div>');
     const tk = todayKey();
-    for (let d = 1; d <= daysInMonth; d++) {
-      const k = calY + '-' + pad(calM + 1) + '-' + pad(d);
-      const dow = new Date(calY, calM, d).getDay();
+    for (let d = 1; d <= days; d++) {
+      const k = monthKeyOf(y, m) + '-' + pad(d);
+      const dow = new Date(y, m, d).getDay();
       const entry = photoStore()[k];
       const hasImg = !!(entry && entry.img);
       const hasDiary = !!(entry && String(entry.diary || entry.memo || '').trim());
       const isToday = k === tk;
-      /* 지난·미래 날짜에 남긴 게 없으면 열리지 않는다 → 비활성 느낌 */
+      /* 지난·미래 날짜에 남긴 게 없으면 열리지 않는다 */
       const noEntry = !isToday && !hasImg && !hasDiary;
       const cls = 'cal-cell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') + (isToday ? ' today' : '') +
-        (hasImg ? ' has-photo' : ' empty-photo') + (hasDiary ? ' has-diary' : '') + (noEntry ? ' no-entry' : '');
+        (hasImg ? ' has-photo' : ' empty-photo') + (hasDiary ? ' has-diary' : '') +
+        (noEntry ? ' no-entry' : ' cal-live');
       const label = prettyDate(k) + (hasImg ? ' 인증 사진' : '') + (hasDiary ? ' 일기' : '') +
         (noEntry ? ' — 남긴 기록 없음' : (isToday ? ' — 열어서 수정' : ' — 열어서 보기'));
       cells.push('<button class="' + cls + '" data-date="' + k + '"' + (noEntry ? ' aria-disabled="true"' : '') +
         ' aria-label="' + esc(label) + '" role="gridcell">' +
-        (hasImg ? '<img src="' + entry.img + '" alt="" loading="lazy">' : (isToday ? '<span class="plus" aria-hidden="true">＋</span>' : '')) +
-        '<span class="d">' + d + '</span>' +
-        (hasDiary ? '<span class="diary-mark" aria-hidden="true">📝</span>' : '') +
+        (hasImg ? '<img src="' + entry.img + '" alt="" loading="lazy">' : '') +
+        (hasImg ? '' : '<span class="d">' + d + '</span>') +
+        (!hasImg && hasDiary ? '<span class="diary-dot" aria-hidden="true"></span>' : '') +
       '</button>');
     }
-    const total = startDow + daysInMonth;
+    const total = startDow + days;
     const trail = (7 - (total % 7)) % 7;
-    for (let i = 1; i <= trail; i++) cells.push('<div class="cal-cell out" aria-hidden="true"><span class="d">' + i + '</span></div>');
-    $('calGrid').innerHTML = cells.join('');
+    for (let i = 0; i < trail; i++) cells.push('<div class="cal-cell out" aria-hidden="true"></div>');
+    return cells.join('');
+  }
+
+  function renderCalendar() {
+    const d = new Date();
+    calY = d.getFullYear();
+    calM = d.getMonth();
+    $('calMonth').textContent = (calM + 1) + '/' + calY;
+    $('calGrid').innerHTML = calGridHTML(calY, calM);
+    const rec = monthRecordedDays(calY, calM);
+    const tot = monthDays(calY, calM);
+    $('calCount').textContent = rec + '/' + tot;
+    $('calCountBtn').setAttribute('aria-label', '이번 달 ' + tot + '일 중 ' + rec + '일 기록 — 월간 기록 보기');
     const st = photoStreak();
     $('calStreak').innerHTML = st > 0 ? '🔥 ' + st + '일 연속 인증' : '';
-    const monthPrefix = calY + '-' + pad(calM + 1);
-    const monthDays = Object.keys(photoStore()).filter((k) => k.indexOf(monthPrefix) === 0).length;
-    $('calCount').textContent = monthDays ? '이번 달 인증 ' + monthDays + '일' : '아직 인증 기록이 없어요';
+    if ($('calArchive').classList.contains('open')) renderArchive();
+  }
+
+  /* ---------- 월간 기록 아카이브 (기록 있는 달 + 이번 달만) ---------- */
+  let arcList = [], arcIdx = 0;
+  function archiveMonths() {
+    const set = {};
+    const now = new Date();
+    set[monthKeyOf(now.getFullYear(), now.getMonth())] = 1;
+    const store = photoStore();
+    Object.keys(store).forEach((k) => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) return;
+      if (calRecorded(store[k])) set[k.slice(0, 7)] = 1;
+    });
+    return Object.keys(set).sort();
+  }
+
+  function openArchive() {
+    arcList = archiveMonths();
+    const now = new Date();
+    const cur = monthKeyOf(now.getFullYear(), now.getMonth());
+    arcIdx = arcList.indexOf(cur);
+    if (arcIdx < 0) { arcList.push(cur); arcList.sort(); arcIdx = arcList.indexOf(cur); }
+    renderArchive();
+    $('calArchive').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeArchive() {
+    $('calArchive').classList.remove('open');
+    if (!document.querySelector('.sheet.open') && !document.querySelector('.coll.open') &&
+        !document.querySelector('.focus-screen.open') && !document.querySelector('.cal-arc.open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function renderArchive() {
+    if (!arcList.length) arcList = archiveMonths();
+    arcIdx = Math.max(0, Math.min(arcIdx, arcList.length - 1));
+    const key = arcList[arcIdx];
+    const y = Number(key.slice(0, 4));
+    const m = Number(key.slice(5, 7)) - 1;
+    $('arcMonth').textContent = (m + 1) + '/' + y;
+    $('arcGrid').innerHTML = calGridHTML(y, m);
+    const rec = monthRecordedDays(y, m);
+    const tot = monthDays(y, m);
+    const pct = tot ? Math.round((rec / tot) * 100) : 0;
+    $('arcCount').textContent = rec + '/' + tot;
+    $('arcFill').style.width = (rec ? Math.max(3, pct) : 0) + '%';
+    $('arcBar').setAttribute('aria-valuenow', pct);
+    $('arcBar').setAttribute('aria-label', (m + 1) + '월 ' + tot + '일 중 ' + rec + '일 기록 · ' + pct + '%');
+    $('arcPrev').disabled = arcIdx <= 0;
+    $('arcNext').disabled = arcIdx >= arcList.length - 1;
+  }
+
+  /* 홈·아카이브 공통 날짜 클릭 */
+  function onCalDayClick(e) {
+    const cell = e.target.closest('[data-date]');
+    if (!cell) return;
+    const k = cell.dataset.date;
+    /* 오늘이 아니면: 남긴 기록(사진/일기)이 있을 때만 열린다 */
+    if (k !== todayKey()) {
+      const p = photoStore()[k];
+      const hasImg = !!(p && p.img);
+      const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
+      if (!hasImg && !hasDiary) return;
+    }
+    openPhoto(k);
   }
 
   function renderCards() {
@@ -6337,22 +6574,13 @@
     }
   });
 
-  /* 달력 */
-  $('calPrev').addEventListener('click', () => { calM--; if (calM < 0) { calM = 11; calY--; } renderCalendar(); });
-  $('calNext').addEventListener('click', () => { calM++; if (calM > 11) { calM = 0; calY++; } renderCalendar(); });
-  $('calGrid').addEventListener('click', (e) => {
-    const cell = e.target.closest('[data-date]');
-    if (!cell) return;
-    const k = cell.dataset.date;
-    /* 오늘이 아니면: 남긴 기록(사진/일기)이 있을 때만 열린다 */
-    if (k !== todayKey()) {
-      const p = photoStore()[k];
-      const hasImg = !!(p && p.img);
-      const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
-      if (!hasImg && !hasDiary) return;
-    }
-    openPhoto(k);
-  });
+  /* 달력 — 홈은 이번 달만, 달 이동은 월간 기록 아카이브에서 */
+  $('calCountBtn').addEventListener('click', openArchive);
+  $('calGrid').addEventListener('click', onCalDayClick);
+  $('arcGrid').addEventListener('click', onCalDayClick);
+  $('arcBack').addEventListener('click', closeArchive);
+  $('arcPrev').addEventListener('click', () => { if (arcIdx > 0) { arcIdx--; renderArchive(); } });
+  $('arcNext').addEventListener('click', () => { if (arcIdx < arcList.length - 1) { arcIdx++; renderArchive(); } });
 
   /* 집중모드 */
   $('pickList').addEventListener('click', (e) => {
@@ -8103,6 +8331,7 @@
     if ($('lightbox').classList.contains('open')) { closeLightbox(); return; }
     const open = document.querySelector('.sheet.open');
     if (open) { closeSheet(open.id); return; }
+    if ($('calArchive').classList.contains('open')) { closeArchive(); return; }
     if ($('stats').classList.contains('open')) { closeStats(); return; }
     if ($('petStat').classList.contains('open')) { closePetStat(); return; }
     if ($('coll').classList.contains('open')) { closeCollection(); return; }
