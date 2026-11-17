@@ -446,92 +446,75 @@
   .pick-new .icon-custom input{flex:1;min-width:0;padding:9px 10px;border-radius:11px;border:1px solid var(--line);background:#fff;outline:none}
   .pick-info{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--mint-soft);font-size:11.5px;font-weight:700;color:#2C6A58}
 
-  /* ---------- 집중모드(Tody time) — 항상 가로 탁상시계 ---------- */
+  /* ---------- 집중모드(Tody time) — 세로는 세로 그대로, 가로는 자연스러운 가로 ---------- */
   .focus-screen{
-    position:fixed;inset:0;z-index:120;display:none;overflow:hidden;padding:0;
-    --dkw:844px;--dkh:390px;
-    background:radial-gradient(120% 80% at 50% 6%, #EAFDF5 0%, #DFFAF0 38%, #F6FEFB 100%);
-    transition:background .5s ease
+    position:fixed;inset:0;z-index:120;display:none;flex-direction:column;align-items:center;justify-content:center;
+    padding:calc(62px + env(safe-area-inset-top)) 20px calc(18px + env(safe-area-inset-bottom));
+    transition:background .5s ease;overflow:hidden
   }
-  .focus-screen.open{display:block}
+  .focus-screen.open{display:flex}
   .focus-screen.running{background:radial-gradient(120% 80% at 50% 6%, #EAFDF5 0%, #DFFAF0 38%, #F6FEFB 100%)}
   .focus-screen.paused,.focus-screen.ended{background:radial-gradient(120% 80% at 50% 6%, #F4F6F5 0%, #E9EDEB 46%, #F7F9F8 100%)}
-  /* 세로 화면에서는 통째로 90도 돌려 탁상시계처럼 / 가로 화면에서는 그대로 눕혀 같은 레이아웃 */
-  .focus-screen.desk-rot{
-    inset:auto;top:50%;left:50%;width:100vh;height:100vw;width:100dvh;height:100dvw;
-    transform:translate(-50%,-50%) rotate(90deg);transform-origin:center center
-  }
-  .focus-screen.desk-flat{inset:0;width:100%;height:100%}
-  /* 노치·홈 인디케이터를 피한다 (회전하면 물리적 위=왼쪽, 아래=오른쪽) */
-  .focus-screen.desk-rot .focus-top{left:calc(var(--dkw) * .032 + env(safe-area-inset-top));right:calc(var(--dkw) * .032 + env(safe-area-inset-bottom))}
-  .focus-screen.desk-flat .focus-top{left:calc(var(--dkw) * .032 + env(safe-area-inset-left));right:calc(var(--dkw) * .032 + env(safe-area-inset-right))}
-  .focus-screen.desk-flat .focus-inner{bottom:calc(var(--dkh) * .03 + env(safe-area-inset-bottom))}
-
-  /* 윗줄: TODY ON · 과목 · 자유/25분/50분 · ASMR · × */
+  /* 윗줄 — 세로: TODY ON · ASMR · × / 가로: 과목·뽀모도로까지 한 줄 */
   .focus-top{
-    position:absolute;top:calc(var(--dkh) * .05);left:calc(var(--dkw) * .032);right:calc(var(--dkw) * .032);
-    display:flex;align-items:center;gap:calc(var(--dkh) * .024);z-index:3
+    position:absolute;top:calc(16px + env(safe-area-inset-top));left:18px;right:18px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:3
   }
   .focus-top .tag-live{
-    flex:none;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
-    background:rgba(255,255,255,.86);border:1px solid var(--line);font-size:clamp(9.5px,calc(var(--dkh) * .028),11.5px);
-    font-weight:900;color:var(--mint-deep);letter-spacing:.05em;white-space:nowrap
+    flex:none;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
+    background:rgba(255,255,255,.86);border:1px solid var(--line);font-size:11px;font-weight:900;
+    color:var(--mint-deep);letter-spacing:.05em;white-space:nowrap
   }
   .focus-screen.paused .focus-top .tag-live,.focus-screen.ended .focus-top .tag-live{color:#75827E;background:rgba(255,255,255,.8);border-color:var(--gray-line)}
   .focus-top .tag-live i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(24,210,155,.18);animation:pulseDot 1.8s infinite}
   .focus-screen.paused .focus-top .tag-live i,.focus-screen.ended .focus-top .tag-live i{background:var(--gray);box-shadow:none;animation:none}
   @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.82)}}
-  .focus-subject{
-    flex:0 1 auto;min-width:0;max-width:30%;margin:0;font-size:clamp(12px,calc(var(--dkh) * .045),18px);
-    font-weight:900;color:#2C4A42;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-  }
-  .focus-screen.paused .focus-subject,.focus-screen.ended .focus-subject{color:#5E6B66}
-  .focus-top-right{margin-left:auto;display:flex;align-items:center;gap:calc(var(--dkh) * .022);flex:none}
+  .focus-top-right{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
   .focus-close{
-    width:clamp(30px,calc(var(--dkh) * .105),40px);height:clamp(30px,calc(var(--dkh) * .105),40px);border-radius:50%;
-    background:rgba(255,255,255,.9);border:1px solid var(--line);display:grid;place-items:center;
-    font-size:clamp(15px,calc(var(--dkh) * .05),19px);color:#55655F;box-shadow:var(--shadow)
+    width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--line);
+    display:grid;place-items:center;font-size:17px;color:#55655F;box-shadow:var(--shadow)
   }
-
-  /* 뽀모도로 칩 (윗줄 안에서 한 줄) */
-  .focus-pomo{
-    flex:0 1 auto;display:flex;align-items:center;gap:4px;margin:0;padding:3px;border-radius:999px;
-    background:rgba(255,255,255,.74);border:1px solid var(--line);box-shadow:0 6px 16px rgba(16,105,80,.05);
-    overflow-x:auto;scrollbar-width:none
-  }
-  .focus-pomo::-webkit-scrollbar{display:none}
-  .pomo-pill{
-    flex:none;padding:calc(var(--dkh) * .016) calc(var(--dkh) * .03);border-radius:999px;
-    font-size:clamp(10px,calc(var(--dkh) * .032),13px);font-weight:900;color:#6C7C77;white-space:nowrap;
-    transition:background .25s,color .25s,box-shadow .25s
-  }
-  .pomo-pill .noto-em{width:13px;height:13px;margin-right:2px;vertical-align:-2px}
-  .pomo-pill.on{background:var(--mint);color:#fff;box-shadow:0 6px 14px rgba(24,210,155,.26)}
-  .focus-screen.paused .pomo-pill.on{background:#fff;color:var(--mint-deep);border:1px solid var(--mint-line);box-shadow:none}
+  /* 과목·뽀모도로가 옮겨 다니는 자리 — 세로에선 가운데 열, 가로에선 윗줄 */
+  .focus-slot{display:contents}
 
   /* 힐링 ASMR 토글 */
   .focus-asmr{
-    display:inline-flex;align-items:center;gap:5px;height:clamp(30px,calc(var(--dkh) * .10),40px);padding:0 calc(var(--dkh) * .03);
-    border-radius:999px;background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:var(--shadow);
-    font-size:clamp(9.5px,calc(var(--dkh) * .028),11.5px);font-weight:900;color:#5D6F69;letter-spacing:.02em;
+    display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 12px;border-radius:999px;
+    background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:var(--shadow);
+    font-size:11px;font-weight:900;color:#5D6F69;letter-spacing:.02em;
     transition:background .3s,border-color .3s,color .3s;white-space:nowrap
   }
-  .focus-asmr .asmr-ico{display:inline-flex;align-items:center;font-size:clamp(11px,calc(var(--dkh) * .034),14px);line-height:1}
-  .focus-asmr .asmr-ico .noto-em{width:1em;height:1em}
+  .focus-asmr .asmr-ico{display:inline-flex;align-items:center;font-size:13px;line-height:1}
+  .focus-asmr .asmr-ico .noto-em{width:14px;height:14px}
   .focus-asmr .asmr-tx{white-space:nowrap}
   .focus-asmr[aria-pressed="true"]{background:linear-gradient(150deg,#EAFAF4,#D8F8EC);border-color:var(--mint-line);color:var(--mint-deep)}
   .focus-asmr.playing .asmr-ico{animation:asmrBob 1.8s ease-in-out infinite}
   .focus-screen.paused .focus-asmr{box-shadow:none}
   @keyframes asmrBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-1px) scale(1.1)}}
 
-  /* 가운데: 시계 → 목표 진행 → 토디펫 응원 → 버튼 줄 */
-  .focus-inner{
-    position:absolute;left:0;right:0;top:calc(var(--dkh) * .165);bottom:calc(var(--dkh) * .03);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:calc(var(--dkh) * .03);z-index:2
+  /* 가운데 열: 과목 → 뽀모도로 → 시계 → 목표 진행 → 토디펫 응원 → 버튼 */
+  .focus-inner{display:flex;flex-direction:column;align-items:center;width:100%;max-width:420px;z-index:2;gap:0}
+  .focus-subject{
+    order:1;margin:0 0 14px;max-width:86vw;text-align:center;font-size:16px;font-weight:900;
+    color:#2C4A42;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
   }
+  .focus-screen.paused .focus-subject,.focus-screen.ended .focus-subject{color:#5E6B66}
+  .focus-pomo{
+    order:2;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;overflow-x:auto;
+    margin:0 0 18px;padding:4px;border-radius:999px;max-width:100%;
+    background:rgba(255,255,255,.74);border:1px solid var(--line);box-shadow:0 6px 16px rgba(16,105,80,.05);
+    scrollbar-width:none
+  }
+  .focus-pomo::-webkit-scrollbar{display:none}
+  .pomo-pill{
+    flex:none;padding:7px 12px;border-radius:999px;font-size:11.5px;font-weight:900;color:#6C7C77;white-space:nowrap;
+    transition:background .25s,color .25s,box-shadow .25s
+  }
+  .pomo-pill .noto-em{width:13px;height:13px;margin-right:2px;vertical-align:-2px}
+  .pomo-pill.on{background:var(--mint);color:#fff;box-shadow:0 6px 14px rgba(24,210,155,.26)}
+  .focus-screen.paused .pomo-pill.on{background:#fff;color:var(--mint-deep);border:1px solid var(--mint-line);box-shadow:none}
   .focus-clock-wrap{
-    position:relative;display:grid;place-items:center;padding:0 calc(var(--dkh) * .02);border-radius:24px;
+    order:3;position:relative;display:grid;place-items:center;padding:8px 20px;border-radius:34px;
     background:transparent;box-shadow:none;transition:background .6s,box-shadow .6s
   }
   .focus-clock-wrap::before{
@@ -563,7 +546,7 @@
     70%{opacity:.28;transform:scale(.85) rotate(6deg)}
   }
   .focus-clock{
-    font-size:min(calc(var(--dkh) * .27), 170px);font-weight:900;letter-spacing:-.035em;line-height:1;
+    font-size:clamp(54px,17vw,86px);font-weight:900;letter-spacing:-.035em;line-height:1;
     font-variant-numeric:tabular-nums;color:#0E3A30;transition:color .5s;font-family:inherit
   }
   .focus-screen.running .focus-clock{text-shadow:0 8px 26px rgba(24,210,155,.18)}
@@ -572,18 +555,18 @@
   .focus-clock .csec{font-size:.62em;color:var(--mint-2);opacity:.85}
   .focus-screen.paused .focus-clock .csec{color:#94A29D}
 
-  .focus-pomo-progress{width:min(calc(var(--dkw) * .44), 420px);margin:0 auto;text-align:center}
+  .focus-pomo-progress{order:4;width:100%;max-width:258px;margin:14px auto 0;text-align:center}
   .fpp-track{height:6px;border-radius:999px;background:rgba(191,239,222,.55);overflow:hidden}
   .fpp-track i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#8EF0D2,#18D29B);box-shadow:0 0 10px rgba(24,210,155,.4);transition:width .5s linear}
-  .fpp-label{margin-top:6px;font-size:clamp(9.5px,calc(var(--dkh) * .028),12px);font-weight:800;color:#5D7A72;letter-spacing:-.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .fpp-label .noto-em{width:1em;height:1em;vertical-align:-2px}
+  .fpp-label{margin-top:7px;font-size:10.5px;font-weight:800;color:#5D7A72;letter-spacing:-.005em}
+  .fpp-label .noto-em{width:12px;height:12px;vertical-align:-2px}
   .focus-screen.paused .fpp-label{color:#8B9C96}
   .fpp-label.hit{color:var(--mint-deep);font-weight:900}
 
-  /* 토디펫 응원 카메오 — 뽀모도로 달성 순간에만 뿅 */
-  .focus-cameo{display:flex;align-items:center;justify-content:center;gap:calc(var(--dkh) * .02);max-width:100%}
+  /* 토디펫 응원 카메오 — 뽀모도로 달성 순간에만 뿅 (시계 뒤 흰 원 없음) */
+  .focus-cameo{order:5;display:flex;align-items:center;justify-content:center;gap:9px;max-width:100%;margin-top:22px}
   .focus-cameo[hidden]{display:none}
-  .cameo-pet{position:relative;flex:none;width:clamp(56px,calc(var(--dkh) * .235),104px);animation:petBob 3.4s ease-in-out infinite}
+  .cameo-pet{position:relative;flex:none;width:clamp(52px,15vw,76px);animation:petBob 3.4s ease-in-out infinite}
   .cameo-pet svg{display:block;width:100%;height:auto;overflow:visible}
   .cameo-pet .mini-spark{position:absolute;font-style:normal;color:#22CF9C;text-shadow:0 0 8px rgba(24,210,155,.8);pointer-events:none}
   .cameo-pet .mini-spark::before{content:"✦"}
@@ -592,27 +575,24 @@
   @keyframes petBob{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-3px) rotate(-1deg)}}
   @keyframes twinkle{0%,100%{opacity:.3;transform:scale(.72) rotate(0deg)}45%{opacity:1;transform:scale(1.12) rotate(18deg)}70%{opacity:.55;transform:scale(.9) rotate(6deg)}}
   .cameo-bubble{
-    position:relative;flex:0 1 auto;max-width:min(calc(var(--dkw) * .36), 320px);
-    padding:calc(var(--dkh) * .022) calc(var(--dkh) * .033) calc(var(--dkh) * .025);
-    border-radius:16px 16px 16px 6px;
+    position:relative;flex:0 1 auto;max-width:min(62vw,260px);padding:8px 12px 9px;border-radius:16px 16px 16px 6px;
     background:linear-gradient(158deg,#FFFFFF 0%,#F7FFFC 62%,#EFFDF7 100%);
     border:1px solid var(--mint-line);box-shadow:0 10px 24px rgba(16,105,80,.10), inset 0 1px 0 rgba(255,255,255,.9);
     animation:bubbleFloat 4.2s ease-in-out infinite
   }
   @keyframes bubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-  .cameo-bubble b{display:block;font-size:clamp(11px,calc(var(--dkh) * .034),14px);font-weight:900;color:var(--mint-deep);letter-spacing:-.02em;margin-bottom:2px;white-space:nowrap}
-  .cameo-bubble .cameo-tx{display:block;font-size:clamp(10.5px,calc(var(--dkh) * .031),13px);font-weight:800;color:#2C4A42;line-height:1.35;letter-spacing:-.015em}
+  .cameo-bubble b{display:block;font-size:12.5px;font-weight:900;color:var(--mint-deep);letter-spacing:-.02em;margin-bottom:2px;white-space:nowrap}
+  .cameo-bubble .cameo-tx{display:block;font-size:11.5px;font-weight:800;color:#2C4A42;line-height:1.35;letter-spacing:-.015em}
   .cameo-bubble .cameo-tail{position:absolute;left:-6px;top:calc(50% - 6px);width:11px;height:11px;transform:rotate(45deg);background:#fff;border-left:1px solid var(--mint-line);border-bottom:1px solid var(--mint-line);border-radius:0 0 0 3px}
   .cameo-bubble .cameo-spark{position:absolute;top:-7px;right:10px;font-style:normal;font-size:11px;color:#22CF9C;text-shadow:0 0 9px rgba(24,210,155,.7);animation:twinkle 3.4s ease-in-out .4s infinite}
   .cameo-bubble .cameo-spark::before{content:"✦"}
 
-  /* 아래 줄: 일시정지 · 완료 | 오늘/세션 | ☀️ 화면 유지 */
-  .focus-foot{display:flex;align-items:center;justify-content:center;gap:calc(var(--dkh) * .045);max-width:100%;flex-wrap:nowrap}
-  .focus-controls{display:flex;align-items:center;justify-content:center;gap:calc(var(--dkh) * .026);flex:none}
+  /* 버튼 → 오늘/세션 → 화면 유지 */
+  .focus-foot{order:6;display:flex;flex-direction:column;align-items:center;width:100%}
+  .focus-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;width:100%;max-width:330px}
   .fbtn{
     display:flex;align-items:center;justify-content:center;gap:6px;border-radius:26px;font-weight:900;
-    width:clamp(96px,calc(var(--dkw) * .155),160px);height:clamp(36px,calc(var(--dkh) * .115),52px);
-    font-size:clamp(12px,calc(var(--dkh) * .037),15px);
+    flex:1;max-width:150px;height:52px;font-size:14.5px;
     transition:transform .12s,background .3s,box-shadow .3s
   }
   .fbtn:active{transform:scale(.96)}
@@ -620,27 +600,108 @@
   .fbtn.finish{background:#fff;color:#3B4A45;border:1px solid #DDEDE7;box-shadow:0 6px 16px rgba(16,105,80,.08)}
   .fbtn.finish:hover{border-color:var(--mint-line);color:var(--mint-deep)}
   .focus-screen.paused .fbtn.pause,.focus-screen.ended .fbtn.pause{background:#fff;color:#44534E;border:1px solid #DDE5E2;box-shadow:0 6px 16px rgba(60,72,68,.10)}
-  .focus-meta{display:flex;align-items:center;gap:calc(var(--dkh) * .026);font-size:clamp(9.5px,calc(var(--dkh) * .028),12px);color:var(--dim);font-weight:700;white-space:nowrap}
+  .focus-meta{display:flex;align-items:center;gap:14px;margin-top:20px;font-size:11px;color:var(--dim);font-weight:700;white-space:nowrap}
   .focus-meta b{color:#3E5A52}
   .focus-wake{
-    display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.72);
-    border:1px solid var(--line-2);font-size:clamp(9px,calc(var(--dkh) * .027),11px);font-weight:800;color:#6C857D;white-space:nowrap
+    display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:5px 11px;border-radius:999px;
+    background:rgba(255,255,255,.72);border:1px solid var(--line-2);font-size:10.5px;font-weight:800;color:#6C857D;
+    white-space:nowrap
   }
   .focus-wake[hidden]{display:none}
-  .focus-wake .noto-em{width:1em;height:1em}
+  .focus-wake .noto-em{width:12px;height:12px}
 
-  /* 좁은 가로(예: 320×568을 눕힌 568×320) — 시계·펫·버튼을 한 단계 작게 */
-  .focus-screen.desk-narrow .focus-subject{max-width:26%}
-  .focus-screen.desk-narrow .focus-clock{font-size:min(calc(var(--dkh) * .245), 120px)}
-  .focus-screen.desk-narrow .cameo-pet{width:clamp(44px,calc(var(--dkh) * .175),72px)}
-  .focus-screen.desk-narrow .fbtn{width:clamp(86px,calc(var(--dkw) * .17),130px)}
-  .focus-screen.desk-narrow .focus-foot{gap:calc(var(--dkh) * .032)}
+  /* 낮은 세로 화면(예: 320×568) — 여백만 살짝 줄여 넘침 없이 */
+  @media (orientation:portrait) and (max-height:640px){
+    .focus-screen{padding-top:calc(56px + env(safe-area-inset-top));padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+    .focus-subject{margin-bottom:10px;font-size:15px}
+    .focus-pomo{margin-bottom:12px}
+    .focus-pomo-progress{margin-top:10px}
+    .focus-cameo{margin-top:12px}
+    .focus-controls{margin-top:14px}
+    .focus-meta{margin-top:10px}
+    .focus-wake{margin-top:8px}
+  }
+
+  /* ===== 가로 화면: 브라우저가 이미 가로일 때 — 회전 없이 자연스러운 가로 배치 ===== */
+  .focus-screen.is-landscape{
+    --dkw:100vw;--dkh:100dvh;
+    display:none;padding:0
+  }
+  .focus-screen.is-landscape.open{display:block}
+  .focus-screen.is-landscape .focus-top{
+    top:calc(var(--dkh) * .05);
+    left:calc(var(--dkw) * .032 + env(safe-area-inset-left));
+    right:calc(var(--dkw) * .032 + env(safe-area-inset-right));
+    justify-content:flex-start;gap:calc(var(--dkh) * .024)
+  }
+  .focus-screen.is-landscape .focus-top .tag-live{padding:5px 10px;font-size:clamp(9.5px,calc(var(--dkh) * .028),11.5px)}
+  .focus-screen.is-landscape .focus-top-right{order:9;gap:calc(var(--dkh) * .022)}
+  .focus-screen.is-landscape .focus-subject{
+    order:0;flex:0 1 auto;min-width:0;max-width:30%;margin:0;text-align:left;
+    font-size:clamp(12px,calc(var(--dkh) * .045),18px)
+  }
+  .focus-screen.is-landscape .focus-pomo{order:0;flex:0 1 auto;margin:0;padding:3px;gap:4px;max-width:40vw}
+  .focus-screen.is-landscape .pomo-pill{
+    padding:calc(var(--dkh) * .016) calc(var(--dkh) * .03);
+    font-size:clamp(10px,calc(var(--dkh) * .032),13px)
+  }
+  .focus-screen.is-landscape .focus-close{
+    width:clamp(30px,calc(var(--dkh) * .105),40px);height:clamp(30px,calc(var(--dkh) * .105),40px);
+    font-size:clamp(15px,calc(var(--dkh) * .05),19px)
+  }
+  .focus-screen.is-landscape .focus-asmr{
+    height:clamp(30px,calc(var(--dkh) * .10),40px);padding:0 calc(var(--dkh) * .03);
+    font-size:clamp(9.5px,calc(var(--dkh) * .028),11.5px)
+  }
+  .focus-screen.is-landscape .focus-asmr .asmr-ico{font-size:clamp(11px,calc(var(--dkh) * .034),14px)}
+  .focus-screen.is-landscape .focus-asmr .asmr-ico .noto-em{width:1em;height:1em}
+  .focus-screen.is-landscape .focus-inner{
+    position:absolute;left:0;right:0;top:calc(var(--dkh) * .17);bottom:calc(var(--dkh) * .035);
+    width:auto;max-width:none;justify-content:center;gap:calc(var(--dkh) * .028)
+  }
+  .focus-screen.is-landscape .focus-clock-wrap{padding:0 calc(var(--dkh) * .02);border-radius:24px}
+  .focus-screen.is-landscape .focus-clock{font-size:min(calc(var(--dkh) * .27),170px)}
+  .focus-screen.is-landscape .focus-pomo-progress{width:min(calc(var(--dkw) * .44),420px);max-width:none;margin:0}
+  .focus-screen.is-landscape .fpp-label{font-size:clamp(9.5px,calc(var(--dkh) * .028),12px)}
+  .focus-screen.is-landscape .focus-cameo{margin-top:0;gap:calc(var(--dkh) * .02)}
+  .focus-screen.is-landscape .cameo-pet{width:clamp(56px,calc(var(--dkh) * .235),104px)}
+  .focus-screen.is-landscape .cameo-bubble{
+    max-width:min(calc(var(--dkw) * .36),320px);
+    padding:calc(var(--dkh) * .022) calc(var(--dkh) * .033) calc(var(--dkh) * .025)
+  }
+  .focus-screen.is-landscape .cameo-bubble b{font-size:clamp(11px,calc(var(--dkh) * .034),14px)}
+  .focus-screen.is-landscape .cameo-bubble .cameo-tx{font-size:clamp(10.5px,calc(var(--dkh) * .031),13px)}
+  .focus-screen.is-landscape .focus-foot{
+    flex-direction:row;width:auto;max-width:100%;gap:calc(var(--dkh) * .045);flex-wrap:nowrap
+  }
+  .focus-screen.is-landscape .focus-controls{
+    margin-top:0;width:auto;max-width:none;gap:calc(var(--dkh) * .026);flex:none
+  }
+  .focus-screen.is-landscape .fbtn{
+    flex:none;max-width:none;width:clamp(96px,calc(var(--dkw) * .155),160px);
+    height:clamp(36px,calc(var(--dkh) * .115),52px);font-size:clamp(12px,calc(var(--dkh) * .037),15px)
+  }
+  .focus-screen.is-landscape .focus-meta{
+    margin-top:0;gap:calc(var(--dkh) * .026);font-size:clamp(9.5px,calc(var(--dkh) * .028),12px)
+  }
+  .focus-screen.is-landscape .focus-wake{
+    margin-top:0;padding:4px 10px;font-size:clamp(9px,calc(var(--dkh) * .027),11px)
+  }
+  .focus-screen.is-landscape .focus-wake .noto-em{width:1em;height:1em}
+
+  /* 좁은 가로(예: 568×320) — 시계·펫·버튼을 한 단계 작게 */
+  @media (max-width:699px){
+    .focus-screen.is-landscape .focus-subject{max-width:26%}
+    .focus-screen.is-landscape .focus-clock{font-size:min(calc(var(--dkh) * .245),120px)}
+    .focus-screen.is-landscape .cameo-pet{width:clamp(44px,calc(var(--dkh) * .175),72px)}
+    .focus-screen.is-landscape .fbtn{width:clamp(86px,calc(var(--dkw) * .17),130px)}
+    .focus-screen.is-landscape .focus-foot{gap:calc(var(--dkh) * .032)}
+  }
 
   @media (prefers-reduced-motion:reduce){
     .focus-top .tag-live i,.focus-asmr .asmr-ico,.focus-clock-wrap::before,.focus-sparkles i,
     .cameo-pet,.cameo-bubble,.cameo-bubble .cameo-spark,.cameo-pet .mini-spark{animation:none}
   }
-
   /* ---------- 토디펫 도감 ---------- */
   .coll{position:fixed;inset:0;z-index:110;background:#FBFDFC;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
   .coll.open{display:block}
@@ -2382,6 +2443,7 @@
 <div class="focus-screen" id="focusScreen" role="dialog" aria-modal="true" aria-label="Tody time 스톱워치">
   <div class="focus-top">
     <span class="tag-live"><i></i><span id="focusLive">TODY ON</span></span>
+    <span class="focus-slot" id="focusSlotTop"></span>
     <div class="focus-subject" id="focusSubject">과목</div>
     <div class="focus-pomo" id="focusPomo" role="group" aria-label="뽀모도로 모드">
       <button type="button" class="pomo-pill on" data-pomo="0" aria-pressed="true">자유</button>
@@ -2396,6 +2458,7 @@
     </div>
   </div>
   <div class="focus-inner">
+    <span class="focus-slot" id="focusSlotIn"></span>
     <div class="focus-clock-wrap" id="focusClockWrap">
       <div class="focus-clock" id="focusClock"><span class="ch">00</span>:<span class="cm">00</span>:<span class="csec">00</span></div>
       <div class="focus-sparkles" id="focusSparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -4795,22 +4858,23 @@
     syncWakeLock();
   }
 
-  /* Tody time은 항상 가로 탁상시계.
-     세로 화면이면 화면 전체를 90도 돌리고, 가로 화면이면 그대로 눕혀 같은 가로 레이아웃을 쓴다.
-     (iOS는 세로 잠금 상태에서 방향 잠금 API를 막으므로 CSS 회전으로 해결) */
+  /* Tody time은 화면을 돌리지 않는다.
+     세로 화면이면 세로 그대로(과목·뽀모도로는 시계 위 가운데),
+     브라우저가 이미 가로면 자연스러운 가로 배치(과목·뽀모도로는 윗줄)로 바꾼다. */
   function layoutFocusScreen() {
     const scr = $('focusScreen');
     if (!scr) return;
     const vw = window.innerWidth || document.documentElement.clientWidth || 0;
     const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-    const portrait = vh > vw;
-    scr.classList.toggle('desk-rot', portrait);
-    scr.classList.toggle('desk-flat', !portrait);
-    const lw = scr.offsetWidth || (portrait ? vh : vw);
-    const lh = scr.offsetHeight || (portrait ? vw : vh);
-    scr.style.setProperty('--dkw', lw + 'px');
-    scr.style.setProperty('--dkh', lh + 'px');
-    scr.classList.toggle('desk-narrow', lw > 0 && lw < 700);
+    const landscape = vw > vh;
+    if (scr.classList.contains('is-landscape') !== landscape) scr.classList.toggle('is-landscape', landscape);
+    const sub = $('focusSubject'), pomo = $('focusPomo');
+    const slot = landscape ? $('focusSlotTop') : $('focusSlotIn');
+    if (!sub || !pomo || !slot) return;
+    if (sub.parentNode !== slot || pomo.parentNode !== slot) {
+      slot.appendChild(sub);
+      slot.appendChild(pomo);
+    }
   }
 
   function openFocusScreen() {
@@ -8089,12 +8153,12 @@
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     focusState: () => focus, resumeFocusTick: resumeFocusTick, paintFocus: paintFocus,
     layoutFocus: layoutFocusScreen,
-    desk: () => { const s = $('focusScreen'); return s ? {
-      rot: s.classList.contains('desk-rot'), flat: s.classList.contains('desk-flat'),
-      narrow: s.classList.contains('desk-narrow'), w: s.offsetWidth, h: s.offsetHeight,
-      dkw: getComputedStyle(s).getPropertyValue('--dkw').trim(),
-      dkh: getComputedStyle(s).getPropertyValue('--dkh').trim(),
-      transform: getComputedStyle(s).transform } : null; },
+    desk: () => { const s = $('focusScreen'); const sub = $('focusSubject'), pomo = $('focusPomo');
+      return s ? {
+        landscape: s.classList.contains('is-landscape'), w: s.offsetWidth, h: s.offsetHeight,
+        transform: getComputedStyle(s).transform, position: getComputedStyle(s).position,
+        subjectIn: sub && sub.parentNode ? sub.parentNode.id : '',
+        pomoIn: pomo && pomo.parentNode ? pomo.parentNode.id : '' } : null; },
     cameo: () => { const el = $('focusCameo'), art = $('focusCameoArt'); const svg = art ? art.querySelector('svg') : null;
       return { hidden: el ? el.hidden : null,
         head: $('focusCameoHead') ? $('focusCameoHead').textContent : '',
