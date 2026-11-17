@@ -454,7 +454,7 @@
   .focus-screen.open{display:flex}
   .focus-screen.running{background:radial-gradient(120% 80% at 50% 6%, #EAFDF5 0%, #DFFAF0 38%, #F6FEFB 100%)}
   .focus-screen.paused,.focus-screen.ended{background:radial-gradient(120% 80% at 50% 6%, #F4F6F5 0%, #E9EDEB 46%, #F7F9F8 100%)}
-  .focus-top{position:absolute;top:calc(16px + env(safe-area-inset-top));left:18px;right:18px;display:flex;align-items:center;justify-content:space-between}
+  .focus-top{position:absolute;top:calc(16px + env(safe-area-inset-top));left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .focus-top .tag-live{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid var(--line);font-size:11px;font-weight:900;color:var(--mint-deep);letter-spacing:.05em}
   .focus-screen.paused .focus-top .tag-live,.focus-screen.ended .focus-top .tag-live{color:#75827E;background:rgba(255,255,255,.8);border-color:var(--gray-line)}
   .focus-top .tag-live i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(24,210,155,.18);animation:pulseDot 1.8s infinite}
@@ -515,6 +515,89 @@
   .focus-screen .focus-controls{order:3;margin-top:38px;gap:10px;max-width:330px}
   .focus-screen .focus-meta{order:4;margin-top:24px}
   .fbtn.pause,.fbtn.finish{height:52px;font-size:14.5px;border-radius:26px}
+
+  /* ---------- Tody time: 화면 유지 · 힐링 ASMR · 뽀모도로 ---------- */
+  .focus-top-right{display:flex;align-items:center;gap:8px}
+  .focus-asmr{
+    display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 12px;border-radius:999px;
+    background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:var(--shadow);
+    font-size:11px;font-weight:900;color:#5D6F69;letter-spacing:.02em;transition:background .3s,border-color .3s,color .3s
+  }
+  .focus-asmr .asmr-ico{display:inline-flex;align-items:center;font-size:13px;line-height:1}
+  .focus-asmr .asmr-ico .noto-em{width:14px;height:14px}
+  .focus-asmr .asmr-tx{white-space:nowrap}
+  .focus-asmr[aria-pressed="true"]{background:linear-gradient(150deg,#EAFAF4,#D8F8EC);border-color:var(--mint-line);color:var(--mint-deep)}
+  .focus-asmr.playing .asmr-ico{animation:asmrBob 1.8s ease-in-out infinite}
+  .focus-screen.paused .focus-asmr{box-shadow:none}
+  @keyframes asmrBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-1px) scale(1.1)}}
+
+  .focus-pomo{
+    order:2;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;overflow-x:auto;
+    margin:0 0 18px;padding:4px;border-radius:999px;max-width:100%;
+    background:rgba(255,255,255,.74);border:1px solid var(--line);box-shadow:0 6px 16px rgba(16,105,80,.05);
+    scrollbar-width:none
+  }
+  .focus-pomo::-webkit-scrollbar{display:none}
+  .pomo-pill{
+    flex:none;padding:7px 12px;border-radius:999px;font-size:11.5px;font-weight:900;color:#6C7C77;white-space:nowrap;
+    transition:background .25s,color .25s,box-shadow .25s
+  }
+  .pomo-pill .noto-em{width:13px;height:13px;margin-right:2px;vertical-align:-2px}
+  .pomo-pill.on{background:var(--mint);color:#fff;box-shadow:0 6px 14px rgba(24,210,155,.26)}
+  .focus-screen.paused .pomo-pill.on{background:#fff;color:var(--mint-deep);border:1px solid var(--mint-line);box-shadow:none}
+
+  .focus-clock-wrap{order:3;position:relative;display:grid;place-items:center;padding:8px 20px;border-radius:34px;transition:box-shadow .6s,background .6s}
+  .focus-clock-wrap::before{
+    content:"";position:absolute;inset:-14px;border-radius:48px;pointer-events:none;opacity:0;transition:opacity .7s ease;
+    background:radial-gradient(circle at 50% 50%, rgba(24,210,155,.42) 0%, rgba(124,255,214,.24) 40%, rgba(24,210,155,0) 72%)
+  }
+  .focus-clock-wrap.is-pomodoro-hit::before{opacity:1;animation:pomoGlowPulse 2.8s ease-in-out infinite}
+  .focus-clock-wrap.is-pomodoro-hit{background:radial-gradient(circle at 50% 50%, rgba(233,255,247,.9) 0%, rgba(255,255,255,0) 70%);box-shadow:0 0 44px rgba(24,210,155,.26), 0 0 96px rgba(124,255,214,.22)}
+  @keyframes pomoGlowPulse{
+    0%,100%{opacity:.5;transform:scale(.94)}
+    50%{opacity:1;transform:scale(1.06)}
+  }
+  .focus-sparkles{position:absolute;inset:-16px;pointer-events:none;opacity:0;transition:opacity .6s}
+  .focus-clock-wrap.is-pomodoro-hit .focus-sparkles{opacity:1}
+  .focus-sparkles i{position:absolute;font-style:normal;font-size:12px;line-height:1;color:#22CF9C;opacity:0;text-shadow:0 0 10px rgba(24,210,155,.85),0 0 18px rgba(124,255,214,.55)}
+  .focus-sparkles i::before{content:"✦"}
+  .focus-clock-wrap.is-pomodoro-hit .focus-sparkles i{animation:sparkleTwinkle 3.4s ease-in-out infinite}
+  .focus-sparkles i:nth-child(1){top:-4%;left:8%;font-size:15px;animation-delay:0s}
+  .focus-sparkles i:nth-child(2){top:14%;right:1%;font-size:11px;animation-delay:.55s}
+  .focus-sparkles i:nth-child(3){bottom:0;right:12%;font-size:14px;animation-delay:1.15s}
+  .focus-sparkles i:nth-child(4){bottom:12%;left:-2%;font-size:11px;animation-delay:1.7s}
+  .focus-sparkles i:nth-child(5){top:40%;left:-7%;font-size:9px;animation-delay:2.25s}
+  .focus-sparkles i:nth-child(6){top:46%;right:-6%;font-size:9px;animation-delay:2.8s}
+  @keyframes sparkleTwinkle{
+    0%,100%{opacity:0;transform:scale(.55) rotate(0deg)}
+    45%{opacity:1;transform:scale(1.18) rotate(20deg)}
+    70%{opacity:.28;transform:scale(.85) rotate(6deg)}
+  }
+  .focus-clock-wrap.is-pomodoro-hit .focus-clock{color:#0B7A5C;text-shadow:0 0 26px rgba(24,210,155,.35),0 8px 26px rgba(24,210,155,.18)}
+
+  .focus-pomo-progress{order:4;width:100%;max-width:258px;margin:14px auto 0;text-align:center}
+  .fpp-track{height:6px;border-radius:999px;background:rgba(191,239,222,.55);overflow:hidden}
+  .fpp-track i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#8EF0D2,#18D29B);box-shadow:0 0 10px rgba(24,210,155,.4);transition:width .5s linear}
+  .fpp-label{margin-top:7px;font-size:10.5px;font-weight:800;color:#5D7A72;letter-spacing:-.005em}
+  .fpp-label .noto-em{width:12px;height:12px;vertical-align:-2px}
+  .focus-screen.paused .fpp-label{color:#8B9C96}
+  .fpp-label.hit{color:var(--mint-deep);font-weight:900}
+
+  .focus-wake{
+    order:7;display:inline-flex;align-items:center;gap:5px;margin-top:16px;padding:5px 11px;border-radius:999px;
+    background:rgba(255,255,255,.72);border:1px solid var(--line-2);font-size:10.5px;font-weight:800;color:#6C857D
+  }
+  .focus-wake .noto-em{width:12px;height:12px}
+
+  /* 순서 정리: 과목 → 뽀모도로 → 시계 → 목표 진행 → 버튼 → 오늘 → 화면 유지 */
+  .focus-screen .focus-pomo{order:2}
+  .focus-screen .focus-clock-wrap{order:3}
+  .focus-screen .focus-pomo-progress{order:4}
+  .focus-screen .focus-controls{order:5}
+  .focus-screen .focus-meta{order:6}
+  .focus-screen .focus-wake{order:7}
+  .focus-screen.pomo-on .focus-controls{margin-top:24px}
+  .focus-screen.pomo-on .focus-clock-wrap{padding-bottom:2px}
 
   /* ---------- 토디펫 도감 ---------- */
   .coll{position:fixed;inset:0;z-index:110;background:#FBFDFC;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
@@ -2253,16 +2336,34 @@
 <div class="focus-screen" id="focusScreen" role="dialog" aria-modal="true" aria-label="Tody time 스톱워치">
   <div class="focus-top">
     <span class="tag-live"><i></i><span id="focusLive">TODY ON</span></span>
-    <button class="focus-close" id="focusClose" aria-label="Tody time 나가기">×</button>
+    <div class="focus-top-right">
+      <button class="focus-asmr" id="focusAsmr" type="button" aria-pressed="false" aria-label="힐링 ASMR 소리 켜기">
+        <span class="asmr-ico" aria-hidden="true">🔇</span><span class="asmr-tx" id="focusAsmrTx">ASMR</span>
+      </button>
+      <button class="focus-close" id="focusClose" aria-label="Tody time 나가기">×</button>
+    </div>
   </div>
   <div class="focus-inner">
     <div class="focus-subject" id="focusSubject">과목</div>
-    <div class="focus-clock" id="focusClock"><span class="ch">00</span>:<span class="cm">00</span>:<span class="csec">00</span></div>
+    <div class="focus-pomo" id="focusPomo" role="group" aria-label="뽀모도로 모드">
+      <button type="button" class="pomo-pill on" data-pomo="0" aria-pressed="true">자유</button>
+      <button type="button" class="pomo-pill" data-pomo="25" aria-pressed="false">🍅 25분</button>
+      <button type="button" class="pomo-pill" data-pomo="50" aria-pressed="false">🍅 50분</button>
+    </div>
+    <div class="focus-clock-wrap" id="focusClockWrap">
+      <div class="focus-clock" id="focusClock"><span class="ch">00</span>:<span class="cm">00</span>:<span class="csec">00</span></div>
+      <div class="focus-sparkles" id="focusSparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="focus-pomo-progress" id="focusPomoProgress" hidden>
+      <div class="fpp-track"><i id="focusPomoFill"></i></div>
+      <div class="fpp-label" id="focusPomoLabel">🍅 25분 목표</div>
+    </div>
     <div class="focus-controls">
       <button class="fbtn pause" id="focusPause">일시정지</button>
       <button class="fbtn finish" id="focusFinish">완료</button>
     </div>
     <div class="focus-meta"><span>오늘 <b id="focusToday">0분</b></span><span id="focusSessionCount">이번 세션 0분</span></div>
+    <div class="focus-wake" id="focusWake" hidden><span aria-hidden="true">☀️</span> 화면 켜짐 유지</div>
   </div>
 </div>
 
@@ -4619,6 +4720,9 @@
     const subj = focus ? subjectName(focus.subjectId) : '';
     $('focusSubject').textContent = subj;
     $('focusToday').textContent = fmtDur(dayMinutes(todayKey()));
+    paintPomodoro();
+    pomoCelebrateCheck();
+    syncWakeLock();
   }
 
   function openFocusScreen() {
@@ -4628,11 +4732,14 @@
     paintFocus();
     clearInterval(focusTimer);
     focusTimer = setInterval(paintFocus, 500);
+    /* 이전 세션에서 켜 둔 ASMR는 새 세션에서도 이어진다(재생은 첫 터치에 풀린다) */
+    if (asmrOn && !asmrCtx) asmrStart(true);
   }
   function closeFocusScreen() {
     $('focusScreen').classList.remove('open');
     clearInterval(focusTimer);
     focusTimer = null;
+    releaseWakeLock();
     if (!document.querySelector('.sheet.open') && !document.querySelector('.coll.open')) document.body.style.overflow = '';
   }
 
@@ -4667,6 +4774,9 @@
     saveFocus();
     closeSheet('pickSheet');
     openFocusScreen();
+    pomoCelebrated = false;
+    paintPomodoro();
+    syncWakeLock();
     toast('Tody time 시작! 잘 해낼 거예요');
   }
 
@@ -4683,6 +4793,7 @@
     }
     saveFocus();
     paintFocus();
+    syncWakeLock();
   }
 
   function finishFocus() {
@@ -4725,6 +4836,7 @@
     focus = null;
     saveFocus();
     save(true);
+    if (asmrOn) asmrStop(true);
     closeFocusScreen();
     renderHome();
     renderTimetable();
@@ -4744,7 +4856,444 @@
     }
     focus = null;
     saveFocus();
+    if (asmrOn) asmrStop(true);
     closeFocusScreen();
+  }
+
+  /* =========================================================
+     화면 유지 (Screen Wake Lock)
+     ---------------------------------------------------------
+     Tody time이 달리는 동안은 폰 화면이 꾸지 않게 한다.
+     지원하지 않는 브라우저·권한 거부는 조용히 넘어간다(타이머는 그대로 돌아간다).
+     화면을 바꿔도 브라우저가 반납하므로 visible로 돌아오면 다시 잡는다.
+     ========================================================= */
+  let wakeSentinel = null;
+  let wakeStatus = 'idle';   /* idle | requesting | active | denied | unsupported */
+  let wakeWanted = false;
+  let wakeBlocked = false;
+  let wakeReqCount = 0;
+  let wakeRelCount = 0;
+  let wakeFake = null;       /* 테스트용 가짜 navigator.wakeLock */
+
+  function wakeSupported() {
+    try { return !!(navigator.wakeLock && typeof navigator.wakeLock.request === 'function'); }
+    catch (e) { return false; }
+  }
+  function paintWake() {
+    const el = $('focusWake');
+    if (!el) return;
+    const on = wakeStatus === 'active';
+    el.hidden = !on;
+    el.classList.toggle('on', on);
+    el.setAttribute('data-state', wakeStatus);
+  }
+  function requestWakeLock() {
+    wakeWanted = true;
+    if (wakeBlocked) return;
+    if (!wakeSupported()) { wakeStatus = 'unsupported'; paintWake(); return; }
+    if (wakeSentinel) { wakeStatus = 'active'; paintWake(); return; }
+    wakeStatus = 'requesting';
+    wakeReqCount++;
+    try {
+      const p = navigator.wakeLock.request('screen');
+      if (!p || typeof p.then !== 'function') { wakeStatus = 'denied'; wakeBlocked = true; paintWake(); return; }
+      p.then((sentinel) => {
+        wakeSentinel = sentinel || null;
+        wakeStatus = wakeSentinel ? 'active' : 'denied';
+        if (wakeSentinel) {
+          try {
+            if (typeof wakeSentinel.addEventListener === 'function') {
+              wakeSentinel.addEventListener('release', () => {
+                wakeSentinel = null;
+                if (wakeStatus === 'active') wakeStatus = 'released';
+                paintWake();
+              });
+            } else {
+              wakeSentinel.onrelease = () => { wakeSentinel = null; if (wakeStatus === 'active') wakeStatus = 'released'; paintWake(); };
+            }
+          } catch (e) {}
+        } else { wakeBlocked = true; }
+        paintWake();
+      }).catch(() => { wakeSentinel = null; wakeStatus = 'denied'; wakeBlocked = true; paintWake(); });
+    } catch (e) { wakeStatus = 'denied'; wakeBlocked = true; paintWake(); }
+  }
+  function releaseWakeLock() {
+    wakeWanted = false;
+    wakeBlocked = false;
+    const s = wakeSentinel;
+    wakeSentinel = null;
+    wakeStatus = 'idle';
+    if (s) {
+      wakeRelCount++;
+      try { const r = s.release(); if (r && r.catch) r.catch(() => {}); } catch (e) {}
+    }
+    paintWake();
+  }
+  /* 달리는 중이면 잡고, 아니면 놓는다 */
+  function syncWakeLock() {
+    const want = focusRunning() && !document.hidden;
+    if (want) {
+      if (wakeStatus !== 'active' && wakeStatus !== 'requesting') requestWakeLock();
+    } else if (wakeSentinel || wakeWanted) {
+      releaseWakeLock();
+    }
+  }
+
+  /* 테스트용: navigator.wakeLock을 가짜로 바꾸어 요청/반납 횟수를 정확하게 본다 */
+  function stubWakeLock(opts) {
+    const opt = opts || {};
+    if (opt.supported === false) {
+      try { Object.defineProperty(navigator, 'wakeLock', { configurable: true, value: undefined }); }
+      catch (e) { try { navigator.wakeLock = undefined; } catch (e2) {} }
+      wakeFake = { supported: false, requests: 0, releases: 0 };
+      return true;
+    }
+    const rec = { supported: true, requests: 0, releases: 0, type: null };
+    const makeSentinel = () => ({
+      type: 'screen', released: false, onrelease: null,
+      addEventListener(ev, fn) { if (ev === 'release') this.onrelease = fn; },
+      removeEventListener() {},
+      release() {
+        if (this.released) return Promise.resolve();
+        this.released = true;
+        rec.releases++;
+        const fn = this.onrelease;
+        if (typeof fn === 'function') { try { fn(new Event('release')); } catch (e) {} }
+        return Promise.resolve();
+      }
+    });
+    try {
+      Object.defineProperty(navigator, 'wakeLock', {
+        configurable: true,
+        value: { request(type) { rec.requests++; rec.type = type; return Promise.resolve(makeSentinel()); } }
+      });
+    } catch (e) { return false; }
+    wakeFake = rec;
+    return true;
+  }
+  function unstubWakeLock() {
+    try { delete navigator.wakeLock; } catch (e) { try { navigator.wakeLock = undefined; } catch (e2) {} }
+    wakeFake = null;
+    return true;
+  }
+
+  /* =========================================================
+     힐링 ASMR — Web Audio 절차적 액밸언트
+     ---------------------------------------------------------
+     따뜻한 우박·숫소리(및은 크거 깨끔거리는 나지)
+     + 살랑이는 바람 + 가끔 떨어지는 우드 마림바/물방울 하모니.
+     모두 낮은 저역통과 필터를 거쳐 부드럽게 만든다. 외부 파일 없음(사운드 파일 0개).
+     ========================================================= */
+  const ASMR_KEY = 'studyTracker.asmr';
+  const ASMR_SCALE = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
+  let asmrOn = false;
+  let asmrCtx = null;
+  let asmrMaster = null;
+  let asmrNodes = [];
+  let asmrChimeTimer = null;
+  let asmrStarts = 0;
+  let asmrUnlocked = false;
+
+  function asmrPrefLoad() {
+    try { asmrOn = store.getItem(ASMR_KEY) === '1'; } catch (e) { asmrOn = false; }
+  }
+  function asmrPrefSave() { try { store.setItem(ASMR_KEY, asmrOn ? '1' : '0'); } catch (e) {} }
+
+  function asmrNoiseBuffer(ctx, kind) {
+    const len = Math.floor(ctx.sampleRate * 4);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    if (kind === 'brown') {
+      let last = 0;
+      for (let i = 0; i < len; i++) {
+        const white = Math.random() * 2 - 1;
+        last = (last + 0.02 * white) / 1.02;
+        d[i] = last * 3.2;
+      }
+    } else {
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      for (let i = 0; i < len; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+        b6 = white * 0.115926;
+      }
+    }
+    return buf;
+  }
+
+  function asmrBuild(ctx) {
+    const master = ctx.createGain();
+    master.gain.value = 0.0001;
+    master.connect(ctx.destination);
+    const tone = ctx.createBiquadFilter();
+    tone.type = 'lowpass'; tone.frequency.value = 1600; tone.Q.value = 0.4;
+    tone.connect(master);
+
+    const rain = ctx.createBufferSource();
+    rain.buffer = asmrNoiseBuffer(ctx, 'brown');
+    rain.loop = true;
+    const rainLp = ctx.createBiquadFilter();
+    rainLp.type = 'lowpass'; rainLp.frequency.value = 1050; rainLp.Q.value = 0.6;
+    const rainHp = ctx.createBiquadFilter();
+    rainHp.type = 'highpass'; rainHp.frequency.value = 150;
+    const rainGain = ctx.createGain(); rainGain.gain.value = 0.2;
+    rain.connect(rainLp); rainLp.connect(rainHp); rainHp.connect(rainGain); rainGain.connect(tone);
+
+    const breeze = ctx.createBufferSource();
+    breeze.buffer = asmrNoiseBuffer(ctx, 'pink');
+    breeze.loop = true;
+    const breezeBp = ctx.createBiquadFilter();
+    breezeBp.type = 'bandpass'; breezeBp.frequency.value = 520; breezeBp.Q.value = 0.7;
+    const breezeGain = ctx.createGain(); breezeGain.gain.value = 0.04;
+    const lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.07;
+    const lfoGain = ctx.createGain(); lfoGain.gain.value = 0.026;
+    lfo.connect(lfoGain); lfoGain.connect(breezeGain.gain);
+    breeze.connect(breezeBp); breezeBp.connect(breezeGain); breezeGain.connect(tone);
+
+    try { rain.start(0); breeze.start(0); lfo.start(0); } catch (e) {}
+    return { master: master, tone: tone, srcs: [rain, breeze, lfo] };
+  }
+
+  /* 부드러운 마림바/물방울 하모니 한 방 */
+  function asmrChime(when, freq) {
+    const ctx = asmrCtx;
+    if (!ctx || !asmrMaster) return false;
+    const t = ctx.currentTime + (when || 0);
+    const f = freq || ASMR_SCALE[Math.floor(Math.random() * ASMR_SCALE.length)] * (Math.random() < 0.22 ? 0.5 : 1);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.15, t + 0.014);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.7);
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass'; lp.frequency.value = 2200;
+    const o1 = ctx.createOscillator(); o1.type = 'sine'; o1.frequency.setValueAtTime(f, t);
+    const o2 = ctx.createOscillator(); o2.type = 'triangle'; o2.frequency.setValueAtTime(f * 2.01, t);
+    const g2 = ctx.createGain(); g2.gain.value = 0.2;
+    o1.connect(g); o2.connect(g2); g2.connect(g);
+    g.connect(lp); lp.connect(asmrMaster);
+    try {
+      o1.frequency.exponentialRampToValueAtTime(f * 0.985, t + 1.2);
+      o1.start(t); o2.start(t);
+      o1.stop(t + 1.9); o2.stop(t + 1.9);
+    } catch (e) {}
+    return true;
+  }
+  function asmrScheduleChime() {
+    clearTimeout(asmrChimeTimer);
+    asmrChimeTimer = null;
+    if (!asmrOn) return;
+    const wait = 5200 + Math.random() * 7600;
+    asmrChimeTimer = setTimeout(() => {
+      if (!asmrOn) return;
+      try {
+        asmrChime(0);
+        if (Math.random() < 0.35) asmrChime(0.26);
+      } catch (e) {}
+      asmrScheduleChime();
+    }, wait);
+  }
+  function asmrResumeCtx() {
+    if (!asmrCtx) return;
+    try {
+      if (asmrCtx.state === 'suspended') {
+        const r = asmrCtx.resume();
+        if (r && r.catch) r.catch(() => {});
+      }
+    } catch (e) {}
+  }
+  function paintAsmr() {
+    const b = $('focusAsmr');
+    if (!b) return;
+    b.setAttribute('aria-pressed', asmrOn ? 'true' : 'false');
+    b.setAttribute('aria-label', asmrOn ? '힐링 ASMR 소리 끄기' : '힐링 ASMR 소리 켜기');
+    b.classList.toggle('playing', asmrOn);
+    const ic = b.querySelector('.asmr-ico');
+    if (ic && ic.getAttribute('data-on') !== String(asmrOn)) {
+      ic.textContent = asmrOn ? '🔊' : '🔇';
+      ic.setAttribute('data-on', String(asmrOn));
+    }
+    const tx = $('focusAsmrTx');
+    if (tx) tx.textContent = asmrOn ? 'ASMR 켜짐' : 'ASMR';
+  }
+  function asmrStart(quiet) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { asmrOn = false; asmrPrefSave(); paintAsmr(); if (!quiet) toast('이 브라우저는 소리를 지원하지 않아요'); return false; }
+    try {
+      if (!asmrCtx) {
+        asmrCtx = new AC();
+        const g = asmrBuild(asmrCtx);
+        asmrMaster = g.master;
+        asmrNodes = g.srcs;
+      }
+      asmrOn = true;
+      asmrPrefSave();
+      asmrResumeCtx();
+      asmrStarts++;
+      const now = asmrCtx.currentTime;
+      const g = asmrMaster.gain;
+      try {
+        g.cancelScheduledValues(now);
+        g.setValueAtTime(Math.max(0.0001, g.value), now);
+        g.linearRampToValueAtTime(0.5, now + 1.5);
+      } catch (e) {}
+      asmrScheduleChime();
+      paintAsmr();
+      return true;
+    } catch (e) {
+      asmrOn = false;
+      asmrPrefSave();
+      paintAsmr();
+      return false;
+    }
+  }
+  function asmrStop(quiet) {
+    asmrOn = false;
+    asmrPrefSave();
+    clearTimeout(asmrChimeTimer);
+    asmrChimeTimer = null;
+    if (asmrCtx && asmrMaster) {
+      try {
+        const now = asmrCtx.currentTime;
+        const g = asmrMaster.gain;
+        g.cancelScheduledValues(now);
+        g.setValueAtTime(Math.max(0.0001, g.value), now);
+        g.linearRampToValueAtTime(0.0001, now + 0.7);
+      } catch (e) {}
+      setTimeout(() => {
+        if (asmrOn || !asmrCtx) return;
+        try { if (asmrCtx.state === 'running') asmrCtx.suspend(); } catch (e) {}
+      }, 640);
+    }
+    paintAsmr();
+    if (!quiet) {}
+  }
+  function asmrToggle() {
+    if (asmrOn) asmrStop();
+    else if (asmrStart()) toast('🌿 빗소리·바람 소리와 함께 집중해요', 2400);
+  }
+  function asmrPomodoroChime() {
+    if (!asmrOn || !asmrCtx || !asmrMaster) return false;
+    try {
+      asmrChime(0, 659.25);
+      asmrChime(0.16, 783.99);
+      asmrChime(0.32, 1046.5);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  /* =========================================================
+     뽀모도로 (자유 / 🍅 25분 / 🍅 50분) + 반짝 하이라이트
+     ---------------------------------------------------------
+     목표 시간에 닿으면 시계 둘레가 민트빛으로 반짝인다.
+     경과 시간은 멈추지 않는다 — 축하인은 일시정일 뿐, 계속 공부하면 반짝임은 계속 된다.
+     ========================================================= */
+  const POMO_KEY = 'studyTracker.pomo';
+  let pomoMode = 0;            /* 0 = 자유, 25 / 50 = 분 */
+  let pomoCelebrated = false;
+
+  function pomoPrefLoad() {
+    let v = 0;
+    try { v = Number(store.getItem(POMO_KEY)); } catch (e) { v = 0; }
+    pomoMode = (v === 25 || v === 50) ? v : 0;
+  }
+  function pomoPrefSave() { try { store.setItem(POMO_KEY, String(pomoMode)); } catch (e) {} }
+  function pomoTargetMs() { return pomoMode * 60000; }
+  function pomoIsHit() { return pomoMode > 0 && focusElapsedMs() >= pomoTargetMs(); }
+  function pomoProgress() {
+    const t = pomoTargetMs();
+    if (!t) return 0;
+    return Math.min(1, focusElapsedMs() / t);
+  }
+  function paintPomodoro() {
+    const row = $('focusPomo');
+    if (row) {
+      row.querySelectorAll('[data-pomo]').forEach((b) => {
+        const on = Number(b.dataset.pomo) === pomoMode;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    const bar = $('focusPomoProgress');
+    const has = pomoMode > 0;
+    if (bar) bar.hidden = !has;
+    const scr = $('focusScreen');
+    if (scr) scr.classList.toggle('pomo-on', has);
+    const hit = has && pomoIsHit();
+    /* 반짝임은 달리는 동안만 — 일시정지하면 잠시 쉬었다가, 다시 이어가면 돌아온다 */
+    const glowing = hit && focusRunning();
+    const wrap = $('focusClockWrap');
+    if (wrap) wrap.classList.toggle('is-pomodoro-hit', glowing);
+    if (!has) {
+      const fill0 = $('focusPomoFill');
+      if (fill0) fill0.style.width = '0%';
+      return;
+    }
+    const fill = $('focusPomoFill');
+    if (fill) fill.style.width = (pomoProgress() * 100).toFixed(1) + '%';
+    const label = $('focusPomoLabel');
+    if (label) {
+      let txt;
+      if (hit) txt = '🍅 ' + pomoMode + '분 달성! 잠깐 쉬어도 좋아요';
+      else {
+        const left = Math.max(1, Math.ceil((pomoTargetMs() - focusElapsedMs()) / 60000));
+        txt = '🍅 ' + pomoMode + '분 목표 · ' + left + '분 남았어요';
+      }
+      if (label.getAttribute('data-txt') !== txt) {
+        label.textContent = txt;
+        label.setAttribute('data-txt', txt);
+      }
+      label.classList.toggle('hit', hit);
+    }
+  }
+  function setPomoMode(m) {
+    const v = (m === 25 || m === 50) ? m : 0;
+    pomoMode = v;
+    pomoPrefSave();
+    pomoCelebrated = pomoIsHit();
+    paintPomodoro();
+    return pomoMode;
+  }
+  function pomoCelebrateCheck() {
+    if (!focus || pomoMode <= 0) return;
+    if (!pomoIsHit()) { pomoCelebrated = false; return; }
+    if (pomoCelebrated) return;
+    pomoCelebrated = true;
+    asmrPomodoroChime();
+    toast('🍅 뽀모도로 ' + pomoMode + '분 달성! ✨ 잠깐 쉬어가도 좋아요', 4000);
+  }
+
+  /* 화면이 다시 보일 때 오디오 잠금을 풀어 준다(모바일 자동재생 정책) */
+  function asmrUnlockOnce() {
+    if (asmrUnlocked) return;
+    asmrUnlocked = true;
+    document.addEventListener('pointerdown', () => { if (asmrOn) asmrResumeCtx(); }, { passive: true });
+    document.addEventListener('keydown', () => { if (asmrOn) asmrResumeCtx(); });
+  }
+
+  function initFocusExtras() {
+    asmrPrefLoad();
+    pomoPrefLoad();
+    paintAsmr();
+    paintPomodoro();
+    paintWake();
+    pomoCelebrated = pomoIsHit();
+    const b = $('focusAsmr');
+    if (b) b.addEventListener('click', asmrToggle);
+    const row = $('focusPomo');
+    if (row) row.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-pomo]');
+      if (!btn) return;
+      setPomoMode(Number(btn.dataset.pomo));
+      const tx = pomoMode ? '🍅 ' + pomoMode + '분 뽀모도로' : '자유 모드';
+      toast(tx + '로 바꿨어요', 2000);
+    });
+    asmrUnlockOnce();
   }
 
   /* =========================================================
@@ -7394,11 +7943,15 @@
       if (saveTimer) saveNow();
       return;
     }
+    /* 화면으로 돌아오면 브라우저가 반납한 wake lock을 다시 잡는다 */
+    wakeBlocked = false;
+    syncWakeLock();
     resumeFocusTick();
   });
   window.addEventListener('pageshow', () => { resumeFocusTick(); });
   window.addEventListener('focus', () => { resumeFocusTick(); });
 
+  initFocusExtras();
   loadFocus();
   applyMode();
   renderAll();
@@ -7419,7 +7972,26 @@
     subjectMinutes: subjectMinutes, subjectExtra: subjectExtraMinutes, dayMinutes: dayMinutes,
     addMinutes: (id, min) => { const p = petStore(); p.minutes[id || p.animal] = (p.minutes[id || p.animal] || 0) + min; saveNow(); renderAll(); },
     setMode: setMode, applyMode: applyMode, renderJobAll: renderJobAll, showJobPage: showJobPage,
-    openJobSched: openJobSched, certMinutes: certMinutes
+    openJobSched: openJobSched, certMinutes: certMinutes,
+    /* Tody time 확장: 화면 유지 · ASMR · 뽀모도로 */
+    wakeLock: {
+      state: () => ({ supported: wakeSupported(), status: wakeStatus, active: wakeStatus === 'active', wanted: wakeWanted, blocked: wakeBlocked, requests: wakeReqCount, releases: wakeRelCount, fake: wakeFake }),
+      request: requestWakeLock, release: releaseWakeLock, sync: syncWakeLock,
+      stub: stubWakeLock, unstub: unstubWakeLock, paint: paintWake,
+      pill: () => { const el = $('focusWake'); return el ? { hidden: el.hidden, text: (el.textContent || '').trim(), state: el.getAttribute('data-state') } : null; }
+    },
+    asmr: {
+      isOn: () => asmrOn,
+      state: () => ({ on: asmrOn, ctx: asmrCtx ? asmrCtx.state : 'none', gain: asmrMaster ? asmrMaster.gain.value : 0, nodes: asmrNodes.length, starts: asmrStarts, chimes: asmrChimeTimer ? 1 : 0, pref: (() => { try { return store.getItem(ASMR_KEY); } catch (e) { return null; } })() }),
+      toggle: asmrToggle, start: asmrStart, stop: asmrStop, chime: asmrChime, pomoChime: asmrPomodoroChime
+    },
+    pomo: {
+      mode: () => pomoMode,
+      set: setPomoMode,
+      state: () => ({ mode: pomoMode, target: pomoTargetMs(), elapsed: focusElapsedMs(), progress: pomoProgress(), hit: pomoIsHit(), celebrated: pomoCelebrated, cls: (() => { const w = $('focusClockWrap'); return !!w && w.classList.contains('is-pomodoro-hit'); })() }),
+      reset: () => { pomoCelebrated = false; paintPomodoro(); }
+    },
+    setPomo: setPomoMode,
   };
 })();
 </script>
