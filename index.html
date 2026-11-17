@@ -7953,6 +7953,8 @@
 
   initFocusExtras();
   loadFocus();
+  /* 새로고침 직후 이미 지난 목표를 다시 축하하지 않는다(반짝임은 그대로 보인다) */
+  pomoCelebrated = pomoIsHit();
   applyMode();
   renderAll();
   if (focus) openFocusScreen();
