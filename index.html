@@ -624,8 +624,12 @@
 
   /* ===== 가로 화면: 브라우저가 이미 가로일 때 — 회전 없이 자연스러운 가로 배치 ===== */
   .focus-screen.is-landscape{
-    --dkw:100vw;--dkh:100dvh;
+    --dkw:100vw;--dkh:100vh;
     display:none;padding:0
+  }
+  /* dvh를 아는 브라우저(최신 iOS Safari·Chrome)에서만 주소창 높이를 뺀 진짜 높이를 쓴다 */
+  @supports (height:100dvh){
+    .focus-screen.is-landscape{--dkh:100dvh}
   }
   .focus-screen.is-landscape.open{display:block}
   .focus-screen.is-landscape .focus-top{
