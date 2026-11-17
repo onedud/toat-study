@@ -4694,7 +4694,15 @@
     if (name === 'master') renderMaster();
     window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
   }
-  document.querySelectorAll('.nav button').forEach((b) => b.addEventListener('click', () => showPage(b.dataset.page)));
+  /* 오답 탭에 들어오면 항상 '오늘 복습'부터 — 지난 카드는 전체 카드에서 */
+  function openWrongTab() {
+    wrongFilter = 'due';
+    showPage('wrong');
+  }
+  document.querySelectorAll('.nav button').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.page === 'wrong') wrongFilter = 'due';
+    showPage(b.dataset.page);
+  }));
 
   /* =========================================================
      헤더 · 홈
@@ -6613,9 +6621,9 @@
   $('petBadge').addEventListener('click', openPetSheet);
   $('ddayPill').addEventListener('click', openDday);
   $('goalEdit').addEventListener('click', openGoal);
-  $('boostCard').addEventListener('click', () => showPage('wrong'));
+  $('boostCard').addEventListener('click', openWrongTab);
   $('masterCard').addEventListener('click', () => showPage('master'));
-  $('boostCard').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPage('wrong'); } });
+  $('boostCard').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWrongTab(); } });
   $('masterCard').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPage('master'); } });
   $('brandHome').addEventListener('click', (e) => { e.preventDefault(); showPage('home'); });
 
