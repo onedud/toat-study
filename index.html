@@ -603,6 +603,28 @@
   .page-head h1 .em{font-size:17px}
   .page-head .sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:600}
   .page-head .tools{display:flex;align-items:center;gap:5px;flex:none}
+  /* 페이지 제목 옆 현재 날짜: 오늘 / YYYY-MM-DD */
+  .page-head h1 .ph-date{font-size:12px;font-weight:800;color:#9CA3AF;letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin-left:1px}
+  /* 제목 줄 오른쪽 📅 달력 버튼 */
+  .cal-btn{width:38px;height:38px;padding:0;flex:none;border-radius:13px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+  .cal-btn:active{transform:scale(.96)}
+  /* 날짜 선택 달력 시트 */
+  .calsheet .cs-month{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 10px}
+  .calsheet .cs-month .m{font-size:13.5px;font-weight:900;color:#2C4A42;font-variant-numeric:tabular-nums}
+  .calsheet .cs-month .nb{width:30px;height:30px;flex:none;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:900;font-size:14px;display:grid;place-items:center;line-height:1}
+  .calsheet .cs-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 1px}
+  .calsheet .cs-cell{position:relative;aspect-ratio:1/1;border-radius:10px;border:1px solid transparent;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12.5px;font-weight:800;color:#C7D2CD;font-variant-numeric:tabular-nums}
+  .calsheet .cs-cell.has{color:#2C4A42;border-color:var(--line-2);background:var(--card-soft)}
+  .calsheet .cs-cell.has::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--mint);opacity:.7}
+  .calsheet .cs-cell.today{border-color:var(--mint-line);background:#fff;color:var(--mint-deep)}
+  .calsheet .cs-cell.on{border-color:var(--mint);background:var(--mint-soft);color:var(--mint-deep);box-shadow:0 0 0 2px rgba(24,210,155,.12)}
+  .calsheet .cs-cell.on::after{background:var(--mint);opacity:1}
+  .calsheet .cs-cell.sun{color:#D9706B}
+  .calsheet .cs-cell.sat{color:#6E93C4}
+  .calsheet .cs-cell:disabled{opacity:.42;cursor:default}
+  .calsheet .cs-cell:disabled.sun,.calsheet .cs-cell:disabled.sat{color:#C7D2CD}
+  .calsheet .cs-cell.out{visibility:hidden;pointer-events:none}
+  .calsheet .cs-hint{text-align:center;font-size:11px;font-weight:700;color:var(--dim);margin-top:12px}
   .mini-round{
     width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);
     font-size:15px;color:var(--muted);box-shadow:var(--shadow)
@@ -654,6 +676,8 @@
   .field textarea{resize:vertical;min-height:74px;line-height:1.55}
   .field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
   .field-row .field{flex:1 1 0;min-width:0}
+  /* 면접복기: 날짜 칸과 회사명 칸 높이를 똑같이(44px) */
+  #jobRevSheet .field-row .field input{height:44px;min-height:44px;box-sizing:border-box}
   .seg{display:flex;gap:3px;padding:3px;border-radius:12px;background:var(--gray-soft);border:1px solid var(--gray-line)}
   .seg button{flex:1;padding:8px 4px;border-radius:9px;font-size:12.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .seg button.on{background:#fff;color:var(--mint-deep);box-shadow:0 1px 3px rgba(16,105,80,.12)}
@@ -1366,7 +1390,7 @@
   .todo-toggle .ck{width:15px;height:15px;border-radius:4px;border:1.6px solid #C2D1CB;background:#fff;display:grid;place-items:center;flex:none;font-size:10px;line-height:1;color:#fff;transition:background .15s,border-color .15s}
   .todo-toggle.on .ck{background:var(--mint);border-color:var(--mint)}
   .todo-toggle.on .ck::after{content:'✓';font-weight:900}
-  .chips.todo-subj{margin:28px 0 8px;padding:2px 0 3px}
+  .chips.todo-subj{margin:14px 0 8px;padding:2px 0 3px}
   .todo-add-wrap{margin-top:12px}
   .todo-add-wide{width:100%;padding:12px;border-radius:14px;border:1px dashed var(--mint-line);background:var(--mint-soft);color:var(--mint-deep);font-size:13.5px;font-weight:900}
   .todo-add-wide:active{transform:scale(.99)}
@@ -1724,8 +1748,8 @@
   .jdday-co{flex:1;min-width:0;font-size:13px;font-weight:800;color:#3A2530;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   /* 공고 링크 · 수정 = 테두리·배경 없는 모노 라인 아이콘 */
   .jlink{
-    flex:none;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;
-    border:0;background:none;border-radius:9px;color:#6B7280;text-decoration:none;line-height:1
+    flex:none;display:inline-flex;align-items:center;justify-content:center;gap:2px;min-width:30px;height:30px;padding:0 4px;
+    border:0;background:none;border-radius:9px;color:#6B7280;text-decoration:none;line-height:1;white-space:nowrap;flex-shrink:0
   }
   .jlink svg,.jedit svg{width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .jlink.none{color:#C3C7CD;opacity:1}
@@ -1821,9 +1845,21 @@
   .jtip-card{padding:13px 13px 12px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);margin-top:10px}
   .jtip-card .jh{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .jtip-card .jh .co{font-size:14px;font-weight:900;color:#2B1220;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 카드 오른쪽 : 날짜(옅은 회색 글자) + ✏️ · 🗑️ 라인 픽토그램 */
+  .jtip-card .jh .jt-date{flex:none;font-size:11.5px;font-weight:800;color:#9CA3AF;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .jtip-tools{display:inline-flex;align-items:center;gap:1px;flex:none;margin-left:1px}
+  .jtip-tools .pic-tool{width:28px;height:28px}
   .jtip-card .jl{margin-top:8px;font-size:12px;font-weight:600;color:#4A3A42;line-height:1.55;word-break:keep-all}
   .jtip-card .jl b{display:block;font-size:10.5px;font-weight:900;color:var(--mint-deep);margin-bottom:2px}
   .jtip-actions{display:flex;gap:8px;margin:2px 0 4px}
+  /* ＋ 추가 버튼: 탭 바로 아래 꽉 찬 폭 */
+  .jtip-add{display:flex;width:100%;align-items:center;justify-content:center;margin:0 0 8px;text-align:center}
+  .jtip-actions .btn{flex:1;justify-content:center;text-align:center}
+  /* 카테고리 칩 줄: 한 줄 가로 스크롤 · 끝에 ＋ 카테고리 추가 */
+  .jtip-cats{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 0 2px;padding:2px 0 4px}
+  .jtip-cats::-webkit-scrollbar{display:none}
+  .jtip-cats .chip{flex:none;white-space:nowrap}
+  .jtip-cats .chip.add{border-style:dashed;background:#fff;color:var(--mint-deep)}
   #anaAddCat{display:flex;gap:6px;margin-top:8px}
   #anaAddCat input{flex:1;min-width:0;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:#fff;outline:none}
 
@@ -2453,13 +2489,11 @@
   <main class="page" id="page-timetable">
     <div class="page-head">
       <div>
-        <h1><span class="em" aria-hidden="true">⏱️</span>토디테이블</h1>
+        <h1><span class="em" aria-hidden="true">⏱️</span>토디테이블 <span class="ph-date" id="ttDateLbl">오늘</span></h1>
       </div>
-    </div>
-
-    <div class="card" style="padding:2px 8px 4px">
-      <div class="tt-weeknav"><button id="ttWeekPrev" aria-label="지난 주">‹</button><span id="ttWeekLabel"></span><button id="ttWeekNext" aria-label="다음 주">›</button></div>
-      <div class="wkstrip" id="ttWeek"></div>
+      <div class="tools">
+        <button class="cal-btn" id="ttCalBtn" type="button" aria-label="날짜 선택" title="날짜 선택"><span aria-hidden="true">📅</span></button>
+      </div>
     </div>
 
     <div class="card tt-total">
@@ -2504,17 +2538,11 @@
   <main class="page" id="page-todo">
     <div class="page-head">
       <div>
-        <h1><span class="em" aria-hidden="true">✅</span>할일</h1>
-        <div class="sub" id="todoSub">오늘 할일</div>
+        <h1><span class="em" aria-hidden="true">✅</span>할일 <span class="ph-date" id="todoDateLbl">오늘</span></h1>
       </div>
-    </div>
-    <div class="card todo-cal-card">
-      <div class="todo-views" id="todoViews" role="tablist" aria-label="할일 달력 보기">
-        <button data-tview="day" role="tab">일간</button>
-        <button data-tview="week" class="on" role="tab">주간</button>
-        <button data-tview="month" role="tab">월간</button>
+      <div class="tools">
+        <button class="cal-btn" id="todoCalBtn" type="button" aria-label="날짜 선택" title="날짜 선택"><span aria-hidden="true">📅</span></button>
       </div>
-      <div id="todoCal"></div>
     </div>
     <div class="chips stat-subj todo-subj" id="todoSubjects" role="group" aria-label="과목 필터"></div>
     <div class="todo-top" style="margin-top:10px">
@@ -2690,11 +2718,8 @@
         <button type="button" class="chip" data-tip="rev" role="tab" aria-pressed="false"><span aria-hidden="true">🗣️</span>면접복기</button>
       </div>
       <div id="tipAna">
-        <div class="chips stat-subj" id="anaFilters" role="group" aria-label="카테고리 필터" style="margin:0"></div>
-        <div class="jtip-actions">
-          <button class="btn primary small" id="anaAdd">＋ 기업분석 추가</button>
-          <button class="btn ghost small" id="catAdd">＋ 카테고리 추가</button>
-        </div>
+        <button class="btn primary small jtip-add" id="anaAdd" type="button">＋ 기업분석 추가</button>
+        <div class="chips stat-subj jtip-cats" id="anaFilters" role="group" aria-label="카테고리 필터"></div>
         <div id="anaAddCat" hidden>
           <input type="text" id="anaNewCat" maxlength="12" placeholder="카테고리 이름 (예: 공기업)" aria-label="새 카테고리">
           <button class="btn primary small" id="anaNewCatOk">만들기</button>
@@ -2702,9 +2727,7 @@
         <div id="anaList"></div>
       </div>
       <div id="tipRev" hidden>
-        <div class="jtip-actions">
-          <button class="btn primary small" id="revAdd">＋ 면접복기 추가</button>
-        </div>
+        <button class="btn primary small jtip-add" id="revAdd" type="button">＋ 면접복기 추가</button>
         <div id="revList"></div>
       </div>
     </main>
@@ -2798,25 +2821,37 @@
   </button>
 </nav>
 
+<!-- ================= 📅 날짜 선택 달력 (토디테이블 · 할일 공용) ================= -->
+<div class="sheet calsheet" id="dateSheet" role="dialog" aria-modal="true" aria-labelledby="dateSheetTitle">
+  <div class="veil" data-close="dateSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="dateSheetTitle">날짜 선택</h2><button class="x" data-close="dateSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
+    <div class="cs-month">
+      <button class="nb" id="dateSheetPrev" type="button" aria-label="이전 달">‹</button>
+      <span class="m" id="dateSheetMonth"></span>
+      <button class="nb" id="dateSheetNext" type="button" aria-label="다음 달">›</button>
+    </div>
+    <div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="cs-grid" id="dateSheetGrid" role="group" aria-label="날짜 선택"></div>
+    <p class="cs-hint" id="dateSheetHint">기록이 있는 날짜만 고를 수 있어요</p>
+  </div>
+</div>
+
 <!-- ================= 십이지신 도감 ================= -->
 <section class="coll" id="coll" role="dialog" aria-modal="true" aria-label="토디펫 십이지신 도감">
   <div class="coll-wrap">
     <div class="coll-head">
       <button class="back" id="collClose" aria-label="도감 닫기">‹</button>
-      <h1><span class="em" aria-hidden="true">🥚</span>토디펫</h1>
+      <h1><span class="em" aria-hidden="true">🥚</span>토디펫 도감</h1>
       <span class="count" id="collCount">0 / 12</span>
     </div>
 
     <div class="coll-list" id="collList">
-      <div class="coll-hero">
-        <div class="t">십이지신 도감</div>
-        <div class="d" id="collHeroText">공부한 만큼 펠트 인형이 자라나요. 알 → 유아기 → 키치 성체, 그리고 능력치 100% 황금 성체까지 모아보세요.</div>
-      </div>
       <div class="coll-grow" id="collGrow" aria-label="내 토디펫 성장">
         <div class="cg-top">
           <span class="cg-em" id="cgEmoji" aria-hidden="true">🐯</span>
           <span class="cg-nm" id="cgName">호랑이</span>
-          <span class="cg-min" id="cgMins">0분</span>
         </div>
         <div class="pet-gauge" id="cgGauge"></div>
       </div>
@@ -2969,7 +3004,6 @@
       <div class="field"><label for="rCompany">회사명</label><input type="text" id="rCompany" maxlength="30" placeholder="예: 직방" autocomplete="off"></div>
       <div class="field"><label for="rDate">날짜</label><input type="date" id="rDate"></div>
     </div>
-    <div class="field"><label>전형</label><div class="chips" id="rStages" role="group" aria-label="전형 선택"></div></div>
     <div class="field"><label for="rQuestions">받은 질문</label><textarea id="rQuestions" maxlength="600" placeholder="예: 최근 가장 몰입했던 경험은?"></textarea></div>
     <div class="field"><label for="rAnswer">내 답변</label><textarea id="rAnswer" maxlength="600" placeholder="실제로 답했던 내용을 적어주세요"></textarea></div>
     <div class="field-row">
@@ -6383,14 +6417,10 @@
     if (!list.length) {
       $('collGrid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="em">🥚</div><b>' + (collFilter === 'owned' ? '아직 보유한 펫이 없어요' : '모든 펫을 보유하고 있어요!') + '</b><span>' + (collFilter === 'owned' ? 'Tody time으로 공부하면 펫이 알에서 깨어나요.' : '대단해요. 십이지신을 모두 만났어요.') + '</span></div>';
     }
-    // 도감 상단 문구 + 내 펫 성장 (4단계 · 능력치)
+    // 내 펫 성장 (4단계 · 능력치)
     const active = petInfo(c);
-    $('collHeroText').innerHTML = active.complete
-      ? '<b>' + esc(active.animal.name) + '</b>이 능력치를 100% 채웠어요! 다른 십이지신도 키워볼까요?'
-      : '지금 <b>' + esc(active.animal.name) + '</b>는 능력치 <b>' + Math.round(active.pct) + '%</b> · ' + fmtDur(active.total) + ' 공부했어요. 100%까지 ' + fmtDur(GROW_GOAL - active.total) + '.';
     $('cgEmoji').textContent = active.animal.emoji;
     $('cgName').textContent = (petStore().name || '콩이') + ' · ' + active.animal.name;
-    $('cgMins').textContent = fmtDur(active.total);
     $('cgGauge').innerHTML = petGaugeHTML(active);
   }
 
@@ -6539,104 +6569,21 @@
      할일
      ========================================================= */
   let todoDate = todayKey();
-  let todoView = 'week';
-  let todoMonthY, todoMonthM;
-  (function initTodoMonth() {
-    const d = fromKey(todoDate);
-    todoMonthY = d.getFullYear();
-    todoMonthM = d.getMonth();
-  })();
   let showDone = false;
   let todoSubject = 'all';   /* 'all' | 'none' | 과목 id — 타이머 통계와 같은 칩 필터 */
   let todoAddOpen = false;
   let todoAddSid = '';
 
-  function todoCalHTML(c) {
-    if (todoView === 'day') {
-      const d = fromKey(todoDate);
-      return '<div class="todo-daynav">' +
-          '<button class="nb" data-tnav="prev" aria-label="이전 날">‹</button>' +
-          '<div class="d"><b>' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + WEEKDAY[d.getDay()] + '요일</b>' +
-            '<span class="sub">' + (todoDate === todayKey() ? '오늘' : d.getFullYear() + '년') + '</span></div>' +
-          '<button class="nb" data-tnav="next" aria-label="다음 날">›</button>' +
-        '</div>' +
-        '<button class="todo-today-pill" data-ttoday>오늘</button>';
-    }
-    if (todoView === 'month') {
-      const first = new Date(todoMonthY, todoMonthM, 1);
-      const startDow = first.getDay();
-      const daysIn = new Date(todoMonthY, todoMonthM + 1, 0).getDate();
-      const prevDays = new Date(todoMonthY, todoMonthM, 0).getDate();
-      const cells = [];
-      for (let i = startDow - 1; i >= 0; i--) {
-        cells.push('<div class="todo-mcell out" aria-hidden="true">' + (prevDays - i) + '</div>');
-      }
-      for (let d = 1; d <= daysIn; d++) {
-        const k = todoMonthY + '-' + pad(todoMonthM + 1) + '-' + pad(d);
-        const dow = new Date(todoMonthY, todoMonthM, d).getDay();
-        const items = c.todos[k] || [];
-        const done = items.filter((t) => t.done).length;
-        const allDone = items.length > 0 && done === items.length;
-        const dots = items.slice(0, 3).map((t) => '<i class="' + (t.done ? 'done' : '') + '"></i>').join('');
-        cells.push('<button class="todo-mcell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') +
-          (k === todayKey() ? ' today' : '') + (k === todoDate ? ' on' : '') + (allDone ? ' all' : '') +
-          '" data-tday="' + k + '" aria-label="' + esc(prettyDate(k)) + (items.length ? ' 할일 ' + items.length + '개 (완료 ' + done + ')' : ' 할일 없음') + '">' +
-          '<span class="n">' + d + '</span>' +
-          (dots ? '<span class="dots" aria-hidden="true">' + dots + '</span>' : '') +
-        '</button>');
-      }
-      const trail = (7 - ((startDow + daysIn) % 7)) % 7;
-      for (let i = 1; i <= trail; i++) cells.push('<div class="todo-mcell out" aria-hidden="true">' + i + '</div>');
-      return '<div class="todo-monthhead">' +
-          '<button class="nb" data-tnav="prev" aria-label="이전 달" style="width:28px;height:28px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:900">‹</button>' +
-          '<span class="m">' + todoMonthY + '년 ' + (todoMonthM + 1) + '월</span>' +
-          '<button class="nb" data-tnav="next" aria-label="다음 달" style="width:28px;height:28px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:900">›</button>' +
-        '</div>' +
-        '<div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>' +
-        '<div class="todo-mgrid">' + cells.join('') + '</div>';
-    }
-    const dates = weekDates(todoDate);
-    return '<div class="tt-weeknav">' +
-        '<button data-tnav="prev" aria-label="지난 주">‹</button>' +
-        '<span>' + weekLabel(dates) + '</span>' +
-        '<button data-tnav="next" aria-label="다음 주">›</button>' +
-      '</div>' +
-      '<div class="wkstrip">' + weekStripHTML(dates, todoDate, (k) => (c.todos[k] || []).length > 0) + '</div>';
-  }
-
-  function todoShift(dir) {
-    if (todoView === 'day') {
-      todoDate = addDays(todoDate, dir);
-      const d = fromKey(todoDate);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-    } else if (todoView === 'week') {
-      todoDate = addDays(todoDate, dir * 7);
-      const d = fromKey(todoDate);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-    } else {
-      const d = new Date(todoMonthY, todoMonthM + dir, 1);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-      const daysIn = new Date(todoMonthY, todoMonthM + 1, 0).getDate();
-      const keep = Math.min(fromKey(todoDate).getDate(), daysIn);
-      todoDate = todoMonthY + '-' + pad(todoMonthM + 1) + '-' + pad(keep);
-    }
-    renderTodo();
-  }
-
   function renderTodo() {
     const c = cert();
-    $('todoCal').innerHTML = todoCalHTML(c);
-    document.querySelectorAll('#todoViews button').forEach((b) => b.classList.toggle('on', b.dataset.tview === todoView));
+    $('todoDateLbl').textContent = todoDate === todayKey() ? '오늘' : todoDate;
     const items = c.todos[todoDate] || [];
     const done = items.filter((t) => t.done).length;
     $('todoCount').textContent = done + ' / ' + items.length + ' 완료';
     $('todoDoneToggle').classList.toggle('on', showDone);
     $('todoDoneToggle').setAttribute('aria-pressed', showDone ? 'true' : 'false');
-    $('todoSub').textContent = (todoDate === todayKey() ? '오늘' : prettyDate(todoDate)) + ' · ' + c.name;
     renderTodoSubjects();
+
     /* 과목별로 묶어서 보여준다 (전체 = 과목들 + 일반) */
     const buckets = [];
     if (todoSubject === 'all') {
@@ -6724,38 +6671,7 @@
     try { $('todoNewText').focus(); } catch (e) {}
   }
 
-  $('todoViews').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-tview]');
-    if (!b) return;
-    todoView = b.dataset.tview;
-    if (todoView === 'month') {
-      const d = fromKey(todoDate);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-    }
-    renderTodo();
-  });
-  $('todoCal').addEventListener('click', (e) => {
-    const day = e.target.closest('[data-tday]');
-    if (day) {
-      todoDate = day.dataset.tday;
-      const d = fromKey(todoDate);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-      renderTodo();
-      return;
-    }
-    const nav = e.target.closest('[data-tnav]');
-    if (nav) { todoShift(nav.dataset.tnav === 'prev' ? -1 : 1); return; }
-    const today = e.target.closest('[data-ttoday]');
-    if (today) {
-      todoDate = todayKey();
-      const d = fromKey(todoDate);
-      todoMonthY = d.getFullYear();
-      todoMonthM = d.getMonth();
-      renderTodo();
-    }
-  });
+  $('todoCalBtn').addEventListener('click', () => openDateSheet('todo'));
   $('todoDoneToggle').addEventListener('click', () => { showDone = !showDone; renderTodo(); });
   $('todoSubjects').addEventListener('click', (e) => {
     const b = e.target.closest('[data-todosubj]');
@@ -7315,6 +7231,84 @@
      ========================================================= */
   let ttDate = todayKey();
 
+  /* ---------- 📅 날짜 선택 달력 팝업 (토디테이블 · 할일 공용) ----------
+     기록이 있는 날짜 + 오늘만 고를 수 있고, 나머지 날짜는 흐리게 잠긴다. */
+  let calSheetMode = 'tt';
+  let calSheetY = new Date().getFullYear();
+  let calSheetM = new Date().getMonth();
+  function calSheetHas(k) {
+    return calSheetMode === 'todo'
+      ? ((cert().todos || {})[k] || []).length > 0
+      : dayMinutes(k) > 0;
+  }
+  function calSheetKey() { return calSheetMode === 'todo' ? todoDate : ttDate; }
+  function renderDateSheet() {
+    const cur = calSheetKey();
+    const tk = todayKey();
+    $('dateSheetTitle').textContent = calSheetMode === 'todo' ? '할일 날짜' : '공부한 날짜';
+    $('dateSheetMonth').textContent = calSheetY + '년 ' + (calSheetM + 1) + '월';
+    $('dateSheetHint').textContent = calSheetMode === 'todo'
+      ? '할일을 적은 날짜와 오늘만 고를 수 있어요'
+      : '공부 기록이 있는 날짜와 오늘만 고를 수 있어요';
+    const first = new Date(calSheetY, calSheetM, 1);
+    const startDow = first.getDay();
+    const daysIn = new Date(calSheetY, calSheetM + 1, 0).getDate();
+    const prevDays = new Date(calSheetY, calSheetM, 0).getDate();
+    const cells = [];
+    for (let i = startDow - 1; i >= 0; i--) {
+      cells.push('<span class="cs-cell out" aria-hidden="true">' + (prevDays - i) + '</span>');
+    }
+    for (let d = 1; d <= daysIn; d++) {
+      const k = calSheetY + '-' + pad(calSheetM + 1) + '-' + pad(d);
+      const dow = new Date(calSheetY, calSheetM, d).getDay();
+      const has = calSheetHas(k);
+      const today = k === tk;
+      const on = k === cur;
+      const off = !has && !today;
+      cells.push('<button type="button" class="cs-cell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') +
+        (has ? ' has' : '') + (today ? ' today' : '') + (on ? ' on' : '') + '"' +
+        ' data-cday="' + k + '"' + (off ? ' disabled aria-disabled="true"' : '') +
+        ' aria-label="' + esc(prettyDate(k)) + (has ? ' 기록 있음' : ' 기록 없음') + '">' + d + '</button>');
+    }
+    const trail = (7 - ((startDow + daysIn) % 7)) % 7;
+    for (let i = 1; i <= trail; i++) cells.push('<span class="cs-cell out" aria-hidden="true">' + i + '</span>');
+    $('dateSheetGrid').innerHTML = cells.join('');
+  }
+  function openDateSheet(mode) {
+    calSheetMode = mode;
+    const d = fromKey(calSheetKey());
+    calSheetY = d.getFullYear();
+    calSheetM = d.getMonth();
+    renderDateSheet();
+    openSheet('dateSheet');
+  }
+  $('ttCalBtn').addEventListener('click', () => openDateSheet('tt'));
+  $('dateSheetPrev').addEventListener('click', () => {
+    const d = new Date(calSheetY, calSheetM - 1, 1);
+    calSheetY = d.getFullYear();
+    calSheetM = d.getMonth();
+    renderDateSheet();
+  });
+  $('dateSheetNext').addEventListener('click', () => {
+    const d = new Date(calSheetY, calSheetM + 1, 1);
+    calSheetY = d.getFullYear();
+    calSheetM = d.getMonth();
+    renderDateSheet();
+  });
+  $('dateSheetGrid').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cday]');
+    if (!b || b.disabled) return;
+    const k = b.dataset.cday;
+    closeSheet('dateSheet');
+    if (calSheetMode === 'todo') {
+      todoDate = k;
+      renderTodo();
+    } else {
+      ttDate = k;
+      renderTimetable();
+    }
+  });
+
   function weekDates(anchor) {
     const d = fromKey(anchor);
     const off = (d.getDay() + 6) % 7;
@@ -7373,9 +7367,7 @@
 
   function renderTimetable() {
     const c = cert();
-    const dates = weekDates(ttDate);
-    renderWeekStrip('ttWeek', dates, ttDate, (k) => dayMinutes(k) > 0);
-    $('ttWeekLabel').textContent = weekLabel(dates);
+    $('ttDateLbl').textContent = ttDate === todayKey() ? '오늘' : ttDate;
     const totalMin = dayMinutes(ttDate);
     $('ttTotalClock').textContent = clockOf(totalMin);
     $('ttGoalPill').textContent = '목표 ' + fmtDur(c.goal);
@@ -7746,14 +7738,6 @@
     renderHome();
     toast('과목을 저장했어요');
   });
-  $('ttWeek').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-day]');
-    if (!b) return;
-    ttDate = b.dataset.day;
-    renderTimetable();
-  });
-  $('ttWeekPrev').addEventListener('click', () => { ttDate = addDays(ttDate, -7); renderTimetable(); });
-  $('ttWeekNext').addEventListener('click', () => { ttDate = addDays(ttDate, 7); renderTimetable(); });
   $('ttClear').addEventListener('click', () => {
     const hasExtra = !!(cert().extras && cert().extras[ttDate]);
     if (!cert().days[ttDate] && !(cert().slots && cert().slots[ttDate]) && !hasExtra) { toast('지울 기록이 없어요'); return; }
@@ -8539,7 +8523,7 @@
 
   /* ---- 토디팁: 기업분석 · 면접복기 ---- */
   let tipTab = 'ana', anaFilter = 'all', anaEditId = null, anaCat = '', catInputOpen = false;
-  let revEditId = null, revStage = 'doc';
+  let revEditId = null;
   function renderTip() {
     $('tipTabs').querySelectorAll('button').forEach((b) => {
       const on = b.dataset.tip === tipTab;
@@ -8553,12 +8537,16 @@
   function renderAna() {
     if (anaFilter !== 'all' && state.job.categories.indexOf(anaFilter) < 0) anaFilter = 'all';
     $('anaFilters').innerHTML = [{ id: 'all', name: '전체' }].concat(state.job.categories.map((c) => ({ id: c, name: c }))).map((x) =>
-      '<button type="button" class="chip' + (x.id === anaFilter ? ' on' : '') + '" data-anaf="' + esc(x.id) + '" aria-pressed="' + (x.id === anaFilter) + '">' + esc(x.name) + '</button>').join('');
+      '<button type="button" class="chip' + (x.id === anaFilter ? ' on' : '') + '" data-anaf="' + esc(x.id) + '" aria-pressed="' + (x.id === anaFilter) + '">' + esc(x.name) + '</button>').join('') +
+      '<button type="button" class="chip add" id="catAdd" aria-label="카테고리 추가">＋ 카테고리 추가</button>';
     const list = state.job.analyses.filter((a) => anaFilter === 'all' || a.category === anaFilter);
     $('anaList').innerHTML = list.length ? list.map((a) =>
-      '<div class="jtip-card" data-anaitem="' + esc(a.id) + '" role="button" tabindex="0" aria-label="' + esc(a.company) + ' 기업분석 수정">' +
+      '<div class="jtip-card" data-anaitem="' + esc(a.id) + '">' +
       '<div class="jh"><span class="co">' + esc(a.company) + '</span>' + (a.category ? '<span class="tag">' + esc(a.category) + '</span>' : '') +
-      '<button class="todo-del" data-anadel="' + esc(a.id) + '" aria-label="' + esc(a.company) + ' 분석 삭제">×</button></div>' +
+      '<span class="jtip-tools">' +
+        '<button class="pic-tool" data-anaedit="' + esc(a.id) + '" type="button" aria-label="' + esc(a.company) + ' 분석 수정" title="수정">' + PENCIL + '</button>' +
+        '<button class="pic-tool" data-anadel="' + esc(a.id) + '" type="button" aria-label="' + esc(a.company) + ' 분석 삭제" title="삭제">' + TRASH + '</button>' +
+      '</span></div>' +
       (a.url ? '<div style="margin-top:8px"><a class="jlink" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">🔗</span>공고</a></div>' : '') +
       (a.keywords ? '<div class="jl"><b>인재상 · 핵심 키워드</b>' + esc(a.keywords) + '</div>' : '') +
       (a.points ? '<div class="jl"><b>직무 포인트 · 메모</b>' + esc(a.points) + '</div>' : '') +
@@ -8568,10 +8556,13 @@
   function renderRev() {
     const list = state.job.reviews.slice().sort((a, b) => b.date.localeCompare(a.date));
     $('revList').innerHTML = list.length ? list.map((r) => {
-      const st = stageOf(r.stage);
-      return '<div class="jtip-card" data-revitem="' + esc(r.id) + '" role="button" tabindex="0" aria-label="' + esc(r.company) + ' 면접복기 수정">' +
-        '<div class="jh"><span class="co">' + esc(r.company) + '</span>' + stagePillHTML(st) + '<span class="tag gray">' + esc(r.date) + '</span>' +
-        '<button class="todo-del" data-revdel="' + esc(r.id) + '" aria-label="' + esc(r.company) + ' 복기 삭제">×</button></div>' +
+      return '<div class="jtip-card" data-revitem="' + esc(r.id) + '">' +
+        '<div class="jh"><span class="co">' + esc(r.company) + '</span>' +
+        '<span class="jt-date">' + esc(r.date) + '</span>' +
+        '<span class="jtip-tools">' +
+          '<button class="pic-tool" data-revedit="' + esc(r.id) + '" type="button" aria-label="' + esc(r.company) + ' 복기 수정" title="수정">' + PENCIL + '</button>' +
+          '<button class="pic-tool" data-revdel="' + esc(r.id) + '" type="button" aria-label="' + esc(r.company) + ' 복기 삭제" title="삭제">' + TRASH + '</button>' +
+        '</span></div>' +
         (r.questions ? '<div class="jl"><b>받은 질문</b>' + esc(r.questions) + '</div>' : '') +
         (r.answer ? '<div class="jl"><b>내 답변</b>' + esc(r.answer) + '</div>' : '') +
         ((r.good || r.bad) ? '<div class="jl"><b>복기 메모</b>' + (r.good ? '✅ 잘한 점: ' + esc(r.good) : '') + (r.good && r.bad ? '<br>' : '') + (r.bad ? '⚠️ 아쉬운 점: ' + esc(r.bad) : '') + '</div>' : '') +
@@ -8580,23 +8571,29 @@
       : '<div class="empty"><div class="em">🗣️</div><b>면접 복기가 없어요</b><span>면접이 끝나면 바로 받은 질문과 답변을 적어두면<br>다음 면접에 큰 힘이 돼요</span></div>';
   }
   $('tipTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tip]'); if (!b) return; tipTab = b.dataset.tip; renderTip(); });
-  $('anaFilters').addEventListener('click', (e) => { const b = e.target.closest('[data-anaf]'); if (!b) return; anaFilter = b.dataset.anaf; renderAna(); });
+  $('anaFilters').addEventListener('click', (e) => {
+    if (e.target.closest('#catAdd')) {
+      catInputOpen = !catInputOpen;
+      $('anaAddCat').hidden = !catInputOpen;
+      if (catInputOpen) setTimeout(() => { try { $('anaNewCat').focus(); } catch (err) {} }, 50);
+      return;
+    }
+    const b = e.target.closest('[data-anaf]');
+    if (!b) return;
+    anaFilter = b.dataset.anaf;
+    renderAna();
+  });
   $('anaList').addEventListener('click', (e) => {
+    const edit = e.target.closest('[data-anaedit]');
+    if (edit) { openAnaSheet(edit.dataset.anaedit); return; }
     const del = e.target.closest('[data-anadel]');
     if (del) { state.job.analyses = state.job.analyses.filter((a) => a.id !== del.dataset.anadel); save(); renderAna(); return; }
-    const it = e.target.closest('[data-anaitem]');
-    if (it && !e.target.closest('a')) openAnaSheet(it.dataset.anaitem);
   });
   $('revList').addEventListener('click', (e) => {
+    const edit = e.target.closest('[data-revedit]');
+    if (edit) { openRevSheet(edit.dataset.revedit); return; }
     const del = e.target.closest('[data-revdel]');
     if (del) { state.job.reviews = state.job.reviews.filter((r) => r.id !== del.dataset.revdel); save(); renderRev(); return; }
-    const it = e.target.closest('[data-revitem]');
-    if (it) openRevSheet(it.dataset.revitem);
-  });
-  $('catAdd').addEventListener('click', () => {
-    catInputOpen = !catInputOpen;
-    $('anaAddCat').hidden = !catInputOpen;
-    if (catInputOpen) setTimeout(() => { try { $('anaNewCat').focus(); } catch (e) {} }, 50);
   });
   $('anaNewCatOk').addEventListener('click', () => {
     const v = ($('anaNewCat').value || '').trim().slice(0, 12);
@@ -8656,45 +8653,35 @@
     renderAna();
     toast(editing ? '기업분석을 수정했어요' : '기업분석을 저장했어요');
   });
-  function renderRStages() {
-    $('rStages').innerHTML = JOB_CORE_STAGES.map((s) =>
-      '<button type="button" class="chip' + (s.id === revStage ? ' on' : '') + '" data-rstage="' + s.id + '">' + s.em + ' ' + s.name + '</button>').join('');
-  }
-  $('rStages').addEventListener('click', (e) => { const b = e.target.closest('[data-rstage]'); if (!b) return; revStage = b.dataset.rstage; renderRStages(); });
   function openRevSheet(id) {
     revEditId = id || null;
     const r = id ? state.job.reviews.find((x) => x.id === id) : null;
     $('jobRevTitle').textContent = r ? '면접복기 수정' : '면접복기 추가';
     $('rCompany').value = r ? r.company : '';
-    revStage = r ? r.stage : 'doc';
     $('rDate').value = r ? r.date : todayKey();
     $('rQuestions').value = r ? r.questions : '';
     $('rAnswer').value = r ? r.answer : '';
     $('rGood').value = r ? r.good : '';
     $('rBad').value = r ? r.bad : '';
-    renderRStages();
     openSheet('jobRevSheet');
   }
   $('revAdd').addEventListener('click', () => openRevSheet(null));
   $('rSave').addEventListener('click', () => {
     const company = ($('rCompany').value || '').trim();
     if (!company) { toast('회사명을 적어주세요'); return; }
+    const editing = !!revEditId;
+    const prev = editing ? state.job.reviews.find((x) => x.id === revEditId) : null;
     const data = {
       company: company.slice(0, 30),
-      stage: revStage,
+      stage: prev ? prev.stage : 'doc',
       date: isKey($('rDate').value) ? $('rDate').value : todayKey(),
       questions: ($('rQuestions').value || '').trim().slice(0, 600),
       answer: ($('rAnswer').value || '').trim().slice(0, 600),
       good: ($('rGood').value || '').trim().slice(0, 300),
       bad: ($('rBad').value || '').trim().slice(0, 300)
     };
-    const editing = !!revEditId;
-    if (editing) {
-      const r = state.job.reviews.find((x) => x.id === revEditId);
-      if (r) Object.assign(r, data);
-    } else {
-      state.job.reviews.push(Object.assign({ id: 'jr' + uid() }, data));
-    }
+    if (prev) Object.assign(prev, data);
+    else state.job.reviews.push(Object.assign({ id: 'jr' + uid() }, data));
     save();
     closeSheet('jobRevSheet');
     renderRev();
