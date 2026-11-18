@@ -8874,18 +8874,19 @@
     const maxH = P.h * 0.8;               /* 판 높이 안에 두 줄 + 날짜 */
     const dSizeOf = (t) => Math.max(6, Math.min(t * 0.8, 11));
     let pick = null;
-    /* 한 줄에 들어가면 한 줄로, 안 되면 두 줄로 (줄 수가 적은 쪽을 먼저) */
-    for (let maxLines = 1; maxLines <= 2 && !pick; maxLines++) {
-      for (let size = 15; size >= 7; size--) {
+    /* 한 줄에 제대로 들어가면(9pt 이상) 한 줄, 아니면 두 줄로 크게 각인 */
+    const tryFit = (maxLines, minSize) => {
+      for (let size = 15; size >= minSize; size--) {
         const fit = plaqueFit(a.title, maxW, maxLines, size, size);
         const d = dSizeOf(size);
         const blockH = fit.lines.length * size * 1.16 + d * 1.24;
         if (fit.lines.length && fit.lines.length <= maxLines && blockH <= maxH) {
-          pick = { size: size, lines: fit.lines, d: d, blockH: blockH };
-          break;
+          return { size: size, lines: fit.lines, d: d, blockH: blockH };
         }
       }
-    }
+      return null;
+    };
+    pick = tryFit(1, 9) || tryFit(2, 7);
     if (!pick) {
       const fit = plaqueFit(a.title, maxW, 2, 7, 7);
       pick = { size: 7, lines: fit.lines, d: 6, blockH: fit.lines.length * 7 * 1.16 + 6 * 1.24 };
