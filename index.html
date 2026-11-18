@@ -235,6 +235,23 @@
   .pet-art .pet-img.st-baby{height:88%}
   .pet-art .pet-img.is-gold{filter:drop-shadow(0 0 13px rgba(255,199,64,.55)) drop-shadow(0 8px 12px rgba(180,120,10,.18))}
   .cameo-pet .pet-img{display:block;width:100%;height:auto;filter:drop-shadow(0 4px 7px rgba(16,80,58,.16))}
+  /* 도감·상태창·상세 공통 능력치 게이지 (🥚 [====] 👑) */
+  .pet-gauge{margin-top:11px}
+  .pet-gauge .pg-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px;font-size:10px;font-weight:900;color:var(--mint-deep)}
+  .pet-gauge .pg-top b{font-size:11.5px;font-variant-numeric:tabular-nums}
+  .pet-gauge .pg-time{font-size:9.5px;font-weight:800;color:var(--dim);font-variant-numeric:tabular-nums}
+  .pet-gauge .pg-row{display:flex;align-items:center;gap:7px;margin-top:6px}
+  .pet-gauge .pg-end{flex:none;line-height:1;font-size:12.5px;display:inline-flex;align-items:center}
+  .pet-gauge .pg-end.crown img.noto-em{width:14px;height:14px;display:block;margin:0}
+  .pet-gauge .pg-end.crown{opacity:.75}
+  .pet-gauge.gold .pg-end.crown{opacity:1;filter:drop-shadow(0 0 5px rgba(255,186,36,.7))}
+  .pet-gauge .pg-bar{flex:1;height:9px;border-radius:999px;background:#E6F4EF;overflow:hidden}
+  .pet-gauge .pg-bar i{display:block;height:100%;border-radius:999px;width:0;background:linear-gradient(90deg,#46E6B4,#12BE8C);transition:width .4s}
+  .pet-gauge.gold .pg-bar i{background:linear-gradient(90deg,#FFE9A6,#F7C532,#E09A0C)}
+  .pet-gauge .pg-foot{margin-top:4px;font-size:9.5px;font-weight:800;color:var(--dim)}
+  .detail-sheet .pet-gauge .pg-top{color:#CFF6E6}
+  .detail-sheet .pet-gauge .pg-time,.detail-sheet .pet-gauge .pg-foot{color:#9AA5A0}
+  .detail-sheet .pet-gauge .pg-bar{background:rgba(255,255,255,.14)}
   .ability{margin-top:10px}
   .ability .ab-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px;font-size:10px;font-weight:900;color:var(--mint-deep)}
   .ability .ab-top b{font-size:11px;font-variant-numeric:tabular-nums}
@@ -1186,15 +1203,14 @@
   .petstat-actions .btn{flex:1}
   /* 24시간 칸 · 4열 × 6행 (읽기 전용 · Tody time 자동 기록) */
   .tt-timeline{display:flex;flex-direction:column}
-  .tl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(25px,1fr);gap:4px;min-width:0;flex:1;min-height:0;align-content:stretch}
-  .tl-box{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px 0;border-radius:9px;border:1px solid #E9F1EE;background:#F1F6F4;color:#A9BAB4;font-size:9.5px;line-height:1;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;transition:background .2s,border-color .2s,box-shadow .2s;overflow:hidden;min-width:0}
-  .tl-fill{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column-reverse;pointer-events:none}
-  .tl-fill i{display:block;width:100%;flex:none;min-height:2px}
-  .tl-h{position:relative;z-index:1}
-  .tl-m{position:relative;z-index:1;font-size:7.5px;font-weight:900;color:#0F5A46;letter-spacing:-.03em}
-  .tl-box.on{color:#123B31;border-color:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
-  .tl-box.now{background:#FFFFFF;border-color:transparent;color:var(--mint-deep);font-weight:900;box-shadow:0 0 0 2px rgba(24,210,155,.5)}
-  .tl-box.now.on{color:#0B5B47;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 0 0 2px rgba(24,210,155,.42)}
+  .tl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(25px,1fr);gap:1px;min-width:0;flex:1;min-height:0;align-content:stretch;
+    background:#E2ECE8;border:1px solid #E2ECE8;border-radius:10px;overflow:hidden}
+  .tl-box{position:relative;display:block;border-radius:0;border:0;background:#F1F6F4;transition:background .2s,box-shadow .2s;overflow:hidden;min-width:0}
+  .tl-fill{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:row;align-items:stretch;pointer-events:none}
+  .tl-fill i{display:block;height:100%;flex:none;min-width:1px}
+  .tl-box.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+  .tl-box.now{box-shadow:inset 0 0 0 2px rgba(24,210,155,.55)}
+  .tl-box.now.on{box-shadow:inset 0 0 0 2px rgba(24,210,155,.62)}
   .tl-foot{display:flex;align-items:center;gap:5px;margin-top:8px;padding:0 2px;font-size:8.5px;font-weight:800;color:#5C7469;min-width:0;overflow:hidden}
   .tl-legend{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden}
   .tl-legend .lg{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-weight:800;color:#5C7469;white-space:nowrap;max-width:72px;overflow:hidden;text-overflow:ellipsis}
@@ -2466,7 +2482,7 @@
       <section class="card tt-timeline" aria-label="24시간 타임라인">
         <div class="split-head"><span>TIMELINE</span><button class="split-add" id="ttAddTime" type="button" aria-label="공부 시간 직접 적기" title="공부 시간 직접 적기">＋</button></div>
         <div class="tl-grid" id="ttTimeline" aria-readonly="true"></div>
-        <div class="tl-foot"><span class="tl-legend" id="tlLegend"></span><span class="tl-foot-hint">Tody time 자동 기록</span></div>
+        <div class="tl-foot"><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
     </div>
     <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작하면 그 시간이 저절로 채워집니다. 기록을 직접 적고 싶으면 오른쪽 <b>＋</b> 버튼을 눌러 과목·시간·24시간 칸을 고쳐 주세요.</p>
@@ -2802,8 +2818,7 @@
           <span class="cg-nm" id="cgName">호랑이</span>
           <span class="cg-min" id="cgMins">0분</span>
         </div>
-        <div class="stage-track" id="cgStages" role="img" aria-label="성장 단계"></div>
-        <div class="ability" id="cgAbility"></div>
+        <div class="pet-gauge" id="cgGauge"></div>
       </div>
       <div class="coll-filters" id="collFilters" role="tablist" aria-label="도감 필터">
         <button class="chip on" data-cfilter="all">전체</button>
@@ -2832,8 +2847,7 @@
           <h2 id="detailName">호랑이</h2>
           <span class="ds-tag" id="detailTag">보유중</span>
         </div>
-        <div class="stars" id="detailStars" aria-label="성장 단계"></div>
-        <div class="stage-track" id="detailStages" role="img" aria-label="성장 단계"></div>
+        <div class="pet-gauge" id="detailGauge"></div>
         <dl class="spec" id="detailSpec"></dl>
         <div class="ds-foot">
           <div class="grow-note" id="detailNote">공부할수록 자라나요</div>
@@ -2858,8 +2872,7 @@
         <span class="cg-nm" id="psName">호랑이</span>
         <span class="cg-min" id="psMins">0분</span>
       </div>
-      <div class="stage-track" id="psStages" role="img" aria-label="성장 단계"></div>
-      <div class="ability" id="psAbility"></div>
+      <div class="pet-gauge" id="psGauge"></div>
     </div>
     <div class="petstat-actions">
       <button class="btn primary" id="psOpenColl">십이지신 도감 열기</button>
@@ -5131,24 +5144,16 @@
   }
 
   /* 알 → 유아기 → 키치 성체 → 황금 성체 진행 표시 */
-  function stageTrackHTML(stage) {
-    return STAGES.map((s, i) => {
-      const cls = 'st' + (i === stage ? ' on' : i < stage ? ' done' : '');
-      return (i ? '<i class="bar' + (i <= stage ? ' done' : '') + '" aria-hidden="true"></i>' : '') +
-        '<span class="' + cls + '" data-stage="' + i + '" aria-label="' + s.name + '"><b aria-hidden="true">' + s.icon + '</b><i>' + s.name + '</i></span>';
-    }).join('');
-  }
-
-  /* 능력치 게이지 — 30시간을 채우면 100% 황금 각성 */
-  function abilityHTML(info) {
+  /* 도감·상태창·상세 공통 — 알과 왕관 사이를 채우는 능력치 게이지 (단계 이름은 보여주지 않는다) */
+  function petGaugeHTML(info) {
     const pct = Math.round(info.pct);
-    const foot = info.complete
-      ? '능력치 100% · 황금 각성 완료 ✨'
-      : '황금 각성까지 ' + fmtDur(GROW_GOAL - info.total);
-    return '<div class="ability' + (info.complete ? ' gold' : '') + '" role="group" aria-label="능력치 ' + pct + '%">' +
-      '<div class="ab-top"><span>능력치</span><b>' + pct + '%</b></div>' +
-      '<div class="ab-bar"><i style="width:' + Math.max(2, pct) + '%"></i></div>' +
-      '<div class="ab-foot">' + foot + '</div></div>';
+    const foot = info.complete ? '완료 ✨' : fmtDur(info.left) + ' 남음';
+    return '<div class="pg' + (info.complete ? ' gold' : '') + '" role="group" aria-label="능력치 ' + pct + '% · ' + foot + '">' +
+      '<div class="pg-top"><span>능력치 <b>' + pct + '%</b></span><span class="pg-time">' + fmtDur(Math.min(info.total, GROW_GOAL)) + ' / ' + fmtDur(GROW_GOAL) + '</span></div>' +
+      '<div class="pg-row"><span class="pg-end egg" aria-hidden="true">🥚</span>' +
+        '<div class="pg-bar"><i style="width:' + Math.max(2, pct) + '%"></i></div>' +
+        '<span class="pg-end crown" aria-hidden="true">👑</span></div>' +
+      '<div class="pg-foot">' + foot + '</div></div>';
   }
 
   function bubbleText(info) {
@@ -6330,9 +6335,7 @@
     $('psName').textContent = (petStore().name || '콩이') + ' · ' + info.animal.name;
     $('psMins').textContent = fmtDur(info.total);
     $('psArt').innerHTML = petArtHTML(info.stage, info.animal.id, { eager: true });
-    $('psStages').innerHTML = stageTrackHTML(info.stage);
-    $('psStages').setAttribute('aria-label', '성장 단계 ' + info.stageName);
-    $('psAbility').innerHTML = abilityHTML(info);
+    $('psGauge').innerHTML = petGaugeHTML(info);
   }
   function openPetStat() {
     renderPetStat();
@@ -6371,7 +6374,7 @@
           (x.owned ? '' : '<span class="lock" aria-hidden="true">🔒</span>') +
           (x.active ? '<span class="live">키우는 중</span>' : '') +
         '</div>' +
-        '<div class="coll-name"><b>' + esc(x.a.name) + '</b><span class="st">' + (x.owned ? x.info.stageIcon + ' ' + x.info.stageName : '미보유') + '</span></div>' +
+        '<div class="coll-name"><b>' + esc(x.a.name) + '</b>' + (x.owned ? '' : '<span class="st">미보유</span>') + '</div>' +
         '<div class="coll-meta"><span>' + (x.owned ? fmtDur(x.info.total) : '공부하면 만나요') + '</span>' +
           '<span class="coll-pct">' + (x.owned ? '능력치 ' + Math.round(x.info.pct) + '%' : '—') + '</span>' +
         '</div>' +
@@ -6383,14 +6386,12 @@
     // 도감 상단 문구 + 내 펫 성장 (4단계 · 능력치)
     const active = petInfo(c);
     $('collHeroText').innerHTML = active.complete
-      ? '<b>' + esc(active.animal.name) + '</b>이 <b>황금 성체</b>로 각성했어요! 능력치 100% · 다른 십이지신도 키워볼까요?'
-      : '지금 <b>' + esc(active.animal.name) + '</b>는 <b>' + active.stageIcon + ' ' + active.stageName + '</b> · 능력치 <b>' + Math.round(active.pct) + '%</b> · ' + fmtDur(active.total) + ' 공부했어요. ' + active.nextName + '까지 ' + fmtDur(active.left) + '.';
+      ? '<b>' + esc(active.animal.name) + '</b>이 능력치를 100% 채웠어요! 다른 십이지신도 키워볼까요?'
+      : '지금 <b>' + esc(active.animal.name) + '</b>는 능력치 <b>' + Math.round(active.pct) + '%</b> · ' + fmtDur(active.total) + ' 공부했어요. 100%까지 ' + fmtDur(GROW_GOAL - active.total) + '.';
     $('cgEmoji').textContent = active.animal.emoji;
     $('cgName').textContent = (petStore().name || '콩이') + ' · ' + active.animal.name;
     $('cgMins').textContent = fmtDur(active.total);
-    $('cgStages').innerHTML = stageTrackHTML(active.stage);
-    $('cgStages').setAttribute('aria-label', '성장 단계 ' + active.stageName);
-    $('cgAbility').innerHTML = abilityHTML(active);
+    $('cgGauge').innerHTML = petGaugeHTML(active);
   }
 
   function openDetail(animalId) {
@@ -6415,17 +6416,14 @@
     $('detailName').textContent = a.name + (active ? ' · ' + (petStore().name || '콩이') : '');
     $('detailTag').textContent = active ? '키우는 중' : owned ? '보유중' : '미보유';
     $('detailTag').classList.toggle('off', !owned && !active);
-    $('detailStars').innerHTML = abilityHTML(info);
-    $('detailStages').innerHTML = stageTrackHTML(info.stage);
-    $('detailStages').setAttribute('aria-label', '성장 단계 ' + info.stageName);
+    $('detailGauge').innerHTML = petGaugeHTML(info);
     $('detailSpec').innerHTML =
       '<div><dt>동물</dt><dd>' + info.animal.emoji + ' ' + info.animal.name + '</dd></div>' +
-      '<div><dt>성장 단계</dt><dd>' + info.stageIcon + ' ' + info.stageName + '</dd></div>' +
       '<div><dt>누적 공부</dt><dd>' + fmtDur(info.total) + '</dd></div>' +
       '<div><dt>능력치</dt><dd>' + Math.round(info.pct) + '% / 100%</dd></div>' +
-      '<div><dt>다음 진화</dt><dd>' + (info.complete ? '황금 각성 완료 👑' : info.nextName + '까지 ' + fmtDur(info.left)) + '</dd></div>';
+      '<div><dt>100%까지</dt><dd>' + (info.complete ? '완료 ✨' : fmtDur(info.left) + ' 남음') + '</dd></div>';
     $('detailNote').innerHTML = owned
-      ? (info.complete ? '능력치 100% · 황금 성체 ✨' : info.nextName + '까지 ' + fmtDur(info.left))
+      ? (info.complete ? '능력치 100% · 완료 ✨' : '100%까지 ' + fmtDur(info.left))
       : 'Tody time으로 공부하면 알에서 깨어나요';
     const btn = $('detailSelect');
     btn.textContent = active ? '선택됨' : '이 펫 키우기';
@@ -7413,27 +7411,18 @@
       const scale = rawTot > 60 ? 60 / rawTot : 1;   /* 겹쳐도 한 칸을 넘지 않게 */
       const isNow = k === tk && h === nowH;
       const detail = rows.map((x) => (x.name || '과목') + ' ' + x.min + '분').join(' · ');
-      const label = h + '시' + (isNow ? ' · 지금' : '') + (tot ? ' · ' + detail : ' · 기록 없음');
+      const label = h + '시' + (isNow ? ' · 지금' : '') + (tot ? ' · ' + tot + '분 · ' + detail : ' · 기록 없음');
       /* 아래에서부터 분만큼만 차오르는 색 띠 (여러 과목은 순서대로 쌓임) */
       const fill = tot
         ? '<span class="tl-fill" aria-hidden="true">' + rows.map((x) =>
-            '<i style="height:' + ((Math.min(60, x.min) * scale / 60) * 100).toFixed(2) + '%;background:' + tint(subjectColor(x.sid), .62) + '"></i>').join('') + '</span>'
+            '<i style="width:' + ((Math.min(60, x.min) * scale / 60) * 100).toFixed(2) + '%;background:' + tint(subjectColor(x.sid), .62) + '"></i>').join('') + '</span>'
         : '';
       boxes.push('<div class="tl-box' + (tot ? ' on' : '') + (isNow ? ' now' : '') + '" role="img"' +
         ' data-min="' + tot + '"' +
-        ' aria-label="' + esc(label) + '" title="' + esc(label) + '">' + fill +
-        '<span class="tl-h" aria-hidden="true">' + h + '시</span>' +
-        (tot ? '<span class="tl-m" aria-hidden="true">' + tot + '분</span>' : '') + '</div>');
+        ' aria-label="' + esc(label) + '" title="' + esc(label) + '">' + fill + '</div>');
     }
     $('ttTimeline').innerHTML = boxes.join('');
     $('ttAddTime').setAttribute('aria-label', prettyDate(k) + ' 공부 시간 직접 적기');
-    const daySids = dayHourSids(k);
-    const maxLg = window.innerWidth <= 720 ? 2 : 3;
-    const legend = daySids.slice(0, maxLg).map((sid) =>
-      '<span class="lg"><i style="background:' + subjectColor(sid) + '"></i>' + esc(subjectName(sid)) + '</span>').join('');
-    $('tlLegend').innerHTML = daySids.length
-      ? legend + (daySids.length > maxLg ? '<span class="more">+' + (daySids.length - maxLg) + '</span>' : '')
-      : '<span class="lg" style="color:#A9BAB4">아직 기록이 없어요</span>';
   }
 
   function renderTimetableSummary() {
@@ -9964,6 +9953,8 @@
     while ((m = re.exec(text))) {
       var seq = m[0];
       if (!seq) { re.lastIndex++; continue; }
+      /* 🥚 알 이모지는 항상 iOS 네이티브 그대로 (Noto 갈색 달걀 금지) */
+      if (seq.replace(/\uFE0F/g, '') === '\uD83E\uDD5A') continue;
       any = true;
       if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
       frag.appendChild(makeEm(seq));
