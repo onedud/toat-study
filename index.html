@@ -8741,7 +8741,8 @@
     }
     return '을';
   }
-  const certBodyLine = (title) => '위 사람은 ' + title + josaEul(title) + ' 취득하였음을 증명합니다.';
+  /* 이름과 조사는 줄바꿈으로 떨어지지 않게 묶는다(NBSP) */
+  const certBodyLine = (title) => '위 사람은 ' + title + '\u00A0' + josaEul(title) + ' 취득하였음을 증명합니다.';
 
   const awardStore = () => {
     if (!state.job) state.job = freshJob();
@@ -8979,7 +8980,7 @@
     return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
   }
   function wrapKo(text, max, maxLines) {
-    const t = String(text || '').replace(/\s+/g, ' ').trim();
+    const t = String(text || '').replace(/[ \t]{2,}/g, ' ').trim();
     if (!t) return [];
     const out = [];
     let rest = t;
@@ -8987,6 +8988,7 @@
       if (rest.length <= max) { out.push(rest); rest = ''; break; }
       let cut = rest.slice(0, max);
       const sp = cut.lastIndexOf(' ');
+      /* NBSP(\u00A0)는 이름+조사 묶음 — 그 앞에서 끊는다 */
       if (sp >= Math.floor(max * 0.55)) cut = cut.slice(0, sp);
       out.push(cut.trim());
       rest = rest.slice(cut.length).trim();
@@ -9054,7 +9056,7 @@
           const innerW = colW - padX * 2;
           const nameSize = 27, nameLh = 32;
           const nameLines = wrapKo(a.title, Math.max(5, Math.floor(innerW / (nameSize * 0.94))), 3);
-          const bodyLines = wrapKo(certBodyLine(a.title), Math.max(6, Math.floor(innerW / 13.2)), 3);
+          const bodyLines = wrapKo(certBodyLine(a.title), Math.max(8, Math.floor(innerW / 11.6)), 3);
           const issuer = String(a.issuer || '').trim();
           const issuerSize = 13;
           const issuerW = issuer ? issuer.length * issuerSize * 0.96 : 0;
@@ -9071,8 +9073,8 @@
           });
           const bodyTop = Math.round(top + itemH * 0.47);
           bodyLines.forEach((ln, i) => {
-            s += '<text x="' + cx + '" y="' + (bodyTop + i * 18) + '" text-anchor="middle" font-family="' + FF +
-              '" font-size="13" font-weight="600" fill="#5A4630" opacity=".85" letter-spacing="-.2">' + svgEsc(ln) + '</text>';
+            s += '<text x="' + cx + '" y="' + (bodyTop + i * 17) + '" text-anchor="middle" font-family="' + FF +
+              '" font-size="12" font-weight="600" fill="#5A4630" opacity=".86" letter-spacing="-.2">' + svgEsc(ln) + '</text>';
           });
           s += '<text x="' + cx + '" y="' + Math.round(top + itemH * 0.665) + '" text-anchor="middle" font-family="' + FF +
             '" font-size="15" font-weight="800" fill="#3A2A18" letter-spacing=".4">' + svgEsc(wonDate(a.date)) + '</text>';
