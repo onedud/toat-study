@@ -989,12 +989,19 @@
     position:absolute;inset:-4px;display:flex;align-items:center;justify-content:center;border-radius:10px;
     border:1px dashed var(--mint-line);background:rgba(255,255,255,.66);font-size:12.5px;font-weight:900;color:var(--mint-deep)
   }
-  /* 한 번 더 누르면 접히는 토글 — 펼친 상태는 가벼운 회색 버튼 */
-  .memo .cover.on{
-    position:static;display:inline-flex;margin-top:7px;padding:5px 10px;border-radius:999px;
-    border:1px solid var(--line);background:transparent;font-size:11px;font-weight:800;color:var(--muted)
+  /* 펼친 코멘트 = 초록 실선 상자 + 오른쪽 끝 선글라스 눈 아이콘 (누르면 다시 접힘) */
+  .memo .memo-box{
+    display:flex;align-items:center;gap:9px;width:100%;text-align:left;
+    padding:7px 8px 7px 10px;border-radius:10px;border:1.5px solid var(--mint-line);background:var(--mint-soft);
+    transition:background .15s,border-color .15s
   }
-  .memo .cover.on:active{background:var(--mint-soft);border-color:var(--mint-line);color:var(--mint-deep)}
+  .memo .memo-box:active{background:var(--mint-soft-2);border-color:var(--mint)}
+  .memo .memo-box .memo-text{flex:1;min-width:0}
+  .memo .memo-eye{
+    flex:none;margin-left:auto;width:26px;height:26px;border-radius:9px;background:#FFFFFF;
+    border:1px solid var(--mint-line);display:grid;place-items:center
+  }
+  .memo .memo-eye svg{width:17px;height:17px;display:block}
   .memo-none{font-size:12.5px;color:var(--dim);margin-bottom:9px}
   .meta{font-size:11px;color:var(--dim);margin-bottom:9px;font-weight:600}
   .cycle-pick{display:flex;align-items:center;gap:7px;margin-bottom:11px}
@@ -1140,7 +1147,7 @@
   .photo-actions .btn{flex:1;font-size:12.5px;padding:9px}
   .photo-hint.ro,.hint.ro{color:var(--mint-deep);font-weight:800}
   #photoHint.ro{text-align:center}
-  #photoDiary.readonly{background:#F5F8F7;color:#5C7469;border-color:#E6EEEB}
+  #photoDiary.readonly{background:transparent!important;color:#5C7469}
 
   /* ---------- 마이페이지 ---------- */
   .mp-hero{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:linear-gradient(150deg,#E9FBF3,#FBFEFC);border:1px solid var(--line)}
@@ -1353,11 +1360,15 @@
 
   /* ---------- 일기장 ---------- */
   /* 줄노트 배경 없이 깨끗한 카드 (사진·안내문과 따로 놀지 않게) */
-  .diary-wrap{margin-top:12px;border-radius:16px;border:1px solid var(--line);background:#FFFEFB;padding:13px 15px 18px;position:relative;overflow:hidden}
-  .diary-date{font-size:10px;font-weight:900;color:#A8B5AF;position:absolute;right:14px;bottom:8px;letter-spacing:.04em}
+  .diary-wrap{margin-top:12px;border-radius:16px;border:1px solid var(--line);background:#FFFFFF;padding:13px 15px 15px;position:relative;overflow:hidden}
+  /* 일기 입력칸은 카드와 같은 흰 배경 — 안쪽 회색 상자/테두리 없이 투명하게 */
   textarea.diary{
-    position:relative;width:100%;border:none;background:transparent;resize:none;outline:none;
+    position:relative;display:block;width:100%;border:none!important;background:transparent!important;box-shadow:none!important;
+    resize:none;outline:none;opacity:1;
     font-size:14px;line-height:1.72;font-weight:600;color:#2B3632;min-height:132px;padding:0
+  }
+  textarea.diary:disabled,textarea.diary[readonly]{
+    background:transparent!important;border:none!important;box-shadow:none!important;opacity:1
   }
   textarea.diary::placeholder{color:#B6C3BD}
   .diary-hint{font-size:10.5px;color:#A8B5AF;margin-top:2px}
@@ -3117,7 +3128,6 @@
     </div>
     <div class="diary-wrap" id="photoDiaryWrap">
       <textarea class="diary" id="photoDiary" rows="6" maxlength="3000" placeholder="오늘 어떤 하루였나요? 잘한 것, 아쉬운 것, 내일의 다짐…"></textarea>
-      <span class="diary-date" id="diaryDate"></span>
     </div>
     <p class="hint" id="photoHint" style="margin-top:8px">공부 인증 사진은 최대 480px로 작게 압축돼요 · 일기만 남겨도 돼요</p>
     <div class="sheet-actions">
@@ -3239,6 +3249,27 @@
   const petNameDefault = () => PET_NAMES[Math.floor(Math.random() * PET_NAMES.length)];
   const CYCLE_LABEL = { 3: '3일 주기', 7: '7일 주기', 30: '한달 주기' };
   const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg>';
+  /* 코멘트 펼침 버튼 오른쪽 끝에 붙는 선글라스 눈 (IMG_5083 낙서 모양) */
+  const EYE_SHADES = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<rect x="1.6" y="8.5" width="8.1" height="6.7" rx="3.3" fill="#1E2A26"/>' +
+    '<rect x="14.3" y="8.5" width="8.1" height="6.7" rx="3.3" fill="#1E2A26"/>' +
+    '<path d="M10.2 11.2h3.6" stroke="#1E2A26" stroke-width="1.8" stroke-linecap="round"/>' +
+    '<path d="M4 10.4l1.5-1.4M16.7 10.4l1.5-1.4" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity=".92"/>' +
+    '</svg>';
+
+  /* 오답·마스터 카드 코멘트: 숨김(초록 점선 상자) ↔ 펼침(초록 실선 상자 + 선글라스 눈) */
+  function memoBlock(memo, id, open) {
+    memo = String(memo || '').trim();
+    if (!memo) return '<div class="memo-none">코멘트 없음</div>';
+    if (!open) {
+      return '<div class="memo covered"><div class="memo-text">' + esc(memo) + '</div>' +
+        '<button type="button" class="cover" data-reveal="' + esc(id) + '" aria-expanded="false">코멘트 확인 👀</button></div>';
+    }
+    return '<div class="memo open"><button type="button" class="memo-box" data-reveal="' + esc(id) +
+      '" aria-expanded="true" aria-label="코멘트 숨기기">' +
+      '<span class="memo-text">' + esc(memo) + '</span>' +
+      '<span class="memo-eye">' + EYE_SHADES + '</span></button></div>';
+  }
 
   const PALETTE = [
     { id: 'red', name: '빨강', light: '#FFC3BE', base: '#F07E79', deep: '#CB514C', pale: '#FFF0EC', ink: '#8C322E', bg1: '#FFEDEA', bg2: '#FFF8F6' },
@@ -6133,7 +6164,6 @@
     $('photoSub').textContent = prettyDate(dateKey) + (isToday ? ' · 오늘' : ' · 읽기 전용');
     $('photoTitle').textContent = showPhoto && !showDiary ? '인증 사진' : (showDiary && !showPhoto ? '그날의 일기' : '인증 사진 · 일기');
     $('photoDiary').value = p ? (p.diary || p.memo || '') : '';
-    $('diaryDate').textContent = prettyDate(dateKey);
     $('photoImg').hidden = !hasImg;
     $('photoEmpty').hidden = hasImg;
     if (hasImg) $('photoImg').src = p.img; else $('photoImg').removeAttribute('src');
@@ -7703,11 +7733,7 @@
       const memo = (it.memo || '').trim();
       const open = revealed.has(it.id);
       const img = it.img ? '<div class="note-img"><img src="' + it.img + '" alt="문제 사진" data-zoom="' + it.id + '" loading="lazy"></div>' : '';
-      const memoHtml = memo
-        ? '<div class="memo' + (open ? ' open' : ' covered') + '"><div class="memo-text">' + esc(memo) + '</div>' +
-          '<button class="cover' + (open ? ' on' : '') + '" data-reveal="' + it.id + '" aria-expanded="' +
-          (open ? 'true' : 'false') + '">' + (open ? '코멘트 숨기기' : '코멘트 확인 👀') + '</button></div>'
-        : '<div class="memo-none">코멘트 없음</div>';
+      const memoHtml = memoBlock(memo, it.id, open);
       const subj = noteSubjectName(it);
       return '<article class="card note" data-id="' + it.id + '">' + img +
         '<div class="note-body">' +
@@ -7779,6 +7805,8 @@
      마스터노트
      ========================================================= */
   let masterFilter = 'all';
+  /* 마스터 카드는 코멘트가 기본으로 펼쳐져 있고, 누르면 점선 상자로 접힌다 */
+  const masterFolded = new Set();
   function renderMaster() {
     const c = cert();
     $('masterCountSub').textContent = c.master.length + '개 암기 완료';
@@ -7799,7 +7827,7 @@
         '<div class="note-body">' +
           '<div class="tags">' + (noteSubjectName(it) ? '<span class="tag gray">' + esc(noteSubjectName(it)) + '</span>' : '') + '<span class="tag">⭐ 암기 완료</span></div>' +
           '<div class="master-date">' + (it.created ? '등록 ' + esc(prettyDate(it.created)) : '') + (it.mastered ? ' · 암기 ' + esc(prettyDate(it.mastered)) : '') + (it.reviews ? ' · 복습 ' + it.reviews + '회' : '') + '</div>' +
-          ((it.memo || '').trim() ? '<div class="memo"><div class="memo-text">' + esc(it.memo) + '</div></div>' : '<div class="memo-none">코멘트 없음</div>') +
+          ((it.memo || '').trim() ? memoBlock(it.memo, it.id, !masterFolded.has(it.id)) : '<div class="memo-none">코멘트 없음</div>') +
           '<div class="note-actions"><button class="btn ghost" data-restore="' + it.id + '">오답노트로 되돌리기</button>' +
             '<button class="btn ghost icon" data-mdel="' + it.id + '" aria-label="삭제" title="삭제">' + TRASH + '</button></div>' +
         '</div></article>';
@@ -7813,6 +7841,13 @@
     renderMaster();
   });
   $('masterList').addEventListener('click', (e) => {
+    const reveal = e.target.closest('[data-reveal]');
+    if (reveal) {
+      const id = reveal.dataset.reveal;
+      if (masterFolded.has(id)) masterFolded.delete(id); else masterFolded.add(id);
+      renderMaster();
+      return;
+    }
     const zoom = e.target.closest('[data-mzoom]');
     if (zoom) { const it = cert().master.find((x) => x.id === zoom.dataset.mzoom); if (it && it.img) openLightbox(it.img); return; }
     const res = e.target.closest('[data-restore]');
