@@ -249,9 +249,6 @@
   .pet-gauge .pg-bar i{display:block;height:100%;border-radius:999px;width:0;background:linear-gradient(90deg,#46E6B4,#12BE8C);transition:width .4s}
   .pet-gauge.gold .pg-bar i{background:linear-gradient(90deg,#FFE9A6,#F7C532,#E09A0C)}
   .pet-gauge .pg-foot{margin-top:4px;font-size:9.5px;font-weight:800;color:var(--dim)}
-  .detail-sheet .pet-gauge .pg-top{color:#CFF6E6}
-  .detail-sheet .pet-gauge .pg-time,.detail-sheet .pet-gauge .pg-foot{color:#9AA5A0}
-  .detail-sheet .pet-gauge .pg-bar{background:rgba(255,255,255,.14)}
   .ability{margin-top:10px}
   .ability .ab-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px;font-size:10px;font-weight:900;color:var(--mint-deep)}
   .ability .ab-top b{font-size:11px;font-variant-numeric:tabular-nums}
@@ -1028,63 +1025,6 @@
   .coll-meta .dots{display:flex;gap:2px}
   .coll-meta .dots i{width:5px;height:5px;border-radius:50%;opacity:.35}
   .coll-meta .dots i.on{opacity:1}
-  .coll-detail{display:none}
-  .coll.show-detail .coll-list{display:none}
-  .coll.show-detail .coll-detail{display:block}
-  .detail-head{display:flex;align-items:center;justify-content:space-between;padding:2px 0 10px}
-  .coll.show-detail .coll-head{display:none}
-  .detail-head .title{font-size:13px;font-weight:900;color:#3A5148;letter-spacing:.04em}
-  .detail-showcase{
-    position:relative;border-radius:24px;padding:14px 8px 4px;overflow:hidden;
-    background:linear-gradient(160deg,var(--p1,#EAF8F1),var(--p2,#FBFEFC));border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;min-height:270px
-  }
-  .detail-showcase .art{width:min(66%,240px);position:relative;z-index:2}
-  .detail-showcase .art .pet-img{width:100%;height:auto;display:block}
-  .detail-showcase .flower{position:absolute;bottom:0;z-index:1}
-  .detail-showcase .flower .flower-img{height:54px}
-  .detail-showcase .flower.a{left:8px}
-  .detail-showcase .flower.b{right:4px}
-  .detail-arrow{
-    position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:34px;height:34px;border-radius:50%;
-    background:rgba(255,255,255,.9);border:1px solid var(--line);display:grid;place-items:center;font-size:15px;color:#4C625A;
-    box-shadow:0 4px 12px rgba(16,105,80,.10)
-  }
-  .detail-arrow.l{left:8px}
-  .detail-arrow.r{right:8px}
-  .detail-thumbs{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 14px}
-  .detail-thumbs button{
-    width:52px;height:52px;border-radius:14px;border:1.5px solid transparent;background:linear-gradient(160deg,#EFF9F5,#FBFEFC);
-    display:grid;place-items:center;overflow:hidden;opacity:.62;transition:opacity .15s,border-color .15s
-  }
-  .detail-thumbs button svg{width:88%;height:88%}
-  .detail-thumbs button .pet-img{width:88%;height:88%;object-fit:contain}
-  .detail-thumbs button.on{opacity:1;border-color:var(--mint);background:#fff;box-shadow:0 4px 12px rgba(24,210,155,.16)}
-  .detail-sheet{
-    background:#181A20;border-radius:26px 26px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));
-    color:#F4F6F5;margin:0 -16px calc(-28px - env(safe-area-inset-bottom));box-shadow:0 -14px 40px rgba(10,20,16,.28)
-  }
-  .detail-sheet .ds-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-  .detail-sheet h2{font-size:19px;font-weight:900;letter-spacing:-.02em}
-  .detail-sheet .ds-tag{font-size:10.5px;font-weight:900;letter-spacing:.08em;color:#8FE3C4;background:rgba(24,210,155,.14);padding:4px 8px;border-radius:8px;white-space:nowrap}
-  .detail-sheet .ds-tag.off{color:#A5B0AB;background:rgba(255,255,255,.07)}
-  .detail-sheet .stars{display:block;margin-top:8px;font-size:12px;color:#F4C95D}
-  .detail-sheet .stars .off{color:#3E444C}
-  .detail-sheet .ability .ab-top{color:#CFF6E6}
-  .detail-sheet .ability .ab-bar{background:rgba(255,255,255,.14)}
-  .detail-sheet .ability .ab-foot{color:#9AA5A0}
-  .spec{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-  .spec div{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:9px 11px;word-break:keep-all}
-  .spec div:nth-child(5):last-child{grid-column:1/-1}
-  .spec dt{font-size:10px;font-weight:800;color:#9AA5A0;letter-spacing:.04em}
-  .spec dd{margin:4px 0 0;font-size:13px;font-weight:900;color:#F3F7F5}
-  .ds-foot{display:flex;align-items:center;gap:10px;margin-top:14px}
-  .ds-foot .grow-note{font-size:10.5px;color:#98A39E;line-height:1.45}
-  .pill-btn{
-    margin-left:auto;flex:none;padding:12px 20px;border-radius:999px;background:#fff;color:#14171B;
-    font-size:13.5px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.28)
-  }
-  .pill-btn.on{background:rgba(255,255,255,.12);color:#CFE8DE;box-shadow:none;border:1px solid rgba(255,255,255,.16)}
 
   /* ---------- 오답/마스터 ---------- */
   .filters{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
@@ -1187,8 +1127,7 @@
   .coll-grow .cg-top{display:flex;align-items:center;gap:6px}
   .coll-grow .cg-em{font-size:16px;line-height:1}
   .coll-grow .cg-nm{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .coll-grow .cg-min{margin-left:auto;flex:none;font-size:10px;font-weight:900;color:var(--mint-deep);background:#fff;border:1px solid var(--mint-line);border-radius:999px;padding:3px 9px}
-  .coll-grow .rainbow{margin-top:11px}
+  .petstat .ps-art{display:grid;place-items:center;padding:2px 0 10px}
   .coll-grow .ability{margin-top:11px}
   .petstat .ps-art{display:grid;place-items:center;padding:2px 0 10px}
   .petstat .ps-art .pet-img{height:118px;width:auto;max-width:100%;object-fit:contain;display:block}
@@ -1223,15 +1162,13 @@
   .petstat-head .x svg{width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .petstat-head .x:active{background:rgba(34,18,27,.06)}
   .petstat .coll-grow{margin-top:0}
-  .petstat-actions{display:flex;gap:8px;margin-top:13px}
-  .petstat-actions .btn{flex:1}
   /* 24시간 칸 · 4열 × 6행 (읽기 전용 · Tody time 자동 기록) */
   .tt-timeline{display:flex;flex-direction:column}
   .tl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(25px,1fr);gap:1px;min-width:0;flex:1;min-height:0;align-content:stretch;
     background:#E2ECE8;border:1px solid #E2ECE8;border-radius:10px;overflow:hidden}
   .tl-box{position:relative;display:block;border-radius:0;border:0;background:#F1F6F4;transition:background .2s,box-shadow .2s;overflow:hidden;min-width:0}
-  .tl-fill{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:row;align-items:stretch;pointer-events:none}
-  .tl-fill i{display:block;height:100%;flex:none;min-width:1px}
+  .tl-fill{position:absolute;inset:0;pointer-events:none}
+  .tl-fill i{position:absolute;top:0;bottom:0;display:block;min-width:1px}
   .tl-box.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
   .tl-box.now{box-shadow:inset 0 0 0 2px rgba(24,210,155,.55)}
   .tl-box.now.on{box-shadow:inset 0 0 0 2px rgba(24,210,155,.62)}
@@ -1252,6 +1189,8 @@
   .ttedit-sum .diff{font-size:10.5px;font-weight:800;color:var(--dim);flex:none}
   .ttedit-sum .diff.up{color:var(--mint-deep)}
   .ttedit-sum .diff.down{color:#D9702B}
+  .ttedit .field .endval{height:44px;box-sizing:border-box;display:flex;align-items:center;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:#F3F9F6;font-size:14px;font-weight:900;color:#0B5B47;font-variant-numeric:tabular-nums}
+  .ttedit .field .endval.off{color:#A9BAB4;font-weight:800}
   .tt-edit-subj{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
   .tt-edit-subj .chip{display:inline-flex;align-items:center;gap:4px;font-size:12px}
   .tt-hour-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:6px}
@@ -1558,7 +1497,6 @@
     .action-card{padding:14px 13px}
     .ac-btn{width:56px;height:56px;font-size:24px;border-radius:19px}
     .ac-btn .felt-ic{width:36px;height:36px;font-size:30px}
-    .pill-btn{padding:11px 15px;font-size:12.5px}
   }
   @media (min-width:721px){
     .pet-art{width:220px}
@@ -1890,7 +1828,7 @@
   html,body,button,a,input,select,textarea,label,summary,
   .card,.chip,.nav button,.cal-cell,.wkday,.coll-card,.coll-head .back,
   .pick-sub,.pet-art,.pet-bubble,.pet-bubble-tail,.petstat,.sheet,.veil,
-  .todo-item,.qcard,.note,.timetable td,.tt-cell,.icon-grid button,.qicon,.pill-btn{
+  .todo-item,.qcard,.note,.timetable td,.tt-cell,.icon-grid button,.qicon{
     touch-action:manipulation
   }
   button,input,select,textarea,a{-webkit-tap-highlight-color:transparent}
@@ -2519,7 +2457,7 @@
         <div class="tl-foot"><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
     </div>
-    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작하면 그 시간이 저절로 채워집니다. 기록을 직접 적고 싶으면 오른쪽 <b>＋</b> 버튼을 눌러 과목·시간·24시간 칸을 고쳐 주세요.</p>
+    <p class="tt-tip">타임라인은 읽기 전용이에요. 왼쪽에서 과목을 누르고 <b>Tody time</b>을 시작하면 그 시간이 저절로 채워집니다. 기록을 직접 적고 싶으면 오른쪽 <b>＋</b> 버튼을 눌러 과목·시작 시각·시간을 적어 주세요. 칸은 공부한 시각만큼만, 그 자리에서부터 채워집니다.</p>
 
     <section class="card tt-summary">
       <div class="tt-sum-label">
@@ -2863,33 +2801,6 @@
       <div class="coll-grid" id="collGrid"></div>
     </div>
 
-    <div class="coll-detail" id="collDetail">
-      <div class="detail-head">
-        <button class="back" id="detailBack" aria-label="도감 목록으로">‹</button>
-        <span class="title" id="detailTitle">펫 상세</span>
-        <button class="back" id="detailClose" aria-label="도감 닫기">×</button>
-      </div>
-      <div class="detail-showcase" id="detailShowcase">
-        <button class="detail-arrow l" id="detailPrev" aria-label="이전 펫">‹</button>
-        <span class="flower a" id="detailFlowerA" aria-hidden="true"></span>
-        <div class="art" id="detailArt"></div>
-        <span class="flower b" id="detailFlowerB" aria-hidden="true"></span>
-        <button class="detail-arrow r" id="detailNext" aria-label="다음 펫">›</button>
-      </div>
-      <div class="detail-thumbs" id="detailThumbs"></div>
-      <div class="detail-sheet">
-        <div class="ds-top">
-          <h2 id="detailName">호랑이</h2>
-          <span class="ds-tag" id="detailTag">보유중</span>
-        </div>
-        <div class="pet-gauge" id="detailGauge"></div>
-        <dl class="spec" id="detailSpec"></dl>
-        <div class="ds-foot">
-          <div class="grow-note" id="detailNote">공부할수록 자라나요</div>
-          <button class="pill-btn" id="detailSelect">이 펫 키우기</button>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -2905,12 +2816,8 @@
       <div class="cg-top">
         <span class="cg-em" id="psEmoji" aria-hidden="true">🐯</span>
         <span class="cg-nm" id="psName">호랑이</span>
-        <span class="cg-min" id="psMins">0분</span>
       </div>
       <div class="pet-gauge" id="psGauge"></div>
-    </div>
-    <div class="petstat-actions">
-      <button class="btn primary" id="psOpenColl">십이지신 도감 열기</button>
     </div>
   </div>
 </section>
@@ -3147,6 +3054,10 @@
     <div class="field">
       <label>과목</label>
       <div class="tt-edit-subj" id="ttEditSubjectList" role="group" aria-label="과목 선택"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="ttEditStart">시작 시각</label><input id="ttEditStart" type="time" step="60" aria-label="시작 시각"></div>
+      <div class="field"><label>끝나는 시각</label><div class="endval" id="ttEditEnd" aria-live="polite">—</div></div>
     </div>
     <div class="field-row">
       <div class="field"><label for="ttEditH">시간</label><input id="ttEditH" type="number" min="0" max="24" step="1" inputmode="numeric" aria-label="시간"></div>
@@ -3641,6 +3552,7 @@
       subjects: names.map((n, i) => ({ id: (keepIds && keepIds[i] && keepIds[i].id) || ('s' + uid() + i), name: String(n || ''), icon: (keepIds && keepIds[i] && keepIds[i].icon) || SUBJECT_ICONS[i % SUBJECT_ICONS.length] })),
       days: {},
       mins: {},
+      segs: {},
       wrong: [],
       master: [],
       todos: {},
@@ -4025,6 +3937,17 @@
         day[sid] = Math.min(59, v);
       });
       if (!Object.keys(day).length) delete out.extras[k];
+    });
+    /* 정확한 공부 구간 [[시작분, 끝분], …] */
+    if (!out.segs || typeof out.segs !== 'object' || Array.isArray(out.segs)) out.segs = {};
+    Object.keys(out.segs).forEach((k) => {
+      if (!isKey(k) || !out.segs[k] || typeof out.segs[k] !== 'object' || Array.isArray(out.segs[k])) { delete out.segs[k]; return; }
+      const day = out.segs[k];
+      Object.keys(day).forEach((sid) => {
+        const clean = normSegs(day[sid]);
+        if (clean.length) day[sid] = clean; else delete day[sid];
+      });
+      if (!Object.keys(day).length) delete out.segs[k];
     });
     if (!Array.isArray(out.todoCats) || !out.todoCats.length) out.todoCats = ['공부', '할일'];
     out.todoCats = out.todoCats.map((c) => String(c).slice(0, 12)).filter(Boolean);
@@ -4882,17 +4805,146 @@
     if (m) day[sid] = m; else delete day[sid];
     if (!Object.keys(day).length) delete cert().extras[dateKey];
   }
-  /* 한 과목 · 한 시간 칸의 정확한 분 (0~60).
-     세션 기록(mins)이 있으면 그 분, 예전 기록·수동 기록의 시간 칸은 60분으로 본다. */
-  function hourMinutesOf(c, dateKey, sid, h) {
-    const md = c && c.mins && c.mins[dateKey];
-    const v = md && md[sid] ? Number(md[sid][h]) : 0;
-    if (v > 0) return Math.min(60, Math.round(v));
+  /* =========================================================
+     정확한 공부 구간 (segments)
+     ---------------------------------------------------------
+     segs[날짜][과목] = [[시작분, 끝분], …]  · 자정 기준 0~1440분
+       예) 1:30~2:40 → [[90, 160]]  → 1시 칸 50~100%, 2시 칸 0~66.7%
+     · Tody time은 실제 시작·끝 시각을, ＋ 직접 적기는 고른 시작 시각·시간을 쌓는다.
+     · 예전 기록(시간 칸·분·남은 분)에는 구간이 없다 → 왼쪽 0%부터 채워 그린다.
+     · syncLegacy: 구간이 생기면 days(시간 칸)·mins(시각별 분)도 같이 맞춰,
+       통계·달력·펫처럼 예전 값을 읽는 곳들도 같은 숫자를 보게 한다.
+     ========================================================= */
+  function segStore(c) {
+    if (!c.segs || typeof c.segs !== 'object' || Array.isArray(c.segs)) c.segs = {};
+    return c.segs;
+  }
+  function normSegs(list) {
+    const out = [];
+    (Array.isArray(list) ? list : []).forEach((sg) => {
+      if (!Array.isArray(sg) || sg.length < 2) return;
+      let a = Math.round(Number(sg[0])), b = Math.round(Number(sg[1]));
+      if (!isFinite(a) || !isFinite(b)) return;
+      a = Math.max(0, Math.min(1440, a)); b = Math.max(0, Math.min(1440, b));
+      if (b <= a) return;
+      out.push([a, b]);
+    });
+    out.sort((x, y) => x[0] - y[0] || x[1] - y[1]);
+    const merged = [];
+    out.forEach((sg) => {
+      const last = merged[merged.length - 1];
+      if (last && sg[0] <= last[1]) last[1] = Math.max(last[1], sg[1]);   /* 겹치면 한 구간으로 */
+      else merged.push([sg[0], sg[1]]);
+    });
+    return merged;
+  }
+  function subjectSegsOf(c, dateKey, sid) {
+    const d = c && c.segs ? c.segs[dateKey] : null;
+    return d && Array.isArray(d[sid]) ? d[sid] : [];
+  }
+  function subjectSegs(dateKey, sid) { return subjectSegsOf(cert(), dateKey, sid); }
+  /* 구간 저장 + 예전 값(days·mins) 동기화. extras는 구간에 이미 들어있으므로 지운다. */
+  function setSubjectSegs(dateKey, sid, list) {
+    const c = cert();
+    const store2 = segStore(c);
+    const clean = normSegs(list);
+    if (!store2[dateKey]) store2[dateKey] = {};
+    if (clean.length) store2[dateKey][sid] = clean; else delete store2[dateKey][sid];
+    if (!Object.keys(store2[dateKey]).length) delete store2[dateKey];
+    /* 예전 값 맞추기 */
+    const hours = new Set();
+    const byHour = {};
+    clean.forEach((sg) => {
+      for (let h = Math.floor(sg[0] / 60); h <= Math.floor((sg[1] - 1) / 60); h++) {
+        const a = Math.max(sg[0], h * 60), b = Math.min(sg[1], h * 60 + 60);
+        if (b <= a) continue;
+        hours.add(h); byHour[h] = (byHour[h] || 0) + (b - a);
+      }
+    });
+    if (!c.days[dateKey]) c.days[dateKey] = {};
+    const day = c.days[dateKey];
+    if (hours.size) day[sid] = Array.from(hours).sort((a, b) => a - b); else delete day[sid];
+    if (!Object.keys(day).length) delete c.days[dateKey];
+    if (!c.mins[dateKey]) c.mins[dateKey] = {};
+    const mday = c.mins[dateKey];
+    if (hours.size) mday[sid] = byHour; else delete mday[sid];
+    if (!Object.keys(mday).length) delete c.mins[dateKey];
+    if (c.extras && c.extras[dateKey] && c.extras[dateKey][sid] != null) {
+      delete c.extras[dateKey][sid];
+      if (!Object.keys(c.extras[dateKey]).length) delete c.extras[dateKey];
+    }
+    return clean;
+  }
+  /* 예전 기록(시간 칸 60분 · 시각별 분 · 남은 분)을 구간으로 바꾼다 */
+  function segsFromLegacy(c, dateKey, sid, startMin) {
+    const arr = c && c.days && c.days[dateKey] && Array.isArray(c.days[dateKey][sid]) ? c.days[dateKey][sid] : [];
+    const md = (c && c.mins && c.mins[dateKey] && c.mins[dateKey][sid]) || {};
+    const set = new Set(arr.map(Number));
+    Object.keys(md).forEach((h) => set.add(Number(h)));
+    const hours = Array.from(set).filter((h) => Number.isInteger(h) && h >= 0 && h < 24).sort((a, b) => a - b);
+    const shift = Math.max(0, Math.min(59, Math.round(Number(startMin) || 0)));
+    const segs = [];
+    let prev = null;
+    hours.forEach((h) => {
+      const v = md[h] != null ? Math.round(Number(md[h])) : 60;
+      const m = Math.max(1, Math.min(60, isFinite(v) && v > 0 ? v : 60));
+      if (prev !== null && h === prev + 1) segs[segs.length - 1][1] = h * 60 + m;
+      else segs.push([h * 60, h * 60 + m]);
+      prev = h;
+    });
+    const ex = c && c.extras && c.extras[dateKey] ? Math.max(0, Math.min(59, Math.round(Number(c.extras[dateKey][sid]) || 0))) : 0;
+    const out = segs.map((sg) => [sg[0] + shift, sg[1] + shift]);
+    if (ex && out.length) out[out.length - 1][1] += ex;
+    return normSegs(out);
+  }
+  /* 고른 시간 칸(60분씩) + 남은 분 → 구간. startMin: 첫 시간 안에서 몇 분부터 시작했는지 */
+  function segsFromHours(hours, extraMin, startMin) {
+    const shift = Math.max(0, Math.min(59, Math.round(Number(startMin) || 0)));
+    const list = (Array.isArray(hours) ? hours : []).map(Number).filter((h) => Number.isInteger(h) && h >= 0 && h < 24).sort((a, b) => a - b);
+    const segs = [];
+    let prev = null;
+    list.forEach((h) => {
+      if (prev !== null && h === prev + 1) segs[segs.length - 1][1] = h * 60 + 60;
+      else segs.push([h * 60, h * 60 + 60]);
+      prev = h;
+    });
+    const out = segs.map((sg) => [sg[0] + shift, sg[1] + shift]);
+    const ex = Math.max(0, Math.min(59, Math.round(Number(extraMin) || 0)));
+    if (ex && out.length) out[out.length - 1][1] += ex;
+    return normSegs(out);
+  }
+  /* 한 시간 칸 안에서 그 과목이 채운 구간들 (칸 기준 0~60분) */
+  function hourSegsOf(c, dateKey, sid, h) {
+    const from = h * 60, to = from + 60;
+    const segs = subjectSegsOf(c, dateKey, sid);
+    if (segs.length) {
+      const out = [];
+      segs.forEach((sg) => {
+        const a = Math.max(from, sg[0]), b = Math.min(to, sg[1]);
+        if (b > a) out.push([a - from, b - from]);
+      });
+      return out;
+    }
+    const md = c && c.mins && c.mins[dateKey] ? c.mins[dateKey][sid] : null;
+    const v = md && md[h] != null ? Math.round(Number(md[h])) : 0;
+    if (v > 0) return [[0, Math.min(60, v)]];
     const arr = c && c.days && c.days[dateKey] ? c.days[dateKey][sid] : null;
-    return Array.isArray(arr) && arr.indexOf(h) >= 0 ? 60 : 0;
+    return Array.isArray(arr) && arr.indexOf(h) >= 0 ? [[0, 60]] : [];
+  }
+  function hhmm(min) {
+    const m = Math.max(0, Math.round(Number(min) || 0));
+    if (m >= 1440) return '24:00';
+    const h = Math.floor(m / 60) % 24, r = m % 60;
+    return (h < 10 ? '0' : '') + h + ':' + (r < 10 ? '0' : '') + r;
+  }
+  /* 한 과목 · 한 시간 칸의 정확한 분 (0~60) */
+  function hourMinutesOf(c, dateKey, sid, h) {
+    return hourSegsOf(c, dateKey, sid, h).reduce((n, sg) => n + (sg[1] - sg[0]), 0);
   }
   function certSubjectMinutes(c, dateKey, sid) {
     if (!c) return 0;
+    const segs = subjectSegsOf(c, dateKey, sid);
+    if (segs.length) return segs.reduce((n, sg) => n + (sg[1] - sg[0]), 0);
     const arr = c.days && c.days[dateKey] && Array.isArray(c.days[dateKey][sid]) ? c.days[dateKey][sid] : [];
     const md = c.mins && c.mins[dateKey] && c.mins[dateKey][sid] ? c.mins[dateKey][sid] : {};
     const hours = new Set(arr.map(Number));
@@ -5716,6 +5768,38 @@
     syncWakeLock();
   }
 
+  /* Tody time 세션을 실제 시작·끝 시각 그대로 구간으로 남긴다 (자정을 넘기면 두 날로).
+     돌려주는 값 = 새로 칠해진 시간 칸 수. */
+  function addSessionSegments(startMs, endMs, sid) {
+    const c = cert();
+    const end = Math.max(startMs, endMs);
+    let t = Math.min(startMs, endMs);
+    let guard = 0;
+    let fresh = 0;
+    while (t < end && guard++ < 80) {
+      const d = new Date(t);
+      const dayEnd = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
+      const ce = Math.min(end, dayEnd);
+      const k = toKey(d);
+      /* 예전 기록이 아직 구간이 없으면 먼저 구간으로 바꿔 둔다(안 그러면 예전 기록이 사라져 보인다) */
+      if (!subjectSegs(k, sid).length) {
+        const legacy = segsFromLegacy(c, k, sid, 0);
+        if (legacy.length) setSubjectSegs(k, sid, legacy);
+      }
+      const before = subjectSegs(k, sid);
+      const a = d.getHours() * 60 + d.getMinutes();
+      const e0 = ce === dayEnd ? 1440 : (new Date(ce).getHours() * 60 + new Date(ce).getMinutes());
+      const e = e0 > a ? e0 : Math.min(1440, a + 1);
+      for (let h = Math.floor(a / 60); h <= Math.floor((e - 1) / 60); h++) {
+        const hit = before.some((sg) => Math.min(sg[1], h * 60 + 60) - Math.max(sg[0], h * 60) > 0);
+        if (!hit) fresh++;
+      }
+      setSubjectSegs(k, sid, before.concat([[a, e]]));
+      t = ce;
+    }
+    return fresh;
+  }
+
   function finishFocus() {
     if (!focus) return;
     const ms = focusElapsedMs();
@@ -5734,20 +5818,12 @@
     const minutes = Math.max(1, Math.round(sec / 60));
     const end = Date.now();
     const start = end - ms;
-    const sd = new Date(start);
     const ed = new Date(end);
-    const startKey = focus.dateKey || toKey(sd);
+    const startKey = focus.dateKey || toKey(new Date(start));
     const endKey = toKey(ed);
-    const fromH = sd.getHours();
-    const toH = ed.getHours();
-    /* 자정을 넘긴 세션은 시작한 날 23시까지 + 끝난 날 0시부터 나눠 기록 */
-    fillMinuteHours(start, end, subjectId);
-    let filled = 0;
-    if (startKey === endKey) {
-      filled = fillHours(startKey, subjectId, fromH, toH);
-    } else {
-      filled = fillHours(startKey, subjectId, fromH, 23) + fillHours(endKey, subjectId, 0, toH);
-    }
+    /* 실제 시작·끝 시각 그대로 구간으로 남긴다 — 타임라인이 그 자리에서부터 찬다.
+       (자정을 넘긴 세션은 시작한 날 23시까지 + 끝난 날 0시부터 나눠 기록) */
+    const filled = addSessionSegments(start, end, subjectId);
     fillSlots(startKey, subjectId, start, end);
     if (endKey !== startKey) fillSlots(endKey, subjectId, start, end);
     // 펫 성장
@@ -6351,7 +6427,6 @@
      십이지신 도감
      ========================================================= */
   let collFilter = 'all';
-  let detailIdx = 2;
 
   function collItems() {
     const c = cert();
@@ -6367,7 +6442,6 @@
     const info = petInfo(c);
     $('psEmoji').textContent = info.animal.emoji;
     $('psName').textContent = (petStore().name || '콩이') + ' · ' + info.animal.name;
-    $('psMins').textContent = fmtDur(info.total);
     $('psArt').innerHTML = petArtHTML(info.stage, info.animal.id, { eager: true });
     $('psGauge').innerHTML = petGaugeHTML(info);
   }
@@ -6383,7 +6457,6 @@
 
   function openCollection() {
     $('coll').classList.add('open');
-    $('coll').classList.remove('show-detail');
     document.body.style.overflow = 'hidden';
     collFilter = 'all';
     renderCollection();
@@ -6424,50 +6497,18 @@
     $('cgGauge').innerHTML = petGaugeHTML(active);
   }
 
-  function openDetail(animalId) {
-    const idx = ANIMALS.findIndex((a) => a.id === animalId);
-    detailIdx = idx < 0 ? 0 : idx;
-    $('coll').classList.add('show-detail');
-    renderDetail();
-  }
-
-  function renderDetail() {
-    const c = cert();
-    const a = ANIMALS[detailIdx];
-    const info = petInfo(c, a.id);
-    const owned = info.total > 0;
-    const active = petStore().animal === a.id;
-    $('detailTitle').textContent = '펫 상세';
-    $('detailShowcase').style.removeProperty('--p1');
-    $('detailShowcase').style.removeProperty('--p2');
-    $('detailArt').innerHTML = petArtHTML(info.stage, a.id, { alt: a.name + ' ' + info.stageName, eager: true });
-    $('detailFlowerA').innerHTML = flowerImgHTML('white');
-    $('detailFlowerB').innerHTML = flowerImgHTML('coral');
-    $('detailName').textContent = a.name + (active ? ' · ' + (petStore().name || '콩이') : '');
-    $('detailTag').textContent = active ? '키우는 중' : owned ? '보유중' : '미보유';
-    $('detailTag').classList.toggle('off', !owned && !active);
-    $('detailGauge').innerHTML = petGaugeHTML(info);
-    $('detailSpec').innerHTML =
-      '<div><dt>동물</dt><dd>' + info.animal.emoji + ' ' + info.animal.name + '</dd></div>' +
-      '<div><dt>누적 공부</dt><dd>' + fmtDur(info.total) + '</dd></div>' +
-      '<div><dt>능력치</dt><dd>' + Math.round(info.pct) + '% / 100%</dd></div>' +
-      '<div><dt>100%까지</dt><dd>' + (info.complete ? '완료 ✨' : fmtDur(info.left) + ' 남음') + '</dd></div>';
-    $('detailNote').innerHTML = owned
-      ? (info.complete ? '능력치 100% · 완료 ✨' : '100%까지 ' + fmtDur(info.left))
-      : 'Tody time으로 공부하면 알에서 깨어나요';
-    const btn = $('detailSelect');
-    btn.textContent = active ? '선택됨' : '이 펫 키우기';
-    btn.classList.toggle('on', active);
-    btn.disabled = active;
-    const around = [];
-    for (let off = -2; off <= 2; off++) {
-      const j = (detailIdx + off + ANIMALS.length) % ANIMALS.length;
-      around.push(ANIMALS[j]);
-    }
-    $('detailThumbs').innerHTML = around.map((x) => {
-      const xi = petInfo(c, x.id);
-      return '<button class="' + (x.id === a.id ? 'on' : '') + '" data-thumb="' + x.id + '" aria-label="' + esc(x.name) + '">' + petArtHTML(xi.total > 0 ? xi.stage : 0, x.id) + '</button>';
-    }).join('');
+  /* 도감 카드 탭 = 그 펫을 바로 키우기 (상세 페이지 없음) */
+  function selectPet(animalId) {
+    const a = ANIMALS.find((x) => x.id === animalId);
+    if (!a) return;
+    const info = petInfo(cert(), animalId);
+    if (!(info.total > 0)) { toast(a.name + '는 아직 만나지 못했어요 · Tody time으로 공부하면 알에서 깨어나요', 3400); return; }
+    if (petStore().animal === animalId) { toast('지금 ' + a.name + '를 키우고 있어요', 2200); return; }
+    petStore().animal = animalId;
+    save(true);
+    renderCollection();
+    renderHero();
+    toast(a.name + ' · 이제 이 펫을 키워요', 2600);
   }
 
   /* =========================================================
@@ -6948,7 +6989,6 @@
   $('petBtn').addEventListener('click', openCollection);
   $('petArt').addEventListener('click', openPetStat);
   $('psClose').addEventListener('click', closePetStat);
-  $('psOpenColl').addEventListener('click', () => { closePetStat(); openCollection(); });
   $('petStat').addEventListener('click', (e) => { if (e.target === $('petStat')) closePetStat(); });
   $('myBtn').addEventListener('click', openAccountSheet);
   /* 📊 타이머 통계 바로가기 — 상단바 오뇨님 왼쪽 */
@@ -7013,8 +7053,6 @@
 
   /* 도감 */
   $('collClose').addEventListener('click', closeCollection);
-  $('detailBack').addEventListener('click', () => { $('coll').classList.remove('show-detail'); renderCollection(); });
-  $('detailClose').addEventListener('click', closeCollection);
   $('collFilters').addEventListener('click', (e) => {
     const b = e.target.closest('[data-cfilter]');
     if (!b) return;
@@ -7024,24 +7062,7 @@
   $('collGrid').addEventListener('click', (e) => {
     const b = e.target.closest('[data-animal]');
     if (!b) return;
-    openDetail(b.dataset.animal);
-  });
-  $('detailPrev').addEventListener('click', () => { detailIdx = (detailIdx + ANIMALS.length - 1) % ANIMALS.length; renderDetail(); });
-  $('detailNext').addEventListener('click', () => { detailIdx = (detailIdx + 1) % ANIMALS.length; renderDetail(); });
-  $('detailThumbs').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-thumb]');
-    if (!b) return;
-    openDetail(b.dataset.thumb);
-  });
-  $('detailSelect').addEventListener('click', () => {
-    const a = ANIMALS[detailIdx];
-    petStore().animal = a.id;
-    if (!petStore().minutes[a.id]) petStore().minutes[a.id] = 0;
-    save(true);
-    renderDetail();
-    renderCollection();
-    renderHero();
-    toast(a.name + '를 함께 키울 펫으로 골랐어요');
+    selectPet(b.dataset.animal);
   });
 
   /* 마이페이지 */
@@ -7394,23 +7415,39 @@
     const c = cert();
     const boxes = [];
     for (let h = 0; h < 24; h++) {
-      /* 이 시간 칸에 담긴 과목별 정확한 분 (0~60) */
+      /* 이 시간 칸에 담긴 과목별 정확한 구간 (칸 기준 0~60분) */
       const rows = c.subjects
-        .map((sub) => ({ sid: sub.id, name: sub.name, min: hourMinutesOf(c, k, sub.id, h) }))
-        .filter((x) => x.min > 0);
-      const rawTot = rows.reduce((n, x) => n + x.min, 0);
-      const tot = Math.min(60, rawTot);
-      const scale = rawTot > 60 ? 60 / rawTot : 1;   /* 겹쳐도 한 칸을 넘지 않게 */
+        .map((sub) => ({ sid: sub.id, name: sub.name, segs: hourSegsOf(c, k, sub.id, h) }))
+        .filter((x) => x.segs.length);
+      const tot = rows.reduce((n, x) => n + x.segs.reduce((m, sg) => m + (sg[1] - sg[0]), 0), 0);
       const isNow = k === tk && h === nowH;
-      const detail = rows.map((x) => (x.name || '과목') + ' ' + x.min + '분').join(' · ');
-      const label = h + '시' + (isNow ? ' · 지금' : '') + (tot ? ' · ' + tot + '분 · ' + detail : ' · 기록 없음');
-      /* 아래에서부터 분만큼만 차오르는 색 띠 (여러 과목은 순서대로 쌓임) */
+      const detail = rows.map((x) => {
+        const m = Math.round(x.segs.reduce((n2, sg) => n2 + (sg[1] - sg[0]), 0));
+        const when = x.segs.map((sg) => hhmm(h * 60 + sg[0]) + '~' + hhmm(h * 60 + sg[1])).join(', ');
+        return (x.name || '과목') + ' ' + m + '분 (' + when + ')';
+      }).join(' · ');
+      const totR = Math.round(tot);
+      const label = h + '시' + (isNow ? ' · 지금' : '') + (tot ? ' · ' + totR + '분 · ' + detail : ' · 기록 없음');
+      /* 구간이 겹치는 과목은 위아래 lane으로 나눠 둘 다 보이게 한다 */
+      let lanes = 1;
+      for (let i = 0; i < rows.length && lanes === 1; i++) {
+        for (let j = i + 1; j < rows.length; j++) {
+          if (rows[i].segs.some((a) => rows[j].segs.some((b) => Math.min(a[1], b[1]) - Math.max(a[0], b[0]) > 0))) { lanes = rows.length; break; }
+        }
+      }
       const fill = tot
-        ? '<span class="tl-fill" aria-hidden="true">' + rows.map((x) =>
-            '<i style="width:' + ((Math.min(60, x.min) * scale / 60) * 100).toFixed(2) + '%;background:' + tint(subjectColor(x.sid), .62) + '"></i>').join('') + '</span>'
+        ? '<span class="tl-fill" aria-hidden="true">' + rows.map((x, li) => {
+            const top = lanes > 1 ? (li * (100 / lanes)) : 0;
+            const hgt = lanes > 1 ? (100 / lanes) : 100;
+            return x.segs.map((sg) =>
+              '<i style="left:' + (sg[0] / 60 * 100).toFixed(3) + '%;width:' + ((sg[1] - sg[0]) / 60 * 100).toFixed(3) + '%;top:' + top.toFixed(2) + '%;height:' + hgt.toFixed(2) + '%;background:' + tint(subjectColor(x.sid), .62) + '"></i>').join('');
+          }).join('') + '</span>'
+        : '';
+      const segAttr = tot
+        ? ' data-seg="' + esc(rows.map((x) => x.sid + ':' + x.segs.map((sg) => (h * 60 + sg[0]) + '-' + (h * 60 + sg[1])).join(',')).join('|')) + '"'
         : '';
       boxes.push('<div class="tl-box' + (tot ? ' on' : '') + (isNow ? ' now' : '') + '" role="img"' +
-        ' data-min="' + tot + '"' +
+        ' data-min="' + totR + '"' + segAttr +
         ' aria-label="' + esc(label) + '" title="' + esc(label) + '">' + fill + '</div>');
     }
     $('ttTimeline').innerHTML = boxes.join('');
@@ -7442,49 +7479,97 @@
      세션을 까먹었거나 잘못 적혔을 때: 과목·시간·24시간 칸을
      그 자리에서 고친다. 총 시간 = 켜진 시간 칸 × 60 + 남은 분.
      ========================================================= */
-  let ttManual = null;   /* { sid, dateKey, hours:[], mins, base } */
+  let ttManual = null;   /* { sid, dateKey, segs:[[시작분, 끝분]…], base } */
 
-  function openTimeEdit(sid) {
+  /* 기록은 ‘정확한 구간’으로 들고 있는다. 예전 기록(시간 칸·남은 분)은 구간으로 바꿔 연다. */
+  function loadManual(sidx) {
+    const k = ttDate;
+    let segs = subjectSegs(k, sidx).map((sg) => [sg[0], sg[1]]);
+    if (!segs.length) segs = segsFromLegacy(cert(), k, sidx, 0);
+    ttManual = { sid: sidx, dateKey: k, segs: segs };
+    ttManual.base = manualTotal();
+  }
+
+  function openTimeEdit(sidx) {
     const c = cert();
     const has = (id) => !!id && c.subjects.some((x) => x.id === id);
-    const pick = has(sid) ? sid : (has(currentEditSubject()) ? currentEditSubject() : (c.subjects[0] ? c.subjects[0].id : ''));
+    const pick = has(sidx) ? sidx : (has(currentEditSubject()) ? currentEditSubject() : (c.subjects[0] ? c.subjects[0].id : ''));
     if (!pick) { toast('과목을 먼저 추가해 주세요'); return; }
     ttEditSubject = pick;
-    ttManual = { sid: pick, dateKey: ttDate, hours: subjectHours(ttDate, pick), mins: subjectExtraMinutes(ttDate, pick) };
-    ttManual.base = manualTotal();
+    loadManual(pick);
     renderTimeEdit();
     openSheet('ttEdit');
   }
 
-  function manualTotal() { return ttManual ? ttManual.hours.length * 60 + ttManual.mins : 0; }
+  function manualTotal() { return ttManual ? ttManual.segs.reduce((n, sg) => n + (sg[1] - sg[0]), 0) : 0; }
+  function manualStart() { return ttManual && ttManual.segs.length ? ttManual.segs[0][0] : null; }
+  function manualEnd() { return ttManual && ttManual.segs.length ? ttManual.segs[ttManual.segs.length - 1][1] : null; }
 
-  /* 시간 칸 수를 n칸으로 맞춘다 (늘릴 땐 마지막 칸 다음 시간부터, 없으면 오늘은 지금·평소는 9시부터) */
-  function setManualHoursCount(n) {
-    const hs = ttManual.hours.slice().sort((a, b) => a - b);
-    const want = Math.max(0, Math.min(24, n));
-    while (hs.length > want) hs.pop();
-    while (hs.length < want) {
-      let start;
-      if (hs.length) start = hs[hs.length - 1] + 1;
-      else if (ttManual.dateKey === todayKey()) start = Math.min(23, new Date().getHours()) - want + 1;
-      else start = 9;
-      if (start < 0) start = 0;
-      let next = -1;
-      for (let i = 0; i < 24; i++) {
-        const h = (start + i) % 24;
-        if (hs.indexOf(h) < 0) { next = h; break; }
-      }
-      if (next < 0) break;
-      hs.push(next);
-    }
-    ttManual.hours = hs.sort((a, b) => a - b);
+  /* 빈 기록에서 시간을 처음 적을 때의 시작 시각 — 오늘은 ‘지금 끝나는’ 시간대, 지난 날은 9시 */
+  function defaultStart(total) {
+    let start;
+    if (ttManual && ttManual.dateKey === todayKey()) {
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+      start = Math.floor((nowMin - total) / 60) * 60;
+    } else start = 9 * 60;
+    return Math.max(0, Math.min(Math.max(0, 1440 - total), start));
   }
 
-  /* 총 시간을 직접 지정 — 시간 칸과 남은 분을 함께 맞춘다 */
+  /* 총 시간을 직접 지정 — 마지막 구간의 끝을 늘리거나 줄인다 */
   function setManualTotal(min) {
-    const total = Math.max(0, Math.min(24 * 60 + 59, Math.round(Number(min) || 0)));
-    ttManual.mins = total % 60;
-    setManualHoursCount(Math.floor(total / 60));
+    if (!ttManual) return;
+    const total = Math.max(0, Math.min(1440, Math.round(Number(min) || 0)));
+    if (!total) { ttManual.segs = []; return; }
+    if (!ttManual.segs.length) {
+      const st = defaultStart(total);
+      ttManual.segs = [[st, Math.min(1440, st + total)]];
+      return;
+    }
+    const segs = ttManual.segs.map((sg) => [sg[0], sg[1]]);
+    let diff = total - manualTotal();
+    while (diff > 0 && segs.length) {
+      const last = segs[segs.length - 1];
+      const add = Math.min(diff, Math.max(0, 1440 - last[1]));
+      if (!add) break;
+      last[1] += add; diff -= add;
+    }
+    while (diff < 0 && segs.length) {
+      const last = segs[segs.length - 1];
+      const take = Math.min(-diff, last[1] - last[0]);
+      if (!take) break;
+      last[1] -= take; diff += take;
+      if (last[1] <= last[0]) segs.pop();
+    }
+    ttManual.segs = normSegs(segs);
+  }
+
+  /* 시작 시각을 옮기면 구간 전체가 같이 움직인다(길이는 그대로) */
+  function setManualStart(minOfDay) {
+    if (!ttManual) return;
+    const v = Math.max(0, Math.min(1439, Math.round(Number(minOfDay) || 0)));
+    if (!ttManual.segs.length) { ttManual.segs = [[v, Math.min(1440, v + 60)]]; return; }
+    const delta = v - ttManual.segs[0][0];
+    const shift = Math.max(-ttManual.segs[0][0], Math.min(1440 - ttManual.segs[ttManual.segs.length - 1][1], delta));
+    ttManual.segs = ttManual.segs.map((sg) => [sg[0] + shift, sg[1] + shift]);
+  }
+
+  /* 시간 칸 하나를 켜고 끈다 — 켜면 그 시간 전체(60분)를 더하고, 끄면 그 시간을 들어낸다 */
+  function toggleManualHour(h) {
+    if (!ttManual) return;
+    const from = h * 60, to = from + 60;
+    const covered = ttManual.segs.some((sg) => Math.min(sg[1], to) - Math.max(sg[0], from) > 0);
+    if (covered) {
+      const out = [];
+      ttManual.segs.forEach((sg) => {
+        if (sg[1] <= from || sg[0] >= to) { out.push([sg[0], sg[1]]); return; }
+        if (sg[0] < from) out.push([sg[0], from]);
+        if (sg[1] > to) out.push([to, sg[1]]);
+      });
+      ttManual.segs = normSegs(out);
+    } else {
+      ttManual.segs = normSegs(ttManual.segs.concat([[from, to]]));
+    }
   }
 
   function renderTimeEditSubject() {
@@ -7501,9 +7586,13 @@
     const c = cert();
     const day = c.days[ttManual.dateKey] || {};
     const col = subjectColor(ttManual.sid);
+    const mine = new Set();
+    ttManual.segs.forEach((sg) => {
+      for (let h = Math.floor(sg[0] / 60); h <= Math.floor((sg[1] - 1) / 60); h++) mine.add(h);
+    });
     const boxes = [];
     for (let h = 0; h < 24; h++) {
-      const on = ttManual.hours.indexOf(h) >= 0;
+      const on = mine.has(h);
       const other = c.subjects.find((x) => x.id !== ttManual.sid && Array.isArray(day[x.id]) && day[x.id].indexOf(h) >= 0);
       const style = on ? ' style="background:' + tint(col, .34) + ';border-color:' + tint(col, .55) + '"' : '';
       boxes.push('<button type="button" class="tt-hour' + (on ? ' on' : '') + '" data-hour="' + h + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
@@ -7519,6 +7608,12 @@
     if (skip !== 'h') $('ttEditH').value = String(Math.floor(total / 60));
     if (skip !== 'm') $('ttEditM').value = String(total % 60);
     $('ttEditTotal').textContent = fmtDur(total);
+    const st = manualStart();
+    if (skip !== 'start' && document.activeElement !== $('ttEditStart')) $('ttEditStart').value = st == null ? '' : hhmm(st);
+    const en = manualEnd();
+    const box = $('ttEditEnd');
+    box.textContent = en == null ? '—' : hhmm(en);
+    box.classList.toggle('off', en == null);
     const diff = total - (ttManual.base || 0);
     const d = $('ttEditDiff');
     d.textContent = diff > 0 ? '+' + fmtDur(diff) : diff < 0 ? '−' + fmtDur(-diff) : '그대로';
@@ -7536,20 +7631,26 @@
   $('ttEditSubjectList').addEventListener('click', (e) => {
     const b = e.target.closest('[data-mpick]');
     if (!b || !ttManual) return;
-    ttManual.sid = b.dataset.mpick;
-    ttManual.hours = subjectHours(ttManual.dateKey, ttManual.sid);
-    ttManual.mins = subjectExtraMinutes(ttManual.dateKey, ttManual.sid);
-    ttManual.base = manualTotal();
+    loadManual(b.dataset.mpick);
     renderTimeEdit();
   });
 
   $('ttEditHours').addEventListener('click', (e) => {
     const b = e.target.closest('[data-hour]');
     if (!b || !ttManual) return;
-    const h = Number(b.dataset.hour);
-    const i = ttManual.hours.indexOf(h);
-    if (i >= 0) ttManual.hours.splice(i, 1); else ttManual.hours.push(h);
-    ttManual.hours.sort((a, b2) => a - b2);
+    toggleManualHour(Number(b.dataset.hour));
+    renderTimeEditHours();
+    syncTimeEditNumbers();
+  });
+
+  $('ttEditStart').addEventListener('change', () => {
+    if (!ttManual) return;
+    const v = String($('ttEditStart').value || '').trim();
+    if (!v) { setManualTotal(0); }
+    else {
+      const m = v.match(/^(\d{1,2}):(\d{2})/);
+      if (m) setManualStart(Math.min(1439, Math.max(0, Number(m[1]) * 60 + Number(m[2]))));
+    }
     renderTimeEditHours();
     syncTimeEditNumbers();
   });
@@ -7567,14 +7668,15 @@
   $('ttEditH').addEventListener('input', () => {
     if (!ttManual) return;
     const h = Math.max(0, Math.min(24, Math.round(Number($('ttEditH').value) || 0)));
-    setManualTotal(h * 60 + ttManual.mins);
+    setManualTotal(h * 60 + (manualTotal() % 60));
     renderTimeEditHours();
     syncTimeEditNumbers('h');
   });
   $('ttEditM').addEventListener('input', () => {
     if (!ttManual) return;
     const m = Math.max(0, Math.min(59, Math.round(Number($('ttEditM').value) || 0)));
-    ttManual.mins = m;
+    setManualTotal(Math.floor(manualTotal() / 60) * 60 + m);
+    renderTimeEditHours();
     syncTimeEditNumbers('m');
   });
   ['ttEditH', 'ttEditM'].forEach((id) => $(id).addEventListener('blur', () => { if (ttManual) syncTimeEditNumbers(); }));
@@ -7586,10 +7688,7 @@
     const k = ttManual.dateKey;
     if (!c.subjects.some((x) => x.id === sid)) { closeSheet('ttEdit'); return; }
     const sname = subjectName(sid);
-    const target = ttManual.hours.slice().sort((a, b) => a - b);
-    subjectHours(k, sid).forEach((h) => { if (target.indexOf(h) < 0) setBlock(k, sid, h, false); });
-    target.forEach((h) => setBlock(k, sid, h, true));
-    setSubjectExtraMinutes(k, sid, ttManual.mins);
+    setSubjectSegs(k, sid, ttManual.segs);
     const total = subjectMinutes(k, sid);
     const changed = total !== (ttManual.base || 0);
     closeSheet('ttEdit');
@@ -9806,7 +9905,7 @@
     petInfo: (id) => petInfo(cert(), id), focusElapsedMs: focusElapsedMs,
     startFocus: startFocus, finishFocus: finishFocus, openCollection: openCollection,
     openPetStat: openPetStat, closePetStat: closePetStat,
-    openDetail: openDetail, openPicker: openPicker, petArtHTML: petArtHTML, stages: () => STAGES, toast: toast,
+    selectPet: selectPet, openPicker: openPicker, petArtHTML: petArtHTML, stages: () => STAGES, toast: toast,
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     focusState: () => focus, resumeFocusTick: resumeFocusTick, paintFocus: paintFocus,
     layoutFocus: layoutFocusScreen,
@@ -9824,6 +9923,9 @@
         loaded: img ? (img.naturalWidth > 0) : false,
         petw: $('focusCameoPet') ? $('focusCameoPet').offsetWidth : 0 }; },
     openTimeEdit: openTimeEdit, manualState: () => ttManual,
+    subjectSegs: subjectSegs, hourSegsOf: (d, sid, h) => hourSegsOf(cert(), d, sid, h),
+    setSubjectSegs: setSubjectSegs, segsFromLegacy: (d, sid, s0) => segsFromLegacy(cert(), d, sid, s0),
+    hhmm: hhmm,
     quotes: () => QUOTE_BANK, compressImage: compressImage, photoOpts: PHOTO_OPTS,
     subjectMinutes: subjectMinutes, subjectExtra: subjectExtraMinutes, dayMinutes: dayMinutes,
     addMinutes: (id, min) => { const p = petStore(); p.minutes[id || p.animal] = (p.minutes[id || p.animal] || 0) + min; saveNow(); renderAll(); },
