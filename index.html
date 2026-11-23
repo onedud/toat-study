@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tody · 토디 공부기록</title>
 <meta name="theme-color" content="#F3FBF8">
-<meta name="description" content="민트 파스텔 공부 기록 — 토디펫 십이지신 도감, Tody time 스톱워치, 토디테이블, 오답노트">
+<meta name="description" content="민트 파스텔 공부 기록 — 토디펫 십이지신 도감, Tody time 스톱워치, 토디테이블, 부스터 카드">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -555,12 +555,13 @@
     .arc-row-text{font-size:14px;line-height:1.66;-webkit-line-clamp:3}
   }
 
-  /* ---------- 부스트 · 마스터 카드 ---------- */
+  /* ---------- 부스터 카드 · 마스터 카드 ---------- */
   .action-card{margin-top:12px;padding:16px 16px 15px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;cursor:pointer}
   .action-card .ac-txt{min-width:0;flex:1}
-  .ac-kicker{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-  .ac-title{font-size:16.5px;font-weight:900;letter-spacing:-.02em;margin-top:2px;display:flex;align-items:center;gap:5px}
-  .ac-title .sub{font-size:11.5px;font-weight:800;color:var(--dim);letter-spacing:0}
+  /* 카드 이름(Booster card / Master card)은 'N개 저장' 왼쪽에 — 색은 기존 회색 그대로, 자간은 기본으로 */
+  .ac-title{font-size:15px;font-weight:900;letter-spacing:0;display:flex;align-items:baseline;gap:6px;min-width:0}
+  .ac-title .ac-name{color:var(--dim);letter-spacing:0;white-space:nowrap}
+  .ac-title .sub{font-size:11.5px;font-weight:800;color:var(--dim);letter-spacing:0;white-space:nowrap}
   .ac-sub{font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:600}
   .ac-btn{
     flex:none;width:64px;height:64px;border-radius:22px;display:grid;place-items:center;
@@ -664,17 +665,28 @@
     padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#FBFEFD;
     font-size:14px;font-weight:600;outline:none;transition:border-color .15s,box-shadow .15s
   }
-  /* iOS Safari: date/time은 고유 너비가 넓어 옆칸을 밀어낸다 → 칸 안에 가두기 (네이티브 피커는 그대로) */
-  .field input[type=date],.field input[type=time]{
-    width:100%;min-width:0;min-inline-size:0;max-width:100%;height:44px;line-height:1.2;display:block;overflow:hidden
+  /* 한 줄 입력칸(텍스트·숫자·셀렉트)도 같은 높이 44px — 2열에서 글자칸과 날짜칸이 나란히 선다 */
+  .field input[type=text],.field input[type=number],.field select{
+    display:block;height:44px;min-height:44px;max-height:44px;padding:0 12px;line-height:1.2
   }
-  .field input[type=date]::-webkit-date-and-time-value,.field input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0}
+  /* iOS Safari는 date/time에 자기 기준 min-height·min-width를 씌워 글자칸보다 커지고 옆칸까지 밀어낸다
+     → appearance:none 으로 그 보정을 끄고 높이·폭을 직접 못 박는다(탭하면 네이티브 피커는 그대로 열린다) */
+  .field input[type=date],.field input[type=time]{
+    -webkit-appearance:none;appearance:none;
+    display:flex;align-items:center;justify-content:flex-start;
+    width:100%;min-width:0;min-inline-size:0;max-width:100%;
+    height:44px;min-height:44px;max-height:44px;box-sizing:border-box;margin:0;
+    padding:0 12px;line-height:1.15;overflow:hidden;text-align:left
+  }
+  .field input[type=date]::-webkit-date-and-time-value,.field input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.2em;min-height:1lh}
+  .field input[type=date]::-webkit-calendar-picker-indicator,.field input[type=time]::-webkit-calendar-picker-indicator{opacity:.42;margin-left:2px;flex:none}
+  .field input::-webkit-datetime-edit,.field input::-webkit-datetime-edit-fields-wrapper{padding:0}
   .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13)}
   .field textarea{resize:vertical;min-height:74px;line-height:1.55}
   .field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
   .field-row .field{flex:1 1 0;min-width:0}
-  /* 면접복기: 날짜 칸과 회사명 칸 높이를 똑같이(44px) */
-  #jobRevSheet .field-row .field input{height:44px;min-height:44px;box-sizing:border-box}
+  /* 면접복기·자격증·전형 일정: 두 칸(회사명·날짜 등)의 높이를 44px로 똑같이 맞춘다 */
+  .field-row .field > input,.field-row .field > select{height:44px;min-height:44px;max-height:44px;box-sizing:border-box}
   .seg{display:flex;gap:3px;padding:3px;border-radius:12px;background:var(--gray-soft);border:1px solid var(--gray-line)}
   .seg button{flex:1;padding:8px 4px;border-radius:9px;font-size:12.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .seg button.on{background:#fff;color:var(--mint-deep);box-shadow:0 1px 3px rgba(16,105,80,.12)}
@@ -1044,7 +1056,7 @@
   .coll-meta .dots i{width:5px;height:5px;border-radius:50%;opacity:.35}
   .coll-meta .dots i.on{opacity:1}
 
-  /* ---------- 오답/마스터 ---------- */
+  /* ---------- 부스터/마스터 ---------- */
   .filters{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
   .filters::-webkit-scrollbar{display:none}
   .filter-cap{font-size:10.5px;font-weight:900;letter-spacing:.06em;color:var(--dim);margin:10px 0 2px;padding-left:2px}
@@ -1156,7 +1168,7 @@
   .coll-grow .ability{margin-top:11px}
   .petstat .ps-art{display:grid;place-items:center;padding:2px 0 10px}
   .petstat .ps-art .pet-img{height:118px;width:auto;max-width:100%;object-fit:contain;display:block}
-  /* 오답노트 헤더 — 보기 알약을 제목 줄 오른쪽에 붙인다 */
+  /* 부스터 카드 헤더 — 보기 알약을 제목 줄 오른쪽에 붙인다 */
   .wrong-head{align-items:flex-start}
   .wrong-head .filters{margin:0;padding:0;overflow:visible;flex:none;gap:5px}
   .wrong-views .chip{padding:6px 9px;font-size:10.5px;font-weight:900}
@@ -2452,27 +2464,25 @@
       <div class="cal-grid" id="calGrid" role="grid" aria-label="날짜별 토디너리 기록"></div>
     </section>
 
-    <section class="card action-card boost" id="boostCard" role="button" tabindex="0" aria-label="Boost card 오답카드 열기">
+    <section class="card action-card boost" id="boostCard" role="button" tabindex="0" aria-label="Booster card 부스터 카드 열기">
       <div class="ac-btn boost" id="boostBtn" aria-hidden="true">
         <span class="felt-ic" id="icoFlame">🔥</span>
         <span class="badge zero" id="boostBadge">0</span>
       </div>
       <div class="ac-txt">
-        <div class="ac-kicker">Boost card</div>
-        <div class="ac-title">오답카드 <span class="sub" id="boostSub">3일 · 7일 · 한달 복습</span></div>
-        <div class="ac-sub" id="boostHint">오늘 복습할 오답이 없어요</div>
+        <div class="ac-title"><span class="ac-name">Booster card</span><span class="sub" id="boostSub">1개 저장</span></div>
+        <div class="ac-sub" id="boostHint">오늘 복습할 부스터가 없어요</div>
       </div>
     </section>
 
-    <section class="card action-card master" id="masterCard" role="button" tabindex="0" aria-label="Master card 마스터노트 열기">
+    <section class="card action-card master" id="masterCard" role="button" tabindex="0" aria-label="Master card 마스터 카드 열기">
       <div class="ac-btn master" id="masterBtn" aria-hidden="true">
         <span class="felt-ic" id="icoStar">⭐</span>
         <span class="badge zero" id="masterBadge">0</span>
       </div>
       <div class="ac-txt">
-        <div class="ac-kicker">Master Card</div>
-        <div class="ac-title">마스터노트 <span class="sub" id="masterSub">암기 완료</span></div>
-        <div class="ac-sub" id="masterHint">아직 마스터한 문제가 없어요</div>
+        <div class="ac-title"><span class="ac-name">Master card</span><span class="sub" id="masterSub">0개 암기 완료</span></div>
+        <div class="ac-sub" id="masterHint">부스터 카드에서 암기 완료를 눌러보세요</div>
       </div>
     </section>
   </main>
@@ -2560,14 +2570,14 @@
   <main class="page" id="page-wrong">
     <div class="page-head wrong-head">
       <div>
-        <h1><span class="em" aria-hidden="true">🔥</span>오답노트</h1>
+        <h1><span class="em" aria-hidden="true">🔥</span>부스터 카드</h1>
         <div class="sub" id="wrongSub">0개 저장됨</div>
       </div>
-      <div class="filters wrong-views" id="wrongFilters" role="group" aria-label="오답 보기"></div>
+      <div class="filters wrong-views" id="wrongFilters" role="group" aria-label="부스터 보기"></div>
     </div>
     <div class="filter-cap">과목</div>
     <div class="filters" id="wrongSubjects"></div>
-    <button class="add-note" id="addNoteBtn">＋ 오답 추가 (사진 + 코멘트)</button>
+    <button class="add-note" id="addNoteBtn">＋ 부스터 추가 (사진 + 코멘트)</button>
     <div id="wrongList"></div>
   </main>
 
@@ -2575,7 +2585,7 @@
   <main class="page" id="page-master">
     <div class="page-head">
       <div>
-        <h1><span class="em" aria-hidden="true">⭐</span>마스터노트</h1>
+        <h1><span class="em" aria-hidden="true">⭐</span>마스터 카드</h1>
         <div class="sub" id="masterCountSub">0개 암기 완료</div>
       </div>
     </div>
@@ -2782,7 +2792,7 @@
   </button>
   <button data-page="wrong">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 2.8c.7 2.9 2.7 4.3 4.3 6.2 1.3 1.6 1.9 3 1.9 4.7a6.2 6.2 0 0 1-12.4 0c0-2.2 1.1-3.7 2.7-5.3.3 1.3.8 2 1.6 2.4.6-2.4.7-5 1.9-8z"/><path d="M12.3 12.4c.5 1.5 1.7 2.2 1.7 3.7a2.2 2.2 0 0 1-4.4 0c0-1 .5-1.6 1.1-2.3"/></svg>
-    <span>오답</span>
+    <span>부스터</span>
   </button>
   <button data-page="master">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.4 2.6 5.4 6 .8-4.4 4.2 1.1 5.9-5.3-3-5.3 3 1.1-5.9L3.4 9.6l6-.8z"/></svg>
@@ -3251,7 +3261,7 @@
   <div class="sheet-card">
     <div class="sheet-grip"></div>
     <div class="sheet-head"><h2 id="certTitle">자격증 관리</h2><button class="x" data-close="certSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
-    <p class="sheet-sub">자격증마다 시험일·과목·펫·오답노트가 따로 관리돼요</p>
+    <p class="sheet-sub">자격증마다 시험일·과목·펫·부스터 카드가 따로 관리돼요</p>
     <div id="certList"></div>
     <div class="mp-sec">새 자격증 추가</div>
     <div class="preset-row" id="certPresets">
@@ -3380,12 +3390,12 @@
   </div>
 </div>
 
-<!-- ================= 오답 추가 ================= -->
+<!-- ================= 부스터 추가 ================= -->
 <div class="sheet" id="addModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="veil" data-close="addModal"></div>
   <div class="sheet-card">
     <div class="sheet-grip"></div>
-    <div class="sheet-head"><h2 id="modalTitle">오답 추가</h2><div class="sheet-head-tools"><button class="pic-tool" id="modalDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="addModal" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
+    <div class="sheet-head"><h2 id="modalTitle">부스터 추가</h2><div class="sheet-head-tools"><button class="pic-tool" id="modalDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="addModal" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
     <div class="photo-preview" id="notePreview" style="min-height:130px">
       <div class="ph-empty" id="noteEmpty"><span class="em">📷</span>문제 사진 첨부<small style="display:block;font-size:11px;opacity:.8">사진 없이 코멘트만 저장할 수 있어요</small></div>
       <img id="noteImg" alt="첨부한 문제 사진 미리보기" hidden>
@@ -3492,7 +3502,7 @@
   const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg>';
   /* 카드 상단 픽토그램: ✏️ 수정 (테두리·배경 없음, 1.8px 선) */
   const PENCIL = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4.2L19 9.2a2.6 2.6 0 0 0-3.7-3.7L4.5 16.3V20z"/><path d="M13.8 6.9l3.3 3.3"/></svg>';
-  /* 오답·마스터 카드 코멘트: 숨김(초록 점선 상자) ↔ 펼침(초록 실선 상자 + 자물쇠 🔒) */
+  /* 부스터·마스터 카드 코멘트: 숨김(초록 점선 상자) ↔ 펼침(초록 실선 상자 + 자물쇠 🔒) */
   function memoBlock(memo, id, open) {
     memo = String(memo || '').trim();
     if (!memo) return '<div class="memo-none">코멘트 없음</div>';
@@ -5257,7 +5267,7 @@
     if (name === 'master') renderMaster();
     window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
   }
-  /* 오답 탭에 들어오면 항상 '오늘 복습'부터 — 지난 카드는 전체 카드에서 */
+  /* 부스터 탭에 들어오면 항상 '오늘 복습'부터 — 지난 카드는 전체 카드에서 */
   function openWrongTab() {
     wrongFilter = 'due';
     showPage('wrong');
@@ -5549,11 +5559,11 @@
     $('boostBadge').textContent = due;
     $('boostBadge').classList.toggle('zero', due === 0);
     $('boostSub').textContent = c.wrong.length + '개 저장';
-    $('boostHint').textContent = due > 0 ? '오늘 복습할 오답 ' + due + '개가 기다려요' : (c.wrong.length ? '오늘 복습할 오답이 없어요' : '틀린 문제를 사진으로 남겨보세요');
+    $('boostHint').textContent = due > 0 ? '오늘 복습할 부스터 ' + due + '개가 기다려요' : (c.wrong.length ? '오늘 복습할 부스터가 없어요' : '틀린 문제를 사진으로 남겨보세요');
     $('masterBadge').textContent = c.master.length;
     $('masterBadge').classList.toggle('zero', c.master.length === 0);
     $('masterSub').textContent = c.master.length + '개 암기 완료';
-    $('masterHint').textContent = c.master.length ? '암기한 문제를 다시 꺼내볼 수 있어요' : '오답노트에서 암기 완료를 눌러보세요';
+    $('masterHint').textContent = c.master.length ? '암기한 문제를 다시 꺼내볼 수 있어요' : '부스터 카드에서 암기 완료를 눌러보세요';
   }
 
   function renderHome() {
@@ -6420,7 +6430,7 @@
 
   /* 사진 압축 — 쓰임새마다 해상도·품질을 다르게
      · 공부 인증(달력) 사진: 480px · 0.55 (작게, ~20-30KB)
-     · 오답노트 사진: 1000px · 0.75 (문제를 읽을 수 있게) */
+     · 부스터 카드 사진: 1000px · 0.75 (문제를 읽을 수 있게) */
   const PHOTO_OPTS = {
     checkin: { maxW: 480, maxH: 672, quality: 0.55, minW: 240, minH: 180, budget: 120000 },
     note: { maxW: 1000, maxH: 1400, quality: 0.75, minW: 240, minH: 180, budget: 400000 }
@@ -7910,7 +7920,7 @@
   });
 
   /* =========================================================
-     오답노트
+     부스터 카드
      ========================================================= */
   let wrongFilter = 'due';
   let wrongSubject = 'all';
@@ -7951,8 +7961,8 @@
     if (!list.length) {
       const subjActive = wrongSubject !== 'all';
       box.innerHTML = '<div class="empty"><div class="em">' + (subjActive ? '🔎' : wrongFilter === 'all' ? '📄' : '✨') + '</div><b>' +
-        (subjActive ? esc(noteSubjectName({ subjectId: wrongSubject })) + ' 오답이 없어요' : wrongFilter === 'all' ? '아직 오답이 없어요' : '오늘 복습할 문제가 없어요') +
-        '</b><span>' + (subjActive ? '과목 “전체”를 누르면 다른 과목의 오답도 볼 수 있어요.' : wrongFilter === 'all' ? '틀린 문제를 사진으로 남기고<br>수정에서 3일 · 7일 · 한달 주기를 고를 수 있어요.' : '전체 카드를 눌러 지난 오답을 볼 수 있어요.') + '</span></div>';
+        (subjActive ? esc(noteSubjectName({ subjectId: wrongSubject })) + ' 부스터가 없어요' : wrongFilter === 'all' ? '아직 부스터가 없어요' : '오늘 복습할 문제가 없어요') +
+        '</b><span>' + (subjActive ? '과목 “전체”를 누르면 다른 과목의 부스터도 볼 수 있어요.' : wrongFilter === 'all' ? '틀린 문제를 사진으로 남기고<br>수정에서 3일 · 7일 · 한달 주기를 고를 수 있어요.' : '전체 카드를 눌러 지난 부스터를 볼 수 있어요.') + '</span></div>';
       return;
     }
     box.innerHTML = list.map((it) => {
@@ -8024,13 +8034,13 @@
       it.mastered = todayKey();
       cert().master.unshift(it);
       save(true); renderWrong(); renderMaster(); renderHome();
-      toast('마스터노트로 옮겼어요 🎉');
+      toast('마스터 카드로 옮겼어요 🎉');
       return;
     }
   });
 
   /* =========================================================
-     마스터노트
+     마스터 카드
      ========================================================= */
   let masterFilter = 'all';
   /* 마스터 카드는 코멘트가 기본으로 펼쳐져 있고, 누르면 점선 상자로 접힌다 */
@@ -8046,7 +8056,7 @@
     const box = $('masterList');
     if (!list.length) {
       box.innerHTML = '<div class="empty"><div class="em">🏆</div><b>' + (c.master.length ? '이 과목의 마스터 기록이 없어요' : '아직 마스터한 문제가 없어요') +
-        '</b><span>오답노트에서 <b style="color:var(--muted)">암기 완료</b>를 누르면<br>이곳에 차곡차곡 쌓여요.</span></div>';
+        '</b><span>부스터 카드에서 <b style="color:var(--muted)">암기 완료</b>를 누르면<br>이곳에 차곡차곡 쌓여요.</span></div>';
       return;
     }
     box.innerHTML = list.map((it) => {
@@ -8056,7 +8066,7 @@
           '<div class="tags">' + (noteSubjectName(it) ? '<span class="tag gray">' + esc(noteSubjectName(it)) + '</span>' : '') + '<span class="tag">⭐ 암기 완료</span></div>' +
           '<div class="master-date">' + (it.created ? '등록 ' + esc(prettyDate(it.created)) : '') + (it.mastered ? ' · 암기 ' + esc(prettyDate(it.mastered)) : '') + (it.reviews ? ' · 복습 ' + it.reviews + '회' : '') + '</div>' +
           ((it.memo || '').trim() ? memoBlock(it.memo, it.id, !masterFolded.has(it.id)) : '<div class="memo-none">코멘트 없음</div>') +
-          '<div class="note-actions"><button class="btn ghost" data-restore="' + it.id + '">오답노트로 되돌리기</button>' +
+          '<div class="note-actions"><button class="btn ghost" data-restore="' + it.id + '">부스터 카드로 되돌리기</button>' +
             '<button class="btn ghost icon" data-mdel="' + it.id + '" aria-label="삭제" title="삭제">' + TRASH + '</button></div>' +
         '</div></article>';
     }).join('');
@@ -8088,12 +8098,12 @@
       it.due = todayKey();
       cert().wrong.unshift(it);
       save(true); renderMaster(); renderWrong(); renderHome();
-      toast('오답노트로 되돌렸어요. 오늘 복습 목록에 있어요.');
+      toast('부스터 카드로 되돌렸어요. 오늘 복습 목록에 있어요.');
       return;
     }
     const del = e.target.closest('[data-mdel]');
     if (del) {
-      if (!window.confirm('마스터노트에서 이 문제를 지울까요?')) return;
+      if (!window.confirm('마스터 카드에서 이 문제를 지울까요?')) return;
       cert().master = cert().master.filter((x) => x.id !== del.dataset.mdel);
       save(true); renderMaster(); renderHome();
       toast('지웠어요');
@@ -8115,7 +8125,7 @@
   $('lightbox').addEventListener('click', (e) => { if (e.target === $('lightbox')) closeLightbox(); });
 
   /* =========================================================
-     오답 추가 모달
+     부스터 추가 모달
      ========================================================= */
   let pendingNoteImg = null;
   let modalCycle = 3;
@@ -8150,7 +8160,7 @@
     $('subjectInput').value = it ? (it.subjectId || '') : (cert().subjects[0] ? cert().subjects[0].id : '');
     $('cycleSeg').dataset.value = String(modalCycle);
     $('cycleSeg').querySelectorAll('button').forEach((b) => b.classList.toggle('on', Number(b.dataset.c) === modalCycle));
-    $('modalTitle').textContent = it ? '오답 수정' : '오답 추가';
+    $('modalTitle').textContent = it ? '부스터 수정' : '부스터 추가';
     $('modalSave').textContent = it ? '수정 저장' : '저장';
     $('modalDelete').hidden = !it;
     openSheet('addModal');
@@ -8209,7 +8219,7 @@
       if (!saveNow()) return;
       closeSheet('addModal');
       renderWrong(); renderHome(); renderMaster();
-      toast('오답을 수정했어요 · ' + (CYCLE_LABEL[it.cycle] || '') + ' · 다음 복습 ' + prettyDate(it.due));
+      toast('부스터를 수정했어요 · ' + (CYCLE_LABEL[it.cycle] || '') + ' · 다음 복습 ' + prettyDate(it.due));
       return;
     }
     const item = {
@@ -8223,18 +8233,18 @@
     wrongFilter = 'all';
     wrongSubject = 'all';
     showPage('wrong');
-    toast('오답을 저장했어요 · 첫 복습 ' + prettyDate(item.due));
+    toast('부스터를 저장했어요 · 첫 복습 ' + prettyDate(item.due));
   });
   $('modalDelete').addEventListener('click', () => {
     if (!editingNoteId) return;
-    if (!window.confirm('이 오답을 지울까요? 되돌릴 수 없어요.')) return;
+    if (!window.confirm('이 부스터를 지울까요? 되돌릴 수 없어요.')) return;
     const id = editingNoteId;
     editingNoteId = null;
     cert().wrong = cert().wrong.filter((x) => x.id !== id);
     saveNow();
     closeSheet('addModal');
     renderWrong(); renderHome();
-    toast('오답을 지웠어요');
+    toast('부스터를 지웠어요');
   });
 
   /* =========================================================
