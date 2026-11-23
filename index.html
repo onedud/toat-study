@@ -1203,27 +1203,67 @@
   .tl-legend .lg i{width:6px;height:6px;border-radius:50%;flex:none;display:block}
   .tl-legend .more{font-size:8.5px;color:var(--dim);font-weight:800}
   .tl-foot-hint{margin-left:auto;font-size:7.5px;font-weight:700;color:#A9BAB4;white-space:nowrap}
-  /* TIMELINE 헤더의 ＋ (공부 시간 직접 적기) */
+  /* TIMELINE 헤더의 ＋ (수기입력) */
   .split-add{width:20px;height:20px;flex:none;border-radius:7px;display:grid;place-items:center;background:var(--mint-soft);border:1px solid var(--mint-line);color:var(--mint-deep);font-size:13px;font-weight:900;line-height:1;padding:0 0 1px;transition:transform .1s,background .15s}
   .split-add:hover{background:#D7F7EA}
   .split-add:active{transform:scale(.92)}
-  /* 공부 시간 직접 적기 시트 */
-  .ttedit-sum{display:flex;align-items:baseline;gap:7px;padding:11px 13px;border-radius:14px;border:1px solid var(--mint-line);background:linear-gradient(150deg,#EFFDF7,#FBFEFC);margin-top:2px}
-  .ttedit-sum .lbl{font-size:10.5px;font-weight:900;color:var(--muted)}
-  .ttedit-sum b{font-size:19px;font-weight:900;letter-spacing:-.02em;color:#0B5B47;font-variant-numeric:tabular-nums;margin-left:auto}
-  .ttedit-sum .diff{font-size:10.5px;font-weight:800;color:var(--dim);flex:none}
-  .ttedit-sum .diff.up{color:var(--mint-deep)}
-  .ttedit-sum .diff.down{color:#D9702B}
-  .ttedit .field .endval{height:44px;box-sizing:border-box;display:flex;align-items:center;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:#F3F9F6;font-size:14px;font-weight:900;color:#0B5B47;font-variant-numeric:tabular-nums}
-  .ttedit .field .endval.off{color:#A9BAB4;font-weight:800}
-  .tt-edit-subj{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
-  .tt-edit-subj .chip{display:inline-flex;align-items:center;gap:4px;font-size:12px}
-  .tt-hour-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:6px}
-  .tt-hour{position:relative;height:30px;border-radius:9px;border:1px solid #E9F1EE;background:#F5FAF8;color:#8FA49D;font-size:10.5px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;display:grid;place-items:center;transition:background .15s,border-color .15s,color .15s}
-  .tt-hour.on{color:#0F3B32;border-color:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
-  .tt-hour .oth{position:absolute;right:4px;top:4px;width:4px;height:4px;border-radius:50%;opacity:.85}
-  .tt-hour:active{transform:scale(.96)}
-  @media (min-width:721px){.tt-hour-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+  /* ---------- 수기입력 시트 (TIMELINE ＋) ---------- */
+  .ttedit-card{display:flex;flex-direction:column;overflow:hidden;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .ttedit-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 3px 2px;margin:0 -3px}
+  .ttedit-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px;border-radius:15px;border:1px solid var(--mint-line);background:linear-gradient(150deg,#EFFDF7,#FBFEFC);margin-top:2px}
+  .ttedit-sum .lbl{font-size:11.5px;font-weight:900;color:#27564A}
+  .ttedit-sum b{font-size:20px;font-weight:900;letter-spacing:-.03em;color:#0B5B47;font-variant-numeric:tabular-nums;line-height:1}
+  .ttedit .tt-edit-subj{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+  .ttedit .tt-edit-subj .chip{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 13px;font-size:12.5px;font-weight:800}
+  .ttedit .tt-edit-subj .chip .em{font-size:13px;line-height:1}
+  .ttedit-when{margin-top:15px}
+  .ed-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .ed-chip{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:999px;background:var(--mint-soft);border:1px solid var(--mint-line);font-size:10.5px;font-weight:900;color:var(--mint-deep);letter-spacing:-.01em;white-space:nowrap}
+  .ed-chip i{width:5px;height:5px;border-radius:50%;background:var(--mint);display:block;flex:none}
+  .ed-chip.new{background:#fff;border-style:dashed;border-color:var(--mint-line);color:#4E8577}
+  .ed-chip.new i{display:none}
+  .ed-dur{font-size:10.5px;font-weight:900;color:#7C948C;font-variant-numeric:tabular-nums;white-space:nowrap}
+  /* 시작·끝나는 시각 — 두 칸 모두 같은 높이·같은 줄, iOS Safari에서도 밀리지 않게 폭·높이를 못 박는다 */
+  .tt-time-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:end}
+  .tt-tf{display:block;min-width:0;margin:0}
+  .tt-tf > label{display:block;font-size:10.5px;font-weight:800;color:var(--dim);letter-spacing:-.005em;margin:0 0 6px}
+  .ttedit .field .tt-time{
+    -webkit-appearance:none;appearance:none;
+    display:flex;align-items:center;width:100%;min-width:0;min-inline-size:0;max-width:100%;
+    height:52px;min-height:52px;max-height:52px;box-sizing:border-box;margin:0;
+    padding:0 12px;border-radius:13px;border:1px solid var(--line);background:#FBFEFD;
+    font-size:16px;font-weight:900;letter-spacing:-.02em;line-height:1.1;color:#0B4C3D;
+    font-variant-numeric:tabular-nums;overflow:hidden;text-align:left
+  }
+  .ttedit .field .tt-time::-webkit-date-and-time-value{text-align:left;margin:0}
+  .ttedit .field .tt-time::-webkit-calendar-picker-indicator{opacity:.42;margin-left:2px;flex:none}
+  .ttedit .field .tt-time:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13);outline:none}
+  .ttedit .field .tt-time:invalid,.ttedit .field .tt-time.empty{color:#A9BAB4}
+  /* 이 날 기록된 시간 */
+  .tt-rec-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .tt-rec-head .rec-lb{font-size:11.5px;font-weight:900;color:var(--muted);letter-spacing:-.005em}
+  .tt-rec-head .rec-cnt{font-size:10px;font-weight:900;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tt-recs{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+  .tt-rec{display:grid;grid-template-columns:20px minmax(0,auto) minmax(0,1fr) 24px;align-items:center;gap:9px;height:57px;padding:0 11px;border-radius:14px;border:1px solid var(--line-2);background:#fff;cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s}
+  .tt-rec .rec-n{width:20px;height:20px;border-radius:7px;display:grid;place-items:center;background:var(--mint-soft);color:var(--mint-deep);font-size:9.5px;font-weight:900;font-variant-numeric:tabular-nums}
+  .tt-rec .rec-t{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;font-size:13px;font-weight:900;letter-spacing:-.02em;color:#134438;font-variant-numeric:tabular-nums}
+  .tt-rec .rec-t i{font-style:normal;color:#C2D4CE;font-weight:700;font-size:11px}
+  .tt-rec .rec-t em{font-style:normal;font-size:11px;font-weight:800;color:#7C948C;margin-left:2px}
+  .tt-rec .rec-side{display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+  .tt-rec .rec-badge{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:999px;background:var(--mint);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:-.01em;white-space:nowrap;box-shadow:0 3px 8px rgba(24,210,155,.28)}
+  .tt-rec .rec-del{width:24px;height:24px;flex:none;border-radius:8px;display:grid;place-items:center;color:#B9C7C1;background:none;border:0;padding:0}
+  .tt-rec .rec-del svg{width:14px;height:14px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tt-rec.on{border-color:var(--mint);background:linear-gradient(120deg,#F1FDF8 0%,#FFFFFF 72%);box-shadow:0 0 0 3px rgba(24,210,155,.10)}
+  .tt-rec.on .rec-n{background:var(--mint);color:#fff}
+  .tt-rec.on .rec-t em{color:var(--mint-deep)}
+  .tt-rec.on .rec-del{color:#8FB0A6}
+  .tt-rec-empty{display:grid;place-items:center;min-height:57px;padding:0 12px;border-radius:14px;border:1px dashed var(--line);background:#FBFEFD;font-size:11px;font-weight:800;color:#A9BAB4;text-align:center;word-break:keep-all}
+  .tt-rec-add{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;height:44px;margin-top:10px;border-radius:14px;border:1px dashed var(--mint-line);background:#fff;font-size:12.5px;font-weight:900;color:var(--mint-deep);letter-spacing:-.02em}
+  .tt-rec-add i{font-style:normal;font-size:13.5px;font-weight:900;line-height:1;margin-top:-1px}
+  .tt-rec-add:active{background:var(--mint-soft)}
+  .tt-rec-hint{font-size:10px;font-weight:700;color:#A9BAB4;text-align:center;margin-top:10px;letter-spacing:-.005em}
+  .ttedit .sheet-actions{position:relative;flex:none;padding-top:13px}
+  .ttedit .sheet-actions::before{content:"";position:absolute;left:-18px;right:-18px;top:0;height:1px;background:linear-gradient(90deg,rgba(223,243,236,0) 0%,#DFF3EC 16%,#DFF3EC 84%,rgba(223,243,236,0) 100%)}
   .subj-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0}
   .subj-edit-row .sdot{width:10px;height:10px;border-radius:50%;flex:none}
   .subj-edit-row input{flex:1;min-width:0;padding:9px 11px;border-radius:11px;border:1px solid var(--line);font-size:13px;font-weight:700;background:#FBFEFD}
@@ -2466,7 +2506,7 @@
         <button class="tt-add-btn" id="addSubject">＋ 과목 추가</button>
       </section>
       <section class="card tt-timeline" aria-label="24시간 타임라인">
-        <div class="split-head"><span>TIMELINE</span><button class="split-add" id="ttAddTime" type="button" aria-label="공부 시간 직접 적기" title="공부 시간 직접 적기">＋</button></div>
+        <div class="split-head"><span>TIMELINE</span><button class="split-add" id="ttAddTime" type="button" aria-label="수기입력" title="수기입력">＋</button></div>
         <div class="tl-grid" id="ttTimeline" aria-readonly="true"></div>
         <div class="tl-foot"><span class="tl-foot-hint">Tody time 자동 기록</span></div>
       </section>
@@ -3054,40 +3094,38 @@
   </div>
 </div>
 
-<!-- ================= 공부 시간 직접 적기 (TIMELINE ＋) ================= -->
+<!-- ================= 수기입력 (TIMELINE ＋) ================= -->
 <div class="sheet ttedit" id="ttEdit" role="dialog" aria-modal="true" aria-labelledby="ttEditTitle">
   <div class="veil" data-close="ttEdit"></div>
   <div class="sheet-card ttedit-card">
     <div class="sheet-grip"></div>
-    <div class="sheet-head"><h2 id="ttEditTitle">공부 시간 직접 적기</h2><button class="x" data-close="ttEdit" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
-    <p class="sheet-sub" id="ttEditSub">과목을 고르고 시간을 적어주세요</p>
-    <div class="ttedit-sum">
-      <span class="lbl">이 날 기록</span>
-      <b id="ttEditTotal">0분</b>
-      <span class="diff" id="ttEditDiff"></span>
-    </div>
-    <div class="field">
-      <label>과목</label>
-      <div class="tt-edit-subj" id="ttEditSubjectList" role="group" aria-label="과목 선택"></div>
-    </div>
-    <div class="field-row">
-      <div class="field"><label for="ttEditStart">시작 시각</label><input id="ttEditStart" type="time" step="60" aria-label="시작 시각"></div>
-      <div class="field"><label>끝나는 시각</label><div class="endval" id="ttEditEnd" aria-live="polite">—</div></div>
-    </div>
-    <div class="field-row">
-      <div class="field"><label for="ttEditH">시간</label><input id="ttEditH" type="number" min="0" max="24" step="1" inputmode="numeric" aria-label="시간"></div>
-      <div class="field"><label for="ttEditM">분</label><input id="ttEditM" type="number" min="0" max="59" step="5" inputmode="numeric" aria-label="분"></div>
-    </div>
-    <div class="chips" id="ttEditQuick">
-      <button type="button" class="chip" data-madd="10">+10분</button>
-      <button type="button" class="chip" data-madd="30">+30분</button>
-      <button type="button" class="chip" data-madd="60">+1시간</button>
-      <button type="button" class="chip" data-madd="-10">−10분</button>
-      <button type="button" class="chip" data-madd="clear">지우기</button>
-    </div>
-    <div class="field">
-      <label>24시간 칸 <span class="hint" id="ttEditHourHint">직접 눌러도 돼요</span></label>
-      <div class="tt-hour-grid" id="ttEditHours" role="group" aria-label="24시간 칸 선택"></div>
+    <div class="sheet-head"><h2 id="ttEditTitle">수기입력</h2><button class="x" data-close="ttEdit" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
+    <p class="sheet-sub" id="ttEditSub">날짜 · 과목</p>
+    <div class="ttedit-body">
+      <div class="ttedit-sum">
+        <span class="lbl">이 날 기록</span>
+        <b id="ttEditTotal">0분</b>
+      </div>
+      <div class="field">
+        <label>과목</label>
+        <div class="tt-edit-subj" id="ttEditSubjectList" role="group" aria-label="과목 선택"></div>
+      </div>
+      <div class="field ttedit-when">
+        <div class="ed-head">
+          <span class="ed-chip" id="ttEditMode"><i aria-hidden="true"></i><span id="ttEditModeTx">＋ 새 기록 추가 중</span></span>
+          <span class="ed-dur" id="ttEditDur">이 구간 0분</span>
+        </div>
+        <div class="tt-time-row">
+          <div class="tt-tf"><label for="ttEditStart">시작 시각</label><input class="tt-time" id="ttEditStart" type="time" step="60" aria-label="시작 시각"></div>
+          <div class="tt-tf"><label for="ttEditEnd">끝나는 시각</label><input class="tt-time" id="ttEditEnd" type="time" step="60" aria-label="끝나는 시각"></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="tt-rec-head"><span class="rec-lb">이 날 기록된 시간</span><span class="rec-cnt" id="ttEditRecCount">0개</span></div>
+        <ul class="tt-recs" id="ttEditRecs" aria-label="이 날 기록된 시간"></ul>
+        <button class="tt-rec-add" type="button" id="ttEditAddSeg"><i aria-hidden="true">＋</i>새 구간 추가</button>
+        <p class="tt-rec-hint">기록을 누르면 위 시작·끝나는 시각으로 불러와요</p>
+      </div>
     </div>
     <div class="sheet-actions">
       <button class="btn ghost" data-close="ttEdit">취소</button>
@@ -7486,7 +7524,7 @@
         ' aria-label="' + esc(label) + '" title="' + esc(label) + '">' + fill + '</div>');
     }
     $('ttTimeline').innerHTML = boxes.join('');
-    $('ttAddTime').setAttribute('aria-label', prettyDate(k) + ' 공부 시간 직접 적기');
+    $('ttAddTime').setAttribute('aria-label', prettyDate(k) + ' 수기입력');
   }
 
   function renderTimetableSummary() {
@@ -7509,20 +7547,39 @@
   });
 
   /* =========================================================
-     공부 시간 직접 적기 (TIMELINE 헤더 ＋)
+     수기입력 (TIMELINE 헤더 ＋)
      ---------------------------------------------------------
-     세션을 까먹었거나 잘못 적혔을 때: 과목·시간·24시간 칸을
-     그 자리에서 고친다. 총 시간 = 켜진 시간 칸 × 60 + 남은 분.
+     그 날 그 과목의 기록을 ‘구간’으로 보여주고, 고른 구간의
+     시작·끝나는 시각을 위 두 칸에서 바로 고친다. ＋ 새 구간 추가는
+     다음 구간을 하나 더 적는 상태. 저장하면 cert.segs에 반영되고
+     days(시간 칸)·mins(시각별 분)·extras도 같이 맞춰진다.
      ========================================================= */
-  let ttManual = null;   /* { sid, dateKey, segs:[[시작분, 끝분]…], base } */
+  let ttManual = null;   /* { sid, dateKey, segs:[[시작분, 끝분]…], sel, draft, base }
+                            sel = 0 이상 → segs[sel] 수정 중 · -1 → 새 구간 추가 중 */
+  const TRASH_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 6.8h15M9.6 6.8V5.2c0-.7.6-1.3 1.3-1.3h2.2c.7 0 1.3.6 1.3 1.3v1.6M6.8 6.8l.7 11.4c0 .8.7 1.5 1.5 1.5h6c.8 0 1.5-.7 1.5-1.5l.7-11.4"/><path d="M10.4 10.4v5.6M13.6 10.4v5.6"/></svg>';
 
-  /* 기록은 ‘정확한 구간’으로 들고 있는다. 예전 기록(시간 칸·남은 분)은 구간으로 바꿔 연다. */
+  /* 새 구간의 기본 시각: 앞 구간이 있으면 그 끝에 이어서, 오늘이면 방금 전 한 시간, 지난 날은 9시 */
+  function defaultDraft() {
+    const segs = ttManual ? ttManual.segs : [];
+    let st;
+    if (segs.length) st = Math.ceil(segs[segs.length - 1][1] / 5) * 5;
+    else if (ttManual && ttManual.dateKey === todayKey()) {
+      const n = new Date();
+      st = Math.floor((n.getHours() * 60 + n.getMinutes()) / 5) * 5 - 60;
+    } else st = 9 * 60;
+    st = Math.max(0, Math.min(1380, st));
+    return [st, Math.min(1440, st + 60)];
+  }
+
+  /* 그 날 그 과목의 기록을 연다 — 저장된 구간이 없으면 예전 기록(시간 칸·남은 분)을 구간으로 바꿔 보여준다 */
   function loadManual(sidx) {
     const k = ttDate;
     let segs = subjectSegs(k, sidx).map((sg) => [sg[0], sg[1]]);
     if (!segs.length) segs = segsFromLegacy(cert(), k, sidx, 0);
-    ttManual = { sid: sidx, dateKey: k, segs: segs };
-    ttManual.base = manualTotal();
+    segs = normSegs(segs);
+    ttManual = { sid: sidx, dateKey: k, segs: segs, sel: segs.length ? 0 : -1, draft: null };
+    ttManual.base = segs.reduce((n, sg) => n + (sg[1] - sg[0]), 0);
+    if (ttManual.sel < 0) ttManual.draft = defaultDraft();
   }
 
   function openTimeEdit(sidx) {
@@ -7536,129 +7593,116 @@
     openSheet('ttEdit');
   }
 
-  function manualTotal() { return ttManual ? ttManual.segs.reduce((n, sg) => n + (sg[1] - sg[0]), 0) : 0; }
-  function manualStart() { return ttManual && ttManual.segs.length ? ttManual.segs[0][0] : null; }
-  function manualEnd() { return ttManual && ttManual.segs.length ? ttManual.segs[ttManual.segs.length - 1][1] : null; }
-
-  /* 빈 기록에서 시간을 처음 적을 때의 시작 시각 — 오늘은 ‘지금 끝나는’ 시간대, 지난 날은 9시 */
-  function defaultStart(total) {
-    let start;
-    if (ttManual && ttManual.dateKey === todayKey()) {
-      const now = new Date();
-      const nowMin = now.getHours() * 60 + now.getMinutes();
-      start = Math.floor((nowMin - total) / 60) * 60;
-    } else start = 9 * 60;
-    return Math.max(0, Math.min(Math.max(0, 1440 - total), start));
+  /* 지금 위 두 칸이 가리키는 구간 — 수정 중이면 그 구간, 새 구간 추가 중이면 아직 저장 전인 draft */
+  function curSeg() {
+    if (!ttManual) return null;
+    return ttManual.sel >= 0 ? (ttManual.segs[ttManual.sel] || null) : ttManual.draft;
+  }
+  function segLen(sg) {
+    if (!sg || sg[0] == null || sg[1] == null) return null;
+    const d = sg[1] - sg[0];
+    return d > 0 ? d : null;
+  }
+  function parseTimeVal(v) {
+    const m = String(v == null ? '' : v).match(/^(\d{1,2}):(\d{2})/);
+    if (!m) return null;
+    return (Number(m[1]) % 24) * 60 + Math.min(59, Number(m[2]));
   }
 
-  /* 총 시간을 직접 지정 — 마지막 구간의 끝을 늘리거나 줄인다 */
-  function setManualTotal(min) {
-    if (!ttManual) return;
-    const total = Math.max(0, Math.min(1440, Math.round(Number(min) || 0)));
-    if (!total) { ttManual.segs = []; return; }
-    if (!ttManual.segs.length) {
-      const st = defaultStart(total);
-      ttManual.segs = [[st, Math.min(1440, st + total)]];
-      return;
-    }
-    const segs = ttManual.segs.map((sg) => [sg[0], sg[1]]);
-    let diff = total - manualTotal();
-    while (diff > 0 && segs.length) {
-      const last = segs[segs.length - 1];
-      const add = Math.min(diff, Math.max(0, 1440 - last[1]));
-      if (!add) break;
-      last[1] += add; diff -= add;
-    }
-    while (diff < 0 && segs.length) {
-      const last = segs[segs.length - 1];
-      const take = Math.min(-diff, last[1] - last[0]);
-      if (!take) break;
-      last[1] -= take; diff += take;
-      if (last[1] <= last[0]) segs.pop();
-    }
-    ttManual.segs = normSegs(segs);
-  }
-
-  /* 시작 시각을 옮기면 구간 전체가 같이 움직인다(길이는 그대로) */
-  function setManualStart(minOfDay) {
-    if (!ttManual) return;
-    const v = Math.max(0, Math.min(1439, Math.round(Number(minOfDay) || 0)));
-    if (!ttManual.segs.length) { ttManual.segs = [[v, Math.min(1440, v + 60)]]; return; }
-    const delta = v - ttManual.segs[0][0];
-    const shift = Math.max(-ttManual.segs[0][0], Math.min(1440 - ttManual.segs[ttManual.segs.length - 1][1], delta));
-    ttManual.segs = ttManual.segs.map((sg) => [sg[0] + shift, sg[1] + shift]);
-  }
-
-  /* 시간 칸 하나를 켜고 끈다 — 켜면 그 시간 전체(60분)를 더하고, 끄면 그 시간을 들어낸다 */
-  function toggleManualHour(h) {
-    if (!ttManual) return;
-    const from = h * 60, to = from + 60;
-    const covered = ttManual.segs.some((sg) => Math.min(sg[1], to) - Math.max(sg[0], from) > 0);
-    if (covered) {
-      const out = [];
-      ttManual.segs.forEach((sg) => {
-        if (sg[1] <= from || sg[0] >= to) { out.push([sg[0], sg[1]]); return; }
-        if (sg[0] < from) out.push([sg[0], from]);
-        if (sg[1] > to) out.push([to, sg[1]]);
-      });
-      ttManual.segs = normSegs(out);
-    } else {
-      ttManual.segs = normSegs(ttManual.segs.concat([[from, to]]));
-    }
+  function manualTotal() {
+    if (!ttManual) return 0;
+    return ttManual.segs.reduce((n, sg) => n + (segLen(sg) || 0), 0);
   }
 
   function renderTimeEditSubject() {
     const c = cert();
     const s = c.subjects.find((x) => x.id === ttManual.sid);
-    $('ttEditSub').textContent = prettyDate(ttManual.dateKey) + (ttManual.dateKey === todayKey() ? ' · 오늘' : '') +
-      (s ? ' · ' + (s.name || '(이름 없음)') : '');
+    $('ttEditSub').textContent = prettyDate(ttManual.dateKey) + ' · ' + (s ? (s.name || '(이름 없음)') : '(삭제된 과목)');
+    $('ttEditSub').setAttribute('data-date', ttManual.dateKey);
     $('ttEditSubjectList').innerHTML = c.subjects.map((x, i) =>
       '<button type="button" class="chip' + (x.id === ttManual.sid ? ' on' : '') + '" data-mpick="' + esc(x.id) + '" aria-pressed="' + (x.id === ttManual.sid ? 'true' : 'false') + '">' +
-      '<span aria-hidden="true">' + esc(subjectIconOf(x, i)) + '</span> ' + esc(x.name || '(이름 없음)') + '</button>').join('');
+      '<span class="em" aria-hidden="true">' + esc(subjectIconOf(x, i)) + '</span> ' + esc(x.name || '(이름 없음)') + '</button>').join('');
   }
 
-  function renderTimeEditHours() {
-    const c = cert();
-    const day = c.days[ttManual.dateKey] || {};
-    const col = subjectColor(ttManual.sid);
-    const mine = new Set();
-    ttManual.segs.forEach((sg) => {
-      for (let h = Math.floor(sg[0] / 60); h <= Math.floor((sg[1] - 1) / 60); h++) mine.add(h);
+  /* 시작·끝나는 시각 두 칸 + 모드 칩(수정 중 N번 기록 / 새 기록 추가 중) + 이 구간 길이 */
+  function renderTimeEditTimes() {
+    const seg = curSeg();
+    const st = $('ttEditStart'), en = $('ttEditEnd');
+    /* 24:00은 time 인풋이 받지 못한다(00:00~23:59) → 23:59로 보여준다 */
+    const tv = (m) => (m == null ? '' : m >= 1440 ? '23:59' : hhmm(m));
+    if (document.activeElement !== st) st.value = tv(seg ? seg[0] : null);
+    if (document.activeElement !== en) en.value = tv(seg ? seg[1] : null);
+    st.classList.toggle('empty', !(seg && seg[0] != null));
+    en.classList.toggle('empty', !(seg && seg[1] != null));
+    const adding = ttManual.sel < 0;
+    $('ttEditMode').classList.toggle('new', adding);
+    $('ttEditModeTx').textContent = adding ? '＋ 새 기록 추가 중' : '수정 중 · ' + (ttManual.sel + 1) + '번 기록';
+    const d = segLen(seg);
+    $('ttEditDur').textContent = '이 구간 ' + (d == null ? '—' : fmtDur(d));
+  }
+
+  function renderTimeEditRecs() {
+    const rows = ttManual.segs.map((sg, i) => {
+      const on = ttManual.sel === i;
+      const d = segLen(sg);
+      const a = sg[0] == null ? '--:--' : hhmm(sg[0]);
+      const b = sg[1] == null ? '--:--' : hhmm(sg[1]);
+      return '<li class="tt-rec' + (on ? ' on' : '') + '" data-rec="' + i + '" role="button" tabindex="0" aria-pressed="' + (on ? 'true' : 'false') + '"' +
+        ' aria-label="' + (i + 1) + '번 기록 ' + a + '부터 ' + b + '까지' + (d == null ? '' : ' ' + fmtDur(d)) + '">' +
+        '<span class="rec-n">' + (i + 1) + '</span>' +
+        '<span class="rec-t">' + a + '<i>~</i>' + b + '<em>· ' + (d == null ? '—' : fmtDur(d)) + '</em></span>' +
+        '<span class="rec-side">' + (on ? '<span class="rec-badge">수정 중</span>' : '') + '</span>' +
+        '<button class="rec-del" type="button" data-recdel="' + i + '" aria-label="' + (i + 1) + '번 기록 삭제">' + TRASH_SVG + '</button>' +
+        '</li>';
     });
-    const boxes = [];
-    for (let h = 0; h < 24; h++) {
-      const on = mine.has(h);
-      const other = c.subjects.find((x) => x.id !== ttManual.sid && Array.isArray(day[x.id]) && day[x.id].indexOf(h) >= 0);
-      const style = on ? ' style="background:' + tint(col, .34) + ';border-color:' + tint(col, .55) + '"' : '';
-      boxes.push('<button type="button" class="tt-hour' + (on ? ' on' : '') + '" data-hour="' + h + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
-        ' aria-label="' + h + '시' + (on ? ' 선택됨' : '') + '"' + style + '>' + h + '시' +
-        (other ? '<i class="oth" style="background:' + subjectColor(other.id) + '" aria-hidden="true"></i>' : '') + '</button>');
-    }
-    $('ttEditHours').innerHTML = boxes.join('');
-  }
-
-  /* skip: 사용자가 지금 타이핑한 입력칸은 건드리지 않는다 */
-  function syncTimeEditNumbers(skip) {
-    const total = manualTotal();
-    if (skip !== 'h') $('ttEditH').value = String(Math.floor(total / 60));
-    if (skip !== 'm') $('ttEditM').value = String(total % 60);
-    $('ttEditTotal').textContent = fmtDur(total);
-    const st = manualStart();
-    if (skip !== 'start' && document.activeElement !== $('ttEditStart')) $('ttEditStart').value = st == null ? '' : hhmm(st);
-    const en = manualEnd();
-    const box = $('ttEditEnd');
-    box.textContent = en == null ? '—' : hhmm(en);
-    box.classList.toggle('off', en == null);
-    const diff = total - (ttManual.base || 0);
-    const d = $('ttEditDiff');
-    d.textContent = diff > 0 ? '+' + fmtDur(diff) : diff < 0 ? '−' + fmtDur(-diff) : '그대로';
-    d.className = 'diff' + (diff > 0 ? ' up' : diff < 0 ? ' down' : '');
+    $('ttEditRecs').innerHTML = rows.length ? rows.join('') : '<li class="tt-rec-empty">아직 적은 기록이 없어요 · 아래 ＋ 새 구간 추가로 시작해요</li>';
+    $('ttEditRecCount').textContent = ttManual.segs.length + '개';
   }
 
   function renderTimeEdit() {
+    if (!ttManual) return;
     renderTimeEditSubject();
-    renderTimeEditHours();
-    syncTimeEditNumbers();
+    renderTimeEditTimes();
+    renderTimeEditRecs();
+    $('ttEditTotal').textContent = fmtDur(manualTotal());
+  }
+
+  /* 위 칸에 적힌 시각을 지금 구간에 반영 — 비어 있으면 null로 두고 저장할 때 막는다 */
+  function readTimeInputs() {
+    if (!ttManual) return;
+    const seg = curSeg();
+    if (!seg) return;
+    seg[0] = parseTimeVal($('ttEditStart').value);
+    seg[1] = parseTimeVal($('ttEditEnd').value);
+    renderTimeEditTimes();
+    renderTimeEditRecs();
+    $('ttEditTotal').textContent = fmtDur(manualTotal());
+  }
+
+  function selectSeg(i) {
+    if (!ttManual || !ttManual.segs[i]) return;
+    ttManual.sel = i;
+    renderTimeEdit();
+  }
+
+  function addSegDraft() {
+    if (!ttManual) return;
+    /* 이미 새 구간을 적는 중이면 적던 값을 지우지 않는다 */
+    if (ttManual.sel < 0 && ttManual.draft) return;
+    ttManual.sel = -1;
+    ttManual.draft = defaultDraft();
+    renderTimeEdit();
+  }
+
+  /* 구간 하나 지우기 — 저장을 눌러야 실제 기록에서 지워진다(취소하면 그대로) */
+  function deleteSegAt(i) {
+    if (!ttManual || !ttManual.segs[i]) return;
+    ttManual.segs.splice(i, 1);
+    if (ttManual.sel === i) {
+      ttManual.sel = ttManual.segs.length ? Math.min(i, ttManual.segs.length - 1) : -1;
+      if (ttManual.sel < 0) ttManual.draft = defaultDraft();
+    } else if (ttManual.sel > i) ttManual.sel -= 1;
+    renderTimeEdit();
   }
 
   $('ttAddTime').addEventListener('click', () => openTimeEdit(currentEditSubject()));
@@ -7670,51 +7714,27 @@
     renderTimeEdit();
   });
 
-  $('ttEditHours').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-hour]');
-    if (!b || !ttManual) return;
-    toggleManualHour(Number(b.dataset.hour));
-    renderTimeEditHours();
-    syncTimeEditNumbers();
+  ['ttEditStart', 'ttEditEnd'].forEach((id) => {
+    $(id).addEventListener('input', readTimeInputs);
+    $(id).addEventListener('change', readTimeInputs);
   });
 
-  $('ttEditStart').addEventListener('change', () => {
-    if (!ttManual) return;
-    const v = String($('ttEditStart').value || '').trim();
-    if (!v) { setManualTotal(0); }
-    else {
-      const m = v.match(/^(\d{1,2}):(\d{2})/);
-      if (m) setManualStart(Math.min(1439, Math.max(0, Number(m[1]) * 60 + Number(m[2]))));
-    }
-    renderTimeEditHours();
-    syncTimeEditNumbers();
+  $('ttEditRecs').addEventListener('click', (e) => {
+    const del = e.target.closest('[data-recdel]');
+    if (del) { deleteSegAt(Number(del.dataset.recdel)); return; }
+    const row = e.target.closest('[data-rec]');
+    if (row) selectSeg(Number(row.dataset.rec));
+  });
+  $('ttEditRecs').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (e.target.closest('[data-recdel]')) return;
+    const row = e.target.closest('[data-rec]');
+    if (!row) return;
+    e.preventDefault();
+    selectSeg(Number(row.dataset.rec));
   });
 
-  $('ttEditQuick').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-madd]');
-    if (!b || !ttManual) return;
-    const v = b.dataset.madd;
-    if (v === 'clear') setManualTotal(0);
-    else setManualTotal(manualTotal() + Number(v));
-    renderTimeEditHours();
-    syncTimeEditNumbers();
-  });
-
-  $('ttEditH').addEventListener('input', () => {
-    if (!ttManual) return;
-    const h = Math.max(0, Math.min(24, Math.round(Number($('ttEditH').value) || 0)));
-    setManualTotal(h * 60 + (manualTotal() % 60));
-    renderTimeEditHours();
-    syncTimeEditNumbers('h');
-  });
-  $('ttEditM').addEventListener('input', () => {
-    if (!ttManual) return;
-    const m = Math.max(0, Math.min(59, Math.round(Number($('ttEditM').value) || 0)));
-    setManualTotal(Math.floor(manualTotal() / 60) * 60 + m);
-    renderTimeEditHours();
-    syncTimeEditNumbers('m');
-  });
-  ['ttEditH', 'ttEditM'].forEach((id) => $(id).addEventListener('blur', () => { if (ttManual) syncTimeEditNumbers(); }));
+  $('ttEditAddSeg').addEventListener('click', addSegDraft);
 
   $('ttEditSave').addEventListener('click', () => {
     if (!ttManual) { closeSheet('ttEdit'); return; }
@@ -7722,17 +7742,21 @@
     const sid = ttManual.sid;
     const k = ttManual.dateKey;
     if (!c.subjects.some((x) => x.id === sid)) { closeSheet('ttEdit'); return; }
+    readTimeInputs();
+    const list = ttManual.segs.filter(Boolean).map((sg) => [sg[0], sg[1]]);
+    if (ttManual.sel < 0 && ttManual.draft) list.push([ttManual.draft[0], ttManual.draft[1]]);
+    if (list.some((sg) => sg[0] == null || sg[1] == null)) { toast('시작 시각과 끝나는 시각을 적어 주세요'); return; }
+    if (list.some((sg) => sg[1] <= sg[0])) { toast('끝나는 시각이 시작 시각보다 늘어야 해요'); return; }
     const sname = subjectName(sid);
-    setSubjectSegs(k, sid, ttManual.segs);
+    const clean = setSubjectSegs(k, sid, list);
     const total = subjectMinutes(k, sid);
-    const changed = total !== (ttManual.base || 0);
     closeSheet('ttEdit');
     save(true);
     renderTimetable();
     renderHome();
-    toast(changed
+    toast(clean.length
       ? sname + ' · ' + prettyDate(k) + ' ' + fmtDur(total) + '으로 적었어요'
-      : sname + ' · ' + prettyDate(k) + ' 기록은 그대로예요');
+      : sname + ' · ' + prettyDate(k) + ' 기록을 지웠어요');
   });
 
   /* ---------- 과목 탭 → Tody time 시작 확인 팝업 ---------- */
