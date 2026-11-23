@@ -702,6 +702,24 @@
   .ttstart-actions .btn{flex:1;padding:11px 8px;font-size:13px;text-align:center}
 
   /* ---------- 집중모드 과목 선택 ---------- */  .pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  /* Tody time 시트 — 과목을 고르기 전에 오늘 목표를 바로 조절 */
+  .pick-goal{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;
+    padding:7px 8px 7px 12px;border-radius:14px;border:1px solid var(--mint-line);
+    background:linear-gradient(135deg,#F0FDF8 0%,#FFFFFF 78%)
+  }
+  .pick-goal .pgl{font-size:11.5px;font-weight:900;color:var(--mint-deep);letter-spacing:-.01em;white-space:nowrap}
+  .pick-goal .pgs{display:flex;align-items:center;gap:1px;flex:none}
+  .pick-goal .pgb{
+    width:28px;height:28px;border-radius:9px;border:1px solid var(--mint-line);background:#fff;
+    color:var(--mint-deep);font-size:14px;font-weight:900;line-height:1;display:grid;place-items:center
+  }
+  .pick-goal .pgb:active{transform:scale(.93);background:var(--mint-soft)}
+  .pick-goal .pgb[disabled]{opacity:.32}
+  .pick-goal .pgv{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 7px;border:0;background:transparent;color:#124A3C;border-radius:9px}
+  .pick-goal .pgv b{font-size:13.5px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;min-width:44px;text-align:center}
+  .pick-goal .pgv svg{width:13px;height:13px;display:block;fill:none;stroke:#7FA79A;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pick-goal .pgv:active{background:var(--mint-soft)}
   .pick-sub{
     display:flex;align-items:center;gap:8px;padding:13px 12px;border-radius:15px;border:1px solid var(--line);
     background:#FBFEFD;font-size:13.5px;font-weight:800;color:#20352F;text-align:left;min-width:0
@@ -1127,6 +1145,13 @@
   .coll-grow .cg-top{display:flex;align-items:center;gap:6px}
   .coll-grow .cg-em{font-size:16px;line-height:1}
   .coll-grow .cg-nm{font-size:12.5px;font-weight:900;color:#173B32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 펫 상태창 — 이름 옆 최소한의 이름 수정 픽토그램(배경·테두리 없음) */
+  .coll-grow .cg-edit{
+    margin-left:2px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;padding:0;border:0;background:transparent;color:#7FA79A;border-radius:8px
+  }
+  .coll-grow .cg-edit svg{width:15px;height:15px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .coll-grow .cg-edit:active{transform:scale(.92);color:var(--mint-deep)}
   .petstat .ps-art{display:grid;place-items:center;padding:2px 0 10px}
   .coll-grow .ability{margin-top:11px}
   .petstat .ps-art{display:grid;place-items:center;padding:2px 0 10px}
@@ -1726,12 +1751,34 @@
   .jlegend .lg-ing .dot{background:var(--mint-deep)}
   .jlegend .lg-ok{background:#ECFDF5;color:#047857;border:1px solid #A7F3D0}
   .jlegend .lg-no{background:#EDEFF2;color:#8B9099;border:1px solid #E1E4E8;text-decoration:line-through}
-  .jgrid{gap:4px}
-  /* 채용 달력: 날짜 숫자는 전형 배지가 아래로 붙으므로 왼쪽 정렬 */
-  .jgrid .cal-cell{aspect-ratio:auto;min-height:56px;flex-direction:column;align-items:stretch;gap:2px}
-  .jgrid .cal-cell .d{text-align:left;align-self:flex-start}
+  .jgrid{gap:5px}
+  /* 좁은 화면에서도 달력 제목이 한 줄로 (320px에서 '전체 일정'이 세로로 쪼개지지 않게)
+     폭이 모자라면 월 이동·추가 버튼이 다음 줄로 내려간다 */
+  .jcal-card .cal-head{gap:6px;flex-wrap:wrap;row-gap:2px}
+  .jcal-card .cal-title{white-space:nowrap;flex:none}
+  .jcal-card .cal-nav{flex:none;min-width:0;margin-left:auto}
+  /* 테두리 없는 일정 달력 — 칸 테두리 없이 날짜 숫자(가운데) + 얇은 색 막대 일정 칩
+     선택일 = 핑크 알약 · 선택되지 않은 오늘 = 연회색 알약 (둘이 같아 보이지 않게) */
+  .jgrid .cal-cell{
+    aspect-ratio:auto;min-height:58px;flex-direction:column;align-items:stretch;gap:1px;
+    padding:3px 2px 4px;border:0;background:transparent;border-radius:9px
+  }
+  .jgrid .cal-cell:active{transform:none;background:rgba(24,210,155,.08)}
+  .jgrid .cal-cell.out{opacity:.3;background:transparent;border:0}
+  .jgrid .cal-cell .d{
+    align-self:center;text-align:center;font-size:11px;font-weight:800;color:#3E5A52;
+    min-width:22px;height:22px;line-height:22px;padding:0 4px;border-radius:999px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em
+  }
+  .jgrid .cal-cell.sun .d{color:#D9706B}
+  .jgrid .cal-cell.sat .d{color:#6E93C4}
+  .jgrid .jcell.today{background:transparent;border:0;box-shadow:none}
+  .jgrid .jcell.today.off-sel .d{background:#F1F5F9;color:#64748B}
+  .jgrid .jcell.sel .d{background:#FF4E97;color:#fff;font-weight:900;box-shadow:0 3px 8px rgba(255,42,133,.28);min-width:24px;height:24px;line-height:24px}
+  .jgrid .jcell.cell-ok{background:linear-gradient(180deg,#F1FDF8,#FBFFFD);border:0}
   .jgrid .ev{
-    font-size:7.5px;font-weight:800;line-height:1.3;padding:1.5px 3px;border-radius:5px;
+    position:relative;font-size:7.5px;font-weight:800;line-height:1.35;text-align:left;
+    padding:1px 3px;border-radius:4px;
     letter-spacing:-.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
   }
   .ev-doc{background:#DBEAFE;color:#2563EB}
@@ -1739,17 +1786,11 @@
   .ev-it1{background:#D1FAE5;color:#059669}
   .ev-it2{background:#FFEDD5;color:#EA580C}
   .ev-fin{background:#FCE7F3;color:#DB2777}
-  .ev-etc{background:#F1F5F9;color:#64748B;border:1px solid #CBD5E1}
-  .ev-more{background:var(--gray-soft);color:var(--muted)}
+  .ev-etc{background:#F1F5F9;color:#64748B}
+  .ev-more{background:var(--gray-soft);color:var(--muted);text-align:center}
   /* 합격 = 쨍한 민트 pill + 셀 민트 틴트 · 불합격 = 흐린 그레이 pill + 취소선 */
-  .jgrid .ev-ok{background:linear-gradient(135deg,#5EEAD4,#059669);color:#fff;box-shadow:0 2px 6px rgba(5,150,105,.32)}
-  .jgrid .ev-no{background:#E7EAEE;color:#4E5763;opacity:.45;text-decoration:line-through;border:1px solid #E3E6EA}
-  .jcell.cell-ok{border-color:#A7F3D0;background:linear-gradient(180deg,#F1FDF8,#FBFFFD)}
-  /* 선택일 = 핑크 하이라이트 · 오늘이 선택되지 않았을 땐 연회색(둘이 같아 보이지 않게) */
-  .jcell.sel{border-color:#FF4E97;background:#FFF0F7;box-shadow:0 0 0 2px rgba(255,42,133,.14)}
-  .jcell.today{box-shadow:none}
-  .jcell.today.off-sel{background:#F1F5F9;border-color:#CBD5E1;box-shadow:none}
-  .jcell.today.off-sel .d{color:#64748B}
+  .jgrid .ev-ok{background:linear-gradient(135deg,#5EEAD4,#059669);color:#fff;box-shadow:0 2px 6px rgba(5,150,105,.32);text-align:center}
+  .jgrid .ev-no{background:#E7EAEE;color:#4E5763;opacity:.45;text-decoration:line-through}
 
   /* ---------- 선택일 상세 ---------- */
   .jday-detail{margin-top:4px}
@@ -2351,37 +2392,10 @@
         <div class="pet-base" aria-hidden="true"></div>
       </div>
 
-      <div class="pet-meta">
-        <button class="pet-badge" id="petBadge" aria-label="토디펫 정보 수정">
-          <span class="em" id="petEmoji" aria-hidden="true">🐯</span>
-          <span id="petAnimalName">호랑이</span>
-        </button>
-        <span class="pet-name" id="petName">두근</span>
-        <button class="mini-edit" id="petEdit" aria-label="펫 이름·동물 수정">수정</button>
-      </div>
-
       <button class="focus-cta" id="heroFocus" aria-label="Tody time 시작">
         <span class="cta-emoji" id="heroIcon" aria-hidden="true">🍏</span>
         <span>Tody time</span>
       </button>
-
-      <div class="gauge">
-        <div class="gauge-top">
-          <span class="lb">토디게이지</span>
-          <span class="nums">누적 <b id="gaugeAccum">0분</b> / <span id="gaugeGoal">30시간</span></span>
-          <button class="edit" id="goalEdit" aria-label="하루 목표 수정">수정</button>
-        </div>
-        <div class="gauge-bar-row">
-          <span class="gauge-end egg" aria-hidden="true">🥚</span>
-          <div class="gauge-bar" id="gaugeBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="gaugeFill"></i></div>
-          <span class="gauge-end crown" id="gaugeCrown" aria-hidden="true">👑</span>
-        </div>
-        <div class="gauge-foot">
-          <span class="pct" id="gaugePct">0%</span>
-          <span class="today" id="gaugeNext">다음 진화까지 180분</span>
-        </div>
-        <div class="gauge-today" id="gaugeToday">오늘 0분 · 이번 주 0분</div>
-      </div>
     </section>
 
     <section class="card cal-card" id="calCard" aria-label="공부 인증 달력">
@@ -2395,7 +2409,7 @@
         </div>
       </div>
       <div class="cal-dow" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
-      <div class="cal-grid" id="calGrid" role="grid" aria-label="날짜별 인증 사진"></div>
+      <div class="cal-grid" id="calGrid" role="grid" aria-label="날짜별 토디너리 기록"></div>
     </section>
 
     <section class="card action-card boost" id="boostCard" role="button" tabindex="0" aria-label="Boost card 오답카드 열기">
@@ -2816,6 +2830,7 @@
       <div class="cg-top">
         <span class="cg-em" id="psEmoji" aria-hidden="true">🐯</span>
         <span class="cg-nm" id="psName">호랑이</span>
+        <button class="cg-edit" id="psEdit" type="button" aria-label="펫 이름·동물 수정"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4.2L19 9.2a2.6 2.6 0 0 0-3.7-3.7L4.5 16.3V20z"/><path d="M13.8 6.9l3.3 3.3"/></svg></button>
       </div>
       <div class="pet-gauge" id="psGauge"></div>
     </div>
@@ -3088,6 +3103,14 @@
     <div class="sheet-grip"></div>
     <div class="sheet-head"><h2 id="pickTitle">어떤 과목을 공부할까요?</h2><button class="x" data-close="pickSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
     <p class="sheet-sub">과목을 고르면 바로 Tody time 타이머가 시작돼요</p>
+    <div class="pick-goal" role="group" aria-label="오늘 목표 시간">
+      <span class="pgl">오늘 목표</span>
+      <div class="pgs">
+        <button class="pgb" id="pickGoalMinus" type="button" aria-label="오늘 목표 30분 줄이기">−</button>
+        <button class="pgv" id="pickGoalBtn" type="button" aria-label="오늘 목표 직접 입력"><b id="pickGoalVal">3시간</b><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4.2L19 9.2a2.6 2.6 0 0 0-3.7-3.7L4.5 16.3V20z"/><path d="M13.8 6.9l3.3 3.3"/></svg></button>
+        <button class="pgb" id="pickGoalPlus" type="button" aria-label="오늘 목표 30분 늘리기">＋</button>
+      </div>
+    </div>
     <div class="pick-grid" id="pickList"></div>
     <div class="pick-info"><span id="pickInfoSubject">과목을 선택하세요</span><span id="pickInfoGoal"></span></div>
     <div class="sheet-actions">
@@ -3299,7 +3322,7 @@
   <div class="veil" data-close="photoSheet"></div>
   <div class="sheet-card">
     <div class="sheet-grip"></div>
-    <div class="sheet-head"><h2 id="photoTitle">인증 사진 · 일기</h2><div class="sheet-head-tools"><button class="pic-tool" id="photoDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="photoSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
+    <div class="sheet-head"><h2 id="photoTitle">토디너리</h2><div class="sheet-head-tools"><button class="pic-tool" id="photoDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="photoSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
     <p class="sheet-sub" id="photoSub">11월 16일 (월)</p>
     <div class="photo-preview" id="photoPreview">
       <div class="ph-empty" id="photoEmpty"><span class="em">📷</span>사진을 찍거나 앨범에서 골라주세요</div>
@@ -5251,9 +5274,6 @@
   function renderHero() {
     const c = cert();
     const info = petInfo(c);
-    $('petEmoji').textContent = info.animal.emoji;
-    $('petAnimalName').textContent = info.animal.name;
-    $('petName').textContent = petStore().name || '콩이';
     const q = currentQuote();    if (q) {
       const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
       $('petBubble').innerHTML = esc(txt);
@@ -5268,17 +5288,6 @@
     art.style.filter = 'drop-shadow(0 12px 16px rgba(16,80,58,.13))';
     $('flowerLeft').innerHTML = flowerImgHTML('white');
     $('flowerRight').innerHTML = flowerImgHTML('coral');
-    $('gaugeAccum').textContent = fmtDur(info.total);
-    $('gaugeGoal').textContent = fmtDur(GROW_GOAL);
-    $('gaugeFill').style.width = Math.max(2, Math.round(info.pct)) + '%';
-    $('gaugePct').textContent = Math.round(info.pct) + '%';
-    $('gaugeBar').setAttribute('aria-valuenow', Math.round(info.pct));
-    $('gaugeBar').setAttribute('aria-label', '능력치 ' + Math.round(info.pct) + '%');
-    $('gaugeNext').textContent = info.complete ? '완료 ✨' : fmtDur(info.left) + ' 남음';
-    const gaugeBox = document.querySelector('.gauge');
-    if (gaugeBox) gaugeBox.classList.toggle('gold', info.complete);
-    const todayMin = dayMinutes(todayKey());
-    $('gaugeToday').textContent = '오늘 ' + fmtDur(todayMin) + ' · 이번 주 ' + fmtDur(weekMinutes());
     $('heroIcon').textContent = heroSubjectIcon();
   }
 
@@ -5353,13 +5362,14 @@
       const hasImg = !!(entry && entry.img);
       const hasDiary = !!(entry && String(entry.diary || entry.memo || '').trim());
       const isToday = k === tk;
-      /* 지난·미래 날짜에 남긴 게 없으면 열리지 않는다 */
-      const noEntry = !isToday && !hasImg && !hasDiary;
+      /* 작성 가능한 날(오늘·어제)이거나 남긴 기록이 있을 때만 열린다 */
+      const isEditable = todyDiaryEditable(k);
+      const noEntry = !isEditable && !hasImg && !hasDiary;
       const cls = 'cal-cell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') + (isToday ? ' today' : '') +
         (hasImg ? ' has-photo' : ' empty-photo') + (hasDiary ? ' has-diary' : '') +
         (noEntry ? ' no-entry' : ' cal-live');
-      const label = prettyDate(k) + (hasImg ? ' 인증 사진' : '') + (hasDiary ? ' 일기' : '') +
-        (noEntry ? ' — 남긴 기록 없음' : (isToday ? ' — 열어서 수정' : ' — 열어서 보기'));
+      const label = prettyDate(k) + (hasImg ? ' 사진' : '') + (hasDiary ? ' 일기' : '') +
+        (noEntry ? ' — 남긴 기록 없음' : (isEditable ? ' — 열어서 수정' : ' — 열어서 보기'));
       cells.push('<button class="' + cls + '" data-date="' + k + '"' + (noEntry ? ' aria-disabled="true"' : '') +
         ' aria-label="' + esc(label) + '" role="gridcell">' +
         (hasImg ? '<img src="' + entry.img + '" alt="" loading="lazy">' : '') +
@@ -5420,9 +5430,10 @@
   function feedRowHTML(it) {
     const d = fromKey(it.k);
     const isToday = it.k === todayKey();
+    const isEditable = todyDiaryEditable(it.k);
     const cls = 'arc-row' + (it.img && it.text ? ' photo-text' : it.img ? ' photo-only' : ' text-only');
-    const label = prettyDate(it.k) + (it.img ? ' 인증 사진' : '') + (it.text ? ' 일기' : '') +
-      (isToday ? ' — 오늘 · 열어서 수정' : ' — 열어서 보기');
+    const label = prettyDate(it.k) + (it.img ? ' 사진' : '') + (it.text ? ' 일기' : '') +
+      (isToday ? ' — 오늘 · 열어서 수정' : (isEditable ? ' — 어제 · 열어서 수정' : ' — 열어서 보기'));
     return '<button class="' + cls + '" type="button" role="listitem" data-date="' + it.k + '" aria-label="' + esc(label) + '">' +
       '<span class="arc-row-date">' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 <i>(' + WEEKDAY[d.getDay()] + ')</i>' +
         (isToday ? '<span class="arc-now">오늘</span>' : '') + '</span>' +
@@ -5473,7 +5484,7 @@
     $('arcFeed').innerHTML = feed.length
       ? feed.map(feedRowHTML).join('')
       : '<div class="arc-empty"><span class="em" aria-hidden="true">🗓️</span>' +
-        '<b>아직 이번 달 기록이 없어요</b><span>오늘 인증 사진이나 일기를 남겨보세요</span></div>';
+        '<b>아직 이번 달 기록이 없어요</b><span>오늘 토디너리를 남겨보세요</span></div>';
     $('arcPrev').disabled = arcIdx <= 0;
     $('arcNext').disabled = arcIdx >= arcList.length - 1;
     $('calArchive').scrollTop = 0;
@@ -5484,8 +5495,8 @@
     const cell = e.target.closest('[data-date]');
     if (!cell) return;
     const k = cell.dataset.date;
-    /* 오늘이 아니면: 남긴 기록(사진/일기)이 있을 때만 열린다 */
-    if (k !== todayKey()) {
+    /* 오늘·어제는 바로 열고, 그보다 지난 날은 남긴 기록(사진/일기)이 있을 때만 열린다 */
+    if (!todyDiaryEditable(k)) {
       const p = photoStore()[k];
       const hasImg = !!(p && p.img);
       const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
@@ -5600,6 +5611,7 @@
     $('pickInfoSubject').textContent = sel ? sel.name : '과목을 선택하세요';
     const info = petInfo(c);
     $('pickInfoGoal').textContent = info.complete ? '황금 각성 100%' : info.nextName + '까지 ' + fmtDur(info.left);
+    paintPickGoal();
     const add = $('pickAdd');
     if (add) add.addEventListener('click', () => {
       if ($('pickNewName')) { $('pickNewName').focus(); return; }
@@ -6321,8 +6333,10 @@
   }
 
   /* =========================================================
-     인증 사진 시트
+     토디너리 시트 (인증 사진 + 일기)
      ========================================================= */
+  const TODY_DIARY_LOCK = '토디너리는 오늘과 전날까지만 작성할 수 있어요';
+  const todyDiaryEditable = (k) => k === todayKey() || k === addDays(todayKey(), -1);
   let photoDate = todayKey();
   let photoPending = null;
   let photoChanged = false;
@@ -6335,32 +6349,34 @@
     const hasImg = !!(p && p.img);
     const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
     const isToday = dateKey === todayKey();
-    /* 오늘은 사진·일기 모두, 지난·미래는 남긴 것만 보여준다 */
-    const showPhoto = isToday || hasImg;
-    const showDiary = isToday || hasDiary;
+    const isEditable = todyDiaryEditable(dateKey);
+    const isYesterday = isEditable && !isToday;
+    /* 작성 가능한 날(오늘·어제)은 사진·일기 모두, 그보다 지난 날은 남긴 것만 보여준다 */
+    const showPhoto = isEditable || hasImg;
+    const showDiary = isEditable || hasDiary;
     $('photoPreview').hidden = !showPhoto;
-    $('photoActions').hidden = !isToday;
+    $('photoActions').hidden = !isEditable;
     $('photoDiaryWrap').hidden = !showDiary;
-    $('photoSub').textContent = prettyDate(dateKey) + (isToday ? ' · 오늘' : ' · 읽기 전용');
-    $('photoTitle').textContent = showPhoto && !showDiary ? '인증 사진' : (showDiary && !showPhoto ? '그날의 일기' : '인증 사진 · 일기');
+    $('photoSub').textContent = prettyDate(dateKey) + (isToday ? ' · 오늘' : (isYesterday ? ' · 어제' : ' · 읽기 전용'));
+    $('photoTitle').textContent = '토디너리';
     $('photoDiary').value = p ? (p.diary || p.memo || '') : '';
     $('photoImg').hidden = !hasImg;
     $('photoEmpty').hidden = hasImg;
     if (hasImg) $('photoImg').src = p.img; else $('photoImg').removeAttribute('src');
-    /* 인증사진·일기는 당일에만 작성·수정할 수 있다 (지난·미래 날짜는 읽기 전용) */
-    $('photoDelete').hidden = !p || !isToday;
-    $('photoPick').hidden = !isToday;
-    $('photoDiary').readOnly = !isToday;
-    $('photoDiary').classList.toggle('readonly', !isToday);
-    $('photoSave').hidden = !isToday;
+    /* 토디너리는 오늘·어제까지만 작성·수정할 수 있다 (그보다 지난 날짜는 읽기 전용) */
+    $('photoDelete').hidden = !p || !isEditable;
+    $('photoPick').hidden = !isEditable;
+    $('photoDiary').readOnly = !isEditable;
+    $('photoDiary').classList.toggle('readonly', !isEditable);
+    $('photoSave').hidden = !isEditable;
     $('photoPick').textContent = hasImg ? '사진 교체' : '사진 고르기';
-    $('photoHint').textContent = isToday
+    $('photoHint').textContent = isEditable
       ? '공부 인증 사진은 최대 480px로 작게 압축돼요 · 일기만 남겨도 돼요'
-      : '인증사진과 일기는 당일에만 작성할 수 있어요';
-    $('photoHint').classList.toggle('ro', !isToday);
-    $('photoEmpty').innerHTML = hasImg ? '' : (isToday
+      : TODY_DIARY_LOCK;
+    $('photoHint').classList.toggle('ro', !isEditable);
+    $('photoEmpty').innerHTML = hasImg ? '' : (isEditable
       ? '<span class="em">📷</span>공부 인증 사진을 남겨보세요'
-      : '<span class="em">🔒</span>이 날에는 남긴 인증사진이 없어요');
+      : '<span class="em">🔒</span>이 날에는 남긴 토디너리가 없어요');
     openSheet('photoSheet');
   }
 
@@ -6591,6 +6607,23 @@
   function openGoal() {
     $('goalInput').value = cert().goal;
     openSheet('goalSheet');
+  }
+  /* Tody time 시트 안 미니 목표 조절 — cert.goal(분)과 토디테이블 목표 알약을 함께 맞춘다 */
+  function paintPickGoal() {
+    const g = cert().goal;
+    if ($('pickGoalVal')) $('pickGoalVal').textContent = fmtDur(g);
+    if ($('pickGoalMinus')) $('pickGoalMinus').disabled = g <= 10;
+    if ($('pickGoalPlus')) $('pickGoalPlus').disabled = g >= 900;
+    if ($('pickGoalBtn')) $('pickGoalBtn').setAttribute('aria-label', '오늘 목표 ' + fmtDur(g) + ' · 눌러서 직접 입력');
+  }
+  function stepGoal(delta) {
+    const cur = Number(cert().goal) || DEFAULT_GOAL;
+    const next = Math.min(900, Math.max(10, cur + delta));
+    if (next === cur) return;
+    cert().goal = next;
+    save(true);
+    renderAll();      /* 토디테이블 목표 알약·바 동기화 */
+    paintPickGoal();  /* 열려 있는 시트의 값은 renderAll이 다시 그리지 않으므로 따로 맞춘다 */
   }
 
   let petSheetAnimal = 'tiger';
@@ -6993,10 +7026,8 @@
   $('myBtn').addEventListener('click', openAccountSheet);
   /* 📊 타이머 통계 바로가기 — 상단바 오뇨님 왼쪽 */
   $('statsQuick').addEventListener('click', openStats);
-  $('petEdit').addEventListener('click', openPetSheet);
-  $('petBadge').addEventListener('click', openPetSheet);
+  $('psEdit').addEventListener('click', openPetSheet);
   $('ddayPill').addEventListener('click', openDday);
-  $('goalEdit').addEventListener('click', openGoal);
   $('boostCard').addEventListener('click', openWrongTab);
   $('masterCard').addEventListener('click', () => showPage('master'));
   $('boostCard').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWrongTab(); } });
@@ -7047,6 +7078,9 @@
     if (!pickSubject || !cert().subjects.some((s) => s.id === pickSubject)) { toast('과목을 먼저 선택해 주세요'); return; }
     startFocus(pickSubject);
   });
+  $('pickGoalMinus').addEventListener('click', () => stepGoal(-30));
+  $('pickGoalPlus').addEventListener('click', () => stepGoal(30));
+  $('pickGoalBtn').addEventListener('click', openGoal);
   $('focusPause').addEventListener('click', togglePause);
   $('focusFinish').addEventListener('click', finishFocus);
   $('focusClose').addEventListener('click', exitFocus);
@@ -7167,6 +7201,7 @@
     save(true);
     closeSheet('goalSheet');
     renderAll();
+    paintPickGoal();
     toast('성장 목표를 ' + fmtDur(v) + '로 바꿨어요');
   });
   $('petAnimalGrid').addEventListener('click', (e) => {
@@ -7190,7 +7225,7 @@
      인증 사진 이벤트
      ========================================================= */
   $('photoPick').addEventListener('click', () => {
-    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     $('photoFile').click();
   });
   $('photoFile').addEventListener('change', async (e) => {
@@ -7214,7 +7249,7 @@
     }
   });
   $('photoSave').addEventListener('click', () => {
-    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     const existing = photoStore()[photoDate];
     const img = photoPending ? photoPending.data : (existing && existing.img ? existing.img : '');
     const diary = ($('photoDiary').value || '').trim();
@@ -7228,7 +7263,7 @@
     toast(wasNew ? prettyDate(photoDate) + ' 기록을 남겼어요 📸' : '이 날의 기록을 저장했어요');
   });
   $('photoDelete').addEventListener('click', () => {
-    if (photoDate !== todayKey()) { toast('인증사진과 일기는 당일에만 작성할 수 있어요'); return; }
+    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     const entry = photoStore()[photoDate];
     if (!entry) { toast('지울 기록이 없어요'); return; }
     if (!window.confirm(prettyDate(photoDate) + '의 인증 사진과 일기를 모두 지울까요?\n지운 기록은 되돌릴 수 없어요.')) return;
