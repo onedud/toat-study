@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tody · 토디 공부기록</title>
 <meta name="theme-color" content="#F3FBF8">
-<meta name="description" content="민트 파스텔 공부 기록 — 토디펫 십이지신 도감, Tody time 스톱워치, 토디테이블, 부스터 카드">
+<meta name="description" content="민트 파스텔 공부 기록 — 토디펫 도감, Tody time 스톱워치, 토디테이블, 부스터 카드">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -232,8 +232,8 @@
   /* 4단계 페이퍼·펠트 PNG */
   .pet-art .pet-img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain;animation:floaty 4.6s ease-in-out infinite;-webkit-user-drag:none}
   .pet-art .pet-img.st-egg{height:76%}
-  .pet-art .pet-img.st-baby{height:88%}
-  .pet-art .pet-img.is-gold{filter:drop-shadow(0 0 13px rgba(255,199,64,.55)) drop-shadow(0 8px 12px rgba(180,120,10,.18))}
+  .pet-art .pet-img.st-baby{height:86%}
+  .pet-art .pet-img.st-child{height:93%}
   .cameo-pet .pet-img{display:block;width:100%;height:auto;filter:drop-shadow(0 4px 7px rgba(16,80,58,.16))}
   /* 도감·상태창·상세 공통 능력치 게이지 (🥚 [====] 👑) */
   .pet-gauge{margin-top:11px}
@@ -282,19 +282,15 @@
     border-bottom-right-radius:3px
   }
   .pet-bubble b{color:var(--mint-deep);font-weight:900}
-  .pet-scene{position:relative;width:100%;max-width:360px;height:186px;margin:2px auto 0;padding-top:0}
-  .pet-art{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);height:min(94%,176px);display:flex;align-items:flex-end;justify-content:center;flex:none;z-index:2}
+  .pet-scene{position:relative;width:100%;max-width:360px;height:168px;margin:2px auto 0;padding-top:0}
+  .pet-art{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);height:min(100%,188px);display:flex;align-items:flex-end;justify-content:center;flex:none;z-index:2}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  .flower{position:absolute;bottom:0;z-index:1;pointer-events:none}
-  .flower .flower-img{display:block;height:38px;width:auto;filter:drop-shadow(0 5px 7px rgba(20,80,50,.12))}
-  .flower.a{left:4%;transform:rotate(-7deg)}
-  .flower.b{right:4%;transform:rotate(8deg)}
   .pet-base{
-    width:44%;height:9px;margin:4px auto 0;border-radius:999px;
+    width:42%;height:7px;margin:2px auto 0;border-radius:999px;
     background:radial-gradient(50% 50% at 50% 50%, rgba(16,105,80,.16), rgba(16,105,80,0) 72%)
   }
   .focus-cta{
-    display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:8px;
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;
     padding:13px 16px;border-radius:16px;font-size:14.5px;font-weight:900;letter-spacing:-.01em;
     background:linear-gradient(135deg,#1BDFA6,#10B981);color:#fff;box-shadow:var(--shadow-mint);
     transition:transform .1s,box-shadow .15s
@@ -714,6 +710,17 @@
   .ttstart-actions .btn{flex:1;padding:11px 8px;font-size:13px;text-align:center}
 
   /* ---------- 집중모드 과목 선택 ---------- */  .pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  /* 토디펫 28마리 고르기 — 4열 스태커 그리드 */
+  #petAnimalGrid{grid-template-columns:repeat(4,1fr);gap:7px;max-height:44vh;overflow-y:auto;padding:1px}
+  #petAnimalGrid .pet-pick{position:relative;flex-direction:column;align-items:center;gap:2px;padding:5px 3px 4px;border-radius:12px;justify-content:center}
+  #petAnimalGrid .pet-pick .pp-art{height:44px}
+  #petAnimalGrid .pet-pick .pp-art .pet-img{height:44px}
+  #petAnimalGrid .pet-pick .nm{font-size:9.5px;max-width:100%;text-align:center}
+  #petAnimalGrid .pet-pick.locked{opacity:.72;border-color:#E7E2F3;background:linear-gradient(160deg,#FBF9FF,#FFFFFF)}
+  #petAnimalGrid .pet-pick.locked .pp-art .pet-img{filter:grayscale(.92) opacity(.5)}
+  #petAnimalGrid .pet-pick .pp-lock{position:absolute;top:3px;right:4px;font-size:9px;line-height:1}
+  /* 상단바 오뇨님 동그라미 = 키우는 펫 성체 얼굴 */
+  .avatar .av-pet{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center 22%;display:block}
   /* Tody time 시트 — 과목을 고르기 전에 오늘 목표를 바로 조절 */
   .pick-goal{
     display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;
@@ -1028,33 +1035,39 @@
   .coll-hero .d{font-size:11.5px;color:#517868;margin-top:3px;line-height:1.5;word-break:keep-all}
   .coll-filters{display:flex;gap:6px;margin:17px 0 4px;flex-wrap:wrap}
   .coll-filters .chip{padding:6px 11px;font-size:11.5px}
-  .coll-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
   .coll-card{
-    background:#fff;border:1px solid var(--line);border-radius:22px;padding:9px 9px 11px;text-align:left;
-    box-shadow:var(--shadow);transition:transform .12s,border-color .15s
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:5px 5px 7px;text-align:left;
+    box-shadow:var(--shadow);transition:transform .12s,border-color .15s;min-width:0
   }
   .coll-card:active{transform:scale(.98)}
   .coll-card.on{border-color:var(--mint);box-shadow:0 0 0 3px rgba(24,210,155,.13), var(--shadow)}
+  .coll-card.rare-locked{border-color:#E7E2F3;background:linear-gradient(160deg,#FBF9FF,#FFFFFF)}
   .coll-thumb{
-    position:relative;aspect-ratio:1/1;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:14px;overflow:hidden;
+    position:relative;aspect-ratio:1/1;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:7px;overflow:hidden;
     background:linear-gradient(160deg,var(--p1,#EAF8F1),var(--p2,#F8FDFA))
   }
   .coll-thumb .art{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
   .coll-thumb .art .pet-img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;display:block}
-  .coll-thumb .lock{position:absolute;top:6px;right:6px;font-size:13px;line-height:1;opacity:.75}
-  .coll-thumb .locked .art{}
-  .coll-thumb.locked .art{filter:none;opacity:.92}
-  .coll-thumb.locked .art .pet-img{filter:grayscale(1) brightness(1.04);opacity:.55}
-  .coll-thumb.gold{background:linear-gradient(160deg,#FFFAE6,#FFF0BE)}
+  .coll-thumb .lock{position:absolute;top:4px;right:4px;font-size:11px;line-height:1;opacity:.8}
+  .coll-thumb.locked{background:linear-gradient(160deg,#F3F0FA,#FBF9FF)}
+  .coll-thumb.locked .art .pet-img{filter:grayscale(.92) brightness(1.03);opacity:.5}
+  .coll-thumb .rare-tag{
+    position:absolute;top:3px;left:3px;font-size:7px;font-weight:900;letter-spacing:.02em;color:#7A4A00;
+    background:linear-gradient(135deg,#FFF3CE,#FFE39B);border:1px solid #F2D07A;border-radius:999px;padding:1px 4px;line-height:1.35;white-space:nowrap
+  }
+  .coll-card.rare-locked .rare-tag{background:linear-gradient(135deg,#F1ECFF,#E4DBFF);border-color:#D7CAFA;color:#5B3EA8}
   .coll-pct{font-weight:800;color:var(--mint-deep);white-space:nowrap}
-  .coll-thumb .live{position:absolute;top:6px;left:6px;font-size:9px;font-weight:900;color:#fff;background:var(--mint);padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px rgba(24,210,155,.3)}
-  .coll-name{display:flex;align-items:center;justify-content:space-between;gap:4px;margin:8px 2px 2px}
-  .coll-name b{font-size:13px;font-weight:900;color:#16241F}
-  .coll-name .st{font-size:10px;font-weight:900;color:var(--muted)}
-  .coll-meta{margin:0 2px;font-size:10.5px;color:var(--dim);font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:4px}
+  .coll-thumb .live{position:absolute;bottom:3px;left:3px;right:3px;text-align:center;font-size:7.5px;font-weight:900;color:#fff;background:var(--mint);padding:1px 2px;border-radius:999px;box-shadow:0 2px 6px rgba(24,210,155,.3)}
+  .coll-name{display:flex;align-items:center;justify-content:center;gap:3px;margin:6px 1px 1px}
+  .coll-name b{font-size:10.5px;font-weight:900;color:#16241F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.02em}
+  .coll-name .st{font-size:9px;font-weight:900;color:var(--muted)}
+  .coll-meta{margin:1px 1px 0;font-size:8.5px;color:var(--dim);font-weight:800;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .coll-meta .dots{display:flex;gap:2px}
   .coll-meta .dots i{width:5px;height:5px;border-radius:50%;opacity:.35}
   .coll-meta .dots i.on{opacity:1}
+  .rare-bar{height:3px;border-radius:999px;background:#EEE9FA;overflow:hidden;margin:4px 2px 0}
+  .rare-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#CDBBFF,#9C7BF2)}
 
   /* ---------- 부스터/마스터 ---------- */
   .filters{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
@@ -1578,7 +1591,7 @@
   @media (min-width:721px){
     .pet-art{width:220px}
     .pet-stage{min-height:230px}
-    .coll-grid{grid-template-columns:1fr 1fr 1fr}
+    .coll-grid{grid-template-columns:repeat(4,1fr);gap:7px}
     .tt-split{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:10px}
     .tt-timers,.tt-timeline{padding:12px 10px 11px}
     .tl-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
@@ -2422,7 +2435,7 @@
 
     <section class="card hero-card" id="homePet" aria-label="토디펫 성장">
       <div class="pet-top">
-        <button class="pet-book" id="petBtn" aria-label="토디펫 십이지신 도감 열기">
+        <button class="pet-book" id="petBtn" aria-label="토디펫 도감 열기">
           <span class="ic" aria-hidden="true">📗</span>
         </button>
         <div class="pet-bubble-wrap" id="heroBubble">
@@ -2437,9 +2450,7 @@
 
       <div class="pet-stage">
         <div class="pet-scene">
-          <span class="flower a" id="flowerLeft" aria-hidden="true"></span>
           <button class="pet-art" id="petArt" aria-label="토디펫 상태 보기"></button>
-          <span class="flower b" id="flowerRight" aria-hidden="true"></span>
         </div>
         <div class="pet-base" aria-hidden="true"></div>
       </div>
@@ -2840,13 +2851,13 @@
   </div>
 </div>
 
-<!-- ================= 십이지신 도감 ================= -->
-<section class="coll" id="coll" role="dialog" aria-modal="true" aria-label="토디펫 십이지신 도감">
+<!-- ================= 토디펫 도감 ================= -->
+<section class="coll" id="coll" role="dialog" aria-modal="true" aria-label="토디펫 도감">
   <div class="coll-wrap">
     <div class="coll-head">
       <button class="back" id="collClose" aria-label="도감 닫기">‹</button>
       <h1><span class="em" aria-hidden="true">🥚</span>토디펫 도감</h1>
-      <span class="count" id="collCount">0 / 12</span>
+      <span class="count" id="collCount">0 / 28</span>
     </div>
 
     <div class="coll-list" id="collList">
@@ -2858,9 +2869,10 @@
         <div class="pet-gauge" id="cgGauge"></div>
       </div>
       <div class="coll-filters" id="collFilters" role="tablist" aria-label="도감 필터">
-        <button class="chip on" data-cfilter="all">전체</button>
-        <button class="chip" data-cfilter="owned">보유중</button>
-        <button class="chip" data-cfilter="locked">미보유</button>
+        <button class="chip on" data-cfilter="all">전체 28</button>
+        <button class="chip" data-cfilter="rare">✨ 레어 6</button>
+        <button class="chip" data-cfilter="raised">함께한 펫</button>
+        <button class="chip" data-cfilter="locked">잠긴 펫</button>
       </div>
       <div class="coll-grid" id="collGrid"></div>
     </div>
@@ -3338,9 +3350,9 @@
   <div class="sheet-card">
     <div class="sheet-grip"></div>
     <div class="sheet-head"><h2 id="petTitle">토디펫 수정</h2><button class="x" data-close="petSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
-    <p class="sheet-sub">함께 공부할 십이지신을 고르고 이름을 지어주세요</p>
+    <p class="sheet-sub">함께 공부할 토디펫을 고르고 이름을 지어주세요</p>
     <div class="field"><label for="petNameInput">펫 이름</label><input type="text" id="petNameInput" maxlength="10" placeholder="예: 콩이"></div>
-    <div class="field"><label>동물</label><div class="pick-grid" id="petAnimalGrid"></div></div>
+    <div class="field"><label>토디펫</label><div class="pick-grid" id="petAnimalGrid"></div></div>
     <div class="sheet-actions">
       <button class="btn ghost" data-close="petSheet">취소</button>
       <button class="btn primary" id="petSave">저장</button>
@@ -3516,21 +3528,49 @@
       '<span class="memo-lock" aria-hidden="true">🔒</span></button></div>';
   }
 
+  /* =========================================================
+     토디펫 28마리 — 몽글몽글한 애칭 (사용자가 이름을 바꿀 수 있다)
+     ---------------------------------------------------------
+     rare: 해금에 필요한 누적 공부 시간(시간 단위). 10시간 단위.
+     ========================================================= */
   const ANIMALS = [
-    { id: 'rat', name: '쥐', emoji: '🐭' },
-    { id: 'ox', name: '소', emoji: '🐮' },
-    { id: 'tiger', name: '호랑이', emoji: '🐯' },
-    { id: 'rabbit', name: '토끼', emoji: '🐰' },
-    { id: 'dragon', name: '용', emoji: '🐲' },
-    { id: 'snake', name: '뱀', emoji: '🐍' },
-    { id: 'horse', name: '말', emoji: '🐴' },
-    { id: 'sheep', name: '양', emoji: '🐑' },
-    { id: 'monkey', name: '원숭이', emoji: '🐵' },
-    { id: 'rooster', name: '닭', emoji: '🐔' },
-    { id: 'dog', name: '개', emoji: '🐶' },
-    { id: 'pig', name: '돼지', emoji: '🐷' }
+    { id: 'chick',         name: '삐이',   emoji: '🐣' },
+    { id: 'octopus',       name: '무니',   emoji: '🐙' },
+    { id: 'unicorn',       name: '벼리',     emoji: '🦄', rare: 10 },
+    { id: 'panda',         name: '파니',     emoji: '🐼' },
+    { id: 'bat',           name: '보라미',   emoji: '🦇', rare: 20 },
+    { id: 'rabbit',        name: '솜이',     emoji: '🐰' },
+    { id: 'pig',           name: '푸이',   emoji: '🐷' },
+    { id: 'icecream',      name: '베리',   emoji: '🍦', rare: 30 },
+    { id: 'chicken',       name: '꼬꼬',   emoji: '🐤' },
+    { id: 'elephant',      name: '뿌이',     emoji: '🐘' },
+    { id: 'turtle',        name: '부기',   emoji: '🐢' },
+    { id: 'sloth',         name: '느리',     emoji: '🦥' },
+    { id: 'axolotl',       name: '피우',     emoji: '🦎' },
+    { id: 'jellyfish',     name: '해루',     emoji: '🪼' },
+    { id: 'dino_mint',     name: '다노',     emoji: '🦕' },
+    { id: 'cactus',        name: '서니',   emoji: '🌵', rare: 40 },
+    { id: 'frog',          name: '우기',   emoji: '🐸' },
+    { id: 'penguin',       name: '기니',   emoji: '🐧' },
+    { id: 'dino_green',    name: '요이',   emoji: '🦖' },
+    { id: 'chick_yellow',  name: '코이',   emoji: '🐥' },
+    { id: 'goat',          name: '메이',   emoji: '🐐' },
+    { id: 'bear',          name: '보리',     emoji: '🐻' },
+    { id: 'fox',           name: '토리',   emoji: '🦊' },
+    { id: 'koala_balloon', name: '둥실이',   emoji: '🎈', rare: 50 },
+    { id: 'snail',         name: '피니',   emoji: '🐌' },
+    { id: 'bluebird',      name: '누리',   emoji: '🐳' },
+    { id: 'koala',         name: '푸니',   emoji: '🐨' },
+    { id: 'penguin_cream', name: '슈이',   emoji: '🍨', rare: 60 }
   ];
-  const animalOf = (id) => ANIMALS.find((a) => a.id === id) || ANIMALS[2];
+  const ANIMAL_DEFAULT = 'chick';
+  const animalOf = (id) => ANIMALS.find((a) => a.id === id) || ANIMALS[0];
+  /* 예전 십이지신 저장값 → 새 펫 (공부 시간을 그대로 살린다) */
+  const LEGACY_ANIMAL = {
+    rat: 'chick', ox: 'bear', tiger: 'fox', rabbit: 'rabbit', dragon: 'dino_green', snake: 'dino_mint',
+    horse: 'goat', sheep: 'koala', monkey: 'sloth', rooster: 'chicken', dog: 'penguin', pig: 'pig',
+    /* 혹시 남아 있을 옛 4단계 id */ egg: 'chick', baby: 'chick', adult: 'chick', gold: 'chick'
+  };
   /* 민트와 어울리는 과목 색 — 타임테이블·통계에서 같이 쓴다 */
   const SUBJ_COLORS = ['#18D29B', '#5AC8FA', '#A78BFA', '#FF8FA3', '#FBBF24', '#84CC16', '#FB923C', '#60A5FA'];
   const SUBJECT_ICONS = ['🍼', '🍚', '🥛', '💚', '🌿', '🍏', '📗', '🧃', '🍋‍🟩', '🎄', '🥦', '🍬'];
@@ -3850,7 +3890,7 @@
   function freshState() {
     const c = freshCert('공인중개사', '2027-10-30', PRESETS['공인중개사'].subjects);
     c.subjects = PRESETS['공인중개사'].subjects.map((n, i) => ({ id: 's' + (i + 1), name: n, icon: SUBJECT_ICONS[i % SUBJECT_ICONS.length] }));
-    return { v: 2, mode: 'study', job: freshJob(), nickname: DEFAULT_NICK, activeCert: c.id, certs: [c], pet: { animal: 'tiger', name: petNameDefault(), minutes: {} }, photos: {} };
+    return { v: 2, mode: 'study', job: freshJob(), nickname: DEFAULT_NICK, activeCert: c.id, certs: [c], pet: { animal: ANIMAL_DEFAULT, names: {}, minutes: {}, rareSeen: {} }, photos: {} };
   }
 
   /* =========================================================
@@ -3859,32 +3899,66 @@
      예전에는 cert.pet / cert.photos 였다. 불러올 때 전역으로
      합쳐서 어느 자격증을 보고 있어도 펫과 달력이 그대로 보인다.
      ========================================================= */
+  /* 옛 십이지신 id → 새 펫 id (모르는 값은 기본 펫) */
+  const petIdOf = (id) => {
+    const v = String(id || '');
+    if (ANIMALS.some((a) => a.id === v)) return v;
+    return LEGACY_ANIMAL[v] || ANIMAL_DEFAULT;
+  };
+  /* 펫 이름 — 사용자가 지어준 이름이 있으면 그것, 없으면 애칭 */
+  function petName(id) {
+    const st = petStore();
+    const pid = petIdOf(id || (st && st.animal));
+    const names = (st && st.names) || {};
+    const nm = typeof names[pid] === 'string' ? names[pid].trim() : '';
+    return nm || animalOf(pid).name;
+  }
+  function setPetName(id, name) {
+    const st = petStore();
+    if (!st) return;
+    if (!st.names || typeof st.names !== 'object') st.names = {};
+    const pid = petIdOf(id);
+    const nm = String(name || '').trim().slice(0, 10);
+    if (nm) st.names[pid] = nm; else delete st.names[pid];
+  }
   function normalizePet(raw) {
     const p = (raw && typeof raw === 'object') ? raw : {};
     const out = {
-      animal: ANIMALS.some((a) => a.id === p.animal) ? p.animal : 'tiger',
-      name: (typeof p.name === 'string' && p.name.trim() && p.name.trim() !== '두근') ? p.name.trim().slice(0, 12) : petNameDefault(),   /* 예전 기본값 '두근'은 새 이름으로 교체 */
-      minutes: {}
+      animal: petIdOf(p.animal),
+      names: {},
+      minutes: {},
+      rareSeen: {}
     };
+    /* 옛 저장값의 대표 이름 하나(pet.name)는 그 동물의 이름으로 옮긴다 */
+    const oldName = (typeof p.name === 'string' && p.name.trim() && p.name.trim() !== '두근') ? p.name.trim().slice(0, 12) : '';
+    if (oldName) out.names[out.animal] = oldName;
+    if (p.names && typeof p.names === 'object' && !Array.isArray(p.names)) {
+      Object.keys(p.names).forEach((k) => {
+        const v = p.names[k];
+        if (typeof v !== 'string' || !v.trim()) return;
+        out.names[petIdOf(k)] = v.trim().slice(0, 12);
+      });
+    }
+    if (p.rareSeen && typeof p.rareSeen === 'object' && !Array.isArray(p.rareSeen)) {
+      Object.keys(p.rareSeen).forEach((k) => { if (p.rareSeen[k]) out.rareSeen[petIdOf(k)] = true; });
+    }
     /* 예전 저장값은 분(number)뿐 아니라 { minutes, colorIdx } 같은 객체일 수도 있다.
-       4단계(알·유아기·키치 성체·황금 성체)는 분에서 다시 계산하므로 색 단계는 버리고 분만 살린다. */
+       4단계(알·아기·어린이·성체)는 분에서 다시 계산하므로 색 단계는 버리고 분만 살린다. */
     const takeMin = (v) => {
       if (v && typeof v === 'object') v = v.minutes != null ? v.minutes : (v.min != null ? v.min : v.value);
       return Math.max(0, Math.round(Number(v) || 0));
     };
     if (p.minutes && typeof p.minutes === 'object' && !Array.isArray(p.minutes)) {
       Object.keys(p.minutes).forEach((k) => {
-        if (!ANIMALS.some((a) => a.id === k)) return;
         const v = takeMin(p.minutes[k]);
-        if (v > 0) out.minutes[k] = v;
+        if (v > 0) out.minutes[petIdOf(k)] = (out.minutes[petIdOf(k)] || 0) + v;
       });
     }
     /* 아주 예전 모양: pets: { tiger: { minutes: 120, colorIdx: 2 } } */
     if (p.pets && typeof p.pets === 'object' && !Array.isArray(p.pets)) {
       Object.keys(p.pets).forEach((k) => {
-        if (!ANIMALS.some((a) => a.id === k)) return;
         const v = takeMin(p.pets[k]);
-        if (v > 0) out.minutes[k] = (out.minutes[k] || 0) + v;
+        if (v > 0) out.minutes[petIdOf(k)] = (out.minutes[petIdOf(k)] || 0) + v;
       });
     }
     return out;
@@ -3896,7 +3970,7 @@
   function absorbPet(store, raw) {
     const p = normalizePet(raw);
     if (!petTotalOf(p)) { return; }
-    if (!petTotalOf(store)) { store.animal = p.animal; store.name = p.name; }
+    if (!petTotalOf(store)) { store.animal = p.animal; if (p.names[p.animal]) store.names[store.animal] = p.names[p.animal]; }
     Object.keys(p.minutes).forEach((k) => { store.minutes[k] = (store.minutes[k] || 0) + p.minutes[k]; });
   }
   function normalizePhotos(raw) {
@@ -4072,7 +4146,7 @@
         });
         mins += hours.size * 60;
       });
-      if (mins > 0) s.pet.minutes = { tiger: mins };
+      if (mins > 0) s.pet.minutes = { fox: mins };
     }
     return s;
   }
@@ -5159,10 +5233,10 @@
      펫 성장 계산 — 4단계 · 능력치(누적 공부시간 / 30시간)
      ========================================================= */
   function petInfo(c, animalId) {
-    const a = animalOf(animalId || petStore().animal);
+    const a = animalOf(petIdOf(animalId || petStore().animal));
     const total = Math.max(0, Number(petStore().minutes[a.id]) || 0);
     const goal = Math.max(10, Number(c.goal) || DEFAULT_GOAL);
-    /* 알(0~3h) → 유아기(3~10h) → 키치 성체(10~30h) → 황금 성체(30h~) */
+    /* 알(0~3h) → 아기(3~10h) → 어린이(10~30h) → 성체(30h~) */
     let stage = 3;
     for (let i = 0; i < STAGES.length; i++) {
       if (total < STAGES[i].max) { stage = i; break; }
@@ -5181,33 +5255,83 @@
     };
   }
   /* =========================================================
-     토디펫 · 4단계 성장 (알 → 유아기 → 키치 성체 → 황금 성체)
+     토디펫 · 4단계 성장 (알 → 아기 → 어린이 → 성체)
      ---------------------------------------------------------
      누적 공부시간이 능력치로 차오르고, 30시간에서 100%가 되면
-     키치 성체가 황금 성체로 각성한다.
+     어린이가 성체(아기 사람)로 자라난다.
      ========================================================= */
   const GROW_GOAL = 1800;               /* 능력치 100% = 30시간 */
   const STAGES = [
-    { id: 'egg',   name: '알',        icon: '🥚', min: 0,    max: 180,      next: '유아기' },
-    { id: 'baby',  name: '유아기',    icon: '🌱', min: 180,  max: 600,      next: '키치 성체' },
-    { id: 'adult', name: '키치 성체', icon: '✨', min: 600,  max: 1800,     next: '황금 성체' },
-    { id: 'gold',  name: '황금 성체', icon: '👑', min: 1800, max: Infinity, next: '' }
+    { id: 'egg',   name: '알',    icon: '🥚', min: 0,    max: 180,      next: '아기' },
+    { id: 'baby',  name: '아기',  icon: '🌱', min: 180,  max: 600,      next: '어린이' },
+    { id: 'child', name: '어린이', icon: '✨', min: 600,  max: 1800,     next: '성체' },
+    { id: 'adult', name: '성체',  icon: '👑', min: 1800, max: Infinity, next: '' }
   ];
   const STAGE_NAME = STAGES.map((s) => s.name);
   const STAGE_ICON = STAGES.map((s) => s.icon);
-  const petImgSrc = (stageId, animalId) => 'assets/pets/' + (stageId || 'egg') + '/' + (animalId || 'tiger') + '.png';
+  const petImgSrc = (stageId, animalId) => 'assets/pets/' + (stageId || 'egg') + '/' + (animalId || ANIMAL_DEFAULT) + '.png';
+  const petFaceSrc = (animalId) => 'assets/pets/faces/' + (animalId || petStore().animal || ANIMAL_DEFAULT) + '.png';
   /* 4단계 페이퍼·펠트 PNG — 예전 SVG 대신 실제 그림을 그린다 */
   function petArtHTML(stageId, animalId, opts) {
     const o = opts || {};
     const a = animalOf(animalId || petStore().animal);
     const st = STAGES[Math.max(0, Math.min(3, Number(stageId) || 0))];
-    const alt = o.alt || (a.name + ' ' + st.name);
-    return '<img class="pet-img' + (st.id === 'gold' ? ' is-gold' : '') + '" src="' + petImgSrc(st.id, a.id) +
+    const alt = o.alt || (petName(a.id) + ' ' + st.name);
+    return '<img class="pet-img st-' + st.id + '" src="' + petImgSrc(st.id, a.id) +
       '" alt="' + esc(alt) + '" draggable="false" decoding="async"' + (o.eager ? '' : ' loading="lazy"') + '>';
   }
-  function flowerImgHTML(kind) {
-    return '<img class="flower-img" src="assets/pets/flower-' + (kind === 'coral' ? 'right' : 'left') +
-      '.png" alt="" aria-hidden="true" draggable="false" decoding="async">';
+
+  /* =========================================================
+     레어펫 — 누적 공부 시간 10·20·30·40·50·60시간에 해금
+     ========================================================= */
+  const RARE_HOURS = 10;
+  /* 누적 공부 시간 = 기록된 공부(자격증별 일자) 시간, 기록이 없으면 펫이 쌓은 시간 */
+  function studyTotalMinutes() {
+    let sum = 0;
+    state.certs.forEach((c) => {
+      const keys = {};
+      Object.keys(c.days || {}).forEach((k) => { keys[k] = 1; });
+      Object.keys(c.mins || {}).forEach((k) => { keys[k] = 1; });
+      Object.keys(c.segs || {}).forEach((k) => { keys[k] = 1; });
+      Object.keys(c.extras || {}).forEach((k) => { keys[k] = 1; });
+      Object.keys(keys).forEach((k) => { sum += Math.max(0, certMinutes(c, k)); });
+    });
+    const pet = petTotalOf(petStore());
+    return Math.max(sum, pet);
+  }
+  function rareState(a, total) {
+    const need = (a && a.rare ? a.rare : 0) * 60;
+    const cur = total == null ? studyTotalMinutes() : total;
+    return {
+      rare: !!(a && a.rare), need: need, cur: cur,
+      unlocked: !(a && a.rare) || cur >= need,
+      left: Math.max(0, need - cur),
+      pct: need ? Math.max(0, Math.min(100, (cur / need) * 100)) : 100,
+      curH: Math.floor(cur / 60)
+    };
+  }
+  const rareOf = (animalId) => rareState(animalOf(animalId));
+  const isUnlocked = (animalId) => rareOf(animalId).unlocked;
+  /* 새로 해금된 레어펫을 놓치지 않게 — 처음 화면을 그릴 때는 조용히 기록만 하고,
+     그 뒤로 조건을 넘기면 축하 토스트를 띄운다. */
+  let rareArmed = false, rareChecking = false;
+  function checkRareUnlocks() {
+    if (rareChecking) return;
+    rareChecking = true;
+    const st = petStore();
+    if (!st.rareSeen || typeof st.rareSeen !== 'object') st.rareSeen = {};
+    const total = studyTotalMinutes();
+    const newly = [];
+    ANIMALS.forEach((a) => {
+      if (!a.rare) return;
+      if (total >= a.rare * 60 && !st.rareSeen[a.id]) { st.rareSeen[a.id] = true; newly.push(a); }
+    });
+    rareChecking = false;
+    if (!newly.length) return;
+    save(true);
+    if (rareArmed) {
+      toast('✨ 레어펫 ' + newly.map((a) => petName(a.id)).join(', ') + ' 해금! 토디펫 도감에서 만나요', 4600);
+    }
   }
 
   /* =========================================================
@@ -5300,7 +5424,7 @@
       '</button>').join('');
   }
 
-  /* 알 → 유아기 → 키치 성체 → 황금 성체 진행 표시 */
+  /* 알 → 아기 → 어린이 → 성체 게이지 */
   /* 도감·상태창·상세 공통 — 알과 왕관 사이를 채우는 능력치 게이지 (단계 이름은 보여주지 않는다) */
   function petGaugeHTML(info) {
     const pct = Math.round(info.pct);
@@ -5314,8 +5438,8 @@
   }
 
   function bubbleText(info) {
-    const a = info.animal.name;
-    if (info.complete) return '<b>' + a + '</b> 황금 각성! 능력치 100% · 정말 대단해요 👑';
+    const a = petName(info.animal.id);
+    if (info.complete) return '<b>' + a + '</b> 성체 완성! 능력치 100% · 정말 대단해요 👑';
     return '<b>' + info.nextName + '</b>까지 <b>' + fmtDur(info.left) + '</b> 남았어요! 오늘도 화이팅 🔥';
   }
 
@@ -5330,12 +5454,10 @@
       $('petBubble').innerHTML = '오늘도 한 땀씩, <b>화이팅!</b>';
     }
     const art = $('petArt');
-    art.innerHTML = petArtHTML(info.stage, info.animal.id, { alt: petStore().name + ' ' + info.animal.name + ' ' + info.stageName, eager: true });
+    art.innerHTML = petArtHTML(info.stage, info.animal.id, { alt: petName(info.animal.id) + ' ' + info.stageName, eager: true });
     art.setAttribute('data-stage', info.stageId);
-    art.setAttribute('aria-label', petStore().name + ' · ' + info.animal.name + ' ' + info.stageName + ' · 능력치 ' + Math.round(info.pct) + '% — 토디펫 상태 보기');
+    art.setAttribute('aria-label', petName(info.animal.id) + ' ' + info.stageName + ' · 능력치 ' + Math.round(info.pct) + '% — 토디펫 상태 보기');
     art.style.filter = 'drop-shadow(0 12px 16px rgba(16,80,58,.13))';
-    $('flowerLeft').innerHTML = flowerImgHTML('white');
-    $('flowerRight').innerHTML = flowerImgHTML('coral');
     $('heroIcon').textContent = heroSubjectIcon();
   }
 
@@ -5575,19 +5697,28 @@
   }
 
   /* 헤더 계정 칩 — 로그인 전에는 ‘로그인’(누르면 로그인 시트),
-     로그인 뒤에는 닉네임(누르면 통계·계정 시트) */
+     로그인 뒤에는 닉네임(누르면 통계·계정 시트) · 동그라미 안은 키우는 펫 성체 얼굴 */
   function renderAccountChip() {
     const btn = $('myBtn');
     if (!btn) return;
     const signedIn = !!(typeof cloud !== 'undefined' && cloud && cloud.session);
     const nick = (state.nickname || '오뇨님');
     $('myName').textContent = signedIn ? nick : '로그인';
-    $('myAvatar').textContent = signedIn ? (nick.trim().charAt(0) || '오') : '👤';
+    const face = signedIn ? petFaceSrc() : '';
+    ['myAvatar', 'myAvatarJob'].forEach((id) => {
+      const el = $(id);
+      if (!el) return;
+      if (face) {
+        let img = el.querySelector('img.av-pet');
+        if (!img) { el.textContent = ''; img = document.createElement('img'); img.className = 'av-pet'; img.alt = ''; img.setAttribute('draggable', 'false'); el.appendChild(img); }
+        if (img.getAttribute('src') !== face) img.setAttribute('src', face);
+      } else {
+        el.textContent = '👤';
+      }
+    });
     btn.classList.toggle('guest', !signedIn);
     const jn = $('myNameJob');
     if (jn) jn.textContent = signedIn ? nick : '로그인';
-    const ja = $('myAvatarJob');
-    if (ja) ja.textContent = signedIn ? (nick.trim().charAt(0) || '오') : '👤';
     const jb = $('myBtnJob');
     if (jb) jb.classList.toggle('guest', !signedIn);
     btn.setAttribute('aria-label', signedIn ? '마이페이지 · 계정 열기' : '로그인 · 클라우드 동기화');
@@ -5658,7 +5789,7 @@
     const sel = c.subjects.find((s) => s.id === pickSubject);
     $('pickInfoSubject').textContent = sel ? sel.name : '과목을 선택하세요';
     const info = petInfo(c);
-    $('pickInfoGoal').textContent = info.complete ? '황금 각성 100%' : info.nextName + '까지 ' + fmtDur(info.left);
+    $('pickInfoGoal').textContent = info.complete ? '성체 완성 100%' : info.nextName + '까지 ' + fmtDur(info.left);
     paintPickGoal();
     const add = $('pickAdd');
     if (add) add.addEventListener('click', () => {
@@ -5900,8 +6031,8 @@
     let msg = 'Tody time 완료! ' + fmtDur(minutes) + ' 기록했어요' + (filled ? ' · 타임라인 ' + filled + '칸' : '');
     if (after.stage > before.stage) {
       msg = after.complete
-        ? '👑 ' + after.animal.name + '이(가) 황금 성체로 각성했어요! 능력치 100% +' + fmtDur(minutes)
-        : '🎉 ' + after.animal.name + '이(가) ' + after.stageName + '가 되었어요! +' + fmtDur(minutes);
+        ? '👑 ' + petName(after.animal.id) + '이(가) 성체가 되었어요! 능력치 100% +' + fmtDur(minutes)
+        : '🎉 ' + petName(after.animal.id) + '이(가) ' + after.stageName + '가 되었어요! +' + fmtDur(minutes);
     }
     toast(msg, 4200);
   }
@@ -6276,7 +6407,7 @@
     box.hidden = !hit;
     if (!hit) return;
     const info = petInfo(cert());
-    const nm = petStore().name || info.animal.name;
+    const nm = petName(info.animal.id);
     const key = info.animal.id + '|' + info.stage;
     const art = $('focusCameoArt');
     if (art && key !== cameoKey) {
@@ -6507,24 +6638,27 @@
   }
 
   /* =========================================================
-     십이지신 도감
+     토디펫 도감 — 28마리 · 4단계 · 레어펫 6마리
      ========================================================= */
   let collFilter = 'all';
 
   function collItems() {
     const c = cert();
+    const total = studyTotalMinutes();
     return ANIMALS.map((a) => {
       const info = petInfo(c, a.id);
-      return { a: a, info: info, owned: info.total > 0, active: petStore().animal === a.id };
+      const rare = rareState(a, total);
+      return { a: a, info: info, rare: rare, owned: info.total > 0, active: petStore().animal === a.id };
     });
   }
+  const rareChipText = (r) => r.curH + '/' + (r.need / 60) + '시간';
 
   /* 홈 펫 탭 → 토디펫 상태창 팝업 */
   function renderPetStat() {
     const c = cert();
     const info = petInfo(c);
     $('psEmoji').textContent = info.animal.emoji;
-    $('psName').textContent = (petStore().name || '콩이') + ' · ' + info.animal.name;
+    $('psName').textContent = petName(info.animal.id);
     $('psArt').innerHTML = petArtHTML(info.stage, info.animal.id, { eager: true });
     $('psGauge').innerHTML = petGaugeHTML(info);
   }
@@ -6553,30 +6687,47 @@
   function renderCollection() {
     const c = cert();
     const items = collItems();
-    const owned = items.filter((x) => x.owned).length;
-    $('collCount').textContent = owned + ' / 12';
+    const unlocked = items.filter((x) => x.rare.unlocked).length;
+    $('collCount').textContent = unlocked + ' / 28';
     document.querySelectorAll('#collFilters .chip').forEach((b) => b.classList.toggle('on', b.dataset.cfilter === collFilter));
-    const list = items.filter((x) => collFilter === 'all' || (collFilter === 'owned' ? x.owned : !x.owned));
+    const list = items.filter((x) => {
+      if (collFilter === 'rare') return x.rare.rare;
+      if (collFilter === 'raised') return x.owned;
+      if (collFilter === 'locked') return !x.rare.unlocked;
+      return true;
+    });
     $('collGrid').innerHTML = list.map((x) => {
-      return '<button class="coll-card' + (x.active ? ' on' : '') + '" data-animal="' + x.a.id + '" aria-label="' + esc(x.a.name + ' ' + (x.owned ? x.info.stageName + ' · 능력치 ' + Math.round(x.info.pct) + '%' : '미보유')) + '">' +
-        '<div class="coll-thumb' + (x.owned ? '' : ' locked') + (x.info.complete ? ' gold' : '') + '">' +
-          '<div class="art">' + petArtHTML(x.owned ? x.info.stage : 0, x.a.id, { alt: x.a.name + ' ' + (x.owned ? x.info.stageName : '알') }) + '</div>' +
-          (x.owned ? '' : '<span class="lock" aria-hidden="true">🔒</span>') +
-          (x.active ? '<span class="live">키우는 중</span>' : '') +
+      const nm = petName(x.a.id);
+      const locked = !x.rare.unlocked;
+      const stage = locked ? 3 : x.info.stage;
+      const sub = locked
+        ? '🔒 ' + rareChipText(x.rare)
+        : fmtDur(x.info.total) + ' · ' + Math.round(x.info.pct) + '%';
+      const aria = nm + (locked ? ' 잠김 · 누적 공부 ' + (x.rare.need / 60) + '시간 필요 · 지금 ' + x.rare.curH + '시간' : ' ' + x.info.stageName + ' · 능력치 ' + Math.round(x.info.pct) + '%');
+      return '<button class="coll-card' + (x.active ? ' on' : '') + (locked ? ' rare-locked' : '') + '" data-animal="' + x.a.id + '" aria-label="' + esc(aria) + '">' +
+        '<div class="coll-thumb' + (locked ? ' locked' : '') + '">' +
+          '<div class="art">' + petArtHTML(stage, x.a.id, { alt: nm + (locked ? ' 잠김' : ' ' + x.info.stageName) }) + '</div>' +
+          (x.rare.rare ? '<span class="rare-tag" aria-hidden="true">✨ RARE</span>' : '') +
+          (locked ? '<span class="lock" aria-hidden="true">🔒</span>' : '') +
+          (x.active && !locked ? '<span class="live">키우는 중</span>' : '') +
         '</div>' +
-        '<div class="coll-name"><b>' + esc(x.a.name) + '</b>' + (x.owned ? '' : '<span class="st">미보유</span>') + '</div>' +
-        '<div class="coll-meta"><span>' + (x.owned ? fmtDur(x.info.total) : '공부하면 만나요') + '</span>' +
-          '<span class="coll-pct">' + (x.owned ? '능력치 ' + Math.round(x.info.pct) + '%' : '—') + '</span>' +
-        '</div>' +
+        '<div class="coll-name"><b>' + esc(nm) + '</b></div>' +
+        (locked
+          ? '<div class="rare-bar" aria-hidden="true"><i style="width:' + Math.max(3, Math.round(x.rare.pct)) + '%"></i></div>'
+          : '') +
+        '<div class="coll-meta"><span>' + esc(sub) + '</span></div>' +
       '</button>';
     }).join('');
     if (!list.length) {
-      $('collGrid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="em">🥚</div><b>' + (collFilter === 'owned' ? '아직 보유한 펫이 없어요' : '모든 펫을 보유하고 있어요!') + '</b><span>' + (collFilter === 'owned' ? 'Tody time으로 공부하면 펫이 알에서 깨어나요.' : '대단해요. 십이지신을 모두 만났어요.') + '</span></div>';
+      const msg = collFilter === 'locked' ? ['잠긴 펫이 없어요!', '레어펫 6마리를 모두 만났어요 ✨']
+        : collFilter === 'raised' ? ['아직 함께한 펫이 없어요', 'Tody time으로 공부하면 펫이 알에서 깨어나요.']
+        : ['레어펫이 없어요', '누적 공부 시간을 채우면 만날 수 있어요.'];
+      $('collGrid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="em">🥚</div><b>' + msg[0] + '</b><span>' + msg[1] + '</span></div>';
     }
     // 내 펫 성장 (4단계 · 능력치)
     const active = petInfo(c);
     $('cgEmoji').textContent = active.animal.emoji;
-    $('cgName').textContent = (petStore().name || '콩이') + ' · ' + active.animal.name;
+    $('cgName').textContent = petName(active.animal.id);
     $('cgGauge').innerHTML = petGaugeHTML(active);
   }
 
@@ -6584,14 +6735,20 @@
   function selectPet(animalId) {
     const a = ANIMALS.find((x) => x.id === animalId);
     if (!a) return;
-    const info = petInfo(cert(), animalId);
-    if (!(info.total > 0)) { toast(a.name + '는 아직 만나지 못했어요 · Tody time으로 공부하면 알에서 깨어나요', 3400); return; }
-    if (petStore().animal === animalId) { toast('지금 ' + a.name + '를 키우고 있어요', 2200); return; }
+    const nm = petName(a.id);
+    const rs = rareState(a);
+    if (!rs.unlocked) {
+      toast('🔒 ' + nm + '는 아직 잠겨 있어요 · 누적 공부 ' + (a.rare) + '시간이면 만나요 (지금 ' + rs.curH + '시간)', 4200);
+      return;
+    }
+    if (petStore().animal === animalId) { toast('지금 ' + nm + '와 함께 공부하고 있어요', 2200); return; }
     petStore().animal = animalId;
+    if (petStore().minutes[animalId] == null) petStore().minutes[animalId] = 0;
     save(true);
     renderCollection();
     renderHero();
-    toast(a.name + ' · 이제 이 펫을 키워요', 2600);
+    renderAccountChip();
+    toast(nm + ' · 이제 이 펫을 키워요', 2600);
   }
 
   /* =========================================================
@@ -6693,18 +6850,33 @@
     paintPickGoal();  /* 열려 있는 시트의 값은 renderAll이 다시 그리지 않으므로 따로 맞춘다 */
   }
 
-  let petSheetAnimal = 'tiger';
+  let petSheetAnimal = ANIMAL_DEFAULT;
+  let petNameDraft = {};
   function openPetSheet() {
     petSheetAnimal = petStore().animal;
-    $('petNameInput').value = petStore().name || '콩이';
-    $('petAnimalGrid').innerHTML = ANIMALS.map((a) => {
-      const ai = petInfo(cert(), a.id);
-      return '<button class="pick-sub pet-pick' + (a.id === petSheetAnimal ? ' on' : '') + '" data-petanimal="' + a.id + '">' +
-        '<span class="pp-art">' + petArtHTML(ai.total > 0 ? ai.stage : 0, a.id) + '</span>' +
-        '<span class="nm">' + a.name + '</span></button>';
-    }).join('');
+    petNameDraft = {};
+    const paint = () => {
+      $('petNameInput').value = petNameDraft[petSheetAnimal] != null ? petNameDraft[petSheetAnimal] : petName(petSheetAnimal);
+      $('petAnimalGrid').innerHTML = ANIMALS.map((a) => {
+        const ai = petInfo(cert(), a.id);
+        const rs = rareState(a);
+        const locked = !rs.unlocked;
+        return '<button class="pick-sub pet-pick' + (a.id === petSheetAnimal ? ' on' : '') + (locked ? ' locked' : '') + '" data-petanimal="' + a.id + '"' +
+          ' aria-label="' + esc(petName(a.id) + (locked ? ' · 잠김 · 누적 ' + (a.rare) + '시간 필요' : '')) + '">' +
+          '<span class="pp-art">' + petArtHTML(locked ? 3 : (ai.total > 0 ? ai.stage : 0), a.id) + '</span>' +
+          '<span class="nm">' + esc(petName(a.id)) + '</span>' +
+          (locked ? '<span class="pp-lock" aria-hidden="true">🔒</span>' : '') + '</button>';
+      }).join('');
+    };
+    $('petNameInput').oninput = () => { petNameDraft[petSheetAnimal] = $('petNameInput').value; };
+    paint();
+    petSheetPaint = paint;
     openSheet('petSheet');
+    /* 지금 키우는 펫이 그리드 아래쪽에 있어도 바로 보이게 */
+    const cur = $('petAnimalGrid').querySelector('.pet-pick.on');
+    if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'center' });
   }
+  let petSheetPaint = null;
 
   /* =========================================================
      할일
@@ -7274,18 +7446,29 @@
   $('petAnimalGrid').addEventListener('click', (e) => {
     const b = e.target.closest('[data-petanimal]');
     if (!b) return;
-    petSheetAnimal = b.dataset.petanimal;
-    $('petAnimalGrid').querySelectorAll('.pick-sub').forEach((x) => x.classList.toggle('on', x.dataset.petanimal === petSheetAnimal));
+    const id = b.dataset.petanimal;
+    const a = ANIMALS.find((x) => x.id === id);
+    if (!a) return;
+    const rs = rareState(a);
+    if (!rs.unlocked) {
+      toast('🔒 ' + petName(id) + '는 아직 잠겨 있어요 · 누적 공부 ' + a.rare + '시간이면 만나요 (지금 ' + rs.curH + '시간)', 4200);
+      return;
+    }
+    /* 지금 입력 중이던 이름은 그 펫의 이름으로 남겨 두고, 고른 펫의 이름을 보여준다 */
+    petNameDraft[petSheetAnimal] = $('petNameInput').value;
+    petSheetAnimal = id;
+    if (petSheetPaint) petSheetPaint();
   });
   $('petSave').addEventListener('click', () => {
-    const nm = ($('petNameInput').value || '').trim();
-    petStore().name = nm || '콩이';
+    Object.keys(petNameDraft).forEach((id) => setPetName(id, petNameDraft[id]));
+    setPetName(petSheetAnimal, $('petNameInput').value);
     petStore().animal = petSheetAnimal;
     if (petStore().minutes[petSheetAnimal] == null) petStore().minutes[petSheetAnimal] = 0;
     save(true);
     closeSheet('petSheet');
     renderAll();
-    toast('펫을 ' + animalOf(petSheetAnimal).name + ' · ' + petStore().name + '(으)로 바꿨어요');
+    renderPetStat();
+    toast('펫을 ' + petName(petSheetAnimal) + '(으)로 바꿨어요');
   });
 
   /* =========================================================
@@ -9936,8 +10119,11 @@
     renderTodo();
     renderWrong();
     renderMaster();
+    checkRareUnlocks();
+    renderAccountChip();
     if (state.mode === 'job') renderJobAll();
     if ($('petStat').classList.contains('open')) renderPetStat();
+    if ($('coll').classList.contains('open')) renderCollection();
   }
 
   document.addEventListener('keydown', (e) => {
@@ -9988,6 +10174,7 @@
   pomoCelebrated = pomoIsHit();
   applyMode();
   renderAll();
+  rareArmed = true;   /* 첫 화면에서 이미 해금된 레어펫은 조용히 표시만 */
   if (focus) openFocusScreen();
   cloudBoot();
 
@@ -9998,6 +10185,9 @@
     startFocus: startFocus, finishFocus: finishFocus, openCollection: openCollection,
     openPetStat: openPetStat, closePetStat: closePetStat,
     selectPet: selectPet, openPicker: openPicker, petArtHTML: petArtHTML, stages: () => STAGES, toast: toast,
+    animals: () => ANIMALS, petName: petName, setPetName: setPetName, petFaceSrc: petFaceSrc,
+    rareState: rareState, rareOf: rareOf, studyTotalMinutes: studyTotalMinutes, checkRareUnlocks: checkRareUnlocks,
+    armRare: () => { rareArmed = true; },
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
     focusState: () => focus, resumeFocusTick: resumeFocusTick, paintFocus: paintFocus,
     layoutFocus: layoutFocusScreen,
