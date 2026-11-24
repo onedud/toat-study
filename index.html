@@ -3370,7 +3370,7 @@
   <div class="veil" data-close="photoSheet"></div>
   <div class="sheet-card">
     <div class="sheet-grip"></div>
-    <div class="sheet-head"><h2 id="photoTitle">토디너리</h2><div class="sheet-head-tools"><button class="pic-tool" id="photoDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="photoSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
+    <div class="sheet-head"><h2 id="photoTitle">토디너리</h2><div class="sheet-head-tools"><button class="pic-tool" id="photoEdit" type="button" aria-label="수정" title="수정" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4.2L19 9.2a2.6 2.6 0 0 0-3.7-3.7L4.5 16.3V20z"/><path d="M13.8 6.9l3.3 3.3"/></svg></button><button class="pic-tool" id="photoDelete" type="button" aria-label="삭제" title="삭제" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9.2 7V4.8h5.6V7M6.6 7l.8 12.3h9.2L17.4 7M10 10.6v6M14 10.6v6"/></svg></button><button class="x" data-close="photoSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div></div>
     <p class="sheet-sub" id="photoSub">11월 16일 (월)</p>
     <div class="photo-preview" id="photoPreview">
       <div class="ph-empty" id="photoEmpty"><span class="em">📷</span>사진을 찍거나 앨범에서 골라주세요</div>
@@ -5410,14 +5410,14 @@
       const hasImg = !!(entry && entry.img);
       const hasDiary = !!(entry && String(entry.diary || entry.memo || '').trim());
       const isToday = k === tk;
-      /* 작성 가능한 날(오늘·어제)이거나 남긴 기록이 있을 때만 열린다 */
-      const isEditable = todyDiaryEditable(k);
-      const noEntry = !isEditable && !hasImg && !hasDiary;
+      /* 오늘·어제는 새로 쓸 수 있고, 남긴 기록이 있는 날은 지난 날짜여도 열어서 고칠 수 있다 */
+      const canWrite = todyDiaryWritable(k);
+      const noEntry = !canWrite && !hasImg && !hasDiary;
       const cls = 'cal-cell' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '') + (isToday ? ' today' : '') +
         (hasImg ? ' has-photo' : ' empty-photo') + (hasDiary ? ' has-diary' : '') +
         (noEntry ? ' no-entry' : ' cal-live');
       const label = prettyDate(k) + (hasImg ? ' 사진' : '') + (hasDiary ? ' 일기' : '') +
-        (noEntry ? ' — 남긴 기록 없음' : (isEditable ? ' — 열어서 수정' : ' — 열어서 보기'));
+        (noEntry ? ' — 남긴 기록 없음' : (hasImg || hasDiary ? ' — 열어서 보기·수정' : ' — 열어서 쓰기'));
       cells.push('<button class="' + cls + '" data-date="' + k + '"' + (noEntry ? ' aria-disabled="true"' : '') +
         ' aria-label="' + esc(label) + '" role="gridcell">' +
         (hasImg ? '<img src="' + entry.img + '" alt="" loading="lazy">' : '') +
@@ -5478,10 +5478,10 @@
   function feedRowHTML(it) {
     const d = fromKey(it.k);
     const isToday = it.k === todayKey();
-    const isEditable = todyDiaryEditable(it.k);
+    const canWrite = todyDiaryWritable(it.k);
     const cls = 'arc-row' + (it.img && it.text ? ' photo-text' : it.img ? ' photo-only' : ' text-only');
     const label = prettyDate(it.k) + (it.img ? ' 사진' : '') + (it.text ? ' 일기' : '') +
-      (isToday ? ' — 오늘 · 열어서 수정' : (isEditable ? ' — 어제 · 열어서 수정' : ' — 열어서 보기'));
+      (isToday ? ' — 오늘 · 열어서 수정' : (canWrite ? ' — 어제 · 열어서 수정' : ' — 열어서 보기·수정'));
     return '<button class="' + cls + '" type="button" role="listitem" data-date="' + it.k + '" aria-label="' + esc(label) + '">' +
       '<span class="arc-row-date">' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 <i>(' + WEEKDAY[d.getDay()] + ')</i>' +
         (isToday ? '<span class="arc-now">오늘</span>' : '') + '</span>' +
@@ -5544,7 +5544,7 @@
     if (!cell) return;
     const k = cell.dataset.date;
     /* 오늘·어제는 바로 열고, 그보다 지난 날은 남긴 기록(사진/일기)이 있을 때만 열린다 */
-    if (!todyDiaryEditable(k)) {
+    if (!todyDiaryWritable(k)) {
       const p = photoStore()[k];
       const hasImg = !!(p && p.img);
       const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
@@ -6384,48 +6384,67 @@
      토디너리 시트 (인증 사진 + 일기)
      ========================================================= */
   const TODY_DIARY_LOCK = '토디너리는 오늘과 전날까지만 작성할 수 있어요';
-  const todyDiaryEditable = (k) => k === todayKey() || k === addDays(todayKey(), -1);
+  const TODY_DIARY_EDIT_HINT = '잘못 적은 건 ✏️ 로 고칠 수 있어요';
+  /* 새 기록은 오늘·어제에만 쓸 수 있다 */
+  const todyDiaryWritable = (k) => k === todayKey() || k === addDays(todayKey(), -1);
+  /* 그 날 남긴 기록(사진·일기)이 있는지 */
+  const photoHasRecord = (k) => calRecorded(photoStore()[k]);
+  /* 이미 남긴 기록은 지난 날짜여도 고칠 수 있다 */
+  const todyDiaryCanEdit = (k) => todyDiaryWritable(k) || photoHasRecord(k);
   let photoDate = todayKey();
   let photoPending = null;
   let photoChanged = false;
+  let photoEditMode = false;
 
   function openPhoto(dateKey) {
     photoDate = dateKey;
     photoPending = null;
     photoChanged = false;
-    const p = photoStore()[dateKey];
+    /* 오늘·어제는 바로 쓰는 상태로, 지난 기록은 보기 상태로 열고 ✏️ 로 고친다 */
+    photoEditMode = todyDiaryWritable(dateKey);
+    renderPhotoSheet();
+    openSheet('photoSheet');
+  }
+
+  function renderPhotoSheet() {
+    const k = photoDate;
+    const p = photoStore()[k];
     const hasImg = !!(p && p.img);
     const hasDiary = !!(p && String(p.diary || p.memo || '').trim());
-    const isToday = dateKey === todayKey();
-    const isEditable = todyDiaryEditable(dateKey);
-    const isYesterday = isEditable && !isToday;
-    /* 작성 가능한 날(오늘·어제)은 사진·일기 모두, 그보다 지난 날은 남긴 것만 보여준다 */
-    const showPhoto = isEditable || hasImg;
-    const showDiary = isEditable || hasDiary;
-    $('photoPreview').hidden = !showPhoto;
-    $('photoActions').hidden = !isEditable;
-    $('photoDiaryWrap').hidden = !showDiary;
-    $('photoSub').textContent = prettyDate(dateKey) + (isToday ? ' · 오늘' : (isYesterday ? ' · 어제' : ' · 읽기 전용'));
+    const hasRec = hasImg || hasDiary;
+    const isToday = k === todayKey();
+    const isYesterday = todyDiaryWritable(k) && !isToday;
+    const canWrite = todyDiaryWritable(k);
+    const editing = canWrite || (photoEditMode && hasRec);
+    const src = photoPending ? photoPending.data : (hasImg ? p.img : '');
     $('photoTitle').textContent = '토디너리';
+    $('photoSub').textContent = prettyDate(k) + (isToday ? ' · 오늘' : (isYesterday ? ' · 어제' : (hasRec ? ' · 지난 기록' : '')));
+    /* 쓰는 중에는 빈 칸도 보여 주고, 보기 중에는 남긴 것만 보여 준다 */
+    $('photoPreview').hidden = !(editing || hasImg);
+    $('photoActions').hidden = !editing;
+    $('photoDiaryWrap').hidden = !(editing || hasDiary);
     $('photoDiary').value = p ? (p.diary || p.memo || '') : '';
-    $('photoImg').hidden = !hasImg;
-    $('photoEmpty').hidden = hasImg;
-    if (hasImg) $('photoImg').src = p.img; else $('photoImg').removeAttribute('src');
-    /* 토디너리는 오늘·어제까지만 작성·수정할 수 있다 (그보다 지난 날짜는 읽기 전용) */
-    $('photoDelete').hidden = !p || !isEditable;
-    $('photoPick').hidden = !isEditable;
-    $('photoDiary').readOnly = !isEditable;
-    $('photoDiary').classList.toggle('readonly', !isEditable);
-    $('photoSave').hidden = !isEditable;
-    $('photoPick').textContent = hasImg ? '사진 교체' : '사진 고르기';
-    $('photoHint').textContent = isEditable
+    $('photoImg').hidden = !src;
+    $('photoEmpty').hidden = !!src;
+    if (src) $('photoImg').src = src; else $('photoImg').removeAttribute('src');
+    /* 헤더 픽토그램 ✏️ 🗑️ ✕ — 기록이 있으면 지난 날도 ✏️ 로 고치고 🗑️ 로 지운다
+       (수정 중에는 ✏️ 자리를 비워 🗑️ ✕ 위치가 움직이지 않게 한다) */
+    const showPencil = hasRec && !canWrite;
+    $('photoEdit').hidden = !showPencil;
+    $('photoEdit').style.visibility = (showPencil && photoEditMode) ? 'hidden' : '';
+    $('photoDelete').hidden = !hasRec;
+    $('photoPick').hidden = !editing;
+    $('photoSave').hidden = !editing;
+    $('photoDiary').readOnly = !editing;
+    $('photoDiary').classList.toggle('readonly', !editing);
+    $('photoPick').textContent = src ? '사진 교체' : '사진 고르기';
+    $('photoHint').textContent = editing
       ? '공부 인증 사진은 최대 480px로 작게 압축돼요 · 일기만 남겨도 돼요'
-      : TODY_DIARY_LOCK;
-    $('photoHint').classList.toggle('ro', !isEditable);
-    $('photoEmpty').innerHTML = hasImg ? '' : (isEditable
+      : (hasRec ? TODY_DIARY_EDIT_HINT : TODY_DIARY_LOCK);
+    $('photoHint').classList.toggle('ro', !editing);
+    $('photoEmpty').innerHTML = src ? '' : (editing
       ? '<span class="em">📷</span>공부 인증 사진을 남겨보세요'
       : '<span class="em">🔒</span>이 날에는 남긴 토디너리가 없어요');
-    openSheet('photoSheet');
   }
 
   /* 사진 압축 — 쓰임새마다 해상도·품질을 다르게
@@ -7272,8 +7291,13 @@
   /* =========================================================
      인증 사진 이벤트
      ========================================================= */
+  $('photoEdit').addEventListener('click', () => {
+    if (!todyDiaryCanEdit(photoDate)) { toast(TODY_DIARY_LOCK); return; }
+    photoEditMode = true;
+    renderPhotoSheet();
+  });
   $('photoPick').addEventListener('click', () => {
-    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
+    if (!todyDiaryCanEdit(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     $('photoFile').click();
   });
   $('photoFile').addEventListener('change', async (e) => {
@@ -7288,7 +7312,6 @@
       $('photoImg').hidden = false;
       $('photoEmpty').hidden = true;
       $('photoHint').textContent = kb(out.origBytes) + ' → ' + kb(out.bytes) + '로 압축했어요 · ' + out.w + '×' + out.h + 'px';
-      $('photoDelete').hidden = true;
       $('photoPick').textContent = '다른 사진 고르기';
     } catch (err) {
       photoPending = null;
@@ -7297,7 +7320,7 @@
     }
   });
   $('photoSave').addEventListener('click', () => {
-    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
+    if (!todyDiaryCanEdit(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     const existing = photoStore()[photoDate];
     const img = photoPending ? photoPending.data : (existing && existing.img ? existing.img : '');
     const diary = ($('photoDiary').value || '').trim();
@@ -7311,7 +7334,7 @@
     toast(wasNew ? prettyDate(photoDate) + ' 기록을 남겼어요 📸' : '이 날의 기록을 저장했어요');
   });
   $('photoDelete').addEventListener('click', () => {
-    if (!todyDiaryEditable(photoDate)) { toast(TODY_DIARY_LOCK); return; }
+    if (!todyDiaryCanEdit(photoDate)) { toast(TODY_DIARY_LOCK); return; }
     const entry = photoStore()[photoDate];
     if (!entry) { toast('지울 기록이 없어요'); return; }
     if (!window.confirm(prettyDate(photoDate) + '의 인증 사진과 일기를 모두 지울까요?\n지운 기록은 되돌릴 수 없어요.')) return;
