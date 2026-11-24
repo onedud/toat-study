@@ -6702,8 +6702,8 @@
       const stage = locked ? 3 : x.info.stage;
       const sub = locked
         ? '🔒 ' + rareChipText(x.rare)
-        : fmtDur(x.info.total) + ' · ' + Math.round(x.info.pct) + '%';
-      const aria = nm + (locked ? ' 잠김 · 누적 공부 ' + (x.rare.need / 60) + '시간 필요 · 지금 ' + x.rare.curH + '시간' : ' ' + x.info.stageName + ' · 능력치 ' + Math.round(x.info.pct) + '%');
+        : (x.info.pct >= 100 ? '완료 👑' : Math.round(x.info.pct) + '%');
+      const aria = nm + (locked ? ' 잠김 · 누적 공부 ' + (x.rare.need / 60) + '시간 필요 · 지금 ' + x.rare.curH + '시간' : ' ' + x.info.stageName + ' · ' + fmtDur(x.info.total) + ' · 능력치 ' + Math.round(x.info.pct) + '%');
       return '<button class="coll-card' + (x.active ? ' on' : '') + (locked ? ' rare-locked' : '') + '" data-animal="' + x.a.id + '" aria-label="' + esc(aria) + '">' +
         '<div class="coll-thumb' + (locked ? ' locked' : '') + '">' +
           '<div class="art">' + petArtHTML(stage, x.a.id, { alt: nm + (locked ? ' 잠김' : ' ' + x.info.stageName) }) + '</div>' +
