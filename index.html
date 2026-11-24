@@ -6699,14 +6699,15 @@
     $('collGrid').innerHTML = list.map((x) => {
       const nm = petName(x.a.id);
       const locked = !x.rare.unlocked;
-      const stage = locked ? 3 : x.info.stage;
+      /* 잠긴 레어펫은 성체를 미리 보여주지 않고 알로 둔다 */
+      const stage = locked ? 0 : x.info.stage;
       const sub = locked
         ? '🔒 ' + rareChipText(x.rare)
         : (x.info.pct >= 100 ? '완료 👑' : Math.round(x.info.pct) + '%');
       const aria = nm + (locked ? ' 잠김 · 누적 공부 ' + (x.rare.need / 60) + '시간 필요 · 지금 ' + x.rare.curH + '시간' : ' ' + x.info.stageName + ' · ' + fmtDur(x.info.total) + ' · 능력치 ' + Math.round(x.info.pct) + '%');
       return '<button class="coll-card' + (x.active ? ' on' : '') + (locked ? ' rare-locked' : '') + '" data-animal="' + x.a.id + '" aria-label="' + esc(aria) + '">' +
         '<div class="coll-thumb' + (locked ? ' locked' : '') + '">' +
-          '<div class="art">' + petArtHTML(stage, x.a.id, { alt: nm + (locked ? ' 잠김' : ' ' + x.info.stageName) }) + '</div>' +
+          '<div class="art">' + petArtHTML(stage, x.a.id, { alt: nm + (locked ? ' 알 · 잠김' : ' ' + x.info.stageName) }) + '</div>' +
           (x.rare.rare ? '<span class="rare-tag" aria-hidden="true">✨ RARE</span>' : '') +
           (locked ? '<span class="lock" aria-hidden="true">🔒</span>' : '') +
           (x.active && !locked ? '<span class="live">키우는 중</span>' : '') +
@@ -6863,7 +6864,7 @@
         const locked = !rs.unlocked;
         return '<button class="pick-sub pet-pick' + (a.id === petSheetAnimal ? ' on' : '') + (locked ? ' locked' : '') + '" data-petanimal="' + a.id + '"' +
           ' aria-label="' + esc(petName(a.id) + (locked ? ' · 잠김 · 누적 ' + (a.rare) + '시간 필요' : '')) + '">' +
-          '<span class="pp-art">' + petArtHTML(locked ? 3 : (ai.total > 0 ? ai.stage : 0), a.id) + '</span>' +
+          '<span class="pp-art">' + petArtHTML(locked ? 0 : (ai.total > 0 ? ai.stage : 0), a.id) + '</span>' +
           '<span class="nm">' + esc(petName(a.id)) + '</span>' +
           (locked ? '<span class="pp-lock" aria-hidden="true">🔒</span>' : '') + '</button>';
       }).join('');
