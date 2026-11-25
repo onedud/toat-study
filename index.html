@@ -264,43 +264,19 @@
   .rainbow .sep{font-size:8px;color:#C6D6D1;margin:0 -1px}
 
   .pet-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;margin-top:2px}
-  /* 명언 말풍선 — 카드 첫 줄 가운데, 꼬리는 펫 쪽(아래)으로 */
-  .pet-bubble-wrap{position:relative;flex:1;min-width:0;display:block;z-index:3;padding-bottom:5px}
-  /* v41: 흰 카드 위에서도 말풍선만 은은한 그라데이션 그림자로 떠 보이게 */
-  .pet-bubble-wrap::before{
-    content:"";position:absolute;left:5%;right:5%;top:-3px;bottom:1px;border-radius:16px;pointer-events:none;z-index:-1;
-    background:radial-gradient(72% 118% at 50% 0%, rgba(24,210,155,.16) 0%, rgba(24,210,155,.05) 58%, rgba(24,210,155,0) 100%);
-    filter:blur(4px)
+  /* v43: 명언 말풍선 삭제 · 첫 줄(📗 — ▶ — D-DAY) 가운데 재생 삼각형. 배경·테두리·원 없이 초록 삼각형만 */
+  .pet-play{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;
+    display:grid;place-items:center;color:var(--mint-2);z-index:3;line-height:0
   }
-  .pet-bubble{
-    position:relative;width:100%;
-    padding:6px 11px;border-radius:13px;border:1px solid var(--line);
-    background:linear-gradient(180deg,#FFFFFF 0%,#F7FEFB 100%);
-    font-size:10.5px;font-weight:700;color:#2A4A41;
-    box-shadow:0 9px 20px -7px rgba(16,105,80,.22), 0 2px 5px -1px rgba(16,105,80,.06);
-    text-align:center;line-height:1.38;word-break:keep-all;
-    max-height:45px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
-  }
-  .pet-bubble-tail{
-    position:absolute;left:50%;bottom:0;width:10px;height:10px;background:#fff;
-    transform:translateX(-50%) rotate(45deg);
-    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
-    border-bottom-right-radius:3px
-  }
-  .pet-bubble b{color:var(--mint-deep);font-weight:900}
-  .pet-scene{position:relative;width:100%;max-width:360px;height:168px;margin:2px auto 6px;padding-top:0}
+  .pet-play svg{display:block;width:26px;height:26px;overflow:visible}
+  .pet-play:active{transform:translate(-50%,-50%) scale(.9)}
+  /* v43: 펫은 아담하게(아기 76~84px) — 카드도 함께 컴팩트 */
+  .pet-scene{position:relative;width:100%;max-width:360px;height:94px;margin:4px auto 2px;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:min(100%,188px);display:flex;align-items:flex-end;justify-content:center;flex:none;z-index:2}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  .focus-cta{
-    display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;
-    padding:13px 16px;border-radius:16px;font-size:14.5px;font-weight:900;letter-spacing:-.01em;
-    background:linear-gradient(135deg,#1BDFA6,#10B981);color:#fff;box-shadow:var(--shadow-mint);
-    transition:transform .1s,box-shadow .15s
-  }
-  .focus-cta:active{transform:scale(.985)}
-  .focus-cta .zap{font-size:15px}
-    .focus-cta .cta-emoji{font-size:16px;line-height:1;flex:none;display:inline-block}
-  .focus-cta > span:last-child{white-space:nowrap}
+  .hero-card .pet-art{height:90px}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
   .ac-btn .felt-ic{width:40px;height:40px;flex:none;display:grid;place-items:center;font-size:34px;line-height:1}
   .qbolt .felt-ic{display:block;width:100%;height:100%}
   .gauge{margin-top:12px;padding:12px 13px 13px;border-radius:16px;background:var(--card-soft);border:1px solid var(--line-2);position:relative}
@@ -1593,7 +1569,7 @@
   }
   @media (min-width:721px){
     .pet-art{width:220px}
-    .pet-stage{min-height:230px}
+    .pet-stage{min-height:120px}
     .coll-grid{grid-template-columns:repeat(4,1fr);gap:7px}
     .tt-split{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:10px}
     .tt-timers,.tt-timeline{padding:12px 10px 11px}
@@ -1743,7 +1719,6 @@
   :root[data-mode="job"] .brand .logo-pink{display:block}
   :root[data-mode="job"] .egg-btn,:root[data-mode="job"] .avatar-btn{color:#4A3340}
   :root[data-mode="job"] .avatar{background:linear-gradient(145deg,#FFDCEA,#FBB9D6);color:#B4175F}
-  :root[data-mode="job"] .focus-cta{background:linear-gradient(135deg,#FF4E97,#EE2078)}
   :root[data-mode="job"] .gauge-bar{background:#F9E4EF}
   :root[data-mode="job"] .gauge-bar i{background:linear-gradient(90deg,#FF6FA9,#F02380);box-shadow:0 0 10px rgba(255,42,133,.45)}
   :root[data-mode="job"] .hero-card::before{background:none}
@@ -1942,7 +1917,7 @@
   /* ---------- iOS Safari 더블탭 확대 방지 ---------- */
   html,body,button,a,input,select,textarea,label,summary,
   .card,.chip,.nav button,.cal-cell,.wkday,.coll-card,.coll-head .back,
-  .pick-sub,.pet-art,.pet-bubble,.pet-bubble-tail,.petstat,.sheet,.veil,
+  .pick-sub,.pet-art,.pet-play,.petstat,.sheet,.veil,
   .todo-item,.qcard,.note,.timetable td,.tt-cell,.icon-grid button,.qicon{
     touch-action:manipulation
   }
@@ -2447,10 +2422,12 @@
         <button class="pet-book" id="petBtn" aria-label="토디펫 도감 열기">
           <span class="ic" aria-hidden="true">📗</span>
         </button>
-        <div class="pet-bubble-wrap" id="heroBubble">
-          <div class="pet-bubble" id="petBubble" role="note" aria-label="오늘의 명언">오늘도 한 땀씩, <b>화이팅!</b></div>
-          <span class="pet-bubble-tail" aria-hidden="true"></span>
-        </div>
+        <button class="pet-play" id="heroFocus" type="button" aria-label="Tody time 시작">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.4 6.2 L18.2 12 L9.4 17.8 Z" fill="currentColor" stroke="currentColor"
+                  stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </button>
         <button class="dday-pill hero-dday" id="ddayPill" aria-label="시험일까지 남은 날 · 눌러서 시험일 수정">
           <span class="lb">D-DAY</span>
           <span class="v" id="ddayValue">D-000</span>
@@ -2463,10 +2440,6 @@
         </div>
       </div>
 
-      <button class="focus-cta" id="heroFocus" aria-label="Tody time 시작">
-        <span class="cta-emoji" id="heroIcon" aria-hidden="true">🍏</span>
-        <span>Tody time</span>
-      </button>
     </section>
 
     <section class="card cal-card" id="calCard" aria-label="공부 인증 달력">
@@ -5445,43 +5418,19 @@
       '<div class="pg-foot">' + foot + '</div></div>';
   }
 
-  function bubbleText(info) {
-    const a = petName(info.animal.id);
-    if (info.complete) return '<b>' + a + '</b> 성체 완성! 능력치 100% · 정말 대단해요 👑';
-    return '<b>' + info.nextName + '</b>까지 <b>' + fmtDur(info.left) + '</b> 남았어요! 오늘도 화이팅 🔥';
-  }
-
   function renderHero() {
     const c = cert();
     const info = petInfo(c);
-    const q = currentQuote();    if (q) {
-      const txt = q.text.length > 52 ? q.text.slice(0, 51) + '…' : q.text;
-      $('petBubble').innerHTML = esc(txt);
-      $('petBubble').setAttribute('aria-label', '오늘의 명언: ' + q.text + ' — ' + (q.author || '작가 미상'));
-    } else {
-      $('petBubble').innerHTML = '오늘도 한 땀씩, <b>화이팅!</b>';
-    }
     const art = $('petArt');
     art.innerHTML = petArtHTML(info.stage, info.animal.id, { alt: petName(info.animal.id) + ' ' + info.stageName, eager: true });
     art.setAttribute('data-stage', info.stageId);
     art.setAttribute('aria-label', petName(info.animal.id) + ' ' + info.stageName + ' · 능력치 ' + Math.round(info.pct) + '% — 토디펫 상태 보기');
     art.style.filter = '';
-    $('heroIcon').textContent = heroSubjectIcon();
   }
 
   function tint(hex, a) {
     const n = parseInt(String(hex).replace('#', ''), 16);
     return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
-  }
-  let heroIconCert = null, heroIconVal = null;
-  function heroSubjectIcon() {
-    const c = cert();
-    const icons = c.subjects.map((s, i) => subjectIconOf(s, i));
-    if (heroIconCert !== c.id || !heroIconVal || icons.indexOf(heroIconVal) < 0) {
-      heroIconCert = c.id;
-      heroIconVal = icons.length ? icons[Math.floor(Math.random() * icons.length)] : '🍏';
-    }
-    return heroIconVal;
   }
 
   /* 오늘의 한 줄 — 처음 열 때 한 번, 그리고 다른 탭·모드에서 홈으로 돌아올 때마다
@@ -8129,7 +8078,6 @@
       });
     });
     if (!c.subjects.some((s) => s.id === ttEditSubject)) ttEditSubject = c.subjects[0].id;
-    heroIconVal = null;
     save(true);
     closeSheet('subjectSheet');
     renderTimetable();
