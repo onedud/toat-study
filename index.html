@@ -5727,8 +5727,8 @@
       im.src = c.img;
     });
     Object.keys(shotCache.photos).forEach((k) => { if (!keep[k]) delete shotCache.photos[k]; });
-    /* v45: 카드 이모지(📅 · 🔥 · 펫 종류)와 하단 Tody 로고도 미리 받아 둔다 */
-    shotNoto('🗓️'); shotNoto('🔥');
+    /* v45: 카드 이모지(🔥 · 펫 종류)와 하단 Tody 로고도 미리 받아 둔다(v46: 달력 헤더 이모지 없음) */
+    shotNoto('🔥');
     if (md.emoji) shotNoto(md.emoji);
     shotPrewarmLogo();
   }
@@ -5816,14 +5816,15 @@
     im.src = src;
   }
 
-  /* 오른쪽 왕관 — 앱 도감·상세의 👑 자리를 카드에서는 민트 왕관으로(IMG_5416) */
+  /* 오른쪽 왕관 — 앱 도감·상세의 👑 자리를 카드에서는 민트 왕관으로(IMG_5416)
+     v46: 게이지 두께만큼 작게 · 보석·밴드를 빼고 민트 그라데이션 한 덩어리로 깔끔하게 */
   function shotCrown(ctx, cx, cy, w) {
     const h = w * 0.8, x = cx - w / 2, y = cy - h / 2;
     ctx.save();
     const g = ctx.createLinearGradient(x, y, x + w, y + h);
     g.addColorStop(0, '#63EBC0'); g.addColorStop(0.55, '#2FD3A2'); g.addColorStop(1, '#0FB98A');
     ctx.fillStyle = g;
-    ctx.strokeStyle = '#0AAE81'; ctx.lineWidth = 0.9; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0AAE81'; ctx.lineWidth = 0.8; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.moveTo(x + w * 0.11, y + h * 0.94);
     ctx.lineTo(x + w * 0.05, y + h * 0.28);
@@ -5834,37 +5835,26 @@
     ctx.lineTo(x + w * 0.89, y + h * 0.94);
     ctx.closePath();
     ctx.fill(); ctx.stroke();
-    /* 밴드 — 살짝 밝게 눌러 왕관 형태를 살린다 */
-    shotRound(ctx, x + w * 0.11, y + h * 0.64, w * 0.78, h * 0.24, h * 0.1);
-    ctx.fillStyle = 'rgba(255,255,255,.42)';
-    ctx.fill();
-    /* 밴드 위 보석 세 알 */
-    ctx.fillStyle = 'rgba(255,255,255,.95)';
-    [0.30, 0.50, 0.70].forEach((p) => {
-      ctx.beginPath();
-      ctx.arc(x + w * p, y + h * 0.76, w * 0.052, 0, Math.PI * 2);
-      ctx.fill();
-    });
     ctx.restore();
   }
 
   /* 인증 카드 1장 그리기 (동기) */
   function drawShotCard(md) {
     const W = SHOT_W, PAD = 20;
-    const cell = 41, gap = 4, gridW = cell * 7 + gap * 6, gx = (W - gridW) / 2;
+    /* v46: 달력 그리드를 카드 폭의 ~75%로 안쪽에 들여 작고 단정하게(요일·숫자·썸네일도 비례 축소) */
+    const cell = 35, gap = 4, gridW = cell * 7 + gap * 6, gx = (W - gridW) / 2;
     const rows = Math.max(1, Math.ceil(md.cells.length / 7));
-    const monthY = 28;                    /* v45: 맨 위 가운데 연·월(YYYY.MM) */
-    const petTop = 46, petH = 104;        /* v45: 펫은 이전의 약 60% — 위 여백을 비우고 컴팩트하게 */
+    const petTop = 30, petH = 104;        /* v46: 맨 위 연·월을 달력 헤더로 옮겨 위 여백을 정리 */
     const nameY = petTop + petH + 19;
     const gaugeY = nameY + 33;
     const footY = gaugeY + 25;
     const divY = footY + 15;
     const calY2 = divY + 27;
     const dowY = calY2 + 29;
-    const gridTop = dowY + 16;
+    const gridTop = dowY + 15;
     const gridBottom = gridTop + rows * (cell + gap) - gap;
-    const foot2Y = gridBottom + 34;
-    const H = Math.round(foot2Y + 22);
+    const foot2Y = gridBottom + 22;       /* v46: Tody 로고를 축소된 달력 바로 아래로 올린다 */
+    const H = Math.round(foot2Y + 24);
 
     const cv = document.createElement('canvas');
     cv.width = Math.round(W * SHOT_SCALE);
@@ -5883,22 +5873,7 @@
     shotRound(ctx, 0.5, 0.5, W - 1, H - 1, 26);
     ctx.strokeStyle = '#D9F1E7'; ctx.lineWidth = 1; ctx.stroke();
 
-    /* 0) 맨 위 가운데 — 지금 보고 있는 연·월 (2026.11) */
-    const monthTxt = md.y + '.' + pad(md.month);
-    ctx.save();
-    ctx.font = '800 11px ' + SHOT_FONT;
-    ctx.fillStyle = '#93A39D';
-    ctx.textAlign = 'left';
-    const ls = 2.2;
-    const chars = Array.from(monthTxt);
-    let mw = 0;
-    chars.forEach((ch) => { mw += ctx.measureText(ch).width; });
-    mw += ls * (chars.length - 1);
-    let mx = (W - mw) / 2;
-    chars.forEach((ch) => { ctx.fillText(ch, mx, monthY); mx += ctx.measureText(ch).width + ls; });
-    ctx.restore();
-
-    /* 1) 토디펫 */
+    /* 1) 토디펫 — v46: 맨 위 연·월이 없어져 그만큼 위 여백만 남는다 */
     const im = shotCache.pet;
     if (im && im.naturalWidth) {
       const maxW = 142, maxH = petH;
@@ -5922,22 +5897,22 @@
 
     /* 3) 성장 게이지 — 폭을 줄여 가운데 두고, 알·왕관은 바의 세로 중앙에 */
     const barW = 196, barH = 11, barX = (W - barW) / 2, barY = gaugeY - barH / 2;
-    const endGap = 15;
+    const endGap = 13;
     const eggCx = barX - endGap, crownCx = barX + barW + endGap;
-    /* 왼쪽 알 — 앱처럼 흰 알(네이티브 🥚 느낌): 갈색 Noto 알을 피해 직접 그린다 */
-    const eggX = eggCx, eggY = gaugeY;
+    /* 왼쪽 알 — 앱처럼 흰 알(네이티브 🥚 느낌): 갈색 Noto 알을 피해 직접 그린다 · v46: 게이지 두께만큼 작게 */
+    const eggX = eggCx, eggY = gaugeY, eg = 0.63;
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(eggX, eggY - 9);
-    ctx.bezierCurveTo(eggX + 4.2, eggY - 8.4, eggX + 7.3, eggY - 2.3, eggX + 7.3, eggY + 2.3);
-    ctx.bezierCurveTo(eggX + 7.3, eggY + 7, eggX + 4, eggY + 9.2, eggX, eggY + 9.2);
-    ctx.bezierCurveTo(eggX - 4, eggY + 9.2, eggX - 7.3, eggY + 7, eggX - 7.3, eggY + 2.3);
-    ctx.bezierCurveTo(eggX - 7.3, eggY - 2.3, eggX - 4.2, eggY - 8.4, eggX, eggY - 9);
+    ctx.moveTo(eggX, eggY - 9 * eg);
+    ctx.bezierCurveTo(eggX + 4.2 * eg, eggY - 8.4 * eg, eggX + 7.3 * eg, eggY - 2.3 * eg, eggX + 7.3 * eg, eggY + 2.3 * eg);
+    ctx.bezierCurveTo(eggX + 7.3 * eg, eggY + 7 * eg, eggX + 4 * eg, eggY + 9.2 * eg, eggX, eggY + 9.2 * eg);
+    ctx.bezierCurveTo(eggX - 4 * eg, eggY + 9.2 * eg, eggX - 7.3 * eg, eggY + 7 * eg, eggX - 7.3 * eg, eggY + 2.3 * eg);
+    ctx.bezierCurveTo(eggX - 7.3 * eg, eggY - 2.3 * eg, eggX - 4.2 * eg, eggY - 8.4 * eg, eggX, eggY - 9 * eg);
     ctx.closePath();
     const eggG = ctx.createLinearGradient(eggX - 8, eggY - 10, eggX + 8, eggY + 10);
     eggG.addColorStop(0, '#FFFFFF'); eggG.addColorStop(1, '#F2F8F5');
     ctx.fillStyle = eggG; ctx.fill();
-    ctx.strokeStyle = '#CFE2DA'; ctx.lineWidth = 1.1; ctx.stroke();
+    ctx.strokeStyle = '#CFE2DA'; ctx.lineWidth = 0.9; ctx.stroke();
     ctx.restore();
     shotRound(ctx, barX, barY, barW, barH, barH / 2);
     ctx.fillStyle = '#E6F4EF'; ctx.fill();
@@ -5949,7 +5924,7 @@
       shotRound(ctx, barX, barY, fw, barH, barH / 2);
       ctx.fillStyle = fg; ctx.fill();
     }
-    shotCrown(ctx, crownCx, gaugeY, 17);
+    shotCrown(ctx, crownCx, gaugeY, 13);
 
     /* 게이지 아래 — 왼쪽 누적 시간 · 오른쪽 능력치 %, 줄어든 바의 양끝에 맞춘다 */
     ctx.textAlign = 'left';
@@ -5966,19 +5941,24 @@
     ctx.moveTo(PAD, divY + 0.5); ctx.lineTo(W - PAD, divY + 0.5);
     ctx.strokeStyle = '#EDF5F1'; ctx.lineWidth = 1; ctx.stroke();
 
-    /* 4) 📅 tody calendar + 🔥 N일 연속 인증 — 홈 달력 헤더와 같은 그림·색·폰트 */
-    shotDrawEmoji(ctx, '🗓️', PAD + 8, calY2, 16);
-    ctx.textAlign = 'left';
-    ctx.font = '800 14px ' + SHOT_FONT;
+    /* 4) 달력 헤더 — 왼쪽 2026.11(축소 달력 왼쪽 끝) · 오른쪽 🔥 N일 연속 인증(오른쪽 끝) */
+    const monthTxt = md.y + '.' + pad(md.month);
+    ctx.save();
+    ctx.font = '800 12px ' + SHOT_FONT;
     ctx.fillStyle = '#7C8F89';
-    ctx.fillText('tody calendar', PAD + 18, calY2 + 1);
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    const mChars = Array.from(monthTxt), mLs = 2.4;
+    let mx = gx;
+    mChars.forEach((ch) => { ctx.fillText(ch, mx, calY2 + 1); mx += ctx.measureText(ch).width + mLs; });
+    ctx.restore();
     if (md.streak > 0) {
       const stText = md.streak + '일 연속 인증';
       ctx.font = '800 10.5px ' + SHOT_FONT;
       const tw = ctx.measureText(stText).width;
       const ico = 11, icoGap = 3, padL = 8, padR = 9;
       const pw = padL + ico + icoGap + tw + padR, ph = 20;
-      const px = W - PAD - pw;
+      const px = gx + gridW - pw;
       shotRound(ctx, px, calY2 - ph / 2, pw, ph, ph / 2);
       ctx.fillStyle = '#E8FBF3'; ctx.fill();
       shotDrawEmoji(ctx, '🔥', px + padL + ico / 2, calY2 + 0.5, ico);
@@ -5992,7 +5972,7 @@
     const dows = ['일', '월', '화', '수', '목', '금', '토'];
     dows.forEach((t, i) => {
       ctx.textAlign = 'center';
-      ctx.font = '800 9.5px ' + SHOT_FONT;
+      ctx.font = '800 8.5px ' + SHOT_FONT;
       ctx.fillStyle = i === 0 ? '#E08A86' : i === 6 ? '#7FA6D8' : '#8B9C96';
       ctx.fillText(t, gx + i * (cell + gap) + cell / 2, dowY);
     });
@@ -6005,25 +5985,25 @@
       const ph = c.img ? shotCache.photos[c.key] : null;
       if (ph && ph.naturalWidth) {
         ctx.save();
-        shotRound(ctx, x, y, cell, cell, 10);
+        shotRound(ctx, x, y, cell, cell, 9);
         ctx.clip();
         const sc = Math.max(cell / ph.naturalWidth, cell / ph.naturalHeight);
         const dw = ph.naturalWidth * sc, dh = ph.naturalHeight * sc;
         ctx.drawImage(ph, x + (cell - dw) / 2, y + (cell - dh) / 2, dw, dh);
         ctx.restore();
       } else if (c.diary) {
-        shotRound(ctx, x, y, cell, cell, 10);
+        shotRound(ctx, x, y, cell, cell, 9);
         ctx.fillStyle = '#F1FBF7'; ctx.fill();
         ctx.textAlign = 'center';
-        ctx.font = '700 16px ' + SHOT_FONT;
+        ctx.font = '700 14px ' + SHOT_FONT;
         ctx.fillStyle = '#2C4A42';
         ctx.fillText(String(c.d), x + cell / 2, y + cell / 2 + 1);
         ctx.beginPath();
-        ctx.arc(x + cell / 2, y + cell - 6, 2, 0, Math.PI * 2);
+        ctx.arc(x + cell / 2, y + cell - 5.5, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = '#18D29B'; ctx.fill();
       } else {
         ctx.textAlign = 'center';
-        ctx.font = '600 16px ' + SHOT_FONT;
+        ctx.font = '600 14px ' + SHOT_FONT;
         ctx.fillStyle = c.dow === 0 ? '#E2A9A5' : c.dow === 6 ? '#A6C0DD' : '#C0CCC8';
         ctx.fillText(String(c.d), x + cell / 2, y + cell / 2 + 1);
       }
@@ -6037,8 +6017,8 @@
     } else {
       shotTracked(ctx, 'TODY', W / 2, foot2Y, 10, 3.2, '#C3DCD3');
     }
-    return { cv: cv, geom: { W: W, H: H, PAD: PAD, rows: rows, cell: cell, gap: gap, gx: gx,
-      monthY: monthY, petTop: petTop, petH: petH, nameY: nameY, nameX: nx, emoW: emoSize, gaugeY: gaugeY,
+    return { cv: cv, geom: { W: W, H: H, PAD: PAD, rows: rows, cell: cell, gap: gap, gx: gx, gridW: gridW,
+      petTop: petTop, petH: petH, nameY: nameY, nameX: nx, emoW: emoSize, gaugeY: gaugeY,
       barX: barX, barW: barW, eggCx: eggCx, crownCx: crownCx, footY: footY,
       divY: divY, calY: calY2, dowY: dowY, gridTop: gridTop, gridBottom: gridBottom, foot2Y: foot2Y } };
   }
@@ -6068,13 +6048,14 @@
     const fname = shotFileName();
     let file = null;
     try { file = new File([shotBlobFromUrl(url)], fname, { type: 'image/png' }); } catch (e) { file = null; }
-    if (file && navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
-      return navigator.share({ files: [file], title: '공부 인증샷' })
-        .then(() => { toast('인증샷을 공유했어요'); return 'share'; })
-        .catch(() => { openShotSheet(url); return 'preview'; });
+    /* v46: 미리보기 모달의 '공유하기'에서 부른다 — 모달은 그대로 두고 네이티브 공유 시트만 띄운다 */
+    if (!file || !navigator.share || !navigator.canShare || !navigator.canShare({ files: [file] })) {
+      toast('이 기기에서는 공유 대신 이미지로 저장해 주세요');
+      return Promise.resolve('none');
     }
-    openShotSheet(url);
-    return Promise.resolve('preview');
+    return navigator.share({ files: [file], title: '공부 인증샷' })
+      .then(() => { toast('인증샷을 공유했어요'); return 'share'; })
+      .catch(() => 'cancel');
   }
   function shotDownload(url) {
     const blob = shotBlobFromUrl(url);
@@ -6100,19 +6081,8 @@
     let shot;
     try { shot = shotPng(); }
     catch (e) { done(); toast('인증샷을 만들지 못했어요 · 잠시 후 다시 시도해 주세요'); return 'error'; }
-    lastShot = shot.url;
-    const fname = shotFileName();
-    let file = null;
-    try { file = new File([shotBlobFromUrl(shot.url)], fname, { type: 'image/png' }); } catch (e) { file = null; }
-    /* iOS Safari 등 네이티브 공유가 되는 곳 — 바로 공유 시트를 연다(취소하면 미리보기) */
-    if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-      try {
-        navigator.share({ files: [file], title: '공부 인증샷' })
-          .then(() => { done(); toast('인증샷을 공유했어요'); })
-          .catch(() => { done(); openShotSheet(shot.url); });
-        return 'share';
-      } catch (e) { /* 공유 불가 → 미리보기로 */ }
-    }
+    /* v46: 📷를 누르면 카드를 만들고 바로 미리보기 모달을 연다.
+       공유(navigator.share)는 모달의 '공유하기'를 눌렀을 때만 — 저장도 모달에서 고른다. */
     done();
     openShotSheet(shot.url);
     return 'preview';
