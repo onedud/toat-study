@@ -6454,6 +6454,7 @@
     focusTimer = setInterval(paintFocus, 500);
     /* 이전 세션에서 켜 둔 ASMR는 새 세션에서도 이어진다(재생은 첫 터치에 풀린다) */
     if (asmrOn && !asmrCtx) asmrStart(true);
+    else asmrPrefetch(asmrVersion);   /* 탭하는 순간 바로 들리도록 음원만 미리 받아 둔다 */
   }
   function closeFocusScreen() {
     $('focusScreen').classList.remove('open');
@@ -6761,6 +6762,8 @@
   let asmrVersion = 'rainy';
   let asmrBufs = Object.create(null);        /* version → AudioBuffer */
   let asmrLoads = Object.create(null);       /* version → 진행 중인 로딩 Promise */
+  let asmrBytes = Object.create(null);       /* version → 받아 둔 mp3 바이트 */
+  let asmrBytesLoads = Object.create(null);  /* version → 바이트 받는 중인 Promise */
   let asmrWarm = 0;
   let asmrSeq = 0;                          /* 시작/전환 순서 — 늦게 도착한 로딩을 버린다 */
   let asmrErr = '';
@@ -6796,16 +6799,30 @@
       } catch (e) { no(e); }
     });
   }
-  function asmrLoad(id) {
-    if (asmrBufs[id]) return Promise.resolve(asmrBufs[id]);
-    if (asmrLoads[id]) return asmrLoads[id];
-    if (!asmrCtx) return Promise.reject(new Error('no-audio-context'));
-    const url = asmrUrl(id);
-    const p = fetch(url, { credentials: 'same-origin' })
+  /* 음원 바이트만 먼저 받아 두기 — 디코딩은 AudioContext가 생긴 뒤에 */
+  function asmrFetchBytes(id) {
+    if (asmrBytes[id]) return Promise.resolve(asmrBytes[id]);
+    if (asmrBytesLoads[id]) return asmrBytesLoads[id];
+    const p = fetch(asmrUrl(id), { credentials: 'same-origin' })
       .then((res) => {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.arrayBuffer();
       })
+      .then((buf) => { asmrBytes[id] = buf; delete asmrBytesLoads[id]; return buf; })
+      .catch((e) => { delete asmrBytesLoads[id]; throw e; });
+    asmrBytesLoads[id] = p;
+    return p;
+  }
+  /* Tody time을 열 때 조용히 미리 받아 둔다(소리는 나지 않는다) */
+  function asmrPrefetch(id) {
+    if (asmrBufs[id] || asmrLoads[id]) return;
+    asmrFetchBytes(id).catch(() => {});
+  }
+  function asmrLoad(id) {
+    if (asmrBufs[id]) return Promise.resolve(asmrBufs[id]);
+    if (asmrLoads[id]) return asmrLoads[id];
+    if (!asmrCtx) return Promise.reject(new Error('no-audio-context'));
+    const p = asmrFetchBytes(id)
       .then((buf) => asmrDecode(buf))
       .then((buf) => { asmrBufs[id] = buf; delete asmrLoads[id]; return buf; })
       .catch((e) => { delete asmrLoads[id]; asmrErr = id + ': ' + ((e && e.message) || e); throw e; });
