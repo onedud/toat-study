@@ -5727,23 +5727,143 @@
       im.src = c.img;
     });
     Object.keys(shotCache.photos).forEach((k) => { if (!keep[k]) delete shotCache.photos[k]; });
+    /* v45: 카드 이모지(📅 · 🔥 · 펫 종류)와 하단 Tody 로고도 미리 받아 둔다 */
+    shotNoto('🗓️'); shotNoto('🔥');
+    if (md.emoji) shotNoto(md.emoji);
+    shotPrewarmLogo();
+  }
+
+  /* ---------- 카드 이모지 = 앱 홈과 같은 Noto Color Emoji 그림 ----------
+     기기 기본 이모지(iOS의 `Jul 17` 달력 등)가 아니라 앱이 쓰는 것과 같은 그림을 카드에 그린다.
+     Noto SVG는 viewBox만 있고 width/height가 없어 iOS Canvas가 못 그리는 경우가 있어,
+     받아서 크기를 넣은 뒤 data URI로 구워 그린다. CDN이 막히면 crossOrigin 이미지,
+     그것도 안 되면 기기 이모지 글자로 넘어간다. */
+  const SHOT_NOTO = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-emoji@main/2D/svg/emoji_u';
+  const shotNotoCache = Object.create(null);
+
+  /* 이모지 시퀀스 → noto-emoji 파일명(fe0f/fe0e 제외, 4자리 hex, '_' 연결) — 앱 본문과 같은 규칙 */
+  function shotEmojiName(seq) {
+    const out = [];
+    for (let i = 0; i < seq.length; i++) {
+      let cp = seq.charCodeAt(i);
+      if (cp >= 0xD800 && cp <= 0xDBFF && i + 1 < seq.length) {
+        cp = ((cp - 0xD800) << 10) + (seq.charCodeAt(i + 1) - 0xDC00) + 0x10000;
+        i++;
+      }
+      if (cp === 0xFE0F || cp === 0xFE0E) continue;
+      let h = cp.toString(16);
+      while (h.length < 4) h = '0' + h;
+      out.push(h);
+    }
+    return out.join('_');
+  }
+
+  function shotNoto(seq) {
+    const key = seq || '';
+    let rec = shotNotoCache[key];
+    if (rec) return rec;
+    rec = shotNotoCache[key] = { img: null };
+    const url = SHOT_NOTO + shotEmojiName(seq) + '.svg';
+    const fromSvg = (txt) => {
+      const im = new Image();
+      im.onload = () => { rec.img = im; };
+      im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+        String(txt).replace(/<svg\b([^>]*)>/, '<svg width="128" height="128"$1>'));
+    };
+    const direct = () => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.onload = () => { if (!rec.img) rec.img = im; };
+      im.src = url;
+    };
+    try {
+      if (typeof fetch === 'function') {
+        fetch(url)
+          .then((r) => (r.ok ? r.text() : Promise.reject(new Error('http'))))
+          .then(fromSvg)
+          .catch(direct);
+      } else direct();
+    } catch (e) { direct(); }
+    return rec;
+  }
+
+  /* 앱과 같은 Noto 그림으로 그린다 — 아직 준비 전이면 기기 이모지 글자로 */
+  function shotDrawEmoji(ctx, ch, cx, cy, size) {
+    if (!ch) return false;
+    const rec = shotNoto(ch);
+    if (rec.img && rec.img.naturalWidth) {
+      try {
+        ctx.drawImage(rec.img, cx - size / 2, cy - size / 2, size, size);
+        return true;
+      } catch (e) { /* data URI를 못 그리면 아래 기기 이모지로 */ }
+    }
+    shotEmoji(ctx, ch, cx, cy, size);
+    return false;
+  }
+
+  /* 앱 홈 상단 공식 Tody 로고(민트 우체통) — 헤더 img의 data URI를 그대로 쓴다 */
+  const shotLogo = { src: '', img: null };
+  function shotPrewarmLogo() {
+    let el = null;
+    try {
+      el = document.querySelector('#brandHome .logo-mint') || document.querySelector('.brand .logo-mint');
+    } catch (e) { el = null; }
+    const src = el ? (el.getAttribute('src') || '') : '';
+    if (!src || src === shotLogo.src) return;
+    shotLogo.src = src;
+    const im = new Image();
+    im.onload = () => { if (shotLogo.src === src) shotLogo.img = im; };
+    im.src = src;
+  }
+
+  /* 오른쪽 왕관 — 앱 도감·상세의 👑 자리를 카드에서는 민트 왕관으로(IMG_5416) */
+  function shotCrown(ctx, cx, cy, w) {
+    const h = w * 0.8, x = cx - w / 2, y = cy - h / 2;
+    ctx.save();
+    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, '#63EBC0'); g.addColorStop(0.55, '#2FD3A2'); g.addColorStop(1, '#0FB98A');
+    ctx.fillStyle = g;
+    ctx.strokeStyle = '#0AAE81'; ctx.lineWidth = 0.9; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.11, y + h * 0.94);
+    ctx.lineTo(x + w * 0.05, y + h * 0.28);
+    ctx.lineTo(x + w * 0.28, y + h * 0.58);
+    ctx.lineTo(x + w * 0.50, y + h * 0.02);
+    ctx.lineTo(x + w * 0.72, y + h * 0.58);
+    ctx.lineTo(x + w * 0.95, y + h * 0.28);
+    ctx.lineTo(x + w * 0.89, y + h * 0.94);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    /* 밴드 — 살짝 밝게 눌러 왕관 형태를 살린다 */
+    shotRound(ctx, x + w * 0.11, y + h * 0.64, w * 0.78, h * 0.24, h * 0.1);
+    ctx.fillStyle = 'rgba(255,255,255,.42)';
+    ctx.fill();
+    /* 밴드 위 보석 세 알 */
+    ctx.fillStyle = 'rgba(255,255,255,.95)';
+    [0.30, 0.50, 0.70].forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(x + w * p, y + h * 0.76, w * 0.052, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
   }
 
   /* 인증 카드 1장 그리기 (동기) */
   function drawShotCard(md) {
-    const W = SHOT_W, PAD = 20, IN = W - PAD * 2;
-    const cell = 38, gap = 6, gridW = cell * 7 + gap * 6, gx = PAD + (IN - gridW) / 2;
+    const W = SHOT_W, PAD = 20;
+    const cell = 41, gap = 4, gridW = cell * 7 + gap * 6, gx = (W - gridW) / 2;
     const rows = Math.max(1, Math.ceil(md.cells.length / 7));
-    const petTop = 22, petH = 174;
-    const nameY = petTop + petH + 18;
-    const gaugeY = nameY + 36;
-    const footY = gaugeY + 22;
-    const divY = footY + 18;
-    const calY2 = divY + 26;
-    const dowY = calY2 + 30;
-    const gridTop = dowY + 14;
+    const monthY = 28;                    /* v45: 맨 위 가운데 연·월(YYYY.MM) */
+    const petTop = 46, petH = 104;        /* v45: 펫은 이전의 약 60% — 위 여백을 비우고 컴팩트하게 */
+    const nameY = petTop + petH + 19;
+    const gaugeY = nameY + 33;
+    const footY = gaugeY + 25;
+    const divY = footY + 15;
+    const calY2 = divY + 27;
+    const dowY = calY2 + 29;
+    const gridTop = dowY + 16;
     const gridBottom = gridTop + rows * (cell + gap) - gap;
-    const foot2Y = gridBottom + 30;
+    const foot2Y = gridBottom + 34;
     const H = Math.round(foot2Y + 22);
 
     const cv = document.createElement('canvas');
@@ -5763,40 +5883,56 @@
     shotRound(ctx, 0.5, 0.5, W - 1, H - 1, 26);
     ctx.strokeStyle = '#D9F1E7'; ctx.lineWidth = 1; ctx.stroke();
 
+    /* 0) 맨 위 가운데 — 지금 보고 있는 연·월 (2026.11) */
+    const monthTxt = md.y + '.' + pad(md.month);
+    ctx.save();
+    ctx.font = '800 11px ' + SHOT_FONT;
+    ctx.fillStyle = '#93A39D';
+    ctx.textAlign = 'left';
+    const ls = 2.2;
+    const chars = Array.from(monthTxt);
+    let mw = 0;
+    chars.forEach((ch) => { mw += ctx.measureText(ch).width; });
+    mw += ls * (chars.length - 1);
+    let mx = (W - mw) / 2;
+    chars.forEach((ch) => { ctx.fillText(ch, mx, monthY); mx += ctx.measureText(ch).width + ls; });
+    ctx.restore();
+
     /* 1) 토디펫 */
     const im = shotCache.pet;
     if (im && im.naturalWidth) {
-      const maxW = 236, maxH = petH;
+      const maxW = 142, maxH = petH;
       const s = Math.min(maxW / im.naturalWidth, maxH / im.naturalHeight);
       const w = im.naturalWidth * s, h = im.naturalHeight * s;
       ctx.drawImage(im, (W - w) / 2, petTop + (petH - h), w, h);
     }
 
-    /* 2) 종류 이모지 + 이름 */
+    /* 2) 종류 이모지(Noto — 앱 홈과 같은 그림) + 이름 */
     const nameSize = 17;
     ctx.font = '900 ' + nameSize + 'px ' + SHOT_FONT;
     const nameW = ctx.measureText(md.name).width;
-    const emoSize = 18, emoGap = 7;
+    const emoSize = 17, emoGap = 6;
     const totalW = emoSize + emoGap + nameW;
     const nx = Math.round((W - totalW) / 2);
-    shotEmoji(ctx, md.emoji, nx + emoSize / 2, nameY, emoSize);
+    shotDrawEmoji(ctx, md.emoji, nx + emoSize / 2, nameY + 1, emoSize);
     ctx.fillStyle = '#173B32';
     ctx.textAlign = 'left';
     ctx.font = '900 ' + nameSize + 'px ' + SHOT_FONT;
     ctx.fillText(md.name, nx + emoSize + emoGap, nameY + 1);
 
-    /* 3) 성장 게이지 — 🥚 (흰 알) · 능력치 바 · 👑 */
-    const barX = 46, barW = (W - PAD - 30) - barX, barH = 12;
-    const barY = gaugeY - barH / 2;
+    /* 3) 성장 게이지 — 폭을 줄여 가운데 두고, 알·왕관은 바의 세로 중앙에 */
+    const barW = 196, barH = 11, barX = (W - barW) / 2, barY = gaugeY - barH / 2;
+    const endGap = 15;
+    const eggCx = barX - endGap, crownCx = barX + barW + endGap;
     /* 왼쪽 알 — 앱처럼 흰 알(네이티브 🥚 느낌): 갈색 Noto 알을 피해 직접 그린다 */
-    const eggX = barX - 16, eggY = gaugeY;
+    const eggX = eggCx, eggY = gaugeY;
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(eggX, eggY - 10.2);
-    ctx.bezierCurveTo(eggX + 4.8, eggY - 9.6, eggX + 8.3, eggY - 2.6, eggX + 8.3, eggY + 2.6);
-    ctx.bezierCurveTo(eggX + 8.3, eggY + 7.9, eggX + 4.5, eggY + 10.4, eggX, eggY + 10.4);
-    ctx.bezierCurveTo(eggX - 4.5, eggY + 10.4, eggX - 8.3, eggY + 7.9, eggX - 8.3, eggY + 2.6);
-    ctx.bezierCurveTo(eggX - 8.3, eggY - 2.6, eggX - 4.8, eggY - 9.6, eggX, eggY - 10.2);
+    ctx.moveTo(eggX, eggY - 9);
+    ctx.bezierCurveTo(eggX + 4.2, eggY - 8.4, eggX + 7.3, eggY - 2.3, eggX + 7.3, eggY + 2.3);
+    ctx.bezierCurveTo(eggX + 7.3, eggY + 7, eggX + 4, eggY + 9.2, eggX, eggY + 9.2);
+    ctx.bezierCurveTo(eggX - 4, eggY + 9.2, eggX - 7.3, eggY + 7, eggX - 7.3, eggY + 2.3);
+    ctx.bezierCurveTo(eggX - 7.3, eggY - 2.3, eggX - 4.2, eggY - 8.4, eggX, eggY - 9);
     ctx.closePath();
     const eggG = ctx.createLinearGradient(eggX - 8, eggY - 10, eggX + 8, eggY + 10);
     eggG.addColorStop(0, '#FFFFFF'); eggG.addColorStop(1, '#F2F8F5');
@@ -5813,46 +5949,46 @@
       shotRound(ctx, barX, barY, fw, barH, barH / 2);
       ctx.fillStyle = fg; ctx.fill();
     }
-    shotEmoji(ctx, '👑', barX + barW + 16, gaugeY, 17);
+    shotCrown(ctx, crownCx, gaugeY, 17);
 
-    /* 게이지 아래 — 왼쪽 누적 시간 · 오른쪽 능력치 % */
+    /* 게이지 아래 — 왼쪽 누적 시간 · 오른쪽 능력치 %, 줄어든 바의 양끝에 맞춘다 */
     ctx.textAlign = 'left';
     ctx.font = '700 10.5px ' + SHOT_FONT;
     ctx.fillStyle = '#8B9C96';
-    ctx.fillText('누적 ' + fmtDur(Math.min(md.total, GROW_GOAL)), PAD, footY);
+    ctx.fillText('누적 ' + fmtDur(Math.min(md.total, GROW_GOAL)), barX, footY);
     ctx.textAlign = 'right';
     ctx.font = '900 11.5px ' + SHOT_FONT;
     ctx.fillStyle = '#0E9E7A';
-    ctx.fillText(pct + '%', W - PAD, footY);
+    ctx.fillText(pct + '%', barX + barW, footY);
 
     /* 구분선 */
     ctx.beginPath();
     ctx.moveTo(PAD, divY + 0.5); ctx.lineTo(W - PAD, divY + 0.5);
     ctx.strokeStyle = '#EDF5F1'; ctx.lineWidth = 1; ctx.stroke();
 
-    /* 4) 📅 Tody calendar + 🔥 N일 연속인증 */
-    shotEmoji(ctx, '📅', PAD + 9, calY2, 17);
+    /* 4) 📅 tody calendar + 🔥 N일 연속 인증 — 홈 달력 헤더와 같은 그림·색·폰트 */
+    shotDrawEmoji(ctx, '🗓️', PAD + 8, calY2, 16);
     ctx.textAlign = 'left';
-    ctx.font = '900 16px ' + SHOT_FONT;
-    ctx.fillStyle = '#12241F';
-    ctx.fillText('Tody calendar', PAD + 22, calY2 + 1);
+    ctx.font = '800 14px ' + SHOT_FONT;
+    ctx.fillStyle = '#7C8F89';
+    ctx.fillText('tody calendar', PAD + 18, calY2 + 1);
     if (md.streak > 0) {
-      const stText = md.streak + '일 연속인증';
-      ctx.font = '900 10.5px ' + SHOT_FONT;
+      const stText = md.streak + '일 연속 인증';
+      ctx.font = '800 10.5px ' + SHOT_FONT;
       const tw = ctx.measureText(stText).width;
-      const pw = tw + 34, ph = 22;
+      const ico = 11, icoGap = 3, padL = 8, padR = 9;
+      const pw = padL + ico + icoGap + tw + padR, ph = 20;
       const px = W - PAD - pw;
-      shotRound(ctx, px, calY2 - ph / 2, pw, ph, 11);
+      shotRound(ctx, px, calY2 - ph / 2, pw, ph, ph / 2);
       ctx.fillStyle = '#E8FBF3'; ctx.fill();
-      ctx.strokeStyle = '#BFEFDE'; ctx.lineWidth = 1; ctx.stroke();
-      shotEmoji(ctx, '🔥', px + 12, calY2, 12);
+      shotDrawEmoji(ctx, '🔥', px + padL + ico / 2, calY2 + 0.5, ico);
       ctx.textAlign = 'left';
-      ctx.font = '900 10.5px ' + SHOT_FONT;
-      ctx.fillStyle = '#0C6B54';
-      ctx.fillText(stText, px + 24, calY2 + 1);
+      ctx.font = '800 10.5px ' + SHOT_FONT;
+      ctx.fillStyle = '#0E9E7A';
+      ctx.fillText(stText, px + padL + ico + icoGap, calY2 + 1);
     }
 
-    /* 요일 헤더 */
+    /* 요일 헤더 — 홈과 같은 색(일 연빨강 · 평일 회색 · 토 연파랑) */
     const dows = ['일', '월', '화', '수', '목', '금', '토'];
     dows.forEach((t, i) => {
       ctx.textAlign = 'center';
@@ -5861,47 +5997,50 @@
       ctx.fillText(t, gx + i * (cell + gap) + cell / 2, dowY);
     });
 
-    /* 날짜 칸 — 사진이 있으면 썸네일, 일기만 있으면 숫자+민트 점, 오늘은 민트 테두리 */
+    /* 날짜 칸 — 홈처럼 테두리·박스 없이 숫자만 가운데, 사진이 있으면 썸네일만 (오늘 강조 없음) */
     md.cells.forEach((c, i) => {
       if (!c) return;
       const col = i % 7, row = Math.floor(i / 7);
       const x = gx + col * (cell + gap), y = gridTop + row * (cell + gap);
-      shotRound(ctx, x, y, cell, cell, 11);
-      ctx.fillStyle = c.today ? '#F1FDF7' : '#FAFEFC';
-      ctx.fill();
-      ctx.strokeStyle = c.today ? '#18D29B' : '#EDF5F1';
-      ctx.lineWidth = c.today ? 1.6 : 1;
-      ctx.stroke();
       const ph = c.img ? shotCache.photos[c.key] : null;
       if (ph && ph.naturalWidth) {
         ctx.save();
-        shotRound(ctx, x, y, cell, cell, 11);
+        shotRound(ctx, x, y, cell, cell, 10);
         ctx.clip();
         const sc = Math.max(cell / ph.naturalWidth, cell / ph.naturalHeight);
         const dw = ph.naturalWidth * sc, dh = ph.naturalHeight * sc;
         ctx.drawImage(ph, x + (cell - dw) / 2, y + (cell - dh) / 2, dw, dh);
         ctx.restore();
-        shotRound(ctx, x + 0.5, y + 0.5, cell - 1, cell - 1, 11);
-        ctx.strokeStyle = c.today ? '#18D29B' : 'rgba(255,255,255,.9)';
-        ctx.lineWidth = c.today ? 1.6 : 1;
-        ctx.stroke();
+      } else if (c.diary) {
+        shotRound(ctx, x, y, cell, cell, 10);
+        ctx.fillStyle = '#F1FBF7'; ctx.fill();
+        ctx.textAlign = 'center';
+        ctx.font = '700 16px ' + SHOT_FONT;
+        ctx.fillStyle = '#2C4A42';
+        ctx.fillText(String(c.d), x + cell / 2, y + cell / 2 + 1);
+        ctx.beginPath();
+        ctx.arc(x + cell / 2, y + cell - 6, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#18D29B'; ctx.fill();
       } else {
-        ctx.textAlign = 'left';
-        ctx.font = (c.today ? '900 ' : '800 ') + '9.5px ' + SHOT_FONT;
-        ctx.fillStyle = c.today ? '#0E9E7A' : '#5C6F69';
-        ctx.fillText(String(c.d), x + 5, y + 11);
-        if (c.diary) {
-          ctx.beginPath();
-          ctx.arc(x + cell - 8, y + cell - 8, 2.6, 0, Math.PI * 2);
-          ctx.fillStyle = '#18D29B'; ctx.fill();
-        }
+        ctx.textAlign = 'center';
+        ctx.font = '600 16px ' + SHOT_FONT;
+        ctx.fillStyle = c.dow === 0 ? '#E2A9A5' : c.dow === 6 ? '#A6C0DD' : '#C0CCC8';
+        ctx.fillText(String(c.d), x + cell / 2, y + cell / 2 + 1);
       }
     });
 
-    /* 워터마크 */
-    shotTracked(ctx, 'TODY', W / 2, foot2Y, 10, 3.2, '#C3DCD3');
+    /* 5) 맨 아래 — T O D Y 글자 대신 공식 Tody 로고 */
+    const logoSrc = shotLogo.img;
+    if (logoSrc && logoSrc.naturalWidth) {
+      const lh = 22, lw = lh * (logoSrc.naturalWidth / logoSrc.naturalHeight);
+      ctx.drawImage(logoSrc, (W - lw) / 2, foot2Y - lh / 2, lw, lh);
+    } else {
+      shotTracked(ctx, 'TODY', W / 2, foot2Y, 10, 3.2, '#C3DCD3');
+    }
     return { cv: cv, geom: { W: W, H: H, PAD: PAD, rows: rows, cell: cell, gap: gap, gx: gx,
-      nameY: nameY, gaugeY: gaugeY, barX: barX, barW: barW, divY: divY, calY: calY2, dowY: dowY, gridTop: gridTop, gridBottom: gridBottom } };
+      monthY: monthY, petTop: petTop, petH: petH, nameY: nameY, nameX: nx, emoW: emoSize, gaugeY: gaugeY,
+      barX: barX, barW: barW, eggCx: eggCx, crownCx: crownCx, footY: footY,
+      divY: divY, calY: calY2, dowY: dowY, gridTop: gridTop, gridBottom: gridBottom, foot2Y: foot2Y } };
   }
 
   function shotPng() {
@@ -10625,7 +10764,11 @@
       png: () => { const s = shotPng(); return { url: s.url, w: s.w, h: s.h, geom: s.geom, model: s.model }; },
       open: (url) => openShotSheet(url || lastShot || shotPng().url),
       last: () => lastShot,
-      cache: () => ({ pet: !!shotCache.pet, petSrc: shotCache.petSrc, photos: Object.keys(shotCache.photos).length })
+      cache: () => ({ pet: !!shotCache.pet, petSrc: shotCache.petSrc, photos: Object.keys(shotCache.photos).length }),
+      /* v45: 카드 이모지·로고가 앱과 같은 Noto 그림/Tody 로고로 준비됐는지 */
+      emoji: (ch) => { const r = shotNoto(ch); return { ready: !!(r.img && r.img.naturalWidth), name: shotEmojiName(ch) }; },
+      logo: () => ({ src: !!shotLogo.src, ready: !!(shotLogo.img && shotLogo.img.naturalWidth),
+        w: shotLogo.img ? shotLogo.img.naturalWidth : 0, h: shotLogo.img ? shotLogo.img.naturalHeight : 0 })
     },
     heroIcon: () => ({ icon: heroSubjectIcon(), key: heroIconKey }),
     rareState: rareState, rareOf: rareOf, studyTotalMinutes: studyTotalMinutes, checkRareUnlocks: checkRareUnlocks,
