@@ -57,16 +57,16 @@
     바꾼 값은 저장돼 토디테이블의 `목표 3시간` 알약·진행 바까지 함께 움직입니다.
   - **☀️ 화면 켜짐 유지**: Tody time이 달리는 동안 화면이 꺼지지 않습니다(지원 브라우저만, 일시정지·종료 시 해제).
   - **🔊 ASMR 백색소음 4가지**: Tody time 오른쪽 위 `🔊 ASMR`을 누르면 소리가 켜지고, 그 아래 줄에서
-    **📚 도서관**(차분한 서고의 룸톤 + 아주 미세한 종이 스침) · **🌧️ 흐린날**(부드러운 빗소리 + 잔잔한 빗방울) ·
-    **☕ 카페**(따뜻한 실내 앰비언스 + 은은한 웅성거림) · **🍲 본가**(보글보글 주방 소리 + 지글지글) 중 하나를
-    골라 들을 수 있습니다. 고른 버전은 저장돼 다음에도 그 소리로 시작해요. 사운드 파일 없이 브라우저에서
-    직접 합성하고(오디오 요청 0개), 끈 상태가 기본입니다.
+    **📚 도서관**(조용한 열람실 룸톤 + 책장 넘기는 소리) · **🌧️ 흐린날**(잔잔한 빗소리) ·
+    **☕ 카페**(작게 웅성거리는 대화 + 은은한 식기 소리) · **🍲 본가**(보글보글 끓는 주방 소리) 중 하나를
+    골라 들을 수 있습니다. 고른 버전은 저장돼 다음에도 그 소리로 시작해요. 끈 상태가 기본입니다.
     가로 화면에서는 오른쪽 가장자리에 아이콘만 세로로 붙습니다.
-    **v48**: 예전엔 4초짜리 잡음 루프를 이어 붙이고 5~13초마다 마림바/물방울 오실레이터(523~1046Hz)를
-    무작위로 얹어 **중간중간 '띠딩' 소리**가 났습니다. 그 주기 차임을 통째로 없애고, 13~17초짜리 긴 루프를
-    **꼬리를 머리에 등전력 크로스페이드로 접어** 이음매가 들리지 않게 다시 만들었으며, 모든 소리는 잡음과
-    부드러운 로우패스로만 냅니다(날카로운 금속음 없음). 버전을 바꾸면 0.6초 크로스페이드로 갈아타고,
-    뽀모도로 달성 알림만 목표에 닿았을 때 한 번 은은하게 울립니다.
+    **v49**: v48까지는 브라우저에서 합성한 잡음이었는데, "카페·주방이 너무 시끄럽고 부자연스럽다"는 피드백에
+    따라 **실제로 녹음된 자유 음원 4종**으로 갈아끼웠습니다(`assets/asmr/*.mp3`, 각 42초 · 약 500KB).
+    네 가지 모두 **−29 LUFS**로 음량을 맞춰 어느 것을 골라도 잔잔한 배경음 정도로만 들리고(카페·주방은
+    저역 위주로 다듬고 쨍한 고음을 눌렀습니다), 꼬리를 머리에 등전력 크로스페이드로 접어 이음매가 들리지
+    않습니다. 디코딩한 버퍼를 `loop=true`로 이어 붙여 루프 이음매가 없고, 버전을 바꾸면 0.6초 크로스페이드로
+    갈아탑니다. 뽀모도로 달성 알림만 목표에 닿았을 때 한 번 은은하게 울립니다.
   - **🍅 뽀모도로**: 자유 / 25분 / 50분 중 고르면 시계 아래에 목표 진행률이 보이고, 목표에 닿으면
     시계 둘레가 민트빛으로 반짝입니다. 그 순간 키우는 토디펫이 말풍선으로 응원해 줍니다
     ("25분 완주! 잠깐 물 한 잔 어때요? 💧"). 반짝여도 공부 시간은 계속 흘러가요.
@@ -137,3 +137,19 @@
 ## 과목 아이콘
 과목마다 🍼 🍚 🥛 💚 🌿 🍏 📗 🧃 🍋‍🟩 🎄 🥦 🍬 중 하나(또는 직접 입력한 이모지)를 골라 쓸 수 있어요.
 토디테이블 왼쪽 TIMERS와 홈 Tody time 버튼에 그대로 나타납니다.
+
+## ASMR 음원 출처 (v49)
+
+`assets/asmr/`의 네 파일은 모두 Wikimedia Commons의 자유 음원을 42초 루프로 다듬은 것입니다.
+(자르기 · 크로스페이드 · 음량 정규화 · MP3 인코딩: `tools/asmr-build.py`)
+
+| 파일 | 쓰는 곳 | 원본 | 저작자 · 라이선스 |
+| --- | --- | --- | --- |
+| `library.mp3` | 📚 도서관 | [TU Delft Library, quiet study room – general ambience](https://commons.wikimedia.org/wiki/File:20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg) + [Turning a page](https://commons.wikimedia.org/wiki/File:Turning_a_page.ogg) · [Old book](https://commons.wikimedia.org/wiki/File:Old_book.ogg) | el_mar · **CC BY 3.0** / planish · cori · Public domain |
+| `rain.mp3` | 🌧️ 흐린날 | [Rain (1)](https://commons.wikimedia.org/wiki/File:Rain_(1).ogg) | ezwa · Public domain |
+| `cafe.mp3` | ☕ 카페 | [Cafe ambiance](https://commons.wikimedia.org/wiki/File:Cafe_ambiance.ogg) + [Restaurant ambience](https://commons.wikimedia.org/wiki/File:Restaurant_ambience.ogg) | Marble Toast · **CC0** / stephan · Public domain |
+| `kitchen.mp3` | 🍲 본가 | [Ambient Kitchen Sounds](https://commons.wikimedia.org/wiki/File:Ambient_Kitchen_Sounds.wav) | **CC0** |
+
+- 도서관 소리는 CC BY 3.0이라 위와 같이 저작자(el_mar)를 밝힙니다. 나머지는 CC0/퍼블릭 도메인입니다.
+- 원본을 42초로 잘라 앞뒤 2~3초를 등전력 크로스페이드로 접었고, 저역 럼블을 걷어내고 날카로운 고음을
+  눌렀으며, 네 파일 모두 −29 LUFS · 96kbps MP3로 맞췄습니다.

@@ -6726,32 +6726,30 @@
   /* =========================================================
      ASMR 백색소음 — 도서관 · 흐린날 · 카페 · 본가
      ---------------------------------------------------------
-     왜 다시 만들었나
-       예전 소리는 4초짜리 잡음 루프를 계속 이어 붙이고, 5~13초마다
-       마림바/물방울 오실레이터(523~1046Hz)를 무작위로 얹었다.
-       그 '띠딩'이 집중을 깨는 주범이었고, 4초 루프가 다시 시작하는
-       자리에서도 아주 작은 틱이 났다.
-     지금은
-       · 13~17초짜리 긴 루프를 브라우저에서 직접 합성하고,
-       · 꼬리를 머리에 등전력 크로스페이드로 접어 넣어 이음매가 없다.
-       · 주기적으로 울리는 톤·차임은 없다. 모든 소리는 잡음과 부드러운
-         필터(로우패스)로만 만든다.
+     실제로 녹음된 자유 음원(Wikimedia Commons PD/CC0/CC BY)을
+     assets/asmr/*.mp3 로 넣고 그대로 재생한다.
+       · 파일: library.mp3 · rain.mp3 · cafe.mp3 · kitchen.mp3
+         (화면의 '본가'는 주방(kitchen) 소리다)
+       · 42초 루프. 꼬리를 머리에 등전력 크로스페이드로 접어
+         이음매가 들리지 않게 미리 다듬어 두었다.
+       · 네 가지 모두 -29 LUFS로 음량을 맞춰, 어느 것을 골라도
+         잔잔한 배경음 정도로만 들린다(카페·주방이 튀지 않게).
+       · 디코딩한 버퍼를 loop=true 로 이어 붙이므로 이음매가 없다.
        · 버전을 바꾸면 0.6초 크로스페이드로 갈아탄다.
-     외부 사운드 파일은 여전히 0개(모두 그 자리에서 합성).
+       · 주기적으로 울리는 톤·차임은 없다(뽀모도로 달성음 하나뿐).
      ========================================================= */
   const ASMR_KEY = 'studyTracker.asmr';
   const ASMR_VER_KEY = 'studyTracker.asmrVer';
-  const ASMR_SR = 22050;                    /* 합성 표본율 — 버퍼 표본율로 그대로 쓴다 */
-  const ASMR_FADE = 2;                      /* 루프 이음매 크로스페이드(초) */
-  const ASMR_MASTER = 0.5;
-  const ASMR_SECS = { library: 17, rainy: 19, cafe: 16, home: 15 };
-  /* 버전마다 음색이 달라 같은 크기로 들리지 않는다 — A가중 음량이 비슷해지도록 맞춘 값 */
-  const ASMR_RMS = { library: 0.22, rainy: 0.07, cafe: 0.168, home: 0.2 };
+  const ASMR_MASTER = 1;
+  /* 버전 id → 실제 파일. 'home'(본가)은 주방 녹음(kitchen.mp3)이다 */
+  const ASMR_FILES = { library: 'library.mp3', rainy: 'rain.mp3', cafe: 'cafe.mp3', home: 'kitchen.mp3' };
+  const ASMR_DIR = 'assets/asmr/';
+  const ASMR_FILE_VER = '49';
   const ASMR_VERSIONS = [
-    { id: 'library', name: '도서관', emo: '📚', tip: '차분한 서고의 룸톤' },
-    { id: 'rainy', name: '흐린날', emo: '🌧️', tip: '부드러운 빗소리' },
-    { id: 'cafe', name: '카페', emo: '☕', tip: '따뜻한 실내 앰비언스' },
-    { id: 'home', name: '본가', emo: '🍲', tip: '보글보글 주방 소리' }
+    { id: 'library', name: '도서관', emo: '📚', tip: '조용한 열람실의 룸톤과 책장 넘기는 소리' },
+    { id: 'rainy', name: '흐린날', emo: '🌧️', tip: '잔잔한 빗소리' },
+    { id: 'cafe', name: '카페', emo: '☕', tip: '작게 웅성거리는 대화와 식기 소리' },
+    { id: 'home', name: '본가', emo: '🍲', tip: '보글보글 끓는 주방 소리' }
   ];
   let asmrOn = false;
   let asmrCtx = null;
@@ -6762,7 +6760,10 @@
   let asmrUnlocked = false;
   let asmrVersion = 'rainy';
   let asmrBufs = Object.create(null);        /* version → AudioBuffer */
+  let asmrLoads = Object.create(null);       /* version → 진행 중인 로딩 Promise */
   let asmrWarm = 0;
+  let asmrSeq = 0;                          /* 시작/전환 순서 — 늦게 도착한 로딩을 버린다 */
+  let asmrErr = '';
 
   function asmrVersionOf(id) {
     for (let i = 0; i < ASMR_VERSIONS.length; i++) if (ASMR_VERSIONS[i].id === id) return ASMR_VERSIONS[i];
@@ -6772,279 +6773,81 @@
     try { asmrOn = store.getItem(ASMR_KEY) === '1'; } catch (e) { asmrOn = false; }
     let v = null;
     try { v = store.getItem(ASMR_VER_KEY); } catch (e) { v = null; }
-    asmrVersion = (v && ASMR_SECS[v]) ? v : 'rainy';
+    asmrVersion = (v && ASMR_FILES[v]) ? v : 'rainy';
   }
   function asmrPrefSave() {
     try { store.setItem(ASMR_KEY, asmrOn ? '1' : '0'); } catch (e) {}
     try { store.setItem(ASMR_VER_KEY, asmrVersion); } catch (e) {}
   }
+  function asmrUrl(id) {
+    return ASMR_DIR + (ASMR_FILES[id] || ASMR_FILES.rainy) + '?v=' + ASMR_FILE_VER;
+  }
 
-  /* ---------- 소리 합성 도구 (모두 순수 계산) ---------- */
-  function asmrRng(seed) {
-    let s = (seed >>> 0) || 0x2545F491;
-    return function () {                    /* xorshift32 → [-1,1) */
-      s ^= s << 13; s >>>= 0;
-      s ^= s >>> 17;
-      s ^= s << 5; s >>>= 0;
-      return s / 2147483648 - 1;
+  /* ---------- 파일 받아서 디코딩 (한 버전은 한 번만) ---------- */
+  function asmrDecode(arrayBuf) {
+    return new Promise((resolve, reject) => {
+      /* 예전 Safari 는 콜백형만 받는다 — 둘 다 받아 준다 */
+      let done = false;
+      const ok = (b) => { if (!done) { done = true; resolve(b); } };
+      const no = (e) => { if (!done) { done = true; reject(e || new Error('decode')); } };
+      try {
+        const r = asmrCtx.decodeAudioData(arrayBuf, ok, no);
+        if (r && typeof r.then === 'function') r.then(ok, no);
+      } catch (e) { no(e); }
+    });
+  }
+  function asmrLoad(id) {
+    if (asmrBufs[id]) return Promise.resolve(asmrBufs[id]);
+    if (asmrLoads[id]) return asmrLoads[id];
+    if (!asmrCtx) return Promise.reject(new Error('no-audio-context'));
+    const url = asmrUrl(id);
+    const p = fetch(url, { credentials: 'same-origin' })
+      .then((res) => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.arrayBuffer();
+      })
+      .then((buf) => asmrDecode(buf))
+      .then((buf) => { asmrBufs[id] = buf; delete asmrLoads[id]; return buf; })
+      .catch((e) => { delete asmrLoads[id]; asmrErr = id + ': ' + ((e && e.message) || e); throw e; });
+    asmrLoads[id] = p;
+    return p;
+  }
+  /* 나머지 버전은 한가할 때 미리 받아 둔다 → 칩을 누르면 바로 바뀐다 */
+  function asmrPrewarm() {
+    clearTimeout(asmrWarm);
+    const queue = ASMR_VERSIONS.map((v) => v.id).filter((id) => !asmrBufs[id] && !asmrLoads[id] && id !== asmrVersion);
+    const step = () => {
+      const id = queue.shift();
+      if (!id || !asmrCtx || !asmrOn) return;
+      asmrLoad(id).catch(() => {});
+      asmrWarm = setTimeout(step, 1200);
     };
-  }
-  function asmrWhite(n, rnd) {
-    const a = new Float32Array(n);
-    for (let i = 0; i < n; i++) a[i] = rnd();
-    return a;
-  }
-  function asmrPink(src) {
-    const n = src.length, out = new Float32Array(n);
-    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-    for (let i = 0; i < n; i++) {
-      const w = src[i];
-      b0 = 0.99886 * b0 + w * 0.0555179;
-      b1 = 0.99332 * b1 + w * 0.0750759;
-      b2 = 0.96900 * b2 + w * 0.1538520;
-      b3 = 0.86650 * b3 + w * 0.3104856;
-      b4 = 0.55000 * b4 + w * 0.5329522;
-      b5 = -0.7616 * b5 - w * 0.0168980;
-      out[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
-      b6 = w * 0.115926;
-    }
-    return out;
-  }
-  function asmrBrown(src) {
-    const n = src.length, out = new Float32Array(n);
-    let last = 0;
-    for (let i = 0; i < n; i++) { last = (last + 0.02 * src[i]) / 1.02; out[i] = last * 3.5; }
-    return out;
-  }
-  function asmrLP(src, hz, passes) {
-    const a = 1 - Math.exp(-2 * Math.PI * hz / ASMR_SR), p = passes || 1;
-    const out = new Float32Array(src.length);
-    let y = 0;
-    for (let i = 0; i < src.length; i++) {
-      let x = src[i];
-      for (let k = 0; k < p; k++) { y += a * (x - y); x = y; }
-      out[i] = y;
-    }
-    return out;
-  }
-  function asmrHP(src, hz, passes) {
-    const a = 1 - Math.exp(-2 * Math.PI * hz / ASMR_SR), p = passes || 1;
-    const out = new Float32Array(src.length);
-    let y = 0;
-    for (let i = 0; i < src.length; i++) {
-      const x = src[i];
-      let l = x;
-      for (let k = 0; k < p; k++) { y += a * (l - y); l = y; }
-      out[i] = x - l;
-    }
-    return out;
-  }
-  function asmrBP(src, fc, q) {
-    const w0 = 2 * Math.PI * fc / ASMR_SR, alpha = Math.sin(w0) / (2 * q), cw = Math.cos(w0);
-    const a0 = 1 + alpha, b0 = alpha / a0, b2 = -alpha / a0, a1 = (-2 * cw) / a0, a2 = (1 - alpha) / a0;
-    const out = new Float32Array(src.length);
-    let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-    for (let i = 0; i < src.length; i++) {
-      const x = src[i], y = b0 * x + b2 * x2 - a1 * y1 - a2 * y2;
-      x2 = x1; x1 = x; y2 = y1; y1 = y; out[i] = y;
-    }
-    return out;
-  }
-  /* 부드러운 사건 봉투(양 끝이 0) — 끝을 넘어가면 앞으로 감아 루프를 지킨다 */
-  function asmrBurstEnv(n, rnd, o) {
-    const env = new Float32Array(n);
-    let t = rnd() * o.gapMin + 0.05, guard = 0;
-    while (t * ASMR_SR < n && guard++ < 20000) {
-      const dur = o.durMin + rnd() * (o.durMax - o.durMin);
-      const amp = o.ampMin + rnd() * (o.ampMax - o.ampMin);
-      const i0 = Math.round(t * ASMR_SR), len = Math.max(24, Math.round(dur * ASMR_SR));
-      for (let k = 0; k < len; k++) {
-        const u = k / (len - 1), e = Math.sin(Math.PI * u);
-        env[(i0 + k) % n] += amp * e * e;
-      }
-      t += o.gapMin + rnd() * (o.gapMax - o.gapMin);
-    }
-    return env;
-  }
-  /* 보글보글 — 아주 낮은 음이 살짝 올라가는 짧은 방울(금속성 없이 둥글게) */
-  function asmrBubbles(n, rnd, o) {
-    const out = new Float32Array(n);
-    let t = rnd() * 0.3 + 0.05, guard = 0;
-    while (t * ASMR_SR < n && guard++ < 20000) {
-      const dur = o.durMin + rnd() * (o.durMax - o.durMin);
-      const amp = o.ampMin + rnd() * (o.ampMax - o.ampMin);
-      const f0 = o.fMin + rnd() * (o.fMax - o.fMin), f1 = f0 * (1.10 + rnd() * 0.45);
-      const i0 = Math.round(t * ASMR_SR), len = Math.max(48, Math.round(dur * ASMR_SR));
-      let ph = 0;
-      for (let k = 0; k < len; k++) {
-        const u = k / (len - 1), e = Math.sin(Math.PI * u);
-        ph += 2 * Math.PI * (f0 + (f1 - f0) * u) / ASMR_SR;
-        out[(i0 + k) % n] += amp * e * e * (Math.sin(ph) + 0.12 * Math.sin(2 * ph));
-      }
-      t += o.gapMin + rnd() * (o.gapMax - o.gapMin);
-    }
-    return out;
-  }
-  /* 아주 느린 무작위 숨결 봉투(평균 1) */
-  function asmrBreath(n, rnd, hz, depth) {
-    const slow = asmrLP(asmrHP(asmrWhite(n, rnd), Math.max(0.15, hz * 0.25)), hz, 2);
-    let sum = 0, i;
-    for (i = 0; i < n; i++) sum += slow[i];
-    const mean = sum / n || 1e-9, out = new Float32Array(n);
-    for (i = 0; i < n; i++) out[i] = 1 + (slow[i] / mean - 1) * depth;
-    return out;
-  }
-  function asmrRms(a) {
-    let s = 0;
-    for (let i = 0; i < a.length; i++) s += a[i] * a[i];
-    return Math.sqrt(s / a.length) || 1e-9;
-  }
-  function asmrPeak(a) {
-    let p = 0;
-    for (let i = 0; i < a.length; i++) { const v = a[i] < 0 ? -a[i] : a[i]; if (v > p) p = v; }
-    return p || 1e-9;
-  }
-  function asmrMul(a, b) {
-    const out = new Float32Array(a.length);
-    for (let i = 0; i < a.length; i++) out[i] = a[i] * b[i];
-    return out;
-  }
-  /* 바닥 레이어 — 첫 레이어 기준 RMS 상대 크기 */
-  function asmrBed(layers) {
-    const n = layers[0].arr.length, base = asmrRms(layers[0].arr), out = new Float32Array(n);
-    for (let l = 0; l < layers.length; l++) {
-      const g = l === 0 ? 1 : (layers[l].rel * base) / asmrRms(layers[l].arr);
-      const a = layers[l].arr;
-      for (let i = 0; i < n; i++) out[i] += a[i] * g;
-    }
-    return out;
-  }
-  /* 사건 레이어 — 바닥 RMS 대비 꼭대기 크기로 맞춰 낮게 깔리게 */
-  function asmrEvents(bed, layers) {
-    const base = asmrRms(bed), n = bed.length;
-    for (let l = 0; l < layers.length; l++) {
-      const g = (layers[l].peak * base) / asmrPeak(layers[l].arr);
-      const a = layers[l].arr;
-      for (let i = 0; i < n; i++) bed[i] += a[i] * g;
-    }
-    return bed;
-  }
-  /* 꼬리를 머리에 등전력 크로스페이드로 접어 이음매를 없앤다 */
-  function asmrFold(raw) {
-    const M = raw.length, F = Math.round(ASMR_FADE * ASMR_SR), N = M - F;
-    const out = new Float32Array(N);
-    for (let i = 0; i < F; i++) {
-      const th = (i / F) * Math.PI / 2;
-      out[i] = raw[i] * Math.sin(th) + raw[N + i] * Math.cos(th);
-    }
-    for (let i = F; i < N; i++) out[i] = raw[i];
-    let sum = 0;
-    for (let i = 0; i < N; i++) sum += out[i];
-    const dc = sum / N;
-    for (let i = 0; i < N; i++) out[i] -= dc;
-    return out;
-  }
-  function asmrSynth(version) {
-    const secs = ASMR_SECS[version] || 16;
-    const M = Math.round(secs * ASMR_SR);
-    const seed = { library: 0x51A7B3, rainy: 0x2F6D91, cafe: 0x7C31A5, home: 0x19B4E7 }[version] || 12345;
-    const rnd = asmrRng(seed);
-    const white = asmrWhite(M, rnd);
-    const pink = asmrPink(white);
-    const brown = asmrBrown(white);
-    let bed, ev;
-    if (version === 'library') {
-      /* 차분한 서고 — 낮은 룸톤 + 아주 미세한 종이 스침 + 먼 의자 소리 */
-      bed = asmrBed([
-        { arr: asmrLP(asmrHP(brown, 40), 320, 2), rel: 1 },
-        { arr: asmrLP(pink, 700, 1), rel: 0.34 }
-      ]);
-      ev = [
-        { arr: asmrMul(asmrBP(pink, 2000, 0.75),
-          asmrBurstEnv(M, rnd, { gapMin: 1.7, gapMax: 3.6, durMin: 0.18, durMax: 0.38, ampMin: 0.45, ampMax: 1 }) ), peak: 1.5 },
-        { arr: asmrMul(asmrLP(brown, 150, 2),
-          asmrBurstEnv(M, rnd, { gapMin: 6, gapMax: 11, durMin: 0.24, durMax: 0.42, ampMin: 0.5, ampMax: 0.9 })), peak: 1.1 }
-      ];
-    } else if (version === 'rainy') {
-      /* 흐린날 — 부드러운 빗소리 + 잔잔한 빗방울 */
-      bed = asmrBed([
-        { arr: asmrLP(asmrHP(pink, 300), 6000, 1), rel: 1 },
-        { arr: asmrLP(asmrHP(brown, 45), 250, 2), rel: 0.55 },
-        { arr: asmrBP(pink, 2500, 0.55), rel: 0.22 }
-      ]);
-      ev = [
-        { arr: asmrMul(asmrBP(pink, 1700, 1.15),
-          asmrBurstEnv(M, rnd, { gapMin: 0.11, gapMax: 0.44, durMin: 0.07, durMax: 0.15, ampMin: 0.25, ampMax: 1 })), peak: 1.5 },
-        { arr: asmrMul(asmrLP(brown, 180, 2),
-          asmrBurstEnv(M, rnd, { gapMin: 3, gapMax: 6.5, durMin: 0.3, durMax: 0.8, ampMin: 0.3, ampMax: 0.7 })), peak: 0.9 }
-      ];
-    } else if (version === 'cafe') {
-      /* 카페 — 따뜻한 저음 + 은은한 웅성거림 + 먼 컵 내려놓는 소리 */
-      bed = asmrBed([
-        { arr: asmrLP(asmrHP(brown, 42), 265, 2), rel: 1 },
-        { arr: asmrMul(asmrBP(pink, 520, 0.85), asmrBreath(M, rnd, 0.9, 0.75)), rel: 0.45 },
-        { arr: asmrBP(pink, 1600, 0.5), rel: 0.12 }
-      ]);
-      ev = [
-        { arr: asmrMul(asmrLP(brown, 190, 2),
-          asmrBurstEnv(M, rnd, { gapMin: 4, gapMax: 8.5, durMin: 0.16, durMax: 0.28, ampMin: 0.4, ampMax: 0.85 })), peak: 1 }
-      ];
-    } else {
-      /* 본가 — 보글보글 끓는 소리 + 지글지글 + 따뜻한 생활 소음 */
-      bed = asmrBed([
-        { arr: asmrLP(asmrHP(brown, 42), 400, 2), rel: 1 },
-        { arr: asmrMul(asmrBP(pink, 330, 1.6), asmrBreath(M, rnd, 2.2, 0.45)), rel: 0.42 },
-        { arr: asmrMul(asmrBP(pink, 4300, 0.6), asmrBreath(M, rnd, 3.2, 0.5)), rel: 0.1 }
-      ]);
-      ev = [
-        { arr: asmrBubbles(M, rnd, { gapMin: 0.42, gapMax: 1.15, durMin: 0.06, durMax: 0.12, ampMin: 0.3, ampMax: 1, fMin: 190, fMax: 380 }), peak: 0.95 }
-      ];
-    }
-    const loop = asmrFold(asmrHP(asmrEvents(bed, ev), 38, 2));
-    /* 목표 음량으로 맞춘다(버퍼는 float32라 1.0을 조금 넘어도 재생에서 잘리지 않는다) */
-    const target = ASMR_RMS[version] || 0.14;
-    let g = target / asmrRms(loop);
-    if (asmrPeak(loop) * g > 1.5) g = 1.5 / asmrPeak(loop);
-    for (let i = 0; i < loop.length; i++) loop[i] *= g;
-    return loop;
+    asmrWarm = setTimeout(step, 900);
   }
 
-  /* ---------- 재생 (Web Audio) ---------- */
-  function asmrBuffer(version) {
-    if (asmrBufs[version]) return asmrBufs[version];
-    const data = asmrSynth(version);
-    const buf = asmrCtx.createBuffer(1, data.length, ASMR_SR);
-    buf.getChannelData(0).set(data);
-    asmrBufs[version] = buf;
-    return buf;
-  }
-  function asmrBuildVoice(version) {
+  /* ---------- 재생 (Web Audio, 샘플 단위 루프) ---------- */
+  function asmrBuildVoice(version, buffer) {
     const ctx = asmrCtx;
     const gain = ctx.createGain();
     gain.gain.value = 0.0001;
     gain.connect(asmrMaster);
-    /* 한 번 더 부드럽게 — 어떤 버전도 날카로운 고음이 올라오지 않게 */
-    const tone = ctx.createBiquadFilter();
-    tone.type = 'lowpass'; tone.frequency.value = 9000; tone.Q.value = 0.4;
-    tone.connect(gain);
     const src = ctx.createBufferSource();
-    src.buffer = asmrBuffer(version);
-    src.loop = true;
-    src.connect(tone);
-    /* 아주 느린 숨결 — 필터를 살짝 흔들어 정지된 느낌을 없앤다(들리지 않는 정도) */
-    const lfo = ctx.createOscillator();
-    lfo.type = 'sine'; lfo.frequency.value = 0.035;
-    const lg = ctx.createGain(); lg.gain.value = 420;
-    lfo.connect(lg); lg.connect(tone.frequency);
-    try { src.start(0); lfo.start(0); } catch (e) {}
-    return { version: version, gain: gain, tone: tone, src: src, lfo: lfo, nodes: [src, lfo] };
+    src.buffer = buffer;
+    src.loop = true;                    /* 버퍼를 이어 붙이므로 이음매가 없다 */
+    src.loopStart = 0;
+    src.loopEnd = buffer.duration;
+    src.connect(gain);
+    try { src.start(0); } catch (e) {}
+    return { version: version, gain: gain, src: src, nodes: [src] };
   }
   /* 버전 교체·시작 — 새 소리는 0에서 올리고, 옛 소리는 같은 시간에 내려 끈다 */
   function asmrUseVoice(version, fade) {
     if (!asmrCtx || !asmrMaster) return null;
+    const buf = asmrBufs[version];
+    if (!buf) return asmrVoice;
     const ctx = asmrCtx, old = asmrVoice;
     let voice;
-    try { voice = asmrBuildVoice(version); } catch (e) { return old; }
+    try { voice = asmrBuildVoice(version, buf); } catch (e) { return old; }
     asmrVoice = voice;
     asmrNodes = voice.nodes;
     const now = ctx.currentTime, t = Math.max(0.05, fade == null ? 0.6 : fade);
@@ -7053,7 +6856,7 @@
       voice.gain.gain.setValueAtTime(0.0001, now);
       voice.gain.gain.linearRampToValueAtTime(1, now + t);
     } catch (e) {}
-    if (old) {
+    if (old && old !== voice) {
       try {
         const g = old.gain.gain;
         g.cancelScheduledValues(now);
@@ -7062,24 +6865,10 @@
       } catch (e) {}
       setTimeout(() => {
         try { old.src.stop(); } catch (e) {}
-        try { old.lfo.stop(); } catch (e) {}
         try { old.gain.disconnect(); } catch (e) {}
-        try { old.tone.disconnect(); } catch (e) {}
       }, (t + 0.25) * 1000);
     }
     return voice;
-  }
-  /* 나머지 버전은 한가할 때 미리 만들어 둔다 → 칩을 누르면 바로 바뀐다 */
-  function asmrPrewarm() {
-    clearTimeout(asmrWarm);
-    const queue = ASMR_VERSIONS.map((v) => v.id).filter((id) => !asmrBufs[id] && id !== asmrVersion);
-    const step = () => {
-      const id = queue.shift();
-      if (!id || !asmrCtx) return;
-      try { asmrBuffer(id); } catch (e) {}
-      asmrWarm = setTimeout(step, 900);
-    };
-    asmrWarm = setTimeout(step, 1200);
   }
   function asmrResumeCtx() {
     if (!asmrCtx) return;
@@ -7115,6 +6904,14 @@
       }
     }
   }
+  /* 로딩이 실패하면 조용히 꺼지고 한 번만 알린다 */
+  function asmrFailed(token, quiet) {
+    if (token !== asmrSeq) return;
+    asmrOn = false;
+    asmrPrefSave();
+    paintAsmr();
+    if (!quiet) toast('소리를 불러오지 못했어요 · 잠시 뒤 다시 시도해 주세요', 2800);
+  }
   function asmrStart(quiet) {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) { asmrOn = false; asmrPrefSave(); paintAsmr(); if (!quiet) toast('이 브라우저는 소리를 지원하지 않아요'); return false; }
@@ -7129,13 +6926,18 @@
       asmrPrefSave();
       asmrResumeCtx();
       asmrStarts++;
-      if (!asmrVoice || asmrVoice.version !== asmrVersion) asmrUseVoice(asmrVersion, 1.2);
       const now = asmrCtx.currentTime, g = asmrMaster.gain;
       try {
         g.cancelScheduledValues(now);
         g.setValueAtTime(Math.max(0.0001, g.value), now);
         g.linearRampToValueAtTime(ASMR_MASTER, now + 1.5);
       } catch (e) {}
+      const want = asmrVersion, token = ++asmrSeq;
+      asmrLoad(want).then(() => {
+        if (!asmrOn || token !== asmrSeq || !asmrCtx) return;
+        asmrResumeCtx();
+        if (!asmrVoice || asmrVoice.version !== want) asmrUseVoice(want, 1.6);
+      }).catch(() => asmrFailed(token, quiet));
       asmrPrewarm();
       paintAsmr();
       return true;
@@ -7149,6 +6951,7 @@
   function asmrStop(quiet) {
     asmrOn = false;
     asmrPrefSave();
+    asmrSeq++;
     if (asmrCtx && asmrMaster) {
       try {
         const now = asmrCtx.currentTime, g = asmrMaster.gain;
@@ -7176,13 +6979,24 @@
     const changed = v.id !== asmrVersion;
     asmrVersion = v.id;
     asmrPrefSave();
+    const token = ++asmrSeq;
     if (asmrOn) {
       asmrResumeCtx();
-      asmrUseVoice(asmrVersion, 0.6);
+      if (asmrBufs[asmrVersion]) {
+        asmrUseVoice(asmrVersion, 0.6);
+      } else {
+        /* 아직 안 받아 둔 버전이면 받는 동안 소리가 끊기지 않게 잠깐 기다린다 */
+        asmrLoad(asmrVersion).then(() => {
+          if (!asmrOn || token !== asmrSeq) return;
+          asmrUseVoice(asmrVersion, 0.9);
+        }).catch(() => asmrFailed(token, true));
+        asmrPrewarm();
+      }
     }
     paintAsmr();
     if (!quiet && (changed || !asmrOn)) toast(v.emo + ' ' + v.name + ' 소리 · ' + v.tip, 2000);
   }
+
   /* 뽀모도로 달성 알림 — 주기 차임은 없앴고, 목표에 닿았을 때 딱 한 번만 은은하게 */
   function asmrPomodoroChime() {
     if (!asmrOn || !asmrCtx || !asmrMaster) return false;
@@ -11127,12 +10941,16 @@
         on: asmrOn, ctx: asmrCtx ? asmrCtx.state : 'none', gain: asmrMaster ? asmrMaster.gain.value : 0,
         nodes: asmrNodes.length, starts: asmrStarts, chimes: 0,
         version: asmrVersion, versions: ASMR_VERSIONS.map((v) => v.id),
-        buffers: Object.keys(asmrBufs),
+        buffers: Object.keys(asmrBufs), loading: Object.keys(asmrLoads), err: asmrErr,
+        files: ASMR_VERSIONS.map((v) => ({ id: v.id, url: asmrUrl(v.id) })),
+        file: asmrUrl(asmrVersion),
         pref: (() => { try { return store.getItem(ASMR_KEY); } catch (e) { return null; } })(),
         prefVersion: (() => { try { return store.getItem(ASMR_VER_KEY); } catch (e) { return null; } })()
       }),
       toggle: asmrToggle, start: asmrStart, stop: asmrStop, pomoChime: asmrPomodoroChime,
       setVersion: asmrSetVersion,
+      /* 검증용: 파일을 지금 받아 디코딩해 둔다 */
+      load: (v) => asmrLoad(v || asmrVersion).then((b) => ({ id: v || asmrVersion, secs: b.duration, sr: b.sampleRate })),
       /* 루프 버퍼의 이음매·음량을 숫자로 돌려준다(검증용) */
       loop: (v) => {
         const id = v || asmrVersion, buf = asmrBufs[id];
