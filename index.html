@@ -268,10 +268,32 @@
   .pet-play{
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:44px;height:44px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;
-    display:grid;place-items:center;color:var(--mint-2);z-index:3;line-height:0
+    display:grid;place-items:center;z-index:3;line-height:1
   }
-  .pet-play svg{display:block;width:26px;height:26px;overflow:visible}
+  /* v44: ▶ 대신 내가 등록한 과목의 이모지 — 배경·테두리 없이 이모지만(탭 44px) */
+  .pet-play .em{display:flex;align-items:center;justify-content:center;font-size:23px;line-height:1}
+  .pet-play img.noto-em{width:24px;height:24px;display:block;margin:0}
   .pet-play:active{transform:translate(-50%,-50%) scale(.9)}
+  /* v44: 펫 아래 이름 줄 — 종류 이모지 · 이름 · ✏️ (가로 가운데) + 오른쪽 끝 📷 */
+  .pet-meta{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:-6px}
+  .pet-id{display:inline-flex;align-items:center;gap:5px;max-width:calc(100% - 54px)}
+  .pet-id .em{display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+  .pet-id img.noto-em{width:18px;height:18px;display:block;margin:0}
+  .pet-id .nm{font-size:15.5px;font-weight:900;letter-spacing:-.02em;color:#173B32;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pet-id .edit{
+    width:26px;height:26px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+    padding:0;border:0;background:transparent;color:#7FA79A;border-radius:8px;line-height:1
+  }
+  .pet-id .edit svg{width:15px;height:15px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pet-id .edit:active{transform:scale(.92);color:var(--mint-deep)}
+  .pet-shot{
+    position:absolute;right:0;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;padding:0;border:0;border-radius:12px;background:transparent;
+    display:grid;place-items:center;line-height:1;font-size:21px
+  }
+  .pet-shot img.noto-em{width:23px;height:23px;display:block;margin:0}
+  .pet-shot:active{transform:translateY(-50%) scale(.92)}
+  .pet-shot.busy{opacity:.5}
   /* v43: 펫은 아담하게(아기 76~84px) — 카드도 함께 컴팩트 */
   .pet-scene{position:relative;width:100%;max-width:360px;height:94px;margin:4px auto 2px;padding-top:0}
   .pet-art{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:min(100%,188px);display:flex;align-items:flex-end;justify-content:center;flex:none;z-index:2}
@@ -632,6 +654,13 @@
   .sheet-sub{font-size:12.5px;color:var(--muted);margin:-4px 0 12px}
   .sheet-actions{display:flex;gap:8px;margin-top:16px}
   .sheet-actions .btn{flex:1;text-align:center;justify-content:center}
+  /* 📷 인증샷 미리보기 — 카드 PNG를 그대로 보여준다 */
+  .shot-prev{
+    display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);
+    background:linear-gradient(160deg,#F1FCF7,#FFFFFF);padding:10px;max-height:54vh;overflow:auto
+  }
+  .shot-prev img{display:block;width:100%;max-width:290px;height:auto;border-radius:14px;
+    box-shadow:0 10px 26px rgba(16,105,80,.13)}
   .field{margin-top:12px;min-width:0}
   .field label{display:block;font-size:11.5px;font-weight:800;color:var(--muted);margin-bottom:5px}
   .field input[type=text],.field input[type=date],.field input[type=time],.field input[type=number],.field textarea,.field select{
@@ -2423,10 +2452,7 @@
           <span class="ic" aria-hidden="true">📗</span>
         </button>
         <button class="pet-play" id="heroFocus" type="button" aria-label="Tody time 시작">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M9.4 6.2 L18.2 12 L9.4 17.8 Z" fill="currentColor" stroke="currentColor"
-                  stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-          </svg>
+          <span class="em" id="heroIcon" aria-hidden="true">📚</span>
         </button>
         <button class="dday-pill hero-dday" id="ddayPill" aria-label="시험일까지 남은 날 · 눌러서 시험일 수정">
           <span class="lb">D-DAY</span>
@@ -2438,6 +2464,17 @@
         <div class="pet-scene">
           <button class="pet-art" id="petArt" aria-label="토디펫 상태 보기"></button>
         </div>
+      </div>
+
+      <div class="pet-meta">
+        <div class="pet-id">
+          <span class="em" id="heroKind" aria-hidden="true">🐣</span>
+          <span class="nm" id="heroName">콩이</span>
+          <button class="edit" id="heroNameEdit" type="button" aria-label="펫 이름 수정">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4.2L19 9.2a2.6 2.6 0 0 0-3.7-3.7L4.5 16.3V20z"/><path d="M13.8 6.9l3.3 3.3"/></svg>
+          </button>
+        </div>
+        <button class="pet-shot" id="petShot" type="button" aria-label="오늘의 공부 인증샷 만들기 · 공유">📷</button>
       </div>
 
     </section>
@@ -3474,6 +3511,21 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ================= 📷 공부 인증샷 (미리보기 · 저장 · 공유) ================= -->
+<div class="sheet" id="shotSheet" role="dialog" aria-modal="true" aria-labelledby="shotTitle">
+  <div class="veil" data-close="shotSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="shotTitle"><span aria-hidden="true">📷</span>공부 인증샷</h2><button class="x" data-close="shotSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
+    <p class="sheet-sub">토디펫과 이번 달 달력을 사진 한 장으로 남겨요</p>
+    <div class="shot-prev"><img id="shotImg" alt="공부 인증 카드 미리보기"></div>
+    <div class="sheet-actions">
+      <button class="btn ghost" id="shotSave" type="button">이미지로 저장</button>
+      <button class="btn primary" id="shotShare" type="button">공유하기</button>
+    </div>
+  </div>
+</div>
 
 <!-- Supabase JS v2 (CDN). 오프라인이거나 로드에 실패하면 앱은 로컬 저장소로만 동작합니다. -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -5390,11 +5442,18 @@
     if (d === 0) return 'D-DAY';
     return d > 0 ? 'D-' + d : 'D+' + Math.abs(d);
   }
+  /* v44: 홈 카드 오른쪽 숫자 — 위에 D-DAY 라벨이 있으니 접뒤어 없이 숫자만
+     (오늘 0 · 지난 날 +N — 부호만 남겨 의미를 지킨다) */
+  function ddayNumText(exam) {
+    const d = diffDays(todayKey(), exam);
+    if (d === 0) return '0';
+    return d > 0 ? String(d) : '+' + Math.abs(d);
+  }
 
   function renderHeader() {
     const c = cert();
     $('certBtnName').textContent = c.name;
-    $('ddayValue').textContent = ddayText(c.examDate);
+    $('ddayValue').textContent = ddayNumText(c.examDate);
     $('ddayPill').classList.toggle('past', diffDays(todayKey(), c.examDate) < 0);
     renderAccountChip();
     $('certMenuList').innerHTML = state.certs.map((x) =>
@@ -5418,6 +5477,29 @@
       '<div class="pg-foot">' + foot + '</div></div>';
   }
 
+  /* v44: 펫 카드 이모지 자리 — 값을 한 번만 써서 Noto 이미지 변환이 반복되지 않게 */
+  function setHeroEmoji(el, em) {
+    if (!el) return;
+    const val = em || HERO_ICON_DEFAULT;
+    if (el.getAttribute('data-em') === val) return;
+    el.setAttribute('data-em', val);
+    el.textContent = val;
+  }
+  /* v44: 가운데 재생 삼각형 대신 — 내가 등록한 과목 이모지 중 하나를 랜덤으로.
+     새로고침·초기 렌더에서 뽑고, 과목 목록이 바뀔 때만 다시 뽑는다(렌더마다 흔들리지 않음). */
+  const HERO_ICON_DEFAULT = '📚';
+  let heroIconKey = '', heroIconVal = HERO_ICON_DEFAULT;
+  function heroSubjectIcon() {
+    const c = cert();
+    const pool = (c.subjects || []).map((s, i) => (s && (s.icon || '').trim()) ? s.icon : SUBJECT_ICONS[i % SUBJECT_ICONS.length]);
+    const key = c.id + '|' + pool.join(',');
+    if (key !== heroIconKey) {
+      heroIconKey = key;
+      heroIconVal = pool.length ? pool[Math.floor(Math.random() * pool.length)] : HERO_ICON_DEFAULT;
+    }
+    return heroIconVal;
+  }
+
   function renderHero() {
     const c = cert();
     const info = petInfo(c);
@@ -5426,6 +5508,15 @@
     art.setAttribute('data-stage', info.stageId);
     art.setAttribute('aria-label', petName(info.animal.id) + ' ' + info.stageName + ' · 능력치 ' + Math.round(info.pct) + '% — 토디펫 상태 보기');
     art.style.filter = '';
+    /* v44: 첫 줄 가운데 = 과목 이모지(탭하면 Tody time) */
+    setHeroEmoji($('heroIcon'), heroSubjectIcon());
+    $('heroFocus').setAttribute('aria-label', 'Tody time 시작');
+    /* v44: 펫 아래 이름 줄 = 종류 이모지 + 내가 정한 이름 */
+    setHeroEmoji($('heroKind'), info.animal.emoji);
+    if ($('heroName')) $('heroName').textContent = petName(info.animal.id);
+    if ($('heroNameEdit')) $('heroNameEdit').setAttribute('aria-label', petName(info.animal.id) + ' 이름 수정');
+    if ($('petShot')) $('petShot').setAttribute('aria-label', petName(info.animal.id) + '와 오늘의 공부 인증샷 만들기 · 공유');
+    shotPrewarm();
   }
 
   function tint(hex, a) {
@@ -5524,6 +5615,366 @@
       ? '<span class="cs-full">🔥 ' + st + '일 연속 인증</span><span class="cs-short">🔥 ' + st + '일</span>'
       : '';
     if ($('calArchive').classList.contains('open')) renderArchive();
+  }
+
+  /* =========================================================
+     📷 공부 인증샷 — 토디펫 · 종류+이름 · 게이지 · 이번 달
+     달력을 한 장의 PNG 카드로 그려 공유(네이티브 공유 시트)·저장
+     ---------------------------------------------------------
+     · 카드에 넣는 이미지는 같은 출처(assets/pets · 저장된 사진 data URI)만 써서 캔버스가 오염되지 않는다
+     · 그리기는 동기 — 사진·펫 이미지는 화면을 그릴 때 미리 받아 둔다
+       (iOS는 탭 제스추어 안에서 navigator.share를 불러야 공유 시트가 뜬다)
+     ========================================================= */
+  const SHOT_W = 360;            /* 카드 기준 폭(CSS px) — 3배로 그려 1080px */
+  const SHOT_SCALE = 3;
+  const SHOT_FONT = '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans CJK KR", "Malgun Gothic", sans-serif';
+  const SHOT_EMOJI_FONT = '"Apple Color Emoji", "Noto Color Emoji", "Segoe UI Emoji", sans-serif';
+  const shotCache = { pet: null, petSrc: '', photos: {} };
+  let lastShot = null;
+
+  function shotRound(ctx, x, y, w, h, r) {
+    const rr = Math.max(0, Math.min(r, w / 2, h / 2));
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x, y + h, rr);
+    ctx.arcTo(x, y + h, x, y, rr);
+    ctx.arcTo(x, y, x + w, y, rr);
+    ctx.closePath();
+  }
+  function shotEmoji(ctx, ch, cx, cy, size) {
+    ctx.save();
+    ctx.font = size + 'px ' + SHOT_EMOJI_FONT;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(ch, cx, cy);
+    ctx.restore();
+  }
+  /* 자간 있는 작은 글자(워터마크) */
+  function shotTracked(ctx, text, cx, y, size, ls, color) {
+    ctx.save();
+    ctx.font = '900 ' + size + 'px ' + SHOT_FONT;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'middle';
+    const chars = Array.from(text);
+    let w = 0;
+    chars.forEach((ch) => { w += ctx.measureText(ch).width; });
+    w += ls * (chars.length - 1);
+    let x = cx - w / 2;
+    ctx.textAlign = 'left';
+    chars.forEach((ch) => { ctx.fillText(ch, x, y); x += ctx.measureText(ch).width + ls; });
+    ctx.restore();
+  }
+
+  /* 이번 달 달력 셀 — 캔버스 카드용 모델(달력 DOM과 같은 규칙) */
+  function shotMonthCells(y, m) {
+    const store = photoStore();
+    const tk = todayKey();
+    const first = new Date(y, m, 1).getDay();
+    const days = monthDays(y, m);
+    const cells = [];
+    for (let i = 0; i < first; i++) cells.push(null);
+    for (let d = 1; d <= days; d++) {
+      const k = monthKeyOf(y, m) + '-' + pad(d);
+      const e = store[k] || null;
+      cells.push({
+        d: d, key: k, dow: new Date(y, m, d).getDay(),
+        img: (e && e.img) || '',
+        diary: !!(e && String(e.diary || e.memo || '').trim()),
+        today: k === tk
+      });
+    }
+    while (cells.length % 7) cells.push(null);
+    return cells;
+  }
+
+  function shotModel() {
+    const c = cert();
+    const info = petInfo(c);
+    const now = new Date();
+    return {
+      name: petName(info.animal.id), emoji: info.animal.emoji,
+      kind: info.animal.id, src: petImgSrc(info.stageId, info.animal.id), stage: info.stageId,
+      pct: Math.round(info.pct), total: info.total, complete: info.complete,
+      y: now.getFullYear(), m: now.getMonth(), month: now.getMonth() + 1,
+      streak: photoStreak(), cells: shotMonthCells(now.getFullYear(), now.getMonth())
+    };
+  }
+
+  /* 화면을 그릴 때마다 미리 받아 둔다 — 첫 탭에서 바로(동기로) 그리기 위해서 */
+  function shotPrewarm() {
+    let md;
+    try { md = shotModel(); } catch (e) { return; }
+    if (!shotCache.petSrc || shotCache.petSrc !== md.src) {
+      shotCache.petSrc = md.src;
+      shotCache.pet = null;
+      const src = md.src;
+      const im = new Image();
+      im.decoding = 'async';
+      im.onload = () => { if (shotCache.petSrc === src) shotCache.pet = im; };
+      im.src = src;
+    }
+    const keep = {};
+    md.cells.forEach((c) => {
+      if (!c || !c.img) return;
+      keep[c.key] = 1;
+      if (shotCache.photos[c.key]) return;
+      const key = c.key;
+      const im = new Image();
+      im.onload = () => { shotCache.photos[key] = im; };
+      im.src = c.img;
+    });
+    Object.keys(shotCache.photos).forEach((k) => { if (!keep[k]) delete shotCache.photos[k]; });
+  }
+
+  /* 인증 카드 1장 그리기 (동기) */
+  function drawShotCard(md) {
+    const W = SHOT_W, PAD = 20, IN = W - PAD * 2;
+    const cell = 38, gap = 6, gridW = cell * 7 + gap * 6, gx = PAD + (IN - gridW) / 2;
+    const rows = Math.max(1, Math.ceil(md.cells.length / 7));
+    const petTop = 22, petH = 174;
+    const nameY = petTop + petH + 18;
+    const gaugeY = nameY + 36;
+    const footY = gaugeY + 22;
+    const divY = footY + 18;
+    const calY2 = divY + 26;
+    const dowY = calY2 + 30;
+    const gridTop = dowY + 14;
+    const gridBottom = gridTop + rows * (cell + gap) - gap;
+    const foot2Y = gridBottom + 30;
+    const H = Math.round(foot2Y + 22);
+
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(W * SHOT_SCALE);
+    cv.height = Math.round(H * SHOT_SCALE);
+    const ctx = cv.getContext('2d');
+    ctx.scale(SHOT_SCALE, SHOT_SCALE);
+    ctx.textBaseline = 'middle';
+
+    /* 배경 — 민트 → 순백, 둥근 카드 */
+    ctx.clearRect(0, 0, W, H);
+    shotRound(ctx, 0, 0, W, H, 26);
+    const bg = ctx.createLinearGradient(0, 0, 0, H * 0.62);
+    bg.addColorStop(0, '#E9FBF3'); bg.addColorStop(0.55, '#F8FEFB'); bg.addColorStop(1, '#FFFFFF');
+    ctx.fillStyle = bg;
+    ctx.fill();
+    shotRound(ctx, 0.5, 0.5, W - 1, H - 1, 26);
+    ctx.strokeStyle = '#D9F1E7'; ctx.lineWidth = 1; ctx.stroke();
+
+    /* 1) 토디펫 */
+    const im = shotCache.pet;
+    if (im && im.naturalWidth) {
+      const maxW = 236, maxH = petH;
+      const s = Math.min(maxW / im.naturalWidth, maxH / im.naturalHeight);
+      const w = im.naturalWidth * s, h = im.naturalHeight * s;
+      ctx.drawImage(im, (W - w) / 2, petTop + (petH - h), w, h);
+    }
+
+    /* 2) 종류 이모지 + 이름 */
+    const nameSize = 17;
+    ctx.font = '900 ' + nameSize + 'px ' + SHOT_FONT;
+    const nameW = ctx.measureText(md.name).width;
+    const emoSize = 18, emoGap = 7;
+    const totalW = emoSize + emoGap + nameW;
+    const nx = Math.round((W - totalW) / 2);
+    shotEmoji(ctx, md.emoji, nx + emoSize / 2, nameY, emoSize);
+    ctx.fillStyle = '#173B32';
+    ctx.textAlign = 'left';
+    ctx.font = '900 ' + nameSize + 'px ' + SHOT_FONT;
+    ctx.fillText(md.name, nx + emoSize + emoGap, nameY + 1);
+
+    /* 3) 성장 게이지 — 🥚 (흰 알) · 능력치 바 · 👑 */
+    const barX = 46, barW = (W - PAD - 30) - barX, barH = 12;
+    const barY = gaugeY - barH / 2;
+    /* 왼쪽 알 — 앱처럼 흰 알(네이티브 🥚 느낌): 갈색 Noto 알을 피해 직접 그린다 */
+    const eggX = barX - 16, eggY = gaugeY;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(eggX, eggY - 10.2);
+    ctx.bezierCurveTo(eggX + 4.8, eggY - 9.6, eggX + 8.3, eggY - 2.6, eggX + 8.3, eggY + 2.6);
+    ctx.bezierCurveTo(eggX + 8.3, eggY + 7.9, eggX + 4.5, eggY + 10.4, eggX, eggY + 10.4);
+    ctx.bezierCurveTo(eggX - 4.5, eggY + 10.4, eggX - 8.3, eggY + 7.9, eggX - 8.3, eggY + 2.6);
+    ctx.bezierCurveTo(eggX - 8.3, eggY - 2.6, eggX - 4.8, eggY - 9.6, eggX, eggY - 10.2);
+    ctx.closePath();
+    const eggG = ctx.createLinearGradient(eggX - 8, eggY - 10, eggX + 8, eggY + 10);
+    eggG.addColorStop(0, '#FFFFFF'); eggG.addColorStop(1, '#F2F8F5');
+    ctx.fillStyle = eggG; ctx.fill();
+    ctx.strokeStyle = '#CFE2DA'; ctx.lineWidth = 1.1; ctx.stroke();
+    ctx.restore();
+    shotRound(ctx, barX, barY, barW, barH, barH / 2);
+    ctx.fillStyle = '#E6F4EF'; ctx.fill();
+    const pct = Math.max(0, Math.min(100, Number(md.pct) || 0));
+    if (pct > 0) {
+      const fw = Math.max(barH, barW * pct / 100);
+      const fg = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+      fg.addColorStop(0, '#46E6B4'); fg.addColorStop(1, '#12BE8C');
+      shotRound(ctx, barX, barY, fw, barH, barH / 2);
+      ctx.fillStyle = fg; ctx.fill();
+    }
+    shotEmoji(ctx, '👑', barX + barW + 16, gaugeY, 17);
+
+    /* 게이지 아래 — 왼쪽 누적 시간 · 오른쪽 능력치 % */
+    ctx.textAlign = 'left';
+    ctx.font = '700 10.5px ' + SHOT_FONT;
+    ctx.fillStyle = '#8B9C96';
+    ctx.fillText('누적 ' + fmtDur(Math.min(md.total, GROW_GOAL)), PAD, footY);
+    ctx.textAlign = 'right';
+    ctx.font = '900 11.5px ' + SHOT_FONT;
+    ctx.fillStyle = '#0E9E7A';
+    ctx.fillText(pct + '%', W - PAD, footY);
+
+    /* 구분선 */
+    ctx.beginPath();
+    ctx.moveTo(PAD, divY + 0.5); ctx.lineTo(W - PAD, divY + 0.5);
+    ctx.strokeStyle = '#EDF5F1'; ctx.lineWidth = 1; ctx.stroke();
+
+    /* 4) 📅 Tody calendar + 🔥 N일 연속인증 */
+    shotEmoji(ctx, '📅', PAD + 9, calY2, 17);
+    ctx.textAlign = 'left';
+    ctx.font = '900 16px ' + SHOT_FONT;
+    ctx.fillStyle = '#12241F';
+    ctx.fillText('Tody calendar', PAD + 22, calY2 + 1);
+    if (md.streak > 0) {
+      const stText = md.streak + '일 연속인증';
+      ctx.font = '900 10.5px ' + SHOT_FONT;
+      const tw = ctx.measureText(stText).width;
+      const pw = tw + 34, ph = 22;
+      const px = W - PAD - pw;
+      shotRound(ctx, px, calY2 - ph / 2, pw, ph, 11);
+      ctx.fillStyle = '#E8FBF3'; ctx.fill();
+      ctx.strokeStyle = '#BFEFDE'; ctx.lineWidth = 1; ctx.stroke();
+      shotEmoji(ctx, '🔥', px + 12, calY2, 12);
+      ctx.textAlign = 'left';
+      ctx.font = '900 10.5px ' + SHOT_FONT;
+      ctx.fillStyle = '#0C6B54';
+      ctx.fillText(stText, px + 24, calY2 + 1);
+    }
+
+    /* 요일 헤더 */
+    const dows = ['일', '월', '화', '수', '목', '금', '토'];
+    dows.forEach((t, i) => {
+      ctx.textAlign = 'center';
+      ctx.font = '800 9.5px ' + SHOT_FONT;
+      ctx.fillStyle = i === 0 ? '#E08A86' : i === 6 ? '#7FA6D8' : '#8B9C96';
+      ctx.fillText(t, gx + i * (cell + gap) + cell / 2, dowY);
+    });
+
+    /* 날짜 칸 — 사진이 있으면 썸네일, 일기만 있으면 숫자+민트 점, 오늘은 민트 테두리 */
+    md.cells.forEach((c, i) => {
+      if (!c) return;
+      const col = i % 7, row = Math.floor(i / 7);
+      const x = gx + col * (cell + gap), y = gridTop + row * (cell + gap);
+      shotRound(ctx, x, y, cell, cell, 11);
+      ctx.fillStyle = c.today ? '#F1FDF7' : '#FAFEFC';
+      ctx.fill();
+      ctx.strokeStyle = c.today ? '#18D29B' : '#EDF5F1';
+      ctx.lineWidth = c.today ? 1.6 : 1;
+      ctx.stroke();
+      const ph = c.img ? shotCache.photos[c.key] : null;
+      if (ph && ph.naturalWidth) {
+        ctx.save();
+        shotRound(ctx, x, y, cell, cell, 11);
+        ctx.clip();
+        const sc = Math.max(cell / ph.naturalWidth, cell / ph.naturalHeight);
+        const dw = ph.naturalWidth * sc, dh = ph.naturalHeight * sc;
+        ctx.drawImage(ph, x + (cell - dw) / 2, y + (cell - dh) / 2, dw, dh);
+        ctx.restore();
+        shotRound(ctx, x + 0.5, y + 0.5, cell - 1, cell - 1, 11);
+        ctx.strokeStyle = c.today ? '#18D29B' : 'rgba(255,255,255,.9)';
+        ctx.lineWidth = c.today ? 1.6 : 1;
+        ctx.stroke();
+      } else {
+        ctx.textAlign = 'left';
+        ctx.font = (c.today ? '900 ' : '800 ') + '9.5px ' + SHOT_FONT;
+        ctx.fillStyle = c.today ? '#0E9E7A' : '#5C6F69';
+        ctx.fillText(String(c.d), x + 5, y + 11);
+        if (c.diary) {
+          ctx.beginPath();
+          ctx.arc(x + cell - 8, y + cell - 8, 2.6, 0, Math.PI * 2);
+          ctx.fillStyle = '#18D29B'; ctx.fill();
+        }
+      }
+    });
+
+    /* 워터마크 */
+    shotTracked(ctx, 'TODY', W / 2, foot2Y, 10, 3.2, '#C3DCD3');
+    return { cv: cv, geom: { W: W, H: H, PAD: PAD, rows: rows, cell: cell, gap: gap, gx: gx,
+      nameY: nameY, gaugeY: gaugeY, barX: barX, barW: barW, divY: divY, calY: calY2, dowY: dowY, gridTop: gridTop, gridBottom: gridBottom } };
+  }
+
+  function shotPng() {
+    const md = shotModel();
+    const out = drawShotCard(md);
+    return { url: out.cv.toDataURL('image/png'), w: out.cv.width, h: out.cv.height, model: md, geom: out.geom };
+  }
+  function shotBlobFromUrl(url) {
+    const b64 = String(url).split(',')[1] || '';
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: 'image/png' });
+  }
+  function shotFileName() { return 'tody-공부인증-' + todayKey() + '.png'; }
+
+  function openShotSheet(url) {
+    lastShot = url;
+    $('shotImg').src = url;
+    $('shotShare').hidden = !(navigator.share && typeof File === 'function');
+    $('shotSheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function shareShotNow(url) {
+    const fname = shotFileName();
+    let file = null;
+    try { file = new File([shotBlobFromUrl(url)], fname, { type: 'image/png' }); } catch (e) { file = null; }
+    if (file && navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+      return navigator.share({ files: [file], title: '공부 인증샷' })
+        .then(() => { toast('인증샷을 공유했어요'); return 'share'; })
+        .catch(() => { openShotSheet(url); return 'preview'; });
+    }
+    openShotSheet(url);
+    return Promise.resolve('preview');
+  }
+  function shotDownload(url) {
+    const blob = shotBlobFromUrl(url);
+    const name = shotFileName();
+    try {
+      const u = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = u; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => { try { URL.revokeObjectURL(u); } catch (e) {} }, 8000);
+      toast('인증샷을 저장했어요 — 사진 앱이나 다운로드에서 확인하세요');
+      return name;
+    } catch (e) { toast('이미지를 저장하지 못했어요'); return ''; }
+  }
+
+  let shotBusy = false;
+  function takeShot() {
+    if (shotBusy) return 'busy';
+    shotBusy = true;
+    const btn = $('petShot');
+    if (btn) btn.classList.add('busy');
+    const done = () => { shotBusy = false; if (btn) btn.classList.remove('busy'); };
+    let shot;
+    try { shot = shotPng(); }
+    catch (e) { done(); toast('인증샷을 만들지 못했어요 · 잠시 후 다시 시도해 주세요'); return 'error'; }
+    lastShot = shot.url;
+    const fname = shotFileName();
+    let file = null;
+    try { file = new File([shotBlobFromUrl(shot.url)], fname, { type: 'image/png' }); } catch (e) { file = null; }
+    /* iOS Safari 등 네이티브 공유가 되는 곳 — 바로 공유 시트를 연다(취소하면 미리보기) */
+    if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        navigator.share({ files: [file], title: '공부 인증샷' })
+          .then(() => { done(); toast('인증샷을 공유했어요'); })
+          .catch(() => { done(); openShotSheet(shot.url); });
+        return 'share';
+      } catch (e) { /* 공유 불가 → 미리보기로 */ }
+    }
+    done();
+    openShotSheet(shot.url);
+    return 'preview';
   }
 
   /* ---------- 월간 기록 아카이브 (기록 있는 달 + 이번 달만 · 최신순 다이어리 피드) ---------- */
@@ -7241,6 +7692,11 @@
   /* 📊 타이머 통계 바로가기 — 상단바 오뇨님 왼쪽 */
   $('statsQuick').addEventListener('click', openStats);
   $('psEdit').addEventListener('click', openPetSheet);
+  /* v44: 홈 펫 이름 줄 — ✏️ 이름 수정 · 📷 인증샷 */
+  $('heroNameEdit').addEventListener('click', openPetSheet);
+  $('petShot').addEventListener('click', () => { takeShot(); });
+  $('shotSave').addEventListener('click', () => { if (lastShot) shotDownload(lastShot); });
+  $('shotShare').addEventListener('click', () => { if (lastShot) shareShotNow(lastShot); });
   $('ddayPill').addEventListener('click', openDday);
   $('boostCard').addEventListener('click', openWrongTab);
   $('masterCard').addEventListener('click', () => showPage('master'));
@@ -10161,6 +10617,15 @@
     openPetStat: openPetStat, closePetStat: closePetStat,
     selectPet: selectPet, openPicker: openPicker, petArtHTML: petArtHTML, stages: () => STAGES, toast: toast,
     animals: () => ANIMALS, petName: petName, setPetName: setPetName, petFaceSrc: petFaceSrc,
+    /* v44: 📷 공부 인증샷 */
+    shot: {
+      take: takeShot, model: shotModel, prewarm: shotPrewarm,
+      png: () => { const s = shotPng(); return { url: s.url, w: s.w, h: s.h, geom: s.geom, model: s.model }; },
+      open: (url) => openShotSheet(url || lastShot || shotPng().url),
+      last: () => lastShot,
+      cache: () => ({ pet: !!shotCache.pet, petSrc: shotCache.petSrc, photos: Object.keys(shotCache.photos).length })
+    },
+    heroIcon: () => ({ icon: heroSubjectIcon(), key: heroIconKey }),
     rareState: rareState, rareOf: rareOf, studyTotalMinutes: studyTotalMinutes, checkRareUnlocks: checkRareUnlocks,
     armRare: () => { rareArmed = true; },
     cloud: cloud, cloudSync: cloudSync, cloudPush: cloudPushNow, cloudOpen: cloudOpen,
