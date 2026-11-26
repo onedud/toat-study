@@ -5948,9 +5948,7 @@
     ctx.fillStyle = '#7C8F89';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
-    const mChars = Array.from(monthTxt), mLs = 2.4;
-    let mx = gx;
-    mChars.forEach((ch) => { ctx.fillText(ch, mx, calY2 + 1); mx += ctx.measureText(ch).width + mLs; });
+    ctx.fillText(monthTxt, gx, calY2 + 1);   /* v47: 연·월은 기본 자간(0)으로 한 번에 쓴다 */
     ctx.restore();
     if (md.streak > 0) {
       const stText = md.streak + '일 연속 인증';
