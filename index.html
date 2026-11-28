@@ -2318,9 +2318,9 @@
     .sz-seal-img{width:8px;height:8px}
   }
 
-  /* ---------- 토디팁 상위 탭: 배경 없는 2분할 세그먼트 (활성 = 흰 배경 + 핑크 테두리) ---------- */
+  /* ---------- 토디팁 상위 탭: 배경 없는 3분할 세그먼트 (활성 = 흰 배경 + 핑크 테두리) ---------- */
   #tipTabs{
-    display:grid;grid-template-columns:1fr 1fr;width:100%;gap:6px;padding:0;
+    display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:6px;padding:0;
     background:transparent;border:0;border-radius:0;
     overflow:visible;margin:0 0 10px
   }
@@ -2334,6 +2334,43 @@
     background:#fff;border-color:var(--mint-line);color:var(--mint);
     box-shadow:0 2px 6px rgba(255,42,133,.10)
   }
+  #tipTabs .chip>.em{font-size:11.5px}
+
+  /* ---------- 경험정리(SPARK) — 예시 카드 · 카드 작성 · 아코디언 ---------- */
+  .spk-top{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+  .spk-top .btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;min-height:44px;padding:11px 6px;border-radius:12px;font-size:13px;font-weight:900}
+  .spk-top .btn.ghost{background:#fff;border:1px solid var(--mint-line);color:var(--mint-deep)}
+  .spk-top .btn.primary{border-color:var(--mint);color:#fff;box-shadow:var(--shadow-mint)}
+  .spk-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-top:10px;overflow:hidden}
+  .spk-head{display:flex;align-items:center;gap:1px;padding:9px 8px 9px 12px}
+  .spk-toggle{flex:1;min-width:0;display:flex;align-items:center;gap:6px;padding:3px 0;text-align:left}
+  .spk-spark{flex:none;font-size:12px;line-height:1;color:var(--mint)}
+  .spk-ttl{flex:1;min-width:0;font-size:13.5px;font-weight:900;color:#2B1220;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .spk-period{flex:none;font-size:11px;font-weight:800;color:#9CA3AF;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .spk-chev{flex:none;width:15px;height:15px;margin-left:1px;color:#C08EA4;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}
+  .spk-toggle[aria-expanded="true"] .spk-chev{transform:rotate(180deg)}
+  .spk-tools{display:inline-flex;align-items:center;gap:1px;flex:none}
+  .spk-tools .pic-tool{width:27px;height:27px}
+  .spk-body{padding:2px 11px 12px}
+  .spk-blocks{display:grid;gap:7px;padding-top:9px;border-top:1px solid var(--line-2)}
+  .spk-b{display:grid;grid-template-columns:46px minmax(0,1fr);gap:9px;align-items:start;padding:8px 9px 9px;border-radius:14px;background:var(--spk-bg);border:1px solid var(--spk-line)}
+  .spk-badge{width:46px;min-height:46px;border-radius:11px;background:rgba(255,255,255,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1;box-shadow:0 1px 2px rgba(88,9,48,.05)}
+  .spk-badge b{font-size:19px;font-weight:900;color:var(--spk-ink);letter-spacing:-.02em}
+  .spk-badge i{font-style:normal;font-size:6.5px;font-weight:800;color:var(--spk-ink);opacity:.7}
+  .spk-b-body{min-width:0}
+  .spk-b-lb{display:block;font-size:10.5px;font-weight:900;color:var(--spk-ink);margin:1px 0 2px}
+  .spk-b-body p{font-size:12px;font-weight:600;color:#4A3A42;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;white-space:pre-wrap}
+  .spk-b[data-k="s"]{--spk-bg:#FFF0F6;--spk-line:#FBD6E7;--spk-ink:#C2185B}
+  .spk-b[data-k="p"]{--spk-bg:#FFF2E9;--spk-line:#FBD9C0;--spk-ink:#BF6526}
+  .spk-b[data-k="a"]{--spk-bg:#FEF8E6;--spk-line:#F5E3A8;--spk-ink:#A87A10}
+  .spk-b[data-k="r"]{--spk-bg:#EAFBF3;--spk-line:#C6EEDD;--spk-ink:#0E9E7A}
+  .spk-b[data-k="k"]{--spk-bg:#F4EFFF;--spk-line:#DCD0FA;--spk-ink:#7A5BD0}
+  .spk-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .spk-tag{display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;background:var(--mint-soft);color:var(--mint-deep);border:1px solid var(--mint-line);white-space:nowrap}
+  .spk-note{font-size:11.5px;font-weight:600;color:var(--dim);line-height:1.65;margin:0 0 10px;word-break:keep-all}
+  .spk-note b{color:var(--mint-deep)}
+  .spk-card.is-example{margin-top:0;box-shadow:none;border-color:var(--mint-line);background:#FFFCFE}
+  .spk-card.is-example .spk-toggle{cursor:default}
 </style>
 </head>
 <body>
@@ -2782,6 +2819,7 @@
       <div class="chips stat-subj" id="tipTabs" role="tablist" aria-label="토디팁 하위 탭" style="margin:0 0 10px">
         <button type="button" class="chip on" data-tip="ana" role="tab" aria-pressed="true"><span aria-hidden="true">🔍</span>기업분석</button>
         <button type="button" class="chip" data-tip="rev" role="tab" aria-pressed="false"><span aria-hidden="true">🗣️</span>면접복기</button>
+        <button type="button" class="chip" data-tip="exp" role="tab" aria-pressed="false"><span aria-hidden="true">✨</span>경험정리</button>
       </div>
       <div id="tipAna">
         <button class="btn primary small jtip-add" id="anaAdd" type="button">＋ 기업분석 추가</button>
@@ -2795,6 +2833,13 @@
       <div id="tipRev" hidden>
         <button class="btn primary small jtip-add" id="revAdd" type="button">＋ 면접복기 추가</button>
         <div id="revList"></div>
+      </div>
+      <div id="tipExp" hidden>
+        <div class="spk-top">
+          <button class="btn ghost" id="spkExample" type="button"><span aria-hidden="true">🔍</span>예시 카드</button>
+          <button class="btn primary" id="spkAdd" type="button"><span aria-hidden="true">✏️</span>카드 작성</button>
+        </div>
+        <div id="spkList"></div>
       </div>
     </main>
 
@@ -3050,6 +3095,41 @@
     <div class="sheet-actions">
       <button class="btn ghost" data-close="jobRevSheet">취소</button>
       <button class="btn primary" id="rSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 💼 경험정리(SPARK) 예시 카드 ================= -->
+<div class="sheet" id="spkExampleSheet" role="dialog" aria-modal="true" aria-labelledby="spkExampleTitle">
+  <div class="veil" data-close="spkExampleSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="spkExampleTitle"><span aria-hidden="true">🔍</span>예시 카드</h2><button class="x" data-close="spkExampleSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
+    <p class="spk-note">기술보증기금·신용보증기금 합격 자소서의 톤을 참고해 만든 <b>참고용</b> 예시예요. 실제 지원자 문장을 그대로 옮긴 글이 아니니, 형식과 흐름만 참고해 내 경험으로 다시 써 보세요.</p>
+    <div id="spkExampleBox"></div>
+    <div class="sheet-actions">
+      <button class="btn ghost" data-close="spkExampleSheet">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 💼 경험정리(SPARK) 카드 작성/수정 ================= -->
+<div class="sheet" id="spkSheet" role="dialog" aria-modal="true" aria-labelledby="spkSheetTitle">
+  <div class="veil" data-close="spkSheet"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head"><h2 id="spkSheetTitle">경험 카드 작성</h2><button class="x" data-close="spkSheet" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg></button></div>
+    <div class="field"><label for="spTitle">경험 제목</label><input type="text" id="spTitle" maxlength="60" placeholder="예: 전통시장 매출 데이터 조사" autocomplete="off"></div>
+    <div class="field"><label for="spPeriod">경험 기간 (선택)</label><input type="text" id="spPeriod" maxlength="30" placeholder="2024.03 ~ 2024.08" autocomplete="off"></div>
+    <div class="field"><label for="spS">상황 (S)</label><textarea id="spS" maxlength="600" placeholder="언제 · 어디서 · 무엇을 하던 상황이었는지"></textarea></div>
+    <div class="field"><label for="spP">문제 (P)</label><textarea id="spP" maxlength="600" placeholder="그때 부딪힌 어려움 · 해결해야 했던 과제"></textarea></div>
+    <div class="field"><label for="spA">행동 (A)</label><textarea id="spA" maxlength="600" placeholder="내가 직접 한 일 · 쓴 방법 · 협업한 방식"></textarea></div>
+    <div class="field"><label for="spR">결과 (R)</label><textarea id="spR" maxlength="600" placeholder="숫자로 보이는 성과 · 달라진 점"></textarea></div>
+    <div class="field"><label for="spK">지식 (K)</label><textarea id="spK" maxlength="600" placeholder="이 경험에서 배운 것 · 자소서에 쓸 한 줄"></textarea></div>
+    <div class="field"><label for="spTags">관련 키워드 (선택)</label><input type="text" id="spTags" maxlength="120" placeholder="#협업 #문제해결 #데이터분석" autocomplete="off"></div>
+    <div class="sheet-actions">
+      <button class="btn ghost" data-close="spkSheet">취소</button>
+      <button class="btn primary" id="spSave">저장</button>
     </div>
   </div>
 </div>
@@ -3764,7 +3844,7 @@
   const JOB_STATUS = ['진행중', '합격', '불합격'];
   const isHttpUrl = (s) => typeof s === 'string' && /^https?:\/\//i.test(s);
   function freshJob() {
-    return { schedules: [], todos: [], categories: ['공기업', '대기업', '스타트업'], analyses: [], reviews: [], scraps: [], awards: [] };
+    return { schedules: [], todos: [], categories: ['공기업', '대기업', '스타트업'], analyses: [], reviews: [], experiences: [], scraps: [], awards: [] };
   }
   function normalizeJob(raw) {
     const j = (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
@@ -3849,6 +3929,22 @@
         answer: String(r.answer || '').slice(0, 600),
         good: String(r.good || '').slice(0, 300),
         bad: String(r.bad || '').slice(0, 300)
+      });
+    });
+    /* ✨ 경험정리(SPARK) — 제목 · 기간 · S/P/A/R/K · 키워드 */
+    if (Array.isArray(j.experiences)) j.experiences.forEach((e) => {
+      if (!e || typeof e !== 'object' || !String(e.title || '').trim()) return;
+      out.experiences.push({
+        id: String(e.id || ('sp' + uid())),
+        title: String(e.title).trim().slice(0, 60),
+        period: String(e.period || '').trim().slice(0, 30),
+        s: String(e.s || '').slice(0, 600),
+        p: String(e.p || '').slice(0, 600),
+        a: String(e.a || '').slice(0, 600),
+        r: String(e.r || '').slice(0, 600),
+        k: String(e.k || '').slice(0, 600),
+        tags: String(e.tags || '').slice(0, 120),
+        created: typeof e.created === 'string' ? e.created : new Date().toISOString()
       });
     });
     return out;
@@ -4778,7 +4874,7 @@
     if (state.pet && petTotalOf(state.pet) > 0) return true;
     if (state.job) {
       const j = state.job;
-      if ((j.schedules && j.schedules.length) || (j.todos && j.todos.length) || (j.analyses && j.analyses.length) || (j.reviews && j.reviews.length) || (j.scraps && j.scraps.length) || (j.awards && j.awards.length)) return true;
+      if ((j.schedules && j.schedules.length) || (j.todos && j.todos.length) || (j.analyses && j.analyses.length) || (j.reviews && j.reviews.length) || (j.experiences && j.experiences.length) || (j.scraps && j.scraps.length) || (j.awards && j.awards.length)) return true;
     }
     return false;
   }
@@ -9615,7 +9711,10 @@
     });
     $('tipAna').hidden = tipTab !== 'ana';
     $('tipRev').hidden = tipTab !== 'rev';
-    if (tipTab === 'ana') renderAna(); else renderRev();
+    $('tipExp').hidden = tipTab !== 'exp';
+    if (tipTab === 'ana') renderAna();
+    else if (tipTab === 'rev') renderRev();
+    else renderExp();
   }
   function renderAna() {
     if (anaFilter !== 'all' && state.job.categories.indexOf(anaFilter) < 0) anaFilter = 'all';
@@ -9769,6 +9868,160 @@
     closeSheet('jobRevSheet');
     renderRev();
     toast(editing ? '면접복기를 수정했어요' : '면접복기를 저장했어요');
+  });
+
+  /* ---- ✨ 경험정리: SPARK (Situation · Problem · Action · Result · Knowledge) ---- */
+  let spkEditId = null;
+  const spkOpenIds = new Set();
+  const SPK_FIELDS = [
+    { k: 's', letter: 'S', en: 'Situation', label: '상황' },
+    { k: 'p', letter: 'P', en: 'Problem', label: '문제' },
+    { k: 'a', letter: 'A', en: 'Action', label: '행동' },
+    { k: 'r', letter: 'R', en: 'Result', label: '결과' },
+    { k: 'k', letter: 'K', en: 'Knowledge', label: '지식' }
+  ];
+  /* 참고용 모범 예시 — 기술보증기금·신용보증기금 합격 자소서의 직무 역량·톤
+     (중소기업·소상공인 현장 지원 · 고객 문제해결 · 데이터 기반 의사결정 · 협업)을 참고해
+     새로 쓴 글이다. 실제 지원자 문장을 그대로 옮기지 않았다. */
+  const SPARK_EXAMPLE = {
+    title: '전통시장 상인회 매출 데이터 조사',
+    period: '2024.03 ~ 2024.08',
+    s: '대학 산학협력단 현장실습으로 지역 전통시장 상인회의 골목상권 매출 분석 조사에 참여했습니다. 2인 1조로 점포 120곳을 맡아 방문 조사와 데이터 정리를 담당했습니다.',
+    p: '첫 주 응답률이 48%에 그쳤습니다. 설문 문항이 어려워 상인들이 중간에 포기했고, 수기 장부를 옮겨 적는 과정에서 누락과 오기가 반복됐습니다.',
+    a: '문항을 상인 눈높이의 쉬운 말로 바꾼 1장짜리 안내 카드를 먼저 보여드리고, 장사가 한산한 오후 2시~4시로 방문 시간을 옮겼습니다. 입력과 검증을 나누어 맡고 마지막에 서로 교차 확인하는 규칙을 팀과 정했으며, 빠진 항목은 그 자리에서 다시 확인해 채웠습니다.',
+    r: '응답률이 89%까지 올랐고 입력 오류는 12%에서 2%로 줄였습니다. 정리한 데이터는 상인회가 공동 배달 앱 도입을 검토하는 근거 자료로 쓰였고, 조사 보고서는 학과 우수 실습 사례로 선정됐습니다.',
+    k: '상대가 이해할 수 있는 말로 묻고, 확인 절차를 팀과 함께 정해 두는 것이 데이터의 정확도를 만든다는 것을 배웠습니다. 현장의 작은 불편을 숫자로 바꿔 보여주는 일이 곧 지원의 출발점이라고 생각합니다.',
+    tags: '#현장조사 #데이터정확성 #고객소통 #문제해결 #협업'
+  };
+  const SPK_CHEV = '<svg class="spk-chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9.5 6 6 6-6"/></svg>';
+  const spkStore = () => {
+    if (!state.job) state.job = freshJob();
+    if (!Array.isArray(state.job.experiences)) state.job.experiences = [];
+    return state.job.experiences;
+  };
+  function spkTagList(tags) {
+    const out = [];
+    String(tags || '').split(/[\s,，]+/).forEach((raw) => {
+      const t = raw.trim().replace(/^#+/, '');
+      if (!t) return;
+      const tag = '#' + t.slice(0, 12);
+      if (out.indexOf(tag) < 0) out.push(tag);
+    });
+    return out.slice(0, 8);
+  }
+  function spkBlocksHTML(e) {
+    return SPK_FIELDS.map((f) => {
+      const body = String(e[f.k] || '').trim();
+      const txt = body ? esc(body) : '<span style="opacity:.5">아직 적지 않았어요</span>';
+      return '<div class="spk-b" data-k="' + f.k + '">' +
+        '<span class="spk-badge"><b>' + f.letter + '</b><i>' + f.en + '</i></span>' +
+        '<div class="spk-b-body"><span class="spk-b-lb">' + f.label + '</span><p>' + txt + '</p></div>' +
+      '</div>';
+    }).join('');
+  }
+  function spkTagsHTML(tags) {
+    const list = spkTagList(tags);
+    return list.length ? '<div class="spk-tags">' + list.map((t) => '<span class="spk-tag">' + esc(t) + '</span>').join('') + '</div>' : '';
+  }
+  function spkCardHTML(e, opts) {
+    const o = opts || {};
+    const open = !!o.open || spkOpenIds.has(e.id);
+    const bodyId = 'spkbody-' + e.id;
+    return '<div class="spk-card' + (o.example ? ' is-example' : '') + '" data-spkitem="' + esc(e.id) + '">' +
+      '<div class="spk-head">' +
+        '<button class="spk-toggle" type="button" data-spktoggle="' + esc(e.id) + '" data-spkflag="' + (o.example ? 'example' : '') + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + bodyId + '"' + (o.example ? ' tabindex="-1"' : '') + '>' +
+          '<span class="spk-spark" aria-hidden="true">✦</span>' +
+          '<span class="spk-ttl">' + esc(e.title) + '</span>' +
+          (e.period ? '<span class="spk-period">' + esc(e.period) + '</span>' : '') +
+          SPK_CHEV +
+        '</button>' +
+        (o.example ? '' : '<span class="spk-tools">' +
+          '<button class="pic-tool" data-spkedit="' + esc(e.id) + '" type="button" aria-label="' + esc(e.title) + ' 경험 카드 수정" title="수정">' + PENCIL + '</button>' +
+          '<button class="pic-tool" data-spkdel="' + esc(e.id) + '" type="button" aria-label="' + esc(e.title) + ' 경험 카드 삭제" title="삭제">' + TRASH + '</button>' +
+        '</span>') +
+      '</div>' +
+      '<div class="spk-body" id="' + bodyId + '"' + (open ? '' : ' hidden') + '>' +
+        '<div class="spk-blocks">' + spkBlocksHTML(e) + '</div>' +
+        spkTagsHTML(e.tags) +
+      '</div>' +
+    '</div>';
+  }
+  function renderExp() {
+    const list = spkStore();
+    $('spkList').innerHTML = list.length
+      ? list.slice().reverse().map((e) => spkCardHTML(e)).join('')
+      : '<div class="empty"><div class="em">✨</div><b>아직 정리한 경험이 없어요</b><span>경험 하나를 S·P·A·R·K로 나눠 적어두면<br>자소서·면접 답변이 바로 나와요<br>처음이라면 🔍 예시 카드부터 보세요</span></div>';
+  }
+  function renderSpkExample() {
+    $('spkExampleBox').innerHTML = spkCardHTML(Object.assign({ id: 'spark-example' }, SPARK_EXAMPLE), { example: true, open: true });
+  }
+  $('spkExample').addEventListener('click', () => { renderSpkExample(); openSheet('spkExampleSheet'); });
+  $('spkAdd').addEventListener('click', () => openSpkSheet(null));
+  $('spkList').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-spktoggle]');
+    if (t) {
+      const id = t.dataset.spktoggle;
+      if (spkOpenIds.has(id)) spkOpenIds.delete(id); else spkOpenIds.add(id);
+      renderExp();
+      return;
+    }
+    const edit = e.target.closest('[data-spkedit]');
+    if (edit) { openSpkSheet(edit.dataset.spkedit); return; }
+    const del = e.target.closest('[data-spkdel]');
+    if (del) {
+      state.job.experiences = spkStore().filter((x) => x.id !== del.dataset.spkdel);
+      spkOpenIds.delete(del.dataset.spkdel);
+      save();
+      renderExp();
+      toast('경험 카드를 삭제했어요');
+    }
+  });
+  $('spkExampleBox').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-spktoggle]');
+    if (!t) return;
+    const body = $(t.getAttribute('aria-controls'));
+    const open = t.getAttribute('aria-expanded') === 'true';
+    t.setAttribute('aria-expanded', open ? 'false' : 'true');
+    if (body) body.hidden = open;
+  });
+  function openSpkSheet(id) {
+    spkEditId = id || null;
+    const e = id ? spkStore().find((x) => x.id === id) : null;
+    $('spkSheetTitle').textContent = e ? '경험 카드 수정' : '경험 카드 작성';
+    $('spTitle').value = e ? e.title : '';
+    $('spPeriod').value = e ? e.period : '';
+    $('spS').value = e ? e.s : '';
+    $('spP').value = e ? e.p : '';
+    $('spA').value = e ? e.a : '';
+    $('spR').value = e ? e.r : '';
+    $('spK').value = e ? e.k : '';
+    $('spTags').value = e ? e.tags : '';
+    openSheet('spkSheet');
+  }
+  $('spSave').addEventListener('click', () => {
+    const title = ($('spTitle').value || '').trim();
+    if (!title) { toast('경험 제목을 적어주세요'); return; }
+    const data = {
+      title: title.slice(0, 60),
+      period: ($('spPeriod').value || '').trim().slice(0, 30),
+      s: ($('spS').value || '').trim().slice(0, 600),
+      p: ($('spP').value || '').trim().slice(0, 600),
+      a: ($('spA').value || '').trim().slice(0, 600),
+      r: ($('spR').value || '').trim().slice(0, 600),
+      k: ($('spK').value || '').trim().slice(0, 600),
+      tags: ($('spTags').value || '').trim().slice(0, 120)
+    };
+    const editing = !!spkEditId;
+    if (editing) {
+      const e = spkStore().find((x) => x.id === spkEditId);
+      if (e) Object.assign(e, data);
+    } else {
+      spkStore().push(Object.assign({ id: 'sp' + uid(), created: new Date().toISOString() }, data));
+    }
+    save();
+    closeSheet('spkSheet');
+    renderExp();
+    toast(editing ? '경험 카드를 수정했어요' : '경험 카드를 저장했어요');
   });
 
   /* =========================================================
@@ -10943,6 +11196,15 @@
       state: () => ({ open: document.documentElement.classList.contains('shelf-open'), awards: awardStore().length, order: awardSorted().map((a) => a.id) })
     },
     openJobSched: openJobSched, certMinutes: certMinutes,
+    /* ✨ 경험정리(SPARK) */
+    spark: {
+      example: () => SPARK_EXAMPLE,
+      fields: () => SPK_FIELDS,
+      openIds: () => Array.from(spkOpenIds),
+      render: renderExp,
+      setTab: (t) => { tipTab = t; renderTip(); },
+      tab: () => tipTab
+    },
     /* 🏆 진열장 실사 트로피 아트(화면=내보내기 동일 픽셀) */
     trophyArt: TROPHY_ART, trophyPlaque: TROPHY_PLAQUE,
     /* Tody time 확장: 화면 유지 · ASMR · 뽀모도로 */
